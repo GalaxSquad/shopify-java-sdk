@@ -1,0 +1,52 @@
+// Generated from graphql_java_gen gem
+
+package com.sdk.shopify.shopify;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.shopify.graphql.support.AbstractResponse;
+import com.shopify.graphql.support.Arguments;
+import com.shopify.graphql.support.Error;
+import com.shopify.graphql.support.Query;
+import com.shopify.graphql.support.SchemaViolationError;
+import com.shopify.graphql.support.TopLevelResponse;
+import com.shopify.graphql.support.Input;
+
+import com.shopify.graphql.support.ID;
+
+/**
+* Return type for `fulfillmentServiceCreate` mutation.
+*/
+public class FulfillmentServiceCreatePayloadQuery extends Query<FulfillmentServiceCreatePayloadQuery> {
+    FulfillmentServiceCreatePayloadQuery(StringBuilder _queryBuilder) {
+        super(_queryBuilder);
+    }
+
+    /**
+    * The created fulfillment service.
+    */
+    public FulfillmentServiceCreatePayloadQuery fulfillmentService(FulfillmentServiceQueryDefinition queryDef) {
+        startField("fulfillmentService");
+
+        _queryBuilder.append('{');
+        queryDef.define(new FulfillmentServiceQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The list of errors that occurred from executing the mutation.
+    */
+    public FulfillmentServiceCreatePayloadQuery userErrors(UserErrorQueryDefinition queryDef) {
+        startField("userErrors");
+
+        _queryBuilder.append('{');
+        queryDef.define(new UserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+}

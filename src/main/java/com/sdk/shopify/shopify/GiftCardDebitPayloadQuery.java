@@ -1,0 +1,40 @@
+// Generated from graphql_java_gen gem
+
+package com.sdk.shopify.shopify;
+
+import com.shopify.graphql.support.Query;
+
+/**
+* Return type for `giftCardDebit` mutation.
+*/
+public class GiftCardDebitPayloadQuery extends Query<GiftCardDebitPayloadQuery> {
+    GiftCardDebitPayloadQuery(StringBuilder _queryBuilder) {
+        super(_queryBuilder);
+    }
+
+    /**
+    * The gift card debit transaction that was created.
+    */
+    public GiftCardDebitPayloadQuery giftCardDebitTransaction(GiftCardDebitTransactionQueryDefinition queryDef) {
+        startField("giftCardDebitTransaction");
+
+        _queryBuilder.append('{');
+        queryDef.define(new GiftCardDebitTransactionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The list of errors that occurred from executing the mutation.
+    */
+    public GiftCardDebitPayloadQuery userErrors(GiftCardTransactionUserErrorQueryDefinition queryDef) {
+        startField("userErrors");
+
+        _queryBuilder.append('{');
+        queryDef.define(new GiftCardTransactionUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+}
