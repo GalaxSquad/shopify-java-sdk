@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class App {
   public static void main(String[] args) throws IOException, InterruptedException {
     ShopifySdk shopifySdk =
-        new ShopifySdk("kezlo-test-2", "shpua_fe842081e57b48e28b29595d175964b2");
+        ShopifySdk.builder().apiKey("shpua_fe842081e57b48e28b29595d175964b2").storeName("kezlo-test-2").maxRetryAttempts(5).retryDelayMs(300L).connectTimeoutMs(300).build();
     QueryRootQuery rootQuery =
         Operations.query(
             q ->

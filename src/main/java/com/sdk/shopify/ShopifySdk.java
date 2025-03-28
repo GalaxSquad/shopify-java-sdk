@@ -2,11 +2,19 @@ package com.sdk.shopify;
 
 import com.sdk.shopify.shopify.QueryResponse;
 import com.sdk.shopify.shopify.QueryRootQuery;
+import io.github.resilience4j.retry.Retry;
+import io.github.resilience4j.retry.RetryConfig;
+import io.github.resilience4j.retry.RetryRegistry;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
+import java.util.function.Supplier;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -15,42 +23,139 @@ public class ShopifySdk {
   private String storeName;
   private String apiKey;
   private String apiVersion = "2025-01";
-  private HttpClient httpClient = HttpClient.newHttpClient();
-  private final String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
+  private HttpClient httpClient;
+  private final Retry retry;
 
-  public ShopifySdk(String storeName, String apiKey) {
+  private static final String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
+  private static final Integer DEFAULT_CONNECT_TIMEOUT_MS = 30000;
+  private static final Long DEFAULT_RETRY_DELAY_MS = 1000L;
+  private static final Integer DEFAULT_MAX_RETRY_ATTEMPTS = 5;
+  private static final String HTTPS = "https://";
+  private static final String SHOPIFY_SUBDOMAIN = ".myshopify.com";
+  private static final String ADMIN_API = "/admin/api/";
+
+
+
+  @Builder
+  public ShopifySdk(
+      String storeName,
+      String apiKey,
+      String apiVersion,
+      Integer connectTimeoutMs,
+      Long retryDelayMs,
+      Integer maxRetryAttempts) {
+
+    // Validate input parameters
+    if (storeName == null || storeName.isEmpty()) {
+      throw new IllegalArgumentException("Store name cannot be null or empty");
+    }
+
+    if (apiKey == null || apiKey.isEmpty()) {
+      throw new IllegalArgumentException("API key cannot be null or empty");
+    }
+
     this.storeName = storeName;
     this.apiKey = apiKey;
+
+    if (apiVersion != null) {
+      this.apiVersion = apiVersion;
+    }
+
+    // Configure HttpClient with timeout
+    this.httpClient =
+        HttpClient.newBuilder()
+            .connectTimeout(
+                Duration.ofMillis(
+                    connectTimeoutMs == null ? DEFAULT_CONNECT_TIMEOUT_MS : connectTimeoutMs))
+            .build();
+
+    // Set default values if not provided
+    long retryDelay = retryDelayMs != null ? retryDelayMs : DEFAULT_RETRY_DELAY_MS;
+    int maxAttempts = maxRetryAttempts != null ? maxRetryAttempts : DEFAULT_MAX_RETRY_ATTEMPTS;
+
+    // Configure Resilience4j retry
+    RetryConfig retryConfig =
+        RetryConfig.custom()
+            .maxAttempts(maxAttempts)
+            .retryExceptions(
+                IOException.class, InterruptedException.class, URISyntaxException.class)
+            .retryOnResult(
+                response -> {
+                  if (response instanceof HttpResponse) {
+                    int statusCode = ((HttpResponse<?>) response).statusCode();
+                    return statusCode == 429 || statusCode >= 500;
+                  }
+                  return false;
+                })
+            .intervalFunction(
+                attempt -> {
+                  // Add jitter (±20%) to fixed delay
+                  double jitter = 0.2 * retryDelay;
+                  return (long) (retryDelay + ((Math.random() * 2 - 1) * jitter));
+                })
+            .failAfterMaxAttempts(true)
+            .build();
+
+    RetryRegistry registry = RetryRegistry.of(retryConfig);
+    this.retry = registry.retry("shopifySdkRetry");
+
+    // Add retry event listeners for logging
+    retry
+        .getEventPublisher()
+        .onRetry(
+            event ->
+                log.warn(
+                    "Retry attempt {} after {} ms",
+                    event.getNumberOfRetryAttempts(),
+                    event.getWaitInterval().toMillis()));
   }
 
   public QueryResponse queryShopifyAdmin(QueryRootQuery rootQuery) {
-    String jsonPayload = String.format("{\"query\":\"%s\"}",
-        rootQuery.toString().replace("\"", "\\\"").replace("\n", "\\n"));
+    String jsonPayload = toJsonPayload(rootQuery);
     return queryShopifyAdmin(jsonPayload);
   }
 
   public QueryResponse queryShopifyAdmin(String payload) {
     try {
-      HttpRequest request =  HttpRequest.newBuilder()
-          .uri(new URI(buildAdminGraphQLUrl()))
-          .POST(HttpRequest.BodyPublishers.ofString(payload))
-          .header("Content-Type", "application/json")
-          .header(ACCESS_TOKEN_HEADER, apiKey)
-          .build();
-      HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
-      if(response.statusCode() != 200) {
-        log.error("Error when execute GraphQL request: {} - {}", response.statusCode(), response.body());
-        return null;
-      }
+      Supplier<HttpResponse<String>> httpRequestSupplier =
+          Retry.decorateSupplier(
+              retry,
+              () -> {
+                try {
+                  HttpRequest request =
+                      HttpRequest.newBuilder()
+                          .uri(new URI(buildAdminGraphQLUrl()))
+                          .POST(HttpRequest.BodyPublishers.ofString(payload))
+                          .header("Content-Type", "application/json")
+                          .header(ACCESS_TOKEN_HEADER, apiKey)
+                          .build();
+                  return httpClient.send(request, BodyHandlers.ofString());
+                } catch (Exception e) {
+                  log.error("Error when execute shopify admin graphql api", e);
+                  throw new ShopifySdkException(e);
+                }
+              });
 
+      // Execute with retry
+      HttpResponse<String> response = httpRequestSupplier.get();
+      if (response.statusCode() != 200) {
+        log.error(
+            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
+        throw new ShopifySdkException("Error when execute shopify admin graphql api");
+      }
       return QueryResponse.fromJson(response.body());
     } catch (Exception e) {
-      log.error("Error when execute shopify admin graphql api", e);
-      throw new RuntimeException(e);
+      log.error("method: queryShopifyAdmin, error", e);
+      throw new ShopifySdkException(e);
     }
   }
 
-  private String buildAdminGraphQLUrl () {
-    return "https://" + storeName + ".myshopify.com/admin/api/" + apiVersion + "/graphql.json";
+  private String buildAdminGraphQLUrl() {
+    return HTTPS + storeName + SHOPIFY_SUBDOMAIN + ADMIN_API + apiVersion + "/graphql.json";
+  }
+
+  private String toJsonPayload(QueryRootQuery query) {
+    return String.format(
+        "{\"query\":\"%s\"}", query.toString().replace("\"", "\\\"").replace("\n", "\\n"));
   }
 }

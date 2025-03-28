@@ -11,8 +11,13 @@ This SDK provides a simple way to interact with Shopify's GraphQL API, specifica
 ## Usage
 ### Initialize the SDK
 ```
-ShopifySdk shopifySdk = new ShopifySdk("your-store-name", "your-api-key");
+ShopifySdk shopifySdk =
+        ShopifySdk.builder().apiKey("your-store-apikey").storeName("your-store-name").maxRetryAttempts(5).retryDelayMs(1000L).connectTimeoutMs(30000).build()
 ```
+- Store name and API Key is mandatory
+- Max Retry Attempts default: 5
+- retryDelayMs default: 1000L
+- connectTimeoutMs default: 30000
 
 Query Orders Example
 ```
