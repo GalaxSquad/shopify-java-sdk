@@ -20,10 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ShopifySdk {
 
-  private String storeName;
-  private String apiKey;
+  private final String storeName;
+  private final String apiKey;
   private String apiVersion = "2025-01";
-  private HttpClient httpClient;
+  private final HttpClient httpClient;
   private final Retry retry;
 
   private static final String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
@@ -33,6 +33,9 @@ public class ShopifySdk {
   private static final String HTTPS = "https://";
   private static final String SHOPIFY_SUBDOMAIN = ".myshopify.com";
   private static final String ADMIN_API = "/admin/api/";
+
+  private static final int LOCKED_STATUS_CODE = 423;
+
 
 
 
@@ -82,8 +85,7 @@ public class ShopifySdk {
             .retryOnResult(
                 response -> {
                   if (response instanceof HttpResponse) {
-                    int statusCode = ((HttpResponse<?>) response).statusCode();
-                    return statusCode == 429 || statusCode >= 500;
+                    return shouldRetryResponse((HttpResponse<?>) response);
                   }
                   return false;
                 })
@@ -157,5 +159,10 @@ public class ShopifySdk {
   private String toJsonPayload(QueryRootQuery query) {
     return String.format(
         "{\"query\":\"%s\"}", query.toString().replace("\"", "\\\"").replace("\n", "\\n"));
+  }
+
+  private boolean shouldRetryResponse(HttpResponse response) {
+    int statusCode = response.statusCode();
+    return (statusCode > 500) || (LOCKED_STATUS_CODE == statusCode);
   }
 }
