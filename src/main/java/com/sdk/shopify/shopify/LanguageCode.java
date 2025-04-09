@@ -3,8 +3,6 @@
 package com.sdk.shopify.shopify;
 
 
-import com.shopify.graphql.support.ID;
-
 /**
 * Language codes supported by Shopify.
 */

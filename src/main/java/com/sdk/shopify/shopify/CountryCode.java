@@ -2,20 +2,6 @@
 
 package com.sdk.shopify.shopify;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.shopify.graphql.support.AbstractResponse;
-import com.shopify.graphql.support.Arguments;
-import com.shopify.graphql.support.Error;
-import com.shopify.graphql.support.Query;
-import com.shopify.graphql.support.SchemaViolationError;
-import com.shopify.graphql.support.TopLevelResponse;
-import com.shopify.graphql.support.Input;
-
-import com.shopify.graphql.support.ID;
-
 /**
 * The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.
 * If a territory doesn't have a country code value in the `CountryCode` enum, then it might be
