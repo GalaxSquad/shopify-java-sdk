@@ -1,5 +1,12 @@
 package com.sdk.shopify;
 
+import com.sdk.shopify.dto.Argument;
+import com.sdk.shopify.mapper.ArgumentMapper;
+import com.sdk.shopify.shopify.Operations;
+import com.sdk.shopify.shopify.Order;
+import com.sdk.shopify.shopify.OrderConnection;
+import com.sdk.shopify.shopify.OrderQueryDefinition;
+import com.sdk.shopify.shopify.OrderSortKeys;
 import com.sdk.shopify.shopify.QueryResponse;
 import com.sdk.shopify.shopify.QueryRootQuery;
 import io.github.resilience4j.retry.Retry;
@@ -13,6 +20,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +32,12 @@ public class ShopifySdk {
   private final String storeName;
   private final String apiKey;
   private String apiVersion = "2025-01";
+  private final Integer BATCH_SIZE = 50;
+
   private final HttpClient httpClient;
   private final Retry retry;
+  private final ArgumentMapper argumentMapper = ArgumentMapper.INSTANCE;
+
 
   private static final String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
   private static final Integer DEFAULT_CONNECT_TIMEOUT_MS = 30000;
@@ -36,11 +49,8 @@ public class ShopifySdk {
 
   private static final int LOCKED_STATUS_CODE = 423;
 
-
-
-
   @Builder
-  public ShopifySdk(
+  public ShopifySdk (
       String storeName,
       String apiKey,
       String apiVersion,
@@ -49,18 +59,18 @@ public class ShopifySdk {
       Integer maxRetryAttempts) {
 
     // Validate input parameters
-    if (storeName == null || storeName.isEmpty()) {
+    if(storeName == null || storeName.isEmpty()) {
       throw new IllegalArgumentException("Store name cannot be null or empty");
     }
 
-    if (apiKey == null || apiKey.isEmpty()) {
+    if(apiKey == null || apiKey.isEmpty()) {
       throw new IllegalArgumentException("API key cannot be null or empty");
     }
 
     this.storeName = storeName;
     this.apiKey = apiKey;
 
-    if (apiVersion != null) {
+    if(apiVersion != null) {
       this.apiVersion = apiVersion;
     }
 
@@ -84,7 +94,7 @@ public class ShopifySdk {
                 IOException.class, InterruptedException.class, URISyntaxException.class)
             .retryOnResult(
                 response -> {
-                  if (response instanceof HttpResponse) {
+                  if(response instanceof HttpResponse) {
                     return shouldRetryResponse((HttpResponse<?>) response);
                   }
                   return false;
@@ -112,12 +122,12 @@ public class ShopifySdk {
                     event.getWaitInterval().toMillis()));
   }
 
-  public QueryResponse queryShopifyAdmin(QueryRootQuery rootQuery) {
+  public QueryResponse queryShopifyAdmin (QueryRootQuery rootQuery) {
     String jsonPayload = toJsonPayload(rootQuery);
     return queryShopifyAdmin(jsonPayload);
   }
 
-  public QueryResponse queryShopifyAdmin(String payload) {
+  public QueryResponse queryShopifyAdmin (String payload) {
     try {
       Supplier<HttpResponse<String>> httpRequestSupplier =
           Retry.decorateSupplier(
@@ -140,7 +150,7 @@ public class ShopifySdk {
 
       // Execute with retry
       HttpResponse<String> response = httpRequestSupplier.get();
-      if (response.statusCode() != 200) {
+      if(response.statusCode() != 200) {
         log.error(
             "Request error, status code: {}, response: {}", response.statusCode(), response.body());
         throw new ShopifySdkException("Error when execute shopify admin graphql api");
@@ -152,16 +162,56 @@ public class ShopifySdk {
     }
   }
 
-  private String buildAdminGraphQLUrl() {
+  public List<Order> queryOrders (OrderQueryDefinition orderQueryDefinition, String sortKey) {
+    Argument argument = Argument.builder()
+        .first(BATCH_SIZE)
+        .sortKey(sortKey)
+        .build();
+
+    boolean hasNextPage = true;
+    String cursor = null;
+
+    List<Order> orders = new ArrayList<>();
+
+    while (hasNextPage) {
+      argument.setAfter(cursor);
+      OrderConnection orderConnection = queryOrderInOnePage(orderQueryDefinition, argument);
+      List<Order> nodes = orderConnection.getNodes();
+      if(nodes != null && !nodes.isEmpty()) {
+        orders.addAll(nodes);
+      }
+      hasNextPage = orderConnection.getPageInfo().getHasNextPage();
+      cursor = orderConnection.getPageInfo().getEndCursor();
+    }
+
+    return orders;
+
+  }
+
+  public OrderConnection queryOrderInOnePage (OrderQueryDefinition orderQueryDefinition,
+      Argument argument) {
+    OrderSortKeys sortKey = OrderSortKeys.fromGraphQl(argument.getSortKey());
+    if(sortKey == OrderSortKeys.UNKNOWN_VALUE) {
+      throw new ShopifySdkException("Unknown sort key");
+    }
+    QueryRootQuery query = Operations.query(
+        q -> q.orders(arg -> argumentMapper.updateToOrderArguments(argument, arg),
+            o -> o.nodes(orderQueryDefinition)
+                .pageInfo(p -> p.startCursor().endCursor().hasPreviousPage().hasNextPage())));
+    QueryResponse response = queryShopifyAdmin(query);
+    return response.getData().getOrders();
+  }
+
+  private String buildAdminGraphQLUrl () {
     return HTTPS + storeName + SHOPIFY_SUBDOMAIN + ADMIN_API + apiVersion + "/graphql.json";
   }
 
-  private String toJsonPayload(QueryRootQuery query) {
+  private String toJsonPayload (QueryRootQuery query) {
     return String.format(
         "{\"query\":\"%s\"}", query.toString().replace("\"", "\\\"").replace("\n", "\\n"));
   }
 
-  private boolean shouldRetryResponse(HttpResponse response) {
+  private boolean shouldRetryResponse (HttpResponse<?> response) {
     int statusCode = response.statusCode();
     return (statusCode > 500) || (LOCKED_STATUS_CODE == statusCode);
   }
