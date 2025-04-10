@@ -190,10 +190,6 @@ public class ShopifySdk {
 
   public OrderConnection queryOrdersInOnePage (OrderQueryDefinition orderQueryDefinition,
       Argument argument) {
-    OrderSortKeys sortKey = OrderSortKeys.fromGraphQl(argument.getSortKey());
-    if(sortKey == OrderSortKeys.UNKNOWN_VALUE) {
-      throw new ShopifySdkException("Unknown sort key");
-    }
     QueryRootQuery query = Operations.query(
         q -> q.orders(arg -> argumentMapper.updateToOrderArguments(argument, arg),
             o -> o.nodes(orderQueryDefinition)
