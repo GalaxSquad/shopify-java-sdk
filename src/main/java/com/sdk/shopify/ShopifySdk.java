@@ -32,7 +32,7 @@ public class ShopifySdk {
   private final String storeName;
   private final String apiKey;
   private String apiVersion = "2025-01";
-  private final Integer BATCH_SIZE = 50;
+  private static final int BATCH_SIZE = 50;
 
   private final HttpClient httpClient;
   private final Retry retry;
