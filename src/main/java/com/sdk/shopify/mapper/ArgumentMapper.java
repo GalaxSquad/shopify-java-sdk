@@ -23,7 +23,7 @@ public interface ArgumentMapper {
   default OrderSortKeys toOrderSortKeys(String sortKey) {
     OrderSortKeys orderSortKeys = OrderSortKeys.fromGraphQl(sortKey);
     if(orderSortKeys == OrderSortKeys.UNKNOWN_VALUE){
-      throw new ShopifySdkException("Unknown sort key");
+      throw new ShopifySdkException("Unknown sort key: " + sortKey);
     }
     return orderSortKeys;
   }
