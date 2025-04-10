@@ -175,7 +175,7 @@ public class ShopifySdk {
 
     while (hasNextPage) {
       argument.setAfter(cursor);
-      OrderConnection orderConnection = queryOrderInOnePage(orderQueryDefinition, argument);
+      OrderConnection orderConnection = queryOrdersInOnePage(orderQueryDefinition, argument);
       List<Order> nodes = orderConnection.getNodes();
       if(nodes != null && !nodes.isEmpty()) {
         orders.addAll(nodes);
@@ -188,7 +188,7 @@ public class ShopifySdk {
 
   }
 
-  public OrderConnection queryOrderInOnePage (OrderQueryDefinition orderQueryDefinition,
+  public OrderConnection queryOrdersInOnePage (OrderQueryDefinition orderQueryDefinition,
       Argument argument) {
     OrderSortKeys sortKey = OrderSortKeys.fromGraphQl(argument.getSortKey());
     if(sortKey == OrderSortKeys.UNKNOWN_VALUE) {
