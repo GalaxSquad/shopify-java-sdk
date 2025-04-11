@@ -2,6 +2,8 @@ package com.sdk.shopify;
 
 import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
+import com.sdk.shopify.shopify.LineItemConnection;
+import com.sdk.shopify.shopify.LineItemQueryDefinition;
 import com.sdk.shopify.shopify.Operations;
 import com.sdk.shopify.shopify.Order;
 import com.sdk.shopify.shopify.OrderConnection;
