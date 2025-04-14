@@ -2,12 +2,16 @@ package com.sdk.shopify;
 
 import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
+import com.sdk.shopify.shopify.FulfillmentQuery;
 import com.sdk.shopify.shopify.LineItem;
 import com.sdk.shopify.shopify.LineItemConnection;
+import com.sdk.shopify.shopify.MailingAddressQueryDefinition;
+import com.sdk.shopify.shopify.MoneyBagQueryDefinition;
 import com.sdk.shopify.shopify.Operations;
 import com.sdk.shopify.shopify.Order;
 import com.sdk.shopify.shopify.OrderConnection;
 import com.sdk.shopify.shopify.OrderQueryDefinition;
+import com.sdk.shopify.shopify.OrderRiskAssessmentQuery;
 import com.sdk.shopify.shopify.PageInfo;
 import com.sdk.shopify.shopify.QueryResponse;
 import com.sdk.shopify.shopify.QueryRootQuery;
@@ -16,6 +20,8 @@ import com.sdk.shopify.util.ShopifyUtils;
 import graphql.language.AstPrinter;
 import graphql.language.Field;
 import graphql.language.IntValue;
+import graphql.language.NullValue;
+import graphql.language.SelectionSet;
 import graphql.language.StringValue;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
@@ -289,7 +295,7 @@ public class ShopifySdk {
                 .pageInfo(p -> p.startCursor().endCursor().hasPreviousPage().hasNextPage())));
     String queryOrder = query.toString();
     String lineItemsQuery = null;
-    if(!isOrderQueryContainLineItem(query)) {
+    if(isOrderQueryContainLineItem(query)) {
       String[] extractAndModified = ShopifyUtils.extractAndRemoveFromShopifyQuery(queryOrder,
           "lineItems");
       lineItemsQuery = extractAndModified[0];
@@ -330,13 +336,15 @@ public class ShopifySdk {
               List.of(graphql.language.Argument.newArgument().name("first").value(new IntValue(
                       BigInteger.valueOf(BATCH_SIZE))).build(),
                   graphql.language.Argument.newArgument().name("after")
-                      .value(cursor == null ? null : new StringValue(cursor)).build()))
+                      .value(cursor == null ? NullValue.of() : new StringValue(cursor)).build()))
+
           .build();
+      lineItemField = GraphQLUtils.enrichFieldWithPaginationInfo(lineItemField);
       Field orderField = Field.newField("order")
           .arguments(Collections.singletonList(
               graphql.language.Argument.newArgument().name("id").value(StringValue.of(orderId))
                   .build()))
-          .selectionSet(lineItemField.getSelectionSet())
+          .selectionSet(SelectionSet.newSelectionSet().selections(Collections.singletonList(lineItemField)).build())
           .build();
 
       String orderLineItemQuery = AstPrinter.printAst(orderField);
@@ -386,8 +394,13 @@ public class ShopifySdk {
   }
 
   private String toJsonPayload (String query) {
+    String replace = query.replace("\"", "\\\"").replace("\n", "\\n");
+    if(!query.startsWith("{")){
+      return String.format(
+          "{\"query\":\"{%s}\"}", replace);
+    }
     return String.format(
-        "{\"query\":\"%s\"}", query.replace("\"", "\\\"").replace("\n", "\\n"));
+        "{\"query\":\"%s\"}", replace);
   }
 
   /**
@@ -401,5 +414,88 @@ public class ShopifySdk {
     return (statusCode >= 500) ||
         (statusCode == LOCKED_STATUS_CODE) ||
         (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
+  }
+
+  public OrderQueryDefinition buildOrderQuery () {
+    return (q) ->
+        q.name().email()
+                // Time
+                .createdAt()
+                .processedAt()
+                .closedAt()
+                .cancelledAt()
+                .updatedAt()
+                .confirmed()
+                .closed()
+                .cancelReason()
+                // Financial
+                .displayFinancialStatus()
+                // Fulfillment
+                .displayFulfillmentStatus()
+                .fulfillable()
+                .fulfillments(arg -> arg.first(1), FulfillmentQuery::createdAt)
+                .customerAcceptsMarketing()
+                .currencyCode()
+                .subtotalPriceSet(buildMoneyBagQuery())
+                .subtotalLineItemsQuantity()
+                .currentShippingPriceSet(buildMoneyBagQuery())
+                .totalShippingPriceSet(buildMoneyBagQuery())
+                .totalTaxSet(buildMoneyBagQuery())
+                .currentTotalTaxSet(buildMoneyBagQuery())
+                .currentTotalPriceSet(buildMoneyBagQuery())
+                .totalPriceSet(buildMoneyBagQuery())
+                .discountCode()
+                .currentCartDiscountAmountSet(buildMoneyBagQuery())
+                .shippingLine(sl -> sl.title().id())
+                .lineItems(arg -> arg.first(50), l -> l.nodes(
+                    lq -> lq.name()
+                        .discountedUnitPriceSet(buildMoneyBagQuery()).quantity()
+                        .originalUnitPriceSet(buildMoneyBagQuery())
+                        .sku()
+                        .requiresShipping()
+                        .taxable()
+                        .vendor()
+                        .discountedTotalSet(buildMoneyBagQuery())
+                        .taxLines(arg -> arg.first(5),t -> t.title().rate().ratePercentage().priceSet(buildMoneyBagQuery()).source().channelLiable())
+                ))
+                .displayAddress(buildMailingAddressQuery())
+                .billingAddress(buildMailingAddressQuery())
+                .shippingAddress(buildMailingAddressQuery())
+                .note()
+                .risk(r -> r.recommendation().assessments(OrderRiskAssessmentQuery::riskLevel))
+                .totalOutstandingSet(buildMoneyBagQuery())
+                .sourceName()
+                .paymentTerms( p -> p.dueInDays().overdue().paymentTermsName())
+        ;
+  }
+
+  private MoneyBagQueryDefinition buildMoneyBagQuery() {
+    return (mB -> mB.shopMoney(m -> m.amount().currencyCode())
+        .presentmentMoney(m -> m.amount().currencyCode()));
+  }
+
+  private MailingAddressQueryDefinition buildMailingAddressQuery() {
+    return (mAq -> mAq.company().coordinatesValidated().country().countryCodeV2()
+        .formattedArea().province().provinceCode().timeZone()
+        .validationResultSummary());
+  }
+
+  public static void main (String[] args) {
+    ShopifySdk sdk = ShopifySdk.builder()
+        .apiKey("shpua_c10fc6d7eb5b1d8167bc5c8902672861")
+        .storeName("kezlo-test-2")
+        .build();
+
+    List<Order> orders = sdk.queryOrders(sdk.buildOrderQuery(), "CREATED_AT");
+    for (Order order : orders) {
+      System.out.println("Order ID: " + order.getId());
+      System.out.println("Customer Name: " + order.getName());
+      System.out.println("Created At: " + order.getCreatedAt());
+      System.out.println("Total Price: " + order.getTotalPriceSet().getShopMoney().getAmount());
+      System.out.println("Currency: " + order.getTotalPriceSet().getShopMoney().getCurrencyCode());
+      System.out.println("------------------------------");
+      LineItemConnection lineItemConnection = order.getLineItems();
+      lineItemConnection.getNodes().forEach(System.out::println);
+    }
   }
 }
