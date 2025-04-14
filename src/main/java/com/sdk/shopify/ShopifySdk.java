@@ -2,18 +2,30 @@ package com.sdk.shopify;
 
 import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
+import com.sdk.shopify.shopify.LineItem;
 import com.sdk.shopify.shopify.LineItemConnection;
 import com.sdk.shopify.shopify.LineItemQueryDefinition;
 import com.sdk.shopify.shopify.Operations;
 import com.sdk.shopify.shopify.Order;
 import com.sdk.shopify.shopify.OrderConnection;
+import com.sdk.shopify.shopify.OrderQuery;
 import com.sdk.shopify.shopify.OrderQueryDefinition;
+import com.sdk.shopify.shopify.PageInfo;
 import com.sdk.shopify.shopify.QueryResponse;
 import com.sdk.shopify.shopify.QueryRootQuery;
+import com.sdk.shopify.util.GraphQLUtils;
+import com.sdk.shopify.util.ShopifyUtils;
+import graphql.language.AstPrinter;
+import graphql.language.Document;
+import graphql.language.Field;
+import graphql.language.IntValue;
+import graphql.language.StringValue;
+import graphql.parser.Parser;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.github.resilience4j.retry.RetryRegistry;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -22,6 +34,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.Builder;
@@ -176,7 +189,14 @@ public class ShopifySdk {
    * @throws ShopifySdkException if the query fails
    */
   public QueryResponse queryShopifyAdmin(String payload) {
+    if(payload == null || payload.isEmpty()) {
+      throw new IllegalArgumentException("Payload cannot be null or empty");
+    }
+    if(!payload.contains("query")){
+      payload = toJsonPayload(payload);
+    }
     try {
+      String finalPayload = payload;
       Supplier<HttpResponse<String>> httpRequestSupplier =
           Retry.decorateSupplier(
               retry,
@@ -186,7 +206,7 @@ public class ShopifySdk {
                       HttpRequest.newBuilder()
                           .uri(buildAdminGraphQLUri())
                           .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
-                          .POST(HttpRequest.BodyPublishers.ofString(payload))
+                          .POST(HttpRequest.BodyPublishers.ofString(finalPayload))
                           .header("Content-Type", "application/json")
                           .header(ACCESS_TOKEN_HEADER, apiKey)
                           .build();
@@ -266,9 +286,74 @@ public class ShopifySdk {
         q -> q.orders(arg -> argumentMapper.updateToOrderArguments(argument, arg),
             o -> o.nodes(orderQueryDefinition)
                 .pageInfo(p -> p.startCursor().endCursor().hasPreviousPage().hasNextPage())));
-    QueryResponse response = queryShopifyAdmin(query);
-    return response.getData().getOrders();
+    String queryOrder = query.toString();
+    String lineItemsQuery = null;
+    if(!isOrderQueryContainLineItem(query)) {
+      String[] extractAndModified = ShopifyUtils.extractAndRemoveFromShopifyQuery(queryOrder, "lineItems");
+      lineItemsQuery = extractAndModified[0];
+      queryOrder = extractAndModified[1];
+    }
+    QueryResponse response = queryShopifyAdmin(queryOrder);
+    OrderConnection orders = response.getData().getOrders();
+    if(lineItemsQuery != null) {
+      for (Order order : orders.getNodes()) {
+        queryLineItemsItemForOrder(order, lineItemsQuery);
+      }
+    }
+    return orders;
   }
+
+  private boolean isOrderQueryContainLineItem(QueryRootQuery rootQuery) {
+    try {
+      return rootQuery.toString().contains("lineItems");
+    } catch (Exception exception){
+      log.info("Error while checking if order query contains line items", exception);
+    }
+
+    return false;
+  }
+
+  private void queryLineItemsItemForOrder(Order order, String lineItemQuery){
+    String orderId = order.getId().toString();
+    List<LineItem> lineItems = new ArrayList<>();
+    boolean hasNextPage = true;
+    String cursor = null;
+    Field lineItemField = GraphQLUtils.getGraphQLFieldFromQuery(lineItemQuery);
+
+    while (hasNextPage){
+      // Remove argument
+      lineItemField = Field.newField("lineItems")
+          .selectionSet(lineItemField.getSelectionSet())
+          .arguments(List.of(graphql.language.Argument.newArgument().name("first").value(new IntValue(
+              BigInteger.valueOf(BATCH_SIZE))).build(), graphql.language.Argument.newArgument().name("after").value(cursor == null ? null : new StringValue(cursor)).build()))
+          .build();
+      Field orderField = Field.newField("order")
+          .arguments(Collections.singletonList(graphql.language.Argument.newArgument().name("id").value(StringValue.of(orderId)).build()))
+          .selectionSet(lineItemField.getSelectionSet())
+          .build();
+
+      String orderLineItemQuery = AstPrinter.printAst(orderField);
+
+
+      QueryResponse queryResponse = queryShopifyAdmin(orderLineItemQuery);
+      LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
+      List<LineItem> nodes = lineItemConnection.getNodes();
+      if(nodes != null && !nodes.isEmpty()) {
+        lineItems.addAll(nodes);
+      } else {
+        // No data returned, break to prevent potential infinite loop
+        break;
+      }
+      PageInfo pageInfo = lineItemConnection.getPageInfo();
+      hasNextPage = pageInfo.getHasNextPage();
+      cursor = pageInfo.getEndCursor();
+
+    }
+    if (!lineItems.isEmpty()) {
+      order.setLineItems(new LineItemConnection().setNodes(lineItems));
+    }
+  }
+
 
   /**
    * Build the Shopify Admin API GraphQL URI using proper URI construction.
@@ -291,8 +376,12 @@ public class ShopifySdk {
   }
 
   private String toJsonPayload(QueryRootQuery query) {
+    return toJsonPayload(query.toString());
+  }
+
+  private String toJsonPayload(String query) {
     return String.format(
-        "{\"query\":\"%s\"}", query.toString().replace("\"", "\\\"").replace("\n", "\\n"));
+        "{\"query\":\"%s\"}", query.replace("\"", "\\\"").replace("\n", "\\n"));
   }
 
   /**

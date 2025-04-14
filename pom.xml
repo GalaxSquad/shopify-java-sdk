@@ -92,7 +92,13 @@
       <version>2.18.2</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>23.0</version>
+    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>

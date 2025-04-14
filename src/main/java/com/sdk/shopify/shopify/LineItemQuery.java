@@ -9,7 +9,7 @@ import com.shopify.graphql.support.Query;
 * Represents individual products and quantities purchased in the associated order.
 */
 public class LineItemQuery extends Query<LineItemQuery> {
-    LineItemQuery(StringBuilder _queryBuilder) {
+    public LineItemQuery(StringBuilder _queryBuilder) {
         super(_queryBuilder);
 
         startField("id");
