@@ -41,9 +41,8 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Main client for interacting with the Shopify Admin API.
- * Provides methods for querying Shopify GraphQL endpoints with automatic pagination
- * and retry capabilities.
+ * Main client for interacting with the Shopify Admin API. Provides methods for querying Shopify
+ * GraphQL endpoints with automatic pagination and retry capabilities.
  */
 @Slf4j
 public class ShopifySdk {
@@ -84,7 +83,7 @@ public class ShopifySdk {
    * @throws IllegalArgumentException if required parameters are missing or invalid
    */
   @Builder
-  public ShopifySdk(
+  public ShopifySdk (
       String storeName,
       String apiKey,
       String apiVersion,
@@ -93,11 +92,11 @@ public class ShopifySdk {
       Integer maxRetryAttempts) {
 
     // Validate required parameters
-    if (storeName == null || storeName.isEmpty()) {
+    if(storeName == null || storeName.isEmpty()) {
       throw new IllegalArgumentException("Store name cannot be null or empty");
     }
 
-    if (apiKey == null || apiKey.isEmpty()) {
+    if(apiKey == null || apiKey.isEmpty()) {
       throw new IllegalArgumentException("API key cannot be null or empty");
     }
 
@@ -105,20 +104,20 @@ public class ShopifySdk {
     this.apiKey = apiKey;
 
     // Validate and set optional parameters
-    if (apiVersion != null && !apiVersion.isEmpty()) {
+    if(apiVersion != null && !apiVersion.isEmpty()) {
       this.apiVersion = apiVersion;
     }
 
     // Validate numeric parameters
-    if (connectTimeoutMs != null && connectTimeoutMs <= 0) {
+    if(connectTimeoutMs != null && connectTimeoutMs <= 0) {
       throw new IllegalArgumentException("Connect timeout must be positive");
     }
-    
-    if (retryDelayMs != null && retryDelayMs <= 0) {
+
+    if(retryDelayMs != null && retryDelayMs <= 0) {
       throw new IllegalArgumentException("Retry delay must be positive");
     }
-    
-    if (maxRetryAttempts != null && maxRetryAttempts <= 0) {
+
+    if(maxRetryAttempts != null && maxRetryAttempts <= 0) {
       throw new IllegalArgumentException("Max retry attempts must be positive");
     }
 
@@ -141,7 +140,7 @@ public class ShopifySdk {
                 IOException.class, InterruptedException.class, URISyntaxException.class)
             .retryOnResult(
                 response -> {
-                  if (response instanceof HttpResponse) {
+                  if(response instanceof HttpResponse) {
                     return shouldRetryResponse((HttpResponse<?>) response);
                   }
                   return false;
@@ -176,7 +175,7 @@ public class ShopifySdk {
    * @return The query response
    * @throws ShopifySdkException if the query fails
    */
-  public QueryResponse queryShopifyAdmin(QueryRootQuery rootQuery) {
+  public QueryResponse queryShopifyAdmin (QueryRootQuery rootQuery) {
     String jsonPayload = toJsonPayload(rootQuery);
     return queryShopifyAdmin(jsonPayload);
   }
@@ -188,11 +187,11 @@ public class ShopifySdk {
    * @return The query response
    * @throws ShopifySdkException if the query fails
    */
-  public QueryResponse queryShopifyAdmin(String payload) {
+  public QueryResponse queryShopifyAdmin (String payload) {
     if(payload == null || payload.isEmpty()) {
       throw new IllegalArgumentException("Payload cannot be null or empty");
     }
-    if(!payload.contains("query")){
+    if(!payload.contains("query")) {
       payload = toJsonPayload(payload);
     }
     try {
@@ -213,17 +212,19 @@ public class ShopifySdk {
                   return httpClient.send(request, BodyHandlers.ofString());
                 } catch (Exception e) {
                   log.error("Error when execute shopify admin graphql api", e);
-                  throw new ShopifySdkException("Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
+                  throw new ShopifySdkException(
+                      "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
                 }
               });
 
       // Execute with retry
       HttpResponse<String> response = httpRequestSupplier.get();
-      if (response.statusCode() != 200) {
+      if(response.statusCode() != 200) {
         log.error(
             "Request error, status code: {}, response: {}", response.statusCode(), response.body());
         throw new ShopifySdkException(
-            "Error when executing Shopify admin GraphQL API. Status code: " + response.statusCode());
+            "Error when executing Shopify admin GraphQL API. Status code: "
+                + response.statusCode());
       }
       return QueryResponse.fromJson(response.body());
     } catch (Exception e) {
@@ -236,10 +237,10 @@ public class ShopifySdk {
    * Query orders with automatic pagination.
    *
    * @param orderQueryDefinition The order query definition
-   * @param sortKey The field to sort by
+   * @param sortKey              The field to sort by
    * @return List of all orders matching the query
    */
-  public List<Order> queryOrders(OrderQueryDefinition orderQueryDefinition, String sortKey) {
+  public List<Order> queryOrders (OrderQueryDefinition orderQueryDefinition, String sortKey) {
     Argument argument = Argument.builder()
         .first(BATCH_SIZE)
         .sortKey(sortKey)
@@ -254,20 +255,21 @@ public class ShopifySdk {
       argument.setAfter(cursor);
       OrderConnection orderConnection = queryOrdersInOnePage(orderQueryDefinition, argument);
       List<Order> nodes = orderConnection.getNodes();
-      if (nodes != null && !nodes.isEmpty()) {
+      if(nodes != null && !nodes.isEmpty()) {
         orders.addAll(nodes);
       } else {
         // No data returned, break to prevent potential infinite loop
         break;
       }
-      
+
       hasNextPage = orderConnection.getPageInfo().getHasNextPage();
       cursor = orderConnection.getPageInfo().getEndCursor();
       pageCount++;
     }
 
-    if (pageCount >= MAX_PAGES) {
-      log.warn("Reached maximum page limit ({}) when querying orders. Results may be incomplete.", MAX_PAGES);
+    if(pageCount >= MAX_PAGES) {
+      log.warn("Reached maximum page limit ({}) when querying orders. Results may be incomplete.",
+          MAX_PAGES);
     }
 
     return orders;
@@ -277,10 +279,10 @@ public class ShopifySdk {
    * Query a single page of orders.
    *
    * @param orderQueryDefinition The order query definition
-   * @param argument The query arguments including pagination
+   * @param argument             The query arguments including pagination
    * @return The order connection result
    */
-  public OrderConnection queryOrdersInOnePage(OrderQueryDefinition orderQueryDefinition,
+  public OrderConnection queryOrdersInOnePage (OrderQueryDefinition orderQueryDefinition,
       Argument argument) {
     QueryRootQuery query = Operations.query(
         q -> q.orders(arg -> argumentMapper.updateToOrderArguments(argument, arg),
@@ -289,7 +291,8 @@ public class ShopifySdk {
     String queryOrder = query.toString();
     String lineItemsQuery = null;
     if(!isOrderQueryContainLineItem(query)) {
-      String[] extractAndModified = ShopifyUtils.extractAndRemoveFromShopifyQuery(queryOrder, "lineItems");
+      String[] extractAndModified = ShopifyUtils.extractAndRemoveFromShopifyQuery(queryOrder,
+          "lineItems");
       lineItemsQuery = extractAndModified[0];
       queryOrder = extractAndModified[1];
     }
@@ -303,37 +306,41 @@ public class ShopifySdk {
     return orders;
   }
 
-  private boolean isOrderQueryContainLineItem(QueryRootQuery rootQuery) {
+  private boolean isOrderQueryContainLineItem (QueryRootQuery rootQuery) {
     try {
       return rootQuery.toString().contains("lineItems");
-    } catch (Exception exception){
+    } catch (Exception exception) {
       log.info("Error while checking if order query contains line items", exception);
     }
 
     return false;
   }
 
-  private void queryLineItemsItemForOrder(Order order, String lineItemQuery){
+  private void queryLineItemsItemForOrder (Order order, String lineItemQuery) {
     String orderId = order.getId().toString();
     List<LineItem> lineItems = new ArrayList<>();
     boolean hasNextPage = true;
     String cursor = null;
     Field lineItemField = GraphQLUtils.getGraphQLFieldFromQuery(lineItemQuery);
 
-    while (hasNextPage){
+    while (hasNextPage) {
       // Remove argument
       lineItemField = Field.newField("lineItems")
           .selectionSet(lineItemField.getSelectionSet())
-          .arguments(List.of(graphql.language.Argument.newArgument().name("first").value(new IntValue(
-              BigInteger.valueOf(BATCH_SIZE))).build(), graphql.language.Argument.newArgument().name("after").value(cursor == null ? null : new StringValue(cursor)).build()))
+          .arguments(
+              List.of(graphql.language.Argument.newArgument().name("first").value(new IntValue(
+                      BigInteger.valueOf(BATCH_SIZE))).build(),
+                  graphql.language.Argument.newArgument().name("after")
+                      .value(cursor == null ? null : new StringValue(cursor)).build()))
           .build();
       Field orderField = Field.newField("order")
-          .arguments(Collections.singletonList(graphql.language.Argument.newArgument().name("id").value(StringValue.of(orderId)).build()))
+          .arguments(Collections.singletonList(
+              graphql.language.Argument.newArgument().name("id").value(StringValue.of(orderId))
+                  .build()))
           .selectionSet(lineItemField.getSelectionSet())
           .build();
 
       String orderLineItemQuery = AstPrinter.printAst(orderField);
-
 
       QueryResponse queryResponse = queryShopifyAdmin(orderLineItemQuery);
       LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
@@ -349,7 +356,7 @@ public class ShopifySdk {
       cursor = pageInfo.getEndCursor();
 
     }
-    if (!lineItems.isEmpty()) {
+    if(!lineItems.isEmpty()) {
       order.setLineItems(new LineItemConnection().setNodes(lineItems));
     }
   }
@@ -361,7 +368,7 @@ public class ShopifySdk {
    * @return The URI for the Shopify Admin API GraphQL endpoint
    * @throws ShopifySdkException if the URI is invalid
    */
-  private URI buildAdminGraphQLUri() {
+  private URI buildAdminGraphQLUri () {
     try {
       return new URI(
           HTTPS_PROTOCOL,
@@ -375,11 +382,11 @@ public class ShopifySdk {
     }
   }
 
-  private String toJsonPayload(QueryRootQuery query) {
+  private String toJsonPayload (QueryRootQuery query) {
     return toJsonPayload(query.toString());
   }
 
-  private String toJsonPayload(String query) {
+  private String toJsonPayload (String query) {
     return String.format(
         "{\"query\":\"%s\"}", query.replace("\"", "\\\"").replace("\n", "\\n"));
   }
@@ -390,10 +397,10 @@ public class ShopifySdk {
    * @param response The HTTP response
    * @return true if the request should be retried
    */
-  private boolean shouldRetryResponse(HttpResponse<?> response) {
+  private boolean shouldRetryResponse (HttpResponse<?> response) {
     int statusCode = response.statusCode();
-    return (statusCode >= 500) || 
-           (statusCode == LOCKED_STATUS_CODE) || 
-           (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
+    return (statusCode >= 500) ||
+        (statusCode == LOCKED_STATUS_CODE) ||
+        (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
   }
 }
