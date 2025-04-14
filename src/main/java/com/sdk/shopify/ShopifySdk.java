@@ -4,11 +4,9 @@ import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
 import com.sdk.shopify.shopify.LineItem;
 import com.sdk.shopify.shopify.LineItemConnection;
-import com.sdk.shopify.shopify.LineItemQueryDefinition;
 import com.sdk.shopify.shopify.Operations;
 import com.sdk.shopify.shopify.Order;
 import com.sdk.shopify.shopify.OrderConnection;
-import com.sdk.shopify.shopify.OrderQuery;
 import com.sdk.shopify.shopify.OrderQueryDefinition;
 import com.sdk.shopify.shopify.PageInfo;
 import com.sdk.shopify.shopify.QueryResponse;
@@ -16,11 +14,9 @@ import com.sdk.shopify.shopify.QueryRootQuery;
 import com.sdk.shopify.util.GraphQLUtils;
 import com.sdk.shopify.util.ShopifyUtils;
 import graphql.language.AstPrinter;
-import graphql.language.Document;
 import graphql.language.Field;
 import graphql.language.IntValue;
 import graphql.language.StringValue;
-import graphql.parser.Parser;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.github.resilience4j.retry.RetryRegistry;
@@ -195,30 +191,7 @@ public class ShopifySdk {
       payload = toJsonPayload(payload);
     }
     try {
-      String finalPayload = payload;
-      Supplier<HttpResponse<String>> httpRequestSupplier =
-          Retry.decorateSupplier(
-              retry,
-              () -> {
-                try {
-                  HttpRequest request =
-                      HttpRequest.newBuilder()
-                          .uri(buildAdminGraphQLUri())
-                          .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
-                          .POST(HttpRequest.BodyPublishers.ofString(finalPayload))
-                          .header("Content-Type", "application/json")
-                          .header(ACCESS_TOKEN_HEADER, apiKey)
-                          .build();
-                  return httpClient.send(request, BodyHandlers.ofString());
-                } catch (Exception e) {
-                  log.error("Error when execute shopify admin graphql api", e);
-                  throw new ShopifySdkException(
-                      "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
-                }
-              });
-
-      // Execute with retry
-      HttpResponse<String> response = httpRequestSupplier.get();
+      HttpResponse<String> response = getStringHttpResponse(payload);
       if(response.statusCode() != 200) {
         log.error(
             "Request error, status code: {}, response: {}", response.statusCode(), response.body());
@@ -231,6 +204,32 @@ public class ShopifySdk {
       log.error("method: queryShopifyAdmin, error", e);
       throw new ShopifySdkException("Failed to query Shopify admin API", e);
     }
+  }
+
+  private HttpResponse<String> getStringHttpResponse (String payload) {
+    Supplier<HttpResponse<String>> httpRequestSupplier =
+        Retry.decorateSupplier(
+            retry,
+            () -> {
+              try {
+                HttpRequest request =
+                    HttpRequest.newBuilder()
+                        .uri(buildAdminGraphQLUri())
+                        .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
+                        .POST(HttpRequest.BodyPublishers.ofString(payload))
+                        .header("Content-Type", "application/json")
+                        .header(ACCESS_TOKEN_HEADER, apiKey)
+                        .build();
+                return httpClient.send(request, BodyHandlers.ofString());
+              } catch (Exception e) {
+                log.error("Error when execute shopify admin graphql api", e);
+                throw new ShopifySdkException(
+                    "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
+              }
+            });
+
+    // Execute with retry
+    return httpRequestSupplier.get();
   }
 
   /**
