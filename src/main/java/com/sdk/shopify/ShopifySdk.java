@@ -2,19 +2,7 @@ package com.sdk.shopify;
 
 import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
-import com.sdk.shopify.shopify.FulfillmentQuery;
-import com.sdk.shopify.shopify.LineItem;
-import com.sdk.shopify.shopify.LineItemConnection;
-import com.sdk.shopify.shopify.MailingAddressQueryDefinition;
-import com.sdk.shopify.shopify.MoneyBagQueryDefinition;
-import com.sdk.shopify.shopify.Operations;
-import com.sdk.shopify.shopify.Order;
-import com.sdk.shopify.shopify.OrderConnection;
-import com.sdk.shopify.shopify.OrderQueryDefinition;
-import com.sdk.shopify.shopify.OrderRiskAssessmentQuery;
-import com.sdk.shopify.shopify.PageInfo;
-import com.sdk.shopify.shopify.QueryResponse;
-import com.sdk.shopify.shopify.QueryRootQuery;
+import com.sdk.shopify.shopify.*;
 import com.sdk.shopify.util.GraphQLUtils;
 import com.sdk.shopify.util.ShopifyUtils;
 import graphql.language.AstPrinter;
@@ -41,7 +29,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-
+import com.shopify.graphql.support.ID;
 /**
  * Main client for interacting with the Shopify Admin API. Provides methods for querying Shopify
  * GraphQL endpoints with automatic pagination and retry capabilities.
@@ -52,7 +40,7 @@ public class ShopifySdk {
   private final String storeName;
   private final String apiKey;
   private String apiVersion = "2025-01";
-  private static final int BATCH_SIZE = 50;
+  private static final int BATCH_SIZE = 100;
   private static final int MAX_PAGES = 100; // Safety limit for pagination
 
   private final HttpClient httpClient;
@@ -416,6 +404,95 @@ public class ShopifySdk {
         (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
   }
 
+  /**
+   * Build a query definition for OnlineStoreTheme that includes pagination information.
+   * This query definition is designed to be used with pagination to fetch all theme files.
+   *
+   * @return A query definition for OnlineStoreTheme
+   */
+  public OnlineStoreThemeQueryDefinition buildOnlineStoreThemeQuery() {
+    return (q) ->
+        q.createdAt()
+            .updatedAt()
+            .files(
+                arg -> arg.first(BATCH_SIZE),
+                f -> f.nodes(
+                    n -> n.updatedAt().filename().contentType().createdAt().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
+                        
+                         .onOnlineStoreThemeFileBodyText(
+                        OnlineStoreThemeFileBodyTextQuery::content
+                    )).body(n1->n1.onOnlineStoreThemeFileBodyBase64(OnlineStoreThemeFileBodyBase64Query::contentBase64))
+                ).pageInfo(p -> p.hasNextPage().endCursor())
+            );
+  }
+
+  /**
+   * Query all files of a theme with automatic pagination.
+   *
+   * @param id The ID of the theme
+   * @return List of all theme files
+   */
+  public List<OnlineStoreThemeFile> queryAllThemeFiles(String id) {
+    if (id == null) {
+      throw new IllegalArgumentException("Theme ID cannot be null");
+    }
+    ID themeId = new ID(id);
+    List<OnlineStoreThemeFile> allFiles = new ArrayList<>();
+    boolean hasNextPage = true;
+    String cursor = null;
+    int pageCount = 0;
+
+    while (hasNextPage && pageCount < MAX_PAGES) {
+      // Query a single page of theme files
+      QueryRootQuery query = Operations.query(
+          q -> q.theme(
+              themeId,
+              buildOnlineStoreThemeQuery()
+          )
+      );
+
+      // If we have a cursor, modify the query to use it
+      String queryStr = query.toString();
+      if (cursor != null) {
+        // Replace the files argument to include the after parameter
+        queryStr = queryStr.replace(
+            "files(first:" + BATCH_SIZE + ")",
+            "files(first:" + BATCH_SIZE + ",after:\"" + cursor + "\")"
+        );
+      }
+
+      // Execute the query
+      QueryResponse response = queryShopifyAdmin(queryStr);
+      OnlineStoreTheme theme = response.getData().getTheme();
+
+      if (theme != null && theme.getFiles() != null) {
+        OnlineStoreThemeFileConnection fileConnection = theme.getFiles();
+        List<OnlineStoreThemeFile> files = fileConnection.getNodes();
+
+        if (files != null && !files.isEmpty()) {
+          allFiles.addAll(files);
+        } else {
+          // No data returned, break to prevent potential infinite loop
+          break;
+        }
+
+        PageInfo pageInfo = fileConnection.getPageInfo();
+        hasNextPage = pageInfo.getHasNextPage();
+        cursor = pageInfo.getEndCursor();
+      } else {
+        hasNextPage = false;
+      }
+
+      pageCount++;
+    }
+
+    if (pageCount >= MAX_PAGES) {
+      log.warn("Reached maximum page limit ({}) when querying theme files. Results may be incomplete.",
+          MAX_PAGES);
+    }
+
+    return allFiles;
+  }
   public OrderQueryDefinition buildOrderQuery () {
     return (q) ->
         q.name().email()
@@ -480,22 +557,19 @@ public class ShopifySdk {
         .validationResultSummary());
   }
 
+
   public static void main (String[] args) {
     ShopifySdk sdk = ShopifySdk.builder()
-        .apiKey("shpua_c10fc6d7eb5b1d8167bc5c8902672861")
+        .apiKey("secret")
         .storeName("kezlo-test-2")
         .build();
 
-    List<Order> orders = sdk.queryOrders(sdk.buildOrderQuery(), "CREATED_AT");
-    for (Order order : orders) {
-      System.out.println("Order ID: " + order.getId());
-      System.out.println("Customer Name: " + order.getName());
-      System.out.println("Created At: " + order.getCreatedAt());
-      System.out.println("Total Price: " + order.getTotalPriceSet().getShopMoney().getAmount());
-      System.out.println("Currency: " + order.getTotalPriceSet().getShopMoney().getCurrencyCode());
-      System.out.println("------------------------------");
-      LineItemConnection lineItemConnection = order.getLineItems();
-      lineItemConnection.getNodes().forEach(System.out::println);
-    }
+    // Example of querying orders
+    List<OnlineStoreThemeFile> files = sdk.queryAllThemeFiles("gid://shopify/OnlineStoreTheme/168800911680");
+    System.out.println("Found " + files.size() + " files:");
+    
+    // To query all theme files, you would use:
+    // ID themeId = new ID("gid://shopify/OnlineStoreTheme/12345");
+    // sdk.printAllThemeFiles(themeId);
   }
 }
