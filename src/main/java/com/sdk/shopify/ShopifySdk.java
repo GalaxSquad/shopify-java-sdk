@@ -417,7 +417,7 @@ public class ShopifySdk {
             .files(
                 arg -> arg.first(BATCH_SIZE),
                 f -> f.nodes(
-                    n -> n.updatedAt().filename().updatedAt().contentType().createdAt().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
+                    n -> n.updatedAt().filename().contentType().createdAt().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
                         
                          .onOnlineStoreThemeFileBodyText(
                         OnlineStoreThemeFileBodyTextQuery::content
