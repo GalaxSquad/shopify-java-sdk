@@ -403,7 +403,36 @@ public class ShopifySdk {
         (statusCode == LOCKED_STATUS_CODE) ||
         (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
   }
-
+  public List<OnlineStoreTheme> queryAllThemes() {
+    List<OnlineStoreTheme> themes = new ArrayList<>();
+    boolean hasNextPage = true;
+    String cursor = null;
+    while (hasNextPage) {
+      
+      String finalCursor = cursor;
+      QueryRootQuery query = Operations.query(
+          q -> q.themes(
+              arg -> arg.first(BATCH_SIZE).after(finalCursor),
+              themeQuery -> themeQuery.nodes(
+                  themeQueryDef -> themeQueryDef.themeStoreId().createdAt().name().updatedAt())
+          ));
+      QueryResponse queryResponse = queryShopifyAdmin(toJsonPayload(query));
+      OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
+      List<OnlineStoreTheme> nodes = onlineStoreThemeConnection.getNodes();
+      if (nodes != null && !nodes.isEmpty()) {
+        themes.addAll(nodes);
+      } else {
+        break;
+      }
+      PageInfo pageInfo = onlineStoreThemeConnection.getPageInfo();
+      if (pageInfo == null) {
+        break;
+      }
+      hasNextPage = pageInfo.getHasNextPage();
+      cursor = pageInfo.getEndCursor();
+    }
+    return themes;
+  }
   /**
    * Build a query definition for OnlineStoreTheme that includes pagination information.
    * This query definition is designed to be used with pagination to fetch all theme files.
@@ -425,7 +454,6 @@ public class ShopifySdk {
                 ).pageInfo(p -> p.hasNextPage().endCursor())
             );
   }
-
   /**
    * Query all files of a theme with automatic pagination.
    *
