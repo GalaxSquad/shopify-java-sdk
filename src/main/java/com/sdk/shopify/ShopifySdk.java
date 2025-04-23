@@ -414,7 +414,7 @@ public class ShopifySdk {
           q -> q.themes(
               arg -> arg.first(BATCH_SIZE).after(finalCursor),
               themeQuery -> themeQuery.nodes(
-                  themeQueryDef -> themeQueryDef.themeStoreId().createdAt().name().updatedAt())
+                  themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())
           ));
       QueryResponse queryResponse = queryShopifyAdmin(toJsonPayload(query));
       OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
@@ -446,7 +446,7 @@ public class ShopifySdk {
             .files(
                 arg -> arg.first(BATCH_SIZE),
                 f -> f.nodes(
-                    n -> n.updatedAt().filename().contentType().createdAt().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
+                    n -> n.updatedAt().filename().contentType().createdAt().size().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
                         
                          .onOnlineStoreThemeFileBodyText(
                         OnlineStoreThemeFileBodyTextQuery::content
