@@ -8,7 +8,7 @@ import com.shopify.graphql.support.Query;
 * A Shopify application.
 */
 public class AppQuery extends Query<AppQuery> {
-    AppQuery(StringBuilder _queryBuilder) {
+    public AppQuery(StringBuilder _queryBuilder) {
         super(_queryBuilder);
 
         startField("id");

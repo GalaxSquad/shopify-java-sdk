@@ -2,27 +2,19 @@
 
 package com.sdk.shopify.shopify.query;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.shopify.graphql.support.AbstractResponse;
-import com.shopify.graphql.support.Arguments;
-import com.shopify.graphql.support.Error;
 import com.shopify.graphql.support.Query;
-import com.shopify.graphql.support.SchemaViolationError;
-import com.shopify.graphql.support.TopLevelResponse;
-import com.shopify.graphql.support.Input;
-import com.sdk.shopify.shopify.definition.AppQueryDefinition;
-import com.sdk.shopify.shopify.definition.FunctionsAppBridgeQueryDefinition;
 
-import com.shopify.graphql.support.ID;
+
+import com.sdk.shopify.shopify.AppQuery;
+import com.sdk.shopify.shopify.AppQueryDefinition;
+import com.sdk.shopify.shopify.FunctionsAppBridgeQuery;
+import com.sdk.shopify.shopify.FunctionsAppBridgeQueryDefinition;
+   
 
 /**
 * A Shopify Function.
 */
-public class ShopifyFunctionQuery extends Query<ShopifyFunctionQuery> {
-    ShopifyFunctionQuery(StringBuilder _queryBuilder) {
+public class ShopifyFunctionQuery extends Query<ShopifyFunctionQuery> {        ShopifyFunctionQuery(StringBuilder _queryBuilder) {
         super(_queryBuilder);
     }
 
