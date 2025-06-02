@@ -80,4 +80,13 @@ public class Argument {
       throw new IllegalArgumentException("Cannot specify both 'after' and 'before' cursors");
     }
   }
+
+  public void defaultValues() {
+    if (first == null) {
+      first = 100;
+    }
+    if(sortKey == null) {
+      sortKey = "CREATED_AT";
+    }
+  }
 }

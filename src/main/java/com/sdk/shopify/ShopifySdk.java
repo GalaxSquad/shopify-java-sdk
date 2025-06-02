@@ -233,12 +233,8 @@ public class ShopifySdk {
    * @param sortKey              The field to sort by
    * @return List of all orders matching the query
    */
-  public List<Order> queryOrders (OrderQueryDefinition orderQueryDefinition, String sortKey) {
-    Argument argument = Argument.builder()
-        .first(BATCH_SIZE)
-        .sortKey(sortKey)
-        .build();
-
+  public List<Order> queryOrders (OrderQueryDefinition orderQueryDefinition, Argument argument) {
+    argument.defaultValues();
     boolean hasNextPage = true;
     String cursor = null;
     List<Order> orders = new ArrayList<>();
