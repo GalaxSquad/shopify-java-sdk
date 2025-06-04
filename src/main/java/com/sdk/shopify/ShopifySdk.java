@@ -181,7 +181,9 @@ public class ShopifySdk {
     if(payload == null || payload.isEmpty()) {
       throw new IllegalArgumentException("Payload cannot be null or empty");
     }
-    if(!payload.contains("query")) {
+    int query = payload.indexOf("query");
+    // if query is not found or query is not the first element, then we need to add the query key
+    if(query == -1 || query > 1) {
       payload = toJsonPayload(payload);
     }
     try {
@@ -377,14 +379,15 @@ public class ShopifySdk {
     return toJsonPayload(query.toString());
   }
 
-  private String toJsonPayload (String query) {
-    String replace = query.replace("\"", "\\\"").replace("\n", "\\n");
-    if(!query.startsWith("{")){
+  private String toJsonPayload(String query) {
+    // Simple JSON escaping - only escape quotes that are actually in the GraphQL query
+    String escapedQuery = query.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+    if (!query.startsWith("{")) {
       return String.format(
-          "{\"query\":\"{%s}\"}", replace);
+          "{\"query\":\"{%s}\"}", escapedQuery);
     }
     return String.format(
-        "{\"query\":\"%s\"}", replace);
+        "{\"query\":\"%s\"}", escapedQuery);
   }
 
   /**
