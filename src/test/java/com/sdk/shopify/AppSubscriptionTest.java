@@ -1,6 +1,7 @@
 package com.sdk.shopify;
 
 import com.sdk.shopify.shopify.*;
+import com.shopify.graphql.support.ID;
 import com.shopify.graphql.support.SchemaViolationError;
 
 import java.math.BigDecimal;
@@ -12,10 +13,8 @@ import java.util.Arrays;
 public class AppSubscriptionTest {
 
     public static void main(String[] args) throws SchemaViolationError {
-        ShopifySdk sdk = ShopifySdk.builder()
-            .apiKey("shpua_3979532e09cea3aea6268a8962db98fa")
-            .storeName("kezlo-test-2")
-            .build();
+        // Mock Shopify SDK instead of using real API
+        MockShopifySdk sdk = new MockShopifySdk();
 
         try {
             // Test: Create a recurring subscription plan with test = true
@@ -31,7 +30,7 @@ public class AppSubscriptionTest {
     /**
      * Test creating an app subscription with test = true
      */
-    private static void testAppSubscription(ShopifySdk sdk) {
+    private static void testAppSubscription(MockShopifySdk sdk) {
         try {
             System.out.println("Creating test app subscription...");
 
@@ -95,7 +94,7 @@ public class AppSubscriptionTest {
     /**
      * Helper method to create usage-based subscription (alternative test)
      */
-    private static void testUsageBasedSubscription(ShopifySdk sdk) {
+    private static void testUsageBasedSubscription(MockShopifySdk sdk) {
         try {
             System.out.println("Creating usage-based test subscription...");
 
@@ -129,4 +128,95 @@ public class AppSubscriptionTest {
         }
     }
 
+    /**
+     * Mock Shopify SDK class to avoid calling real Shopify server
+     */
+    private static class MockShopifySdk {
+        
+        public AppSubscriptionCreatePayload createAppSubscription(
+                String planName,
+                String returnUrl,
+                java.util.List<AppSubscriptionLineItemInput> lineItems,
+                Boolean test,
+                Integer trialDays) {
+            
+            // Create mock subscription
+            MockAppSubscription subscription = new MockAppSubscription();
+            subscription.setName(planName);
+            subscription.setStatus(AppSubscriptionStatus.PENDING);
+            subscription.setTest(test);
+            subscription.setTrialDays(trialDays);
+            subscription.setReturnUrl(returnUrl);
+            subscription.setCreatedAt("2024-01-01T00:00:00Z");
+            
+            // Create mock payload
+            MockAppSubscriptionCreatePayload payload = new MockAppSubscriptionCreatePayload();
+            payload.setAppSubscription(subscription);
+            payload.setConfirmationUrl("https://mock-shopify.com/confirm/subscription/12345");
+            
+            System.out.println("🔧 Mock SDK: Created subscription with plan: " + planName);
+            System.out.println("🔧 Mock SDK: Test mode: " + test);
+            System.out.println("🔧 Mock SDK: Trial days: " + trialDays);
+            
+            return payload;
+        }
+    }
+    
+    /**
+     * Mock AppSubscription class
+     */
+    private static class MockAppSubscription extends AppSubscription {
+        private String name;
+        private AppSubscriptionStatus status;
+        private Boolean test;
+        private Integer trialDays;
+        private String returnUrl;
+        private String createdAt;
+        
+        public MockAppSubscription setName(String name) { this.name = name; return this; }
+        public MockAppSubscription setStatus(AppSubscriptionStatus status) { this.status = status; return this; }
+        public MockAppSubscription setTest(Boolean test) { this.test = test; return this; }
+        public MockAppSubscription setTrialDays(Integer trialDays) { this.trialDays = trialDays; return this; }
+        public MockAppSubscription setReturnUrl(String returnUrl) { this.returnUrl = returnUrl; return this; }
+        public MockAppSubscription setCreatedAt(String createdAt) { this.createdAt = createdAt; return this; }
+        
+        @Override
+        public String getName() { return name; }
+        @Override
+        public AppSubscriptionStatus getStatus() { return status; }
+        @Override
+        public Boolean getTest() { return test; }
+        @Override
+        public Integer getTrialDays() { return trialDays; }
+        @Override
+        public String getReturnUrl() { return returnUrl; }
+        @Override
+        public String getCreatedAt() { return createdAt; }
+        
+        // Implement other required methods with default values
+        @Override
+        public ID getId() { return new ID("gid://shopify/AppSubscription/12345"); }
+        @Override
+        public String getGraphQlTypeName() { return "AppSubscription"; }
+    }
+    
+    /**
+     * Mock AppSubscriptionCreatePayload class
+     */
+    private static class MockAppSubscriptionCreatePayload extends AppSubscriptionCreatePayload {
+        private AppSubscription appSubscription;
+        private String confirmationUrl;
+        
+        public MockAppSubscriptionCreatePayload setAppSubscription(AppSubscription appSubscription) { this.appSubscription = appSubscription; return this; }
+        public MockAppSubscriptionCreatePayload setConfirmationUrl(String confirmationUrl) { this.confirmationUrl = confirmationUrl; return this; }
+        
+        @Override
+        public AppSubscription getAppSubscription() { return appSubscription; }
+        @Override
+        public String getConfirmationUrl() { return confirmationUrl; }
+        @Override
+        public java.util.List<UserError> getUserErrors() { return null; }
+        @Override
+        public String getGraphQlTypeName() { return "AppSubscriptionCreatePayload"; }
+    }
 } 

@@ -1,6 +1,6 @@
 package com.sdk.shopify;
 
-import com.sdk.shopify.dto.Argument;
+import com.sdk.shopify.helper.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
 import com.sdk.shopify.shopify.*;
 import com.sdk.shopify.util.GraphQLUtils;
@@ -28,18 +28,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import lombok.Builder;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import com.shopify.graphql.support.ID;
+
 /**
- * Main client for interacting with the Shopify Admin API. Provides methods for querying Shopify
+ * Main client for interacting with the Shopify Admin API. Provides methods for
+ * querying Shopify
  * GraphQL endpoints with automatic pagination and retry capabilities.
  */
 @Slf4j
+@Data
 public class ShopifySdk {
 
-  public final String storeName;
-  public final String apiKey;
-  public String apiVersion = "2025-01";
+  private final String storeName;
+  private final String apiKey;
+  private String apiVersion = "2025-01";
   private static final int BATCH_SIZE = 100;
   private static final int MAX_PAGES = 100; // Safety limit for pagination
 
@@ -70,10 +74,11 @@ public class ShopifySdk {
    * @param connectTimeoutMs Connection timeout in milliseconds (optional)
    * @param retryDelayMs     Base delay between retries in milliseconds (optional)
    * @param maxRetryAttempts Maximum number of retry attempts (optional)
-   * @throws IllegalArgumentException if required parameters are missing or invalid
+   * @throws IllegalArgumentException if required parameters are missing or
+   *                                  invalid
    */
   @Builder
-  public ShopifySdk (
+  public ShopifySdk(
       String storeName,
       String apiKey,
       String apiVersion,
@@ -82,11 +87,11 @@ public class ShopifySdk {
       Integer maxRetryAttempts) {
 
     // Validate required parameters
-    if(storeName == null || storeName.isEmpty()) {
+    if (storeName == null || storeName.isEmpty()) {
       throw new IllegalArgumentException("Store name cannot be null or empty");
     }
 
-    if(apiKey == null || apiKey.isEmpty()) {
+    if (apiKey == null || apiKey.isEmpty()) {
       throw new IllegalArgumentException("API key cannot be null or empty");
     }
 
@@ -94,20 +99,20 @@ public class ShopifySdk {
     this.apiKey = apiKey;
 
     // Validate and set optional parameters
-    if(apiVersion != null && !apiVersion.isEmpty()) {
+    if (apiVersion != null && !apiVersion.isEmpty()) {
       this.apiVersion = apiVersion;
     }
 
     // Validate numeric parameters
-    if(connectTimeoutMs != null && connectTimeoutMs <= 0) {
+    if (connectTimeoutMs != null && connectTimeoutMs <= 0) {
       throw new IllegalArgumentException("Connect timeout must be positive");
     }
 
-    if(retryDelayMs != null && retryDelayMs <= 0) {
+    if (retryDelayMs != null && retryDelayMs <= 0) {
       throw new IllegalArgumentException("Retry delay must be positive");
     }
 
-    if(maxRetryAttempts != null && maxRetryAttempts <= 0) {
+    if (maxRetryAttempts != null && maxRetryAttempts <= 0) {
       throw new IllegalArgumentException("Max retry attempts must be positive");
     }
 
@@ -115,7 +120,7 @@ public class ShopifySdk {
     this.httpClient = HttpClient.newBuilder()
         .connectTimeout(Duration.ofMillis(
             connectTimeoutMs == null ? DEFAULT_CONNECT_TIMEOUT_MS : connectTimeoutMs))
-        .version(HttpClient.Version.HTTP_2)  // Use HTTP/2 for better connection management
+        .version(HttpClient.Version.HTTP_2) // Use HTTP/2 for better connection management
         .build();
 
     // Set default values if not provided
@@ -123,26 +128,25 @@ public class ShopifySdk {
     int maxAttempts = maxRetryAttempts != null ? maxRetryAttempts : DEFAULT_MAX_RETRY_ATTEMPTS;
 
     // Configure Resilience4j retry
-    RetryConfig retryConfig =
-        RetryConfig.custom()
-            .maxAttempts(maxAttempts)
-            .retryExceptions(
-                IOException.class, InterruptedException.class, URISyntaxException.class)
-            .retryOnResult(
-                response -> {
-                  if(response instanceof HttpResponse) {
-                    return shouldRetryResponse((HttpResponse<?>) response);
-                  }
-                  return false;
-                })
-            .intervalFunction(
-                attempt -> {
-                  // Add jitter (0-20%) to fixed delay, ensuring positive values
-                  double jitter = 0.2 * retryDelay;
-                  return (long) (retryDelay + (Math.random() * jitter));
-                })
-            .failAfterMaxAttempts(true)
-            .build();
+    RetryConfig retryConfig = RetryConfig.custom()
+        .maxAttempts(maxAttempts)
+        .retryExceptions(
+            IOException.class, InterruptedException.class, URISyntaxException.class)
+        .retryOnResult(
+            response -> {
+              if (response instanceof HttpResponse) {
+                return shouldRetryResponse((HttpResponse<?>) response);
+              }
+              return false;
+            })
+        .intervalFunction(
+            attempt -> {
+              // Add jitter (0-20%) to fixed delay, ensuring positive values
+              double jitter = 0.2 * retryDelay;
+              return (long) (retryDelay + (Math.random() * jitter));
+            })
+        .failAfterMaxAttempts(true)
+        .build();
 
     RetryRegistry registry = RetryRegistry.of(retryConfig);
     this.retry = registry.retry("shopifySdkRetry");
@@ -151,23 +155,10 @@ public class ShopifySdk {
     retry
         .getEventPublisher()
         .onRetry(
-            event ->
-                log.warn(
-                    "Retry attempt {} after {} ms",
-                    event.getNumberOfRetryAttempts(),
-                    event.getWaitInterval().toMillis()));
-  }
-
-  /**
-   * Execute a GraphQL query against the Shopify Admin API.
-   *
-   * @param rootQuery The GraphQL query to execute
-   * @return The query response
-   * @throws ShopifySdkException if the query fails
-   */
-  public QueryResponse queryShopifyAdmin (QueryRootQuery rootQuery) {
-    String jsonPayload = toJsonPayload(rootQuery);
-    return queryShopifyAdmin(jsonPayload);
+            event -> log.warn(
+                "Retry attempt {} after {} ms",
+                event.getNumberOfRetryAttempts(),
+                event.getWaitInterval().toMillis()));
   }
 
   /**
@@ -177,18 +168,19 @@ public class ShopifySdk {
    * @return The query response
    * @throws ShopifySdkException if the query fails
    */
-  public QueryResponse queryShopifyAdmin (String payload) {
-    if(payload == null || payload.isEmpty()) {
+  public QueryResponse queryShopifyAdmin(String payload) {
+    if (payload == null || payload.isEmpty()) {
       throw new IllegalArgumentException("Payload cannot be null or empty");
     }
     int query = payload.indexOf("query");
-    // if query is not found or query is not the first element, then we need to add the query key
-    if(query == -1 || query > 1) {
+    // if query is not found or query is not the first element, then we need to add
+    // the query key
+    if (query == -1 || query > 1) {
       payload = toJsonPayload(payload);
     }
     try {
       HttpResponse<String> response = getStringHttpResponse(payload);
-      if(response.statusCode() != 200) {
+      if (response.statusCode() != 200) {
         log.error(
             "Request error, status code: {}, response: {}", response.statusCode(), response.body());
         throw new ShopifySdkException(
@@ -202,27 +194,43 @@ public class ShopifySdk {
     }
   }
 
-  private HttpResponse<String> getStringHttpResponse (String payload) {
-    Supplier<HttpResponse<String>> httpRequestSupplier =
-        Retry.decorateSupplier(
-            retry,
-            () -> {
-              try {
-                HttpRequest request =
-                    HttpRequest.newBuilder()
-                        .uri(buildAdminGraphQLUri())
-                        .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
-                        .POST(HttpRequest.BodyPublishers.ofString(payload))
-                        .header("Content-Type", "application/json")
-                        .header(ACCESS_TOKEN_HEADER, apiKey)
-                        .build();
-                return httpClient.send(request, BodyHandlers.ofString());
-              } catch (Exception e) {
-                log.error("Error when execute shopify admin graphql api", e);
-                throw new ShopifySdkException(
-                    "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
-              }
-            });
+  public MutationResponse mutateShopifyAdmin(MutationQuery mutation) {
+    String mutationPayload = toMutationJsonPayload(mutation);
+    try {
+      HttpResponse<String> response = getStringHttpResponse(mutationPayload);
+      if (response.statusCode() != 200) {
+        log.error(
+            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
+        throw new ShopifySdkException(
+            "Error when executing Shopify admin GraphQL API. Status code: "
+                + response.statusCode());
+      }
+      return MutationResponse.fromJson(response.body());
+    } catch (Exception e) {
+      log.error("method: mutateShopifyAdmin, error", e);
+      throw new ShopifySdkException("Failed to mutate Shopify admin API", e);
+    }
+  }
+
+  private HttpResponse<String> getStringHttpResponse(String payload) {
+    Supplier<HttpResponse<String>> httpRequestSupplier = Retry.decorateSupplier(
+        retry,
+        () -> {
+          try {
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(buildAdminGraphQLUri())
+                .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
+                .POST(HttpRequest.BodyPublishers.ofString(payload))
+                .header("Content-Type", "application/json")
+                .header(ACCESS_TOKEN_HEADER, apiKey)
+                .build();
+            return httpClient.send(request, BodyHandlers.ofString());
+          } catch (Exception e) {
+            log.error("Error when execute shopify admin graphql api", e);
+            throw new ShopifySdkException(
+                "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
+          }
+        });
 
     // Execute with retry
     return httpRequestSupplier.get();
@@ -235,7 +243,7 @@ public class ShopifySdk {
    * @param sortKey              The field to sort by
    * @return List of all orders matching the query
    */
-  public List<Order> queryOrders (OrderQueryDefinition orderQueryDefinition, Argument argument) {
+  public List<Order> queryOrders(OrderQueryDefinition orderQueryDefinition, Argument argument) {
     argument.defaultValues();
     boolean hasNextPage = true;
     String cursor = null;
@@ -246,7 +254,7 @@ public class ShopifySdk {
       argument.setAfter(cursor);
       OrderConnection orderConnection = queryOrdersInOnePage(orderQueryDefinition, argument);
       List<Order> nodes = orderConnection.getNodes();
-      if(nodes != null && !nodes.isEmpty()) {
+      if (nodes != null && !nodes.isEmpty()) {
         orders.addAll(nodes);
       } else {
         // No data returned, break to prevent potential infinite loop
@@ -258,7 +266,7 @@ public class ShopifySdk {
       pageCount++;
     }
 
-    if(pageCount >= MAX_PAGES) {
+    if (pageCount >= MAX_PAGES) {
       log.warn("Reached maximum page limit ({}) when querying orders. Results may be incomplete.",
           MAX_PAGES);
     }
@@ -273,7 +281,7 @@ public class ShopifySdk {
    * @param argument             The query arguments including pagination
    * @return The order connection result
    */
-  public OrderConnection queryOrdersInOnePage (OrderQueryDefinition orderQueryDefinition,
+  public OrderConnection queryOrdersInOnePage(OrderQueryDefinition orderQueryDefinition,
       Argument argument) {
     QueryRootQuery query = Operations.query(
         q -> q.orders(arg -> argumentMapper.updateToOrderArguments(argument, arg),
@@ -281,7 +289,7 @@ public class ShopifySdk {
                 .pageInfo(p -> p.startCursor().endCursor().hasPreviousPage().hasNextPage())));
     String queryOrder = query.toString();
     String lineItemsQuery = null;
-    if(isOrderQueryContainLineItem(query)) {
+    if (isOrderQueryContainLineItem(query)) {
       String[] extractAndModified = ShopifyUtils.extractAndRemoveFromShopifyQuery(queryOrder,
           "lineItems");
       lineItemsQuery = extractAndModified[0];
@@ -289,7 +297,7 @@ public class ShopifySdk {
     }
     QueryResponse response = queryShopifyAdmin(queryOrder);
     OrderConnection orders = response.getData().getOrders();
-    if(lineItemsQuery != null) {
+    if (lineItemsQuery != null) {
       for (Order order : orders.getNodes()) {
         queryLineItemsItemForOrder(order, lineItemsQuery);
       }
@@ -297,7 +305,7 @@ public class ShopifySdk {
     return orders;
   }
 
-  private boolean isOrderQueryContainLineItem (QueryRootQuery rootQuery) {
+  private boolean isOrderQueryContainLineItem(QueryRootQuery rootQuery) {
     try {
       return rootQuery.toString().contains("lineItems");
     } catch (Exception exception) {
@@ -307,7 +315,7 @@ public class ShopifySdk {
     return false;
   }
 
-  private void queryLineItemsItemForOrder (Order order, String lineItemQuery) {
+  private void queryLineItemsItemForOrder(Order order, String lineItemQuery) {
     String orderId = order.getId().toString();
     List<LineItem> lineItems = new ArrayList<>();
     boolean hasNextPage = true;
@@ -320,7 +328,7 @@ public class ShopifySdk {
           .selectionSet(lineItemField.getSelectionSet())
           .arguments(
               List.of(graphql.language.Argument.newArgument().name("first").value(new IntValue(
-                      BigInteger.valueOf(BATCH_SIZE))).build(),
+                  BigInteger.valueOf(BATCH_SIZE))).build(),
                   graphql.language.Argument.newArgument().name("after")
                       .value(cursor == null ? NullValue.of() : new StringValue(cursor)).build()))
 
@@ -338,7 +346,7 @@ public class ShopifySdk {
       QueryResponse queryResponse = queryShopifyAdmin(orderLineItemQuery);
       LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
       List<LineItem> nodes = lineItemConnection.getNodes();
-      if(nodes != null && !nodes.isEmpty()) {
+      if (nodes != null && !nodes.isEmpty()) {
         lineItems.addAll(nodes);
       } else {
         // No data returned, break to prevent potential infinite loop
@@ -349,11 +357,10 @@ public class ShopifySdk {
       cursor = pageInfo.getEndCursor();
 
     }
-    if(!lineItems.isEmpty()) {
+    if (!lineItems.isEmpty()) {
       order.setLineItems(new LineItemConnection().setNodes(lineItems));
     }
   }
-
 
   /**
    * Build the Shopify Admin API GraphQL URI using proper URI construction.
@@ -361,26 +368,34 @@ public class ShopifySdk {
    * @return The URI for the Shopify Admin API GraphQL endpoint
    * @throws ShopifySdkException if the URI is invalid
    */
-  private URI buildAdminGraphQLUri () {
+  private URI buildAdminGraphQLUri() {
     try {
       return new URI(
           HTTPS_PROTOCOL,
           storeName + SHOPIFY_DOMAIN_SUFFIX,
           ADMIN_API_PATH + apiVersion + GRAPHQL_ENDPOINT,
           null,
-          null
-      );
+          null);
     } catch (URISyntaxException e) {
       throw new ShopifySdkException("Invalid URL components for Shopify API endpoint", e);
     }
   }
 
-  private String toJsonPayload (QueryRootQuery query) {
+  private String toJsonPayload(QueryRootQuery query) {
+    
     return toJsonPayload(query.toString());
   }
 
   private String toJsonPayload(String query) {
-    // Simple JSON escaping - only escape quotes that are actually in the GraphQL query
+    // Simple JSON escaping - only escape quotes that are actually in the GraphQL
+    // query
+    if (query == null || query.isEmpty()) {
+      throw new IllegalArgumentException("Payload cannot be null or empty");
+    }
+    int queryIndex = query.indexOf("query");
+    if (queryIndex == 0 || queryIndex ==1){
+      return query;
+    }
     String escapedQuery = query.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
     if (!query.startsWith("{")) {
       return String.format(
@@ -390,13 +405,19 @@ public class ShopifySdk {
         "{\"query\":\"%s\"}", escapedQuery);
   }
 
+  private String toMutationJsonPayload(MutationQuery mutation) {
+    return toMutationJsonPayload(mutation.toString());
+  }
+
   /**
    * Convert a mutation string to JSON payload format.
    * Unlike queries, mutations don't need additional braces.
    */
   private String toMutationJsonPayload(String mutation) {
-    // Simple JSON escaping - only escape quotes that are actually in the GraphQL mutation
-    String escapedMutation = mutation.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+    // Simple JSON escaping - only escape quotes that are actually in the GraphQL
+    // mutation
+    String escapedMutation = mutation.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r",
+        "\\r");
     return String.format("{\"query\":\"%s\"}", escapedMutation);
   }
 
@@ -406,25 +427,25 @@ public class ShopifySdk {
    * @param response The HTTP response
    * @return true if the request should be retried
    */
-  private boolean shouldRetryResponse (HttpResponse<?> response) {
+  private boolean shouldRetryResponse(HttpResponse<?> response) {
     int statusCode = response.statusCode();
     return (statusCode >= 500) ||
         (statusCode == LOCKED_STATUS_CODE) ||
         (statusCode == TOO_MANY_REQUESTS_STATUS_CODE);
   }
+
   public List<OnlineStoreTheme> queryAllThemes() {
     List<OnlineStoreTheme> themes = new ArrayList<>();
     boolean hasNextPage = true;
     String cursor = null;
     while (hasNextPage) {
-      
+
       String finalCursor = cursor;
       QueryRootQuery query = Operations.query(
           q -> q.themes(
               arg -> arg.first(BATCH_SIZE).after(finalCursor),
               themeQuery -> themeQuery.nodes(
-                  themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())
-          ));
+                  themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())));
       QueryResponse queryResponse = queryShopifyAdmin(toJsonPayload(query));
       OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
       List<OnlineStoreTheme> nodes = onlineStoreThemeConnection.getNodes();
@@ -442,27 +463,31 @@ public class ShopifySdk {
     }
     return themes;
   }
+
   /**
-   * Build a query definition for OnlineStoreTheme that includes pagination information.
-   * This query definition is designed to be used with pagination to fetch all theme files.
+   * Build a query definition for OnlineStoreTheme that includes pagination
+   * information.
+   * This query definition is designed to be used with pagination to fetch all
+   * theme files.
    *
    * @return A query definition for OnlineStoreTheme
    */
   public OnlineStoreThemeQueryDefinition buildOnlineStoreThemeQuery() {
-    return (q) ->
-        q.createdAt()
-            .updatedAt()
-            .files(
-                arg -> arg.first(BATCH_SIZE),
-                f -> f.nodes(
-                    n -> n.updatedAt().filename().contentType().createdAt().size().body(b ->b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
-                        
-                         .onOnlineStoreThemeFileBodyText(
-                        OnlineStoreThemeFileBodyTextQuery::content
-                    )).body(n1->n1.onOnlineStoreThemeFileBodyBase64(OnlineStoreThemeFileBodyBase64Query::contentBase64))
-                ).pageInfo(p -> p.hasNextPage().endCursor())
-            );
+    return (q) -> q.createdAt()
+        .updatedAt()
+        .files(
+            arg -> arg.first(BATCH_SIZE),
+            f -> f.nodes(
+                n -> n.updatedAt().filename().contentType().createdAt().size()
+                    .body(b -> b.onOnlineStoreThemeFileBodyUrl(OnlineStoreThemeFileBodyUrlQuery::url)
+
+                        .onOnlineStoreThemeFileBodyText(
+                            OnlineStoreThemeFileBodyTextQuery::content))
+                    .body(
+                        n1 -> n1.onOnlineStoreThemeFileBodyBase64(OnlineStoreThemeFileBodyBase64Query::contentBase64)))
+                .pageInfo(p -> p.hasNextPage().endCursor()));
   }
+
   /**
    * Query all files of a theme with automatic pagination.
    *
@@ -484,9 +509,7 @@ public class ShopifySdk {
       QueryRootQuery query = Operations.query(
           q -> q.theme(
               themeId,
-              buildOnlineStoreThemeQuery()
-          )
-      );
+              buildOnlineStoreThemeQuery()));
 
       // If we have a cursor, modify the query to use it
       String queryStr = query.toString();
@@ -494,8 +517,7 @@ public class ShopifySdk {
         // Replace the files argument to include the after parameter
         queryStr = queryStr.replace(
             "files(first:" + BATCH_SIZE + ")",
-            "files(first:" + BATCH_SIZE + ",after:\"" + cursor + "\")"
-        );
+            "files(first:" + BATCH_SIZE + ",after:\"" + cursor + "\")");
       }
 
       // Execute the query
@@ -530,57 +552,56 @@ public class ShopifySdk {
 
     return allFiles;
   }
-  public OrderQueryDefinition buildOrderQuery () {
-    return (q) ->
-        q.name().email()
-                // Time
-                .createdAt()
-                .processedAt()
-                .closedAt()
-                .cancelledAt()
-                .updatedAt()
-                .confirmed()
-                .closed()
-                .cancelReason()
-                // Financial
-                .displayFinancialStatus()
-                // Fulfillment
-                .displayFulfillmentStatus()
-                .fulfillable()
-                .fulfillments(arg -> arg.first(1), FulfillmentQuery::createdAt)
-                .customerAcceptsMarketing()
-                .currencyCode()
-                .subtotalPriceSet(buildMoneyBagQuery())
-                .subtotalLineItemsQuantity()
-                .currentShippingPriceSet(buildMoneyBagQuery())
-                .totalShippingPriceSet(buildMoneyBagQuery())
-                .totalTaxSet(buildMoneyBagQuery())
-                .currentTotalTaxSet(buildMoneyBagQuery())
-                .currentTotalPriceSet(buildMoneyBagQuery())
-                .totalPriceSet(buildMoneyBagQuery())
-                .discountCode()
-                .currentCartDiscountAmountSet(buildMoneyBagQuery())
-                .shippingLine(sl -> sl.title().id())
-                .lineItems(arg -> arg.first(50), l -> l.nodes(
-                    lq -> lq.name()
-                        .discountedUnitPriceSet(buildMoneyBagQuery()).quantity()
-                        .originalUnitPriceSet(buildMoneyBagQuery())
-                        .sku()
-                        .requiresShipping()
-                        .taxable()
-                        .vendor()
-                        .discountedTotalSet(buildMoneyBagQuery())
-                        .taxLines(arg -> arg.first(5),t -> t.title().rate().ratePercentage().priceSet(buildMoneyBagQuery()).source().channelLiable())
-                ))
-                .displayAddress(buildMailingAddressQuery())
-                .billingAddress(buildMailingAddressQuery())
-                .shippingAddress(buildMailingAddressQuery())
-                .note()
-                .risk(r -> r.recommendation().assessments(OrderRiskAssessmentQuery::riskLevel))
-                .totalOutstandingSet(buildMoneyBagQuery())
-                .sourceName()
-                .paymentTerms( p -> p.dueInDays().overdue().paymentTermsName())
-        ;
+
+  public OrderQueryDefinition buildOrderQuery() {
+    return (q) -> q.name().email()
+        // Time
+        .createdAt()
+        .processedAt()
+        .closedAt()
+        .cancelledAt()
+        .updatedAt()
+        .confirmed()
+        .closed()
+        .cancelReason()
+        // Financial
+        .displayFinancialStatus()
+        // Fulfillment
+        .displayFulfillmentStatus()
+        .fulfillable()
+        .fulfillments(arg -> arg.first(1), FulfillmentQuery::createdAt)
+        .customerAcceptsMarketing()
+        .currencyCode()
+        .subtotalPriceSet(buildMoneyBagQuery())
+        .subtotalLineItemsQuantity()
+        .currentShippingPriceSet(buildMoneyBagQuery())
+        .totalShippingPriceSet(buildMoneyBagQuery())
+        .totalTaxSet(buildMoneyBagQuery())
+        .currentTotalTaxSet(buildMoneyBagQuery())
+        .currentTotalPriceSet(buildMoneyBagQuery())
+        .totalPriceSet(buildMoneyBagQuery())
+        .discountCode()
+        .currentCartDiscountAmountSet(buildMoneyBagQuery())
+        .shippingLine(sl -> sl.title().id())
+        .lineItems(arg -> arg.first(50), l -> l.nodes(
+            lq -> lq.name()
+                .discountedUnitPriceSet(buildMoneyBagQuery()).quantity()
+                .originalUnitPriceSet(buildMoneyBagQuery())
+                .sku()
+                .requiresShipping()
+                .taxable()
+                .vendor()
+                .discountedTotalSet(buildMoneyBagQuery())
+                .taxLines(arg -> arg.first(5),
+                    t -> t.title().rate().ratePercentage().priceSet(buildMoneyBagQuery()).source().channelLiable())))
+        .displayAddress(buildMailingAddressQuery())
+        .billingAddress(buildMailingAddressQuery())
+        .shippingAddress(buildMailingAddressQuery())
+        .note()
+        .risk(r -> r.recommendation().assessments(OrderRiskAssessmentQuery::riskLevel))
+        .totalOutstandingSet(buildMoneyBagQuery())
+        .sourceName()
+        .paymentTerms(p -> p.dueInDays().overdue().paymentTermsName());
   }
 
   private MoneyBagQueryDefinition buildMoneyBagQuery() {
@@ -594,8 +615,7 @@ public class ShopifySdk {
         .validationResultSummary());
   }
 
-
-  public static void main (String[] args) {
+  public static void main(String[] args) {
     ShopifySdk sdk = ShopifySdk.builder()
         .apiKey("secret")
         .storeName("kezlo-test-2")
@@ -604,21 +624,21 @@ public class ShopifySdk {
     // Example of querying orders
     List<OnlineStoreThemeFile> files = sdk.queryAllThemeFiles("gid://shopify/OnlineStoreTheme/168800911680");
     System.out.println("Found " + files.size() + " files:");
-    
-    // To query all theme files, you would use:
-    // ID themeId = new ID("gid://shopify/OnlineStoreTheme/12345");
-    // sdk.printAllThemeFiles(themeId);
+
   }
 
   /**
    * Create an app subscription for a plan.
    *
-   * @param planName The name of the subscription plan
-   * @param returnUrl The URL that the merchant is redirected to after approving the app subscription
+   * @param planName  The name of the subscription plan
+   * @param returnUrl The URL that the merchant is redirected to after approving
+   *                  the app subscription
    * @param lineItems List of subscription line items containing pricing details
-   * @param test Whether the app subscription is a test transaction (optional)
+   * @param test      Whether the app subscription is a test transaction
+   *                  (optional)
    * @param trialDays The number of days of the free trial period (optional)
-   * @return The app subscription create payload containing the subscription details and confirmation URL
+   * @return The app subscription create payload containing the subscription
+   *         details and confirmation URL
    * @throws ShopifySdkException if the subscription creation fails
    */
   public AppSubscriptionCreatePayload createAppSubscription(
@@ -627,24 +647,23 @@ public class ShopifySdk {
       List<AppSubscriptionLineItemInput> lineItems,
       Boolean test,
       Integer trialDays) {
-    
+
     // Validate required parameters
     if (planName == null || planName.isEmpty()) {
       throw new IllegalArgumentException("Plan name cannot be null or empty");
     }
-    
+
     if (returnUrl == null || returnUrl.isEmpty()) {
       throw new IllegalArgumentException("Return URL cannot be null or empty");
     }
-    
+
     if (lineItems == null || lineItems.isEmpty()) {
       throw new IllegalArgumentException("Line items cannot be null or empty");
     }
 
     try {
       // Create the mutation query
-      MutationQuery mutation = Operations.mutation(m -> 
-        m.appSubscriptionCreate(
+      MutationQuery mutation = Operations.mutation(m -> m.appSubscriptionCreate(
           planName,
           lineItems,
           returnUrl,
@@ -657,78 +676,20 @@ public class ShopifySdk {
             }
           },
           payload -> payload
-            .appSubscription(subscription -> subscription
-              .name()
-              .status()
-              .test()
-              .trialDays()
-              .returnUrl()
-              .createdAt()
-              .lineItems(lineItem -> lineItem
-                .plan(plan -> plan
-                  .pricingDetails(details -> details
-                    .onAppRecurringPricing(recurring -> recurring
-                      .price(price -> price.amount().currencyCode())
-                      .interval()
-                      .discount(discount -> discount
-                        .value(value -> value
-                          .onAppSubscriptionDiscountAmount(amount -> amount
-                            .amount(money -> money.amount().currencyCode())
-                          )
-                          .onAppSubscriptionDiscountPercentage(percentage -> percentage
-                            .percentage()
-                          )
-                        )
-                        .durationLimitInIntervals()
-                      )
-                    )
-                    .onAppUsagePricing(usage -> usage
-                      .cappedAmount(capped -> capped.amount().currencyCode())
-                      .terms()
-                      .interval()
-                    )
-                  )
-                )
-              )
-            )
-            .confirmationUrl()
-            .userErrors(error -> error
-              .field()
-              .message()
-            )
-        )
-      );
+              .appSubscription(buildAppSubscriptionQueryDefinition())
+              .confirmationUrl()
+              .userErrors(error -> error
+                  .field()
+                  .message())));
 
-      String mutationString = mutation.toString();
-      String mutationPayload = toMutationJsonPayload(mutationString);
-      
-      // Debug logging
-      log.info("DEBUG - Sending mutation string: {}", mutationString);
-      log.info("DEBUG - Sending mutation payload: {}", mutationPayload);
-      
-      // Execute the mutation
-      HttpResponse<String> response = getStringHttpResponse(mutationPayload);
-      
-      // Debug response
-      log.info("DEBUG - Response status: {}", response.statusCode());
-      log.info("DEBUG - Response body: {}", response.body());
-      
-      if (response.statusCode() != 200) {
-        log.error(
-            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
-        throw new ShopifySdkException(
-            "Error when executing Shopify admin GraphQL API. Status code: "
-                + response.statusCode());
-      }
+      MutationResponse mutationResponse = mutateShopifyAdmin(mutation);
 
-      MutationResponse mutationResponse = MutationResponse.fromJson(response.body());
-      
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");
       }
-      
+
       AppSubscriptionCreatePayload payload = mutationResponse.getData().getAppSubscriptionCreate();
-      
+
       // Check for user errors
       if (payload.getUserErrors() != null && !payload.getUserErrors().isEmpty()) {
         StringBuilder errorMessage = new StringBuilder("App subscription creation failed: ");
@@ -737,9 +698,9 @@ public class ShopifySdk {
         }
         throw new ShopifySdkException(errorMessage.toString());
       }
-      
+
       return payload;
-      
+
     } catch (Exception e) {
       log.error("method: createAppSubscription, error", e);
       throw new ShopifySdkException("Failed to create app subscription", e);
@@ -749,45 +710,148 @@ public class ShopifySdk {
   /**
    * Helper method to create a recurring pricing line item for app subscriptions.
    *
-   * @param amount The amount to charge
+   * @param amount       The amount to charge
    * @param currencyCode The currency code
-   * @param interval The billing interval (EVERY_30_DAYS or ANNUAL)
+   * @param interval     The billing interval (EVERY_30_DAYS or ANNUAL)
    * @return AppSubscriptionLineItemInput configured for recurring pricing
    */
   public static AppSubscriptionLineItemInput createRecurringLineItem(
       java.math.BigDecimal amount,
       CurrencyCode currencyCode,
       AppPricingInterval interval) {
-    
+
     MoneyInput price = new MoneyInput(amount, currencyCode);
     AppRecurringPricingInput recurringPricing = new AppRecurringPricingInput(price)
         .setInterval(interval);
-    
+
     AppPlanInput plan = new AppPlanInput()
         .setAppRecurringPricingDetails(recurringPricing);
-    
+
     return new AppSubscriptionLineItemInput(plan);
   }
 
   /**
-   * Helper method to create a usage-based pricing line item for app subscriptions.
+   * Helper method to create a usage-based pricing line item for app
+   * subscriptions.
    *
-   * @param cappedAmount The maximum amount that can be charged in the billing cycle
+   * @param cappedAmount The maximum amount that can be charged in the billing
+   *                     cycle
    * @param currencyCode The currency code
-   * @param terms The terms and conditions for usage pricing
+   * @param terms        The terms and conditions for usage pricing
    * @return AppSubscriptionLineItemInput configured for usage pricing
    */
   public static AppSubscriptionLineItemInput createUsageLineItem(
       java.math.BigDecimal cappedAmount,
       CurrencyCode currencyCode,
       String terms) {
-    
+
     MoneyInput cappedMoney = new MoneyInput(cappedAmount, currencyCode);
     AppUsagePricingInput usagePricing = new AppUsagePricingInput(cappedMoney, terms);
-    
+
     AppPlanInput plan = new AppPlanInput()
         .setAppUsagePricingDetails(usagePricing);
-    
+
     return new AppSubscriptionLineItemInput(plan);
+  }
+
+  /**
+   * Cancel an app subscription on a store.
+   *
+   * @param id      The ID of the app subscription to cancel
+   * @param prorate Whether to issue prorated credits for the unused portion of
+   *                the app subscription
+   * @return The app subscription cancel payload containing the cancelled
+   *         subscription details
+   * @throws ShopifySdkException if the subscription cancellation fails
+   */
+  public AppSubscriptionCancelPayload cancelAppSubscription(String id, Boolean prorate) {
+
+    // Validate required parameters
+    if (id == null || id.isEmpty()) {
+      throw new IllegalArgumentException("Subscription ID cannot be null or empty");
+    }
+
+    try {
+      // Create the mutation query
+      MutationQuery mutation = Operations.mutation(m -> m.appSubscriptionCancel(
+          new ID(id),
+          args -> {
+            if (prorate != null) {
+              args.prorate(prorate);
+            }
+          },
+          payload -> {
+            payload
+                .appSubscription(buildAppSubscriptionQueryDefinition())
+                .userErrors(error -> error
+                    .field()
+                    .message());
+          }));
+
+      MutationResponse mutationResponse = mutateShopifyAdmin(mutation);
+
+      if (mutationResponse.getData() == null) {
+        throw new ShopifySdkException("Invalid response structure from Shopify API");
+      }
+
+      AppSubscriptionCancelPayload payload = mutationResponse.getData().getAppSubscriptionCancel();
+
+      // Check for user errors
+      if (payload.getUserErrors() != null && !payload.getUserErrors().isEmpty()) {
+        StringBuilder errorMessage = new StringBuilder("App subscription cancellation failed: ");
+        for (UserError error : payload.getUserErrors()) {
+          errorMessage.append(error.getMessage()).append("; ");
+        }
+        throw new ShopifySdkException(errorMessage.toString());
+      }
+
+      return payload;
+
+    } catch (Exception e) {
+      log.error("method: cancelAppSubscription, error", e);
+      throw new ShopifySdkException("Failed to cancel app subscription", e);
+    }
+  }
+
+  /**
+   * Cancel an app subscription on a store without proration.
+   * This is a convenience method that calls cancelAppSubscription with
+   * prorate=false.
+   *
+   * @param id The ID of the app subscription to cancel
+   * @return The app subscription cancel payload containing the cancelled
+   *         subscription details
+   * @throws ShopifySdkException if the subscription cancellation fails
+   */
+  public AppSubscriptionCancelPayload cancelAppSubscription(String id) {
+    return cancelAppSubscription(id, false);
+  }
+
+  private AppSubscriptionQueryDefinition buildAppSubscriptionQueryDefinition() {
+    return (subscription) -> subscription
+        .name()
+        .status()
+        .test()
+        .trialDays()
+        .returnUrl()
+        .createdAt()
+        .currentPeriodEnd()
+        .lineItems(lineItem -> lineItem
+            .plan(plan -> plan
+                .pricingDetails(details -> details
+                    .onAppRecurringPricing(recurring -> recurring
+                        .price(price -> price.amount().currencyCode())
+                        .interval()
+                        .discount(discount -> discount
+                            .value(value -> value
+                                .onAppSubscriptionDiscountAmount(amount -> amount
+                                    .amount(money -> money.amount().currencyCode()))
+                                .onAppSubscriptionDiscountPercentage(percentage -> percentage
+                                    .percentage()))
+                            .durationLimitInIntervals()))
+                    .onAppUsagePricing(usage -> usage
+                        .cappedAmount(capped -> capped.amount().currencyCode())
+                        .terms()
+                        .interval()))));
   }
 }
