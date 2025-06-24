@@ -391,6 +391,16 @@ public class ShopifySdk {
   }
 
   /**
+   * Convert a mutation string to JSON payload format.
+   * Unlike queries, mutations don't need additional braces.
+   */
+  private String toMutationJsonPayload(String mutation) {
+    // Simple JSON escaping - only escape quotes that are actually in the GraphQL mutation
+    String escapedMutation = mutation.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
+    return String.format("{\"query\":\"%s\"}", escapedMutation);
+  }
+
+  /**
    * Determine if a response should be retried based on its status code.
    *
    * @param response The HTTP response
@@ -598,5 +608,186 @@ public class ShopifySdk {
     // To query all theme files, you would use:
     // ID themeId = new ID("gid://shopify/OnlineStoreTheme/12345");
     // sdk.printAllThemeFiles(themeId);
+  }
+
+  /**
+   * Create an app subscription for a plan.
+   *
+   * @param planName The name of the subscription plan
+   * @param returnUrl The URL that the merchant is redirected to after approving the app subscription
+   * @param lineItems List of subscription line items containing pricing details
+   * @param test Whether the app subscription is a test transaction (optional)
+   * @param trialDays The number of days of the free trial period (optional)
+   * @return The app subscription create payload containing the subscription details and confirmation URL
+   * @throws ShopifySdkException if the subscription creation fails
+   */
+  public AppSubscriptionCreatePayload createAppSubscription(
+      String planName,
+      String returnUrl,
+      List<AppSubscriptionLineItemInput> lineItems,
+      Boolean test,
+      Integer trialDays) {
+    
+    // Validate required parameters
+    if (planName == null || planName.isEmpty()) {
+      throw new IllegalArgumentException("Plan name cannot be null or empty");
+    }
+    
+    if (returnUrl == null || returnUrl.isEmpty()) {
+      throw new IllegalArgumentException("Return URL cannot be null or empty");
+    }
+    
+    if (lineItems == null || lineItems.isEmpty()) {
+      throw new IllegalArgumentException("Line items cannot be null or empty");
+    }
+
+    try {
+      // Create the mutation query
+      MutationQuery mutation = Operations.mutation(m -> 
+        m.appSubscriptionCreate(
+          planName,
+          lineItems,
+          returnUrl,
+          args -> {
+            if (test != null) {
+              args.test(test);
+            }
+            if (trialDays != null) {
+              args.trialDays(trialDays);
+            }
+          },
+          payload -> payload
+            .appSubscription(subscription -> subscription
+              .name()
+              .status()
+              .test()
+              .trialDays()
+              .returnUrl()
+              .createdAt()
+              .lineItems(lineItem -> lineItem
+                .plan(plan -> plan
+                  .pricingDetails(details -> details
+                    .onAppRecurringPricing(recurring -> recurring
+                      .price(price -> price.amount().currencyCode())
+                      .interval()
+                      .discount(discount -> discount
+                        .value(value -> value
+                          .onAppSubscriptionDiscountAmount(amount -> amount
+                            .amount(money -> money.amount().currencyCode())
+                          )
+                          .onAppSubscriptionDiscountPercentage(percentage -> percentage
+                            .percentage()
+                          )
+                        )
+                        .durationLimitInIntervals()
+                      )
+                    )
+                    .onAppUsagePricing(usage -> usage
+                      .cappedAmount(capped -> capped.amount().currencyCode())
+                      .terms()
+                      .interval()
+                    )
+                  )
+                )
+              )
+            )
+            .confirmationUrl()
+            .userErrors(error -> error
+              .field()
+              .message()
+            )
+        )
+      );
+
+      String mutationString = mutation.toString();
+      String mutationPayload = toMutationJsonPayload(mutationString);
+      
+      // Debug logging
+      log.info("DEBUG - Sending mutation string: {}", mutationString);
+      log.info("DEBUG - Sending mutation payload: {}", mutationPayload);
+      
+      // Execute the mutation
+      HttpResponse<String> response = getStringHttpResponse(mutationPayload);
+      
+      // Debug response
+      log.info("DEBUG - Response status: {}", response.statusCode());
+      log.info("DEBUG - Response body: {}", response.body());
+      
+      if (response.statusCode() != 200) {
+        log.error(
+            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
+        throw new ShopifySdkException(
+            "Error when executing Shopify admin GraphQL API. Status code: "
+                + response.statusCode());
+      }
+
+      MutationResponse mutationResponse = MutationResponse.fromJson(response.body());
+      
+      if (mutationResponse.getData() == null) {
+        throw new ShopifySdkException("Invalid response structure from Shopify API");
+      }
+      
+      AppSubscriptionCreatePayload payload = mutationResponse.getData().getAppSubscriptionCreate();
+      
+      // Check for user errors
+      if (payload.getUserErrors() != null && !payload.getUserErrors().isEmpty()) {
+        StringBuilder errorMessage = new StringBuilder("App subscription creation failed: ");
+        for (UserError error : payload.getUserErrors()) {
+          errorMessage.append(error.getMessage()).append("; ");
+        }
+        throw new ShopifySdkException(errorMessage.toString());
+      }
+      
+      return payload;
+      
+    } catch (Exception e) {
+      log.error("method: createAppSubscription, error", e);
+      throw new ShopifySdkException("Failed to create app subscription", e);
+    }
+  }
+
+  /**
+   * Helper method to create a recurring pricing line item for app subscriptions.
+   *
+   * @param amount The amount to charge
+   * @param currencyCode The currency code
+   * @param interval The billing interval (EVERY_30_DAYS or ANNUAL)
+   * @return AppSubscriptionLineItemInput configured for recurring pricing
+   */
+  public static AppSubscriptionLineItemInput createRecurringLineItem(
+      java.math.BigDecimal amount,
+      CurrencyCode currencyCode,
+      AppPricingInterval interval) {
+    
+    MoneyInput price = new MoneyInput(amount, currencyCode);
+    AppRecurringPricingInput recurringPricing = new AppRecurringPricingInput(price)
+        .setInterval(interval);
+    
+    AppPlanInput plan = new AppPlanInput()
+        .setAppRecurringPricingDetails(recurringPricing);
+    
+    return new AppSubscriptionLineItemInput(plan);
+  }
+
+  /**
+   * Helper method to create a usage-based pricing line item for app subscriptions.
+   *
+   * @param cappedAmount The maximum amount that can be charged in the billing cycle
+   * @param currencyCode The currency code
+   * @param terms The terms and conditions for usage pricing
+   * @return AppSubscriptionLineItemInput configured for usage pricing
+   */
+  public static AppSubscriptionLineItemInput createUsageLineItem(
+      java.math.BigDecimal cappedAmount,
+      CurrencyCode currencyCode,
+      String terms) {
+    
+    MoneyInput cappedMoney = new MoneyInput(cappedAmount, currencyCode);
+    AppUsagePricingInput usagePricing = new AppUsagePricingInput(cappedMoney, terms);
+    
+    AppPlanInput plan = new AppPlanInput()
+        .setAppUsagePricingDetails(usagePricing);
+    
+    return new AppSubscriptionLineItemInput(plan);
   }
 }

@@ -11,7 +11,7 @@
   <url>https://maven.apache.org</url>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>17</java.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     <lombok.version>1.18.30</lombok.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

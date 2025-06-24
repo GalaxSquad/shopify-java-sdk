@@ -4,6 +4,7 @@ package com.sdk.shopify.shopify;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.shopify.graphql.support.Error;
 import com.shopify.graphql.support.SchemaViolationError;
 import com.shopify.graphql.support.TopLevelResponse;
@@ -15,7 +16,9 @@ public class MutationResponse {
 
     public MutationResponse(TopLevelResponse response) throws SchemaViolationError {
         this.response = response;
-        this.data = response.getData() != null ? new Mutation(response.getData()) : null;
+    
+        JsonObject data2 = response.getData();
+        this.data = data2 != null ? new Mutation(data2) : null;
     }
 
     public Mutation getData() {
