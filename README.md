@@ -8,7 +8,7 @@ This SDK provides a simple way to interact with Shopify's GraphQL API, specifica
 
 ## Requirements
 
-- Java: 11
+- Java: 17
 
 ## Installation
 

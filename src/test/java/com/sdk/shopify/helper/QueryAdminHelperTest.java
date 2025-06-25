@@ -27,7 +27,7 @@ class QueryAdminHelperTest {
             .apiVersion(testApiVersion)
             .build();
             
-        helper = (GraphQLAdminHelper) QueryAdminFactory.createAdminHelper(shopifySdk, QueryAdminFactory.AdminHelperType.GRAPHQL);
+        helper = (GraphQLAdminHelper) new QueryAdminFactory(shopifySdk).createAdminHelper(shopifySdk, QueryAdminFactory.AdminHelperType.GRAPHQL);
     }
 
     // Tests for toJsonPayload methods

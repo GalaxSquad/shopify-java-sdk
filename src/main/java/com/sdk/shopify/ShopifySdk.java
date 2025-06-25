@@ -563,11 +563,10 @@ public class ShopifySdk {
 
       // Check for user errors
       if (payload.getUserErrors() != null && !payload.getUserErrors().isEmpty()) {
-        StringBuilder errorMessage = new StringBuilder("App subscription creation failed: ");
-        for (UserError error : payload.getUserErrors()) {
-          errorMessage.append(error.getMessage()).append("; ");
-        }
-        throw new ShopifySdkException(errorMessage.toString());
+        String errorMessages = payload.getUserErrors().stream()
+            .map(UserError::getMessage)
+            .collect(java.util.stream.Collectors.joining("; "));
+        throw new ShopifySdkException("App subscription creation failed: " + errorMessages);
       }
 
       return payload;
