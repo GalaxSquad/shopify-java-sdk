@@ -12,7 +12,7 @@ public class QueryAdminFactory {
         mutationAdminHelperInstance = new MutationAdminHelper(shopifySdk);
     }
 
-    public QueryAdminHelper<?, ?> createAdminHelper(ShopifySdk shopifySdk, AdminHelperType adminHelperType) {
+    public QueryAdminHelper<?, ?> createAdminHelper(AdminHelperType adminHelperType) {
         switch (adminHelperType) {
             case GRAPHQL:
                 return graphQLAdminHelperInstance;

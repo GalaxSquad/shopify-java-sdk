@@ -221,7 +221,7 @@ public class ShopifySdk {
       lineItemsQuery = extractAndModified[0];
       queryOrder = extractAndModified[1];
     }
-    QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+    QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(AdminHelperType.GRAPHQL))
         .queryShopifyAdmin(queryOrder);
     OrderConnection orders = response.getData().getOrders();
     if (lineItemsQuery != null) {
@@ -270,7 +270,7 @@ public class ShopifySdk {
 
       String orderLineItemQuery = AstPrinter.printAst(orderField);
 
-      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(orderLineItemQuery);
       LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
       List<LineItem> nodes = lineItemConnection.getNodes();
@@ -314,7 +314,7 @@ public class ShopifySdk {
               arg -> arg.first(BATCH_SIZE).after(finalCursor),
               themeQuery -> themeQuery.nodes(
                   themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())));
-      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(query);
       OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
       List<OnlineStoreTheme> nodes = onlineStoreThemeConnection.getNodes();
@@ -390,7 +390,7 @@ public class ShopifySdk {
       }
 
       // Execute the query
-      QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(queryStr);
       OnlineStoreTheme theme = response.getData().getTheme();
 
@@ -553,7 +553,7 @@ public class ShopifySdk {
                   .message())));
 
       MutationResponse mutationResponse = ((MutationAdminHelper) queryAdminFactory
-          .createAdminHelper(this, AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
+          .createAdminHelper(AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");
@@ -659,7 +659,7 @@ public class ShopifySdk {
           }));
 
       MutationResponse mutationResponse = ((MutationAdminHelper) queryAdminFactory
-          .createAdminHelper(this, AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
+          .createAdminHelper(AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");
