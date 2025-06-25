@@ -55,16 +55,11 @@ public class ShopifySdk {
   private final HttpClient httpClient;
   private final Retry retry;
   private final ArgumentMapper argumentMapper = ArgumentMapper.INSTANCE;
+  private final QueryAdminFactory queryAdminFactory;
 
-  private static final String ACCESS_TOKEN_HEADER = "X-Shopify-Access-Token";
   private static final Integer DEFAULT_CONNECT_TIMEOUT_MS = 30000;
-  private static final Integer DEFAULT_READ_TIMEOUT_MS = 60000;
   private static final Long DEFAULT_RETRY_DELAY_MS = 1000L;
   private static final Integer DEFAULT_MAX_RETRY_ATTEMPTS = 5;
-  private static final String HTTPS_PROTOCOL = "https";
-  private static final String SHOPIFY_DOMAIN_SUFFIX = ".myshopify.com";
-  private static final String ADMIN_API_PATH = "/admin/api/";
-  private static final String GRAPHQL_ENDPOINT = "/graphql.json";
 
   // HTTP status codes
   private static final int LOCKED_STATUS_CODE = 423;
@@ -164,6 +159,7 @@ public class ShopifySdk {
                 "Retry attempt {} after {} ms",
                 event.getNumberOfRetryAttempts(),
                 event.getWaitInterval().toMillis()));
+    this.queryAdminFactory = new QueryAdminFactory(this);
   }
 
   /**
@@ -225,7 +221,7 @@ public class ShopifySdk {
       lineItemsQuery = extractAndModified[0];
       queryOrder = extractAndModified[1];
     }
-    QueryResponse response = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+    QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
         .queryShopifyAdmin(queryOrder);
     OrderConnection orders = response.getData().getOrders();
     if (lineItemsQuery != null) {
@@ -274,7 +270,7 @@ public class ShopifySdk {
 
       String orderLineItemQuery = AstPrinter.printAst(orderField);
 
-      QueryResponse queryResponse = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(orderLineItemQuery);
       LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
       List<LineItem> nodes = lineItemConnection.getNodes();
@@ -318,7 +314,7 @@ public class ShopifySdk {
               arg -> arg.first(BATCH_SIZE).after(finalCursor),
               themeQuery -> themeQuery.nodes(
                   themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())));
-      QueryResponse queryResponse = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse queryResponse = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(query);
       OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
       List<OnlineStoreTheme> nodes = onlineStoreThemeConnection.getNodes();
@@ -394,7 +390,7 @@ public class ShopifySdk {
       }
 
       // Execute the query
-      QueryResponse response = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+      QueryResponse response = ((GraphQLAdminHelper)queryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
           .queryShopifyAdmin(queryStr);
       OnlineStoreTheme theme = response.getData().getTheme();
 
@@ -556,8 +552,8 @@ public class ShopifySdk {
                   .field()
                   .message())));
 
-      MutationResponse mutationResponse = ((MutationAdminHelper) QueryAdminFactory
-          .createAdminHelper(this, QueryAdminFactory.AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
+      MutationResponse mutationResponse = ((MutationAdminHelper) queryAdminFactory
+          .createAdminHelper(this, AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");
@@ -663,8 +659,8 @@ public class ShopifySdk {
                     .message());
           }));
 
-      MutationResponse mutationResponse = ((MutationAdminHelper) QueryAdminFactory
-          .createAdminHelper(this, QueryAdminFactory.AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
+      MutationResponse mutationResponse = ((MutationAdminHelper) queryAdminFactory
+          .createAdminHelper(this, AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");

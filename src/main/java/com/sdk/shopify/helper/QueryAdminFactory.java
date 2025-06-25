@@ -4,32 +4,23 @@ import com.sdk.shopify.ShopifySdk;
 
 public class QueryAdminFactory {  
 
-    private static GraphQLAdminHelper graphQLAdminHelperInstance;
-    private static MutationAdminHelper mutationAdminHelperInstance;
+    private GraphQLAdminHelper graphQLAdminHelperInstance;
+    private MutationAdminHelper mutationAdminHelperInstance;
 
-    public static QueryAdminHelper<?, ?> createAdminHelper(ShopifySdk shopifySdk, AdminHelperType adminHelperType) {
+    public QueryAdminFactory(ShopifySdk shopifySdk) {
+        graphQLAdminHelperInstance = new GraphQLAdminHelper(shopifySdk);
+        mutationAdminHelperInstance = new MutationAdminHelper(shopifySdk);
+    }
+
+    public QueryAdminHelper<?, ?> createAdminHelper(ShopifySdk shopifySdk, AdminHelperType adminHelperType) {
         switch (adminHelperType) {
             case GRAPHQL:
-                return createGraphQLAdminHelper(shopifySdk);
+                return graphQLAdminHelperInstance;
             case MUTATION:
-                return createMutationAdminHelper(shopifySdk);
+                return mutationAdminHelperInstance;
             default:
                 throw new IllegalArgumentException("Invalid admin helper type: " + adminHelperType);
         }
-    }
-    
-    private static GraphQLAdminHelper createGraphQLAdminHelper(ShopifySdk shopifySdk) {
-        if (graphQLAdminHelperInstance == null) {
-            graphQLAdminHelperInstance = new GraphQLAdminHelper(shopifySdk);
-        }
-        return graphQLAdminHelperInstance;
-    }
-
-    private static MutationAdminHelper createMutationAdminHelper(ShopifySdk shopifySdk) {
-        if (mutationAdminHelperInstance == null) {
-            mutationAdminHelperInstance = new MutationAdminHelper(shopifySdk);
-        }
-        return mutationAdminHelperInstance;
     }
 
     public enum AdminHelperType {
