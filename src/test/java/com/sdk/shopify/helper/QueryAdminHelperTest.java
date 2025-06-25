@@ -36,14 +36,14 @@ class QueryAdminHelperTest {
     void testToJsonPayload_String_QueryAtStart_AlwaysWraps() {
         String input = "query { shop { name } }";
         String result = helper.toJsonPayload(input);
-        assertEquals("{\"query\":\"{query { shop { name } }}\"}", result);
+        assertEquals("query { shop { name } }", result);
     }
 
     @Test
     void testToJsonPayload_String_QueryAtPosition1_AlwaysWraps() {
         String input = " query { shop { name } }";
         String result = helper.toJsonPayload(input);
-        assertEquals("{\"query\":\"{ query { shop { name } }}\"}", result);
+        assertEquals("query { shop { name } }", result);
     }
 
     @Test
@@ -92,10 +92,10 @@ class QueryAdminHelperTest {
     void testToJsonPayload_String_QueryDetectionLogic() {
         // toJsonPayload always wraps input regardless of query position
         String queryAtIndex0 = "query { test }";
-        assertEquals("{\"query\":\"{query { test }}\"}", helper.toJsonPayload(queryAtIndex0));
+        assertEquals("query { test }", helper.toJsonPayload(queryAtIndex0));
         
         String queryAtIndex1 = " query { test }";
-        assertEquals("{\"query\":\"{ query { test }}\"}", helper.toJsonPayload(queryAtIndex1));
+        assertEquals("query { test }", helper.toJsonPayload(queryAtIndex1));
         
         String queryAtIndex2 = "ab query { test }";
         assertEquals("{\"query\":\"{ab query { test }}\"}", helper.toJsonPayload(queryAtIndex2));
@@ -127,9 +127,9 @@ class QueryAdminHelperTest {
         assertEquals("{\"query\":\"{\"}", helper.toJsonPayload(singleBrace));
         
         String justQuery = "query";
-        assertEquals("{\"query\":\"{query}\"}", helper.toJsonPayload(justQuery));
+        assertEquals("query", helper.toJsonPayload(justQuery));
         
         String queryWithNoSpace = "query{test}";
-        assertEquals("{\"query\":\"{query{test}}\"}", helper.toJsonPayload(queryWithNoSpace));
+        assertEquals("query{test}", helper.toJsonPayload(queryWithNoSpace));
     }
 } 

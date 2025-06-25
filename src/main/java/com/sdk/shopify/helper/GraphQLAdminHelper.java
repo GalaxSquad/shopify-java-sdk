@@ -17,6 +17,12 @@ public class GraphQLAdminHelper extends QueryAdminHelper<QueryRootQuery, QueryRe
 
     @Override
     protected String toJsonPayload(String query) {
+        // if query already exist in first position, return the query
+        query = query.trim();
+        int queryIndex = query.indexOf("query");
+        if (queryIndex == 0 || queryIndex == 1) {
+            return query;
+        }
         // Simple JSON escaping - only escape quotes that are actually in the GraphQL
         // query
         String escapedQuery = query.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r",

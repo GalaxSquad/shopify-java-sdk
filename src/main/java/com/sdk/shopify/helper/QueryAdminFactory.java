@@ -7,7 +7,7 @@ public class QueryAdminFactory {
     private static GraphQLAdminHelper graphQLAdminHelperInstance;
     private static MutationAdminHelper mutationAdminHelperInstance;
 
-    public static QueryAdminHelper createAdminHelper(ShopifySdk shopifySdk, AdminHelperType adminHelperType) {
+    public static QueryAdminHelper<?, ?> createAdminHelper(ShopifySdk shopifySdk, AdminHelperType adminHelperType) {
         switch (adminHelperType) {
             case GRAPHQL:
                 return createGraphQLAdminHelper(shopifySdk);
@@ -32,7 +32,7 @@ public class QueryAdminFactory {
         return mutationAdminHelperInstance;
     }
 
-    enum AdminHelperType {
+    public enum AdminHelperType {
         GRAPHQL,
         MUTATION
     }

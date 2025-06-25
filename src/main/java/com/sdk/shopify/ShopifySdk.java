@@ -1,5 +1,10 @@
 package com.sdk.shopify;
 
+import com.sdk.shopify.helper.QueryAdminFactory;
+import com.sdk.shopify.helper.QueryAdminFactory.AdminHelperType;
+import com.sdk.shopify.helper.QueryAdminHelper;
+import com.sdk.shopify.helper.GraphQLAdminHelper;
+import com.sdk.shopify.helper.MutationAdminHelper;
 import com.sdk.shopify.helper.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
 import com.sdk.shopify.shopify.*;
@@ -162,81 +167,6 @@ public class ShopifySdk {
   }
 
   /**
-   * Execute a raw GraphQL query against the Shopify Admin API.
-   *
-   * @param payload The GraphQL query payload as JSON
-   * @return The query response
-   * @throws ShopifySdkException if the query fails
-   */
-  public QueryResponse queryShopifyAdmin(String payload) {
-    if (payload == null || payload.isEmpty()) {
-      throw new IllegalArgumentException("Payload cannot be null or empty");
-    }
-    int query = payload.indexOf("query");
-    // if query is not found or query is not the first element, then we need to add
-    // the query key
-    if (query == -1 || query > 1) {
-      payload = toJsonPayload(payload);
-    }
-    try {
-      HttpResponse<String> response = getStringHttpResponse(payload);
-      if (response.statusCode() != 200) {
-        log.error(
-            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
-        throw new ShopifySdkException(
-            "Error when executing Shopify admin GraphQL API. Status code: "
-                + response.statusCode());
-      }
-      return QueryResponse.fromJson(response.body());
-    } catch (Exception e) {
-      log.error("method: queryShopifyAdmin, error", e);
-      throw new ShopifySdkException("Failed to query Shopify admin API", e);
-    }
-  }
-
-  public MutationResponse mutateShopifyAdmin(MutationQuery mutation) {
-    String mutationPayload = toMutationJsonPayload(mutation);
-    try {
-      HttpResponse<String> response = getStringHttpResponse(mutationPayload);
-      if (response.statusCode() != 200) {
-        log.error(
-            "Request error, status code: {}, response: {}", response.statusCode(), response.body());
-        throw new ShopifySdkException(
-            "Error when executing Shopify admin GraphQL API. Status code: "
-                + response.statusCode());
-      }
-      return MutationResponse.fromJson(response.body());
-    } catch (Exception e) {
-      log.error("method: mutateShopifyAdmin, error", e);
-      throw new ShopifySdkException("Failed to mutate Shopify admin API", e);
-    }
-  }
-
-  private HttpResponse<String> getStringHttpResponse(String payload) {
-    Supplier<HttpResponse<String>> httpRequestSupplier = Retry.decorateSupplier(
-        retry,
-        () -> {
-          try {
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(buildAdminGraphQLUri())
-                .timeout(Duration.ofMillis(DEFAULT_READ_TIMEOUT_MS))
-                .POST(HttpRequest.BodyPublishers.ofString(payload))
-                .header("Content-Type", "application/json")
-                .header(ACCESS_TOKEN_HEADER, apiKey)
-                .build();
-            return httpClient.send(request, BodyHandlers.ofString());
-          } catch (Exception e) {
-            log.error("Error when execute shopify admin graphql api", e);
-            throw new ShopifySdkException(
-                "Error when executing Shopify admin GraphQL API: " + e.getMessage(), e);
-          }
-        });
-
-    // Execute with retry
-    return httpRequestSupplier.get();
-  }
-
-  /**
    * Query orders with automatic pagination.
    *
    * @param orderQueryDefinition The order query definition
@@ -295,7 +225,8 @@ public class ShopifySdk {
       lineItemsQuery = extractAndModified[0];
       queryOrder = extractAndModified[1];
     }
-    QueryResponse response = queryShopifyAdmin(queryOrder);
+    QueryResponse response = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+        .queryShopifyAdmin(queryOrder);
     OrderConnection orders = response.getData().getOrders();
     if (lineItemsQuery != null) {
       for (Order order : orders.getNodes()) {
@@ -343,7 +274,8 @@ public class ShopifySdk {
 
       String orderLineItemQuery = AstPrinter.printAst(orderField);
 
-      QueryResponse queryResponse = queryShopifyAdmin(orderLineItemQuery);
+      QueryResponse queryResponse = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+          .queryShopifyAdmin(orderLineItemQuery);
       LineItemConnection lineItemConnection = queryResponse.getData().getOrder().getLineItems();
       List<LineItem> nodes = lineItemConnection.getNodes();
       if (nodes != null && !nodes.isEmpty()) {
@@ -361,66 +293,6 @@ public class ShopifySdk {
       order.setLineItems(new LineItemConnection().setNodes(lineItems));
     }
   }
-
-  /**
-   * Build the Shopify Admin API GraphQL URI using proper URI construction.
-   *
-   * @return The URI for the Shopify Admin API GraphQL endpoint
-   * @throws ShopifySdkException if the URI is invalid
-   */
-  private URI buildAdminGraphQLUri() {
-    try {
-      return new URI(
-          HTTPS_PROTOCOL,
-          storeName + SHOPIFY_DOMAIN_SUFFIX,
-          ADMIN_API_PATH + apiVersion + GRAPHQL_ENDPOINT,
-          null,
-          null);
-    } catch (URISyntaxException e) {
-      throw new ShopifySdkException("Invalid URL components for Shopify API endpoint", e);
-    }
-  }
-
-  private String toJsonPayload(QueryRootQuery query) {
-    
-    return toJsonPayload(query.toString());
-  }
-
-  private String toJsonPayload(String query) {
-    // Simple JSON escaping - only escape quotes that are actually in the GraphQL
-    // query
-    if (query == null || query.isEmpty()) {
-      throw new IllegalArgumentException("Payload cannot be null or empty");
-    }
-    int queryIndex = query.indexOf("query");
-    if (queryIndex == 0 || queryIndex ==1){
-      return query;
-    }
-    String escapedQuery = query.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
-    if (!query.startsWith("{")) {
-      return String.format(
-          "{\"query\":\"{%s}\"}", escapedQuery);
-    }
-    return String.format(
-        "{\"query\":\"%s\"}", escapedQuery);
-  }
-
-  private String toMutationJsonPayload(MutationQuery mutation) {
-    return toMutationJsonPayload(mutation.toString());
-  }
-
-  /**
-   * Convert a mutation string to JSON payload format.
-   * Unlike queries, mutations don't need additional braces.
-   */
-  private String toMutationJsonPayload(String mutation) {
-    // Simple JSON escaping - only escape quotes that are actually in the GraphQL
-    // mutation
-    String escapedMutation = mutation.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r",
-        "\\r");
-    return String.format("{\"query\":\"%s\"}", escapedMutation);
-  }
-
   /**
    * Determine if a response should be retried based on its status code.
    *
@@ -446,7 +318,8 @@ public class ShopifySdk {
               arg -> arg.first(BATCH_SIZE).after(finalCursor),
               themeQuery -> themeQuery.nodes(
                   themeQueryDef -> themeQueryDef.themeStoreId().createdAt().role().name().updatedAt())));
-      QueryResponse queryResponse = queryShopifyAdmin(toJsonPayload(query));
+      QueryResponse queryResponse = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+          .queryShopifyAdmin(query);
       OnlineStoreThemeConnection onlineStoreThemeConnection = queryResponse.getData().getThemes();
       List<OnlineStoreTheme> nodes = onlineStoreThemeConnection.getNodes();
       if (nodes != null && !nodes.isEmpty()) {
@@ -521,7 +394,8 @@ public class ShopifySdk {
       }
 
       // Execute the query
-      QueryResponse response = queryShopifyAdmin(queryStr);
+      QueryResponse response = ((GraphQLAdminHelper)QueryAdminFactory.createAdminHelper(this, AdminHelperType.GRAPHQL))
+          .queryShopifyAdmin(queryStr);
       OnlineStoreTheme theme = response.getData().getTheme();
 
       if (theme != null && theme.getFiles() != null) {
@@ -682,7 +556,8 @@ public class ShopifySdk {
                   .field()
                   .message())));
 
-      MutationResponse mutationResponse = mutateShopifyAdmin(mutation);
+      MutationResponse mutationResponse = ((MutationAdminHelper) QueryAdminFactory
+          .createAdminHelper(this, QueryAdminFactory.AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");
@@ -788,7 +663,8 @@ public class ShopifySdk {
                     .message());
           }));
 
-      MutationResponse mutationResponse = mutateShopifyAdmin(mutation);
+      MutationResponse mutationResponse = ((MutationAdminHelper) QueryAdminFactory
+          .createAdminHelper(this, QueryAdminFactory.AdminHelperType.MUTATION)).queryShopifyAdmin(mutation);
 
       if (mutationResponse.getData() == null) {
         throw new ShopifySdkException("Invalid response structure from Shopify API");

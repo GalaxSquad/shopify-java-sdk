@@ -91,14 +91,9 @@ public abstract class QueryAdminHelper<T extends Query<T>, R extends Response<? 
         if (payload == null || payload.isEmpty()) {
           throw new IllegalArgumentException("Payload cannot be null or empty");
         }
-        int query = payload.indexOf("query");
-        // if query is not found or query is not the first element, then we need to add
-        // the query key
-        if (query == -1 || query > 1) {
-          payload = toJsonPayload(payload);
-        }
+        String query = toJsonPayload(payload);
         try {
-          HttpResponse<String> response = getStringHttpResponse(payload);
+          HttpResponse<String> response = getStringHttpResponse(query);
           if (response.statusCode() != 200) {
             log.error(
                 "Request error, status code: {}, response: {}", response.statusCode(), response.body());
@@ -112,5 +107,11 @@ public abstract class QueryAdminHelper<T extends Query<T>, R extends Response<? 
           throw new ShopifySdkException("Failed to query Shopify admin API", e);
         }
       }
-
+  
+  public R queryShopifyAdmin(T payload) {
+    if (payload == null || payload.toString().isEmpty()) {
+      throw new IllegalArgumentException("Payload cannot be null or empty");
+    }
+    return queryShopifyAdmin(payload.toString());
+  }
 }
