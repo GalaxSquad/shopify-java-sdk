@@ -1,4 +1,4 @@
-package com.sdk.shopify.dto;
+package com.sdk.shopify.helper.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

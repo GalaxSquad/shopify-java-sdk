@@ -38,3 +38,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# asdf
+.tool-versions
+
+.cursor
