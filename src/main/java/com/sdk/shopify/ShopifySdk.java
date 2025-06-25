@@ -5,7 +5,7 @@ import com.sdk.shopify.helper.QueryAdminFactory.AdminHelperType;
 import com.sdk.shopify.helper.QueryAdminHelper;
 import com.sdk.shopify.helper.GraphQLAdminHelper;
 import com.sdk.shopify.helper.MutationAdminHelper;
-import com.sdk.shopify.helper.dto.Argument;
+import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.mapper.ArgumentMapper;
 import com.sdk.shopify.shopify.*;
 import com.sdk.shopify.util.GraphQLUtils;
