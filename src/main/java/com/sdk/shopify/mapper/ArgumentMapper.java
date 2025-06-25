@@ -1,7 +1,7 @@
 package com.sdk.shopify.mapper;
 
 import com.sdk.shopify.ShopifySdkException;
-import com.sdk.shopify.helper.dto.Argument;
+import com.sdk.shopify.dto.Argument;
 import com.sdk.shopify.shopify.OrderSortKeys;
 import com.sdk.shopify.shopify.QueryRootQuery.OrdersArguments;
 import org.mapstruct.BeanMapping;
