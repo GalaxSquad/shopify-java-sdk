@@ -341,6 +341,10 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
         return "Customer";
     }
 
+    public Boolean getHasTimelineComment() {
+        return (Boolean) get("hasTimelineComment");
+    }
+
     /**
     * A list of addresses associated with the customer.
     */

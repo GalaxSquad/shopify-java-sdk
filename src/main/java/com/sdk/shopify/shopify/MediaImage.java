@@ -207,6 +207,14 @@ public class MediaImage extends AbstractResponse<MediaImage> implements File, Ha
         return this;
     }
 
+    public Metafield getMetafield() {
+        return (Metafield) get("metafield");
+    }
+
+    public MetafieldConnection getMetafields() {
+        return (MetafieldConnection) get("metafields");
+    }
+
     /**
     * The date and time ([ISO 8601 format](http://en.wikipedia.org/wiki/ISO_8601)) when the file was
     * created.

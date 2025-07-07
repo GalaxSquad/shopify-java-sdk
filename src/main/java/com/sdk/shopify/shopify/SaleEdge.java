@@ -27,7 +27,7 @@ public class SaleEdge extends AbstractResponse<SaleEdge> {
                 }
 
                 case "node": {
-                    responseData.put(key, UnknownSale.create(jsonAsObject(field.getValue(), key)));
+                    responseData.put(key, new UnknownSale(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }

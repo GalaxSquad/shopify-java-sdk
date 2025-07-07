@@ -535,7 +535,7 @@ public class ShopifySdk {
 
   public static void main(String[] args) {
     ShopifySdk sdk = ShopifySdk.builder()
-        .apiKey("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")
+        .apiKey("api_key")
         .storeName("kezlo-test-2")
         .build();
 

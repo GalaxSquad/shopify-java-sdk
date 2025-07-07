@@ -162,6 +162,10 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
         return "DiscountAutomaticBxgy";
     }
 
+    public ID getId() {
+        return (ID) get("id");
+    }
+
     /**
     * The number of times that the discount has been used.
     * For example, if a "Buy 3, Get 1 Free" t-shirt discount
