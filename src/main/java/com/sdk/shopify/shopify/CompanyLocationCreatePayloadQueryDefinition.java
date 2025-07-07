@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyLocationCreatePayloadQueryDefinition {
     void define(CompanyLocationCreatePayloadQuery _queryBuilder);
 }

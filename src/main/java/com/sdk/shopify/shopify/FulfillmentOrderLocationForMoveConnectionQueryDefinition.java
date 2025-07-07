@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderLocationForMoveConnectionQueryDefinition {
     void define(FulfillmentOrderLocationForMoveConnectionQuery _queryBuilder);
 }

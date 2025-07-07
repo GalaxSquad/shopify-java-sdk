@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TransactionVoidPayloadQueryDefinition {
     void define(TransactionVoidPayloadQuery _queryBuilder);
 }

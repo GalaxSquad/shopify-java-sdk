@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MerchantApprovalSignalsQueryDefinition {
     void define(MerchantApprovalSignalsQuery _queryBuilder);
 }

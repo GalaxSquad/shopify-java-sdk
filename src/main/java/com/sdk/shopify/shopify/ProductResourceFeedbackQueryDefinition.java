@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductResourceFeedbackQueryDefinition {
     void define(ProductResourceFeedbackQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocalPaymentMethodsPaymentDetailsQueryDefinition {
     void define(LocalPaymentMethodsPaymentDetailsQuery _queryBuilder);
 }

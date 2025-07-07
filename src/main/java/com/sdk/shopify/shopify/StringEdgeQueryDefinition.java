@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface StringEdgeQueryDefinition {
     void define(StringEdgeQuery _queryBuilder);
 }

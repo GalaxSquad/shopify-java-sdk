@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `PubSubWebhookSubscriptionUpdateUserError`.
 */
@@ -10,6 +14,11 @@ public enum PubSubWebhookSubscriptionUpdateUserErrorCode {
     * Invalid parameters provided.
     */
     INVALID_PARAMETERS,
+
+    /**
+    * Address for this topic has already been taken.
+    */
+    TAKEN,
 
     UNKNOWN_VALUE;
 
@@ -23,6 +32,10 @@ public enum PubSubWebhookSubscriptionUpdateUserErrorCode {
                 return INVALID_PARAMETERS;
             }
 
+            case "TAKEN": {
+                return TAKEN;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -32,6 +45,10 @@ public enum PubSubWebhookSubscriptionUpdateUserErrorCode {
         switch (this) {
             case INVALID_PARAMETERS: {
                 return "INVALID_PARAMETERS";
+            }
+
+            case TAKEN: {
+                return "TAKEN";
             }
 
             default: {

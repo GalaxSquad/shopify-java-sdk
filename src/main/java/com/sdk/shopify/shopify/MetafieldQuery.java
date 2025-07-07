@@ -55,15 +55,6 @@ public class MetafieldQuery extends Query<MetafieldQuery> {
     }
 
     /**
-    * The description of the metafield.
-    */
-    public MetafieldQuery description() {
-        startField("description");
-
-        return this;
-    }
-
-    /**
     * The data stored in the metafield in JSON format.
     */
     public MetafieldQuery jsonValue() {

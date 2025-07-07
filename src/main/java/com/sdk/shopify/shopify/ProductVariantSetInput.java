@@ -39,6 +39,10 @@ public class ProductVariantSetInput implements Serializable {
 
     private Input<String> taxCode = Input.undefined();
 
+    private Input<UnitPriceMeasurementInput> unitPriceMeasurement = Input.undefined();
+
+    private Input<Boolean> showUnitPrice = Input.undefined();
+
     public ProductVariantSetInput(List<VariantOptionValueInput> optionValues) {
         this.optionValues = optionValues;
     }
@@ -346,6 +350,48 @@ public class ProductVariantSetInput implements Serializable {
         return this;
     }
 
+    public UnitPriceMeasurementInput getUnitPriceMeasurement() {
+        return unitPriceMeasurement.getValue();
+    }
+
+    public Input<UnitPriceMeasurementInput> getUnitPriceMeasurementInput() {
+        return unitPriceMeasurement;
+    }
+
+    public ProductVariantSetInput setUnitPriceMeasurement(UnitPriceMeasurementInput unitPriceMeasurement) {
+        this.unitPriceMeasurement = Input.optional(unitPriceMeasurement);
+        return this;
+    }
+
+    public ProductVariantSetInput setUnitPriceMeasurementInput(Input<UnitPriceMeasurementInput> unitPriceMeasurement) {
+        if (unitPriceMeasurement == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.unitPriceMeasurement = unitPriceMeasurement;
+        return this;
+    }
+
+    public Boolean getShowUnitPrice() {
+        return showUnitPrice.getValue();
+    }
+
+    public Input<Boolean> getShowUnitPriceInput() {
+        return showUnitPrice;
+    }
+
+    public ProductVariantSetInput setShowUnitPrice(Boolean showUnitPrice) {
+        this.showUnitPrice = Input.optional(showUnitPrice);
+        return this;
+    }
+
+    public ProductVariantSetInput setShowUnitPriceInput(Input<Boolean> showUnitPrice) {
+        if (showUnitPrice == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.showUnitPrice = showUnitPrice;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
@@ -531,6 +577,28 @@ public class ProductVariantSetInput implements Serializable {
             _queryBuilder.append("taxCode:");
             if (taxCode.getValue() != null) {
                 Query.appendQuotedString(_queryBuilder, taxCode.getValue().toString());
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.unitPriceMeasurement.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("unitPriceMeasurement:");
+            if (unitPriceMeasurement.getValue() != null) {
+                unitPriceMeasurement.getValue().appendTo(_queryBuilder);
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.showUnitPrice.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("showUnitPrice:");
+            if (showUnitPrice.getValue() != null) {
+                _queryBuilder.append(showUnitPrice.getValue());
             } else {
                 _queryBuilder.append("null");
             }

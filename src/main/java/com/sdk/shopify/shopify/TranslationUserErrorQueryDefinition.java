@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface TranslationUserErrorQueryDefinition {
     void define(TranslationUserErrorQuery _queryBuilder);
 }

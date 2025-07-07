@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeletionEventEdgeQueryDefinition {
     void define(DeletionEventEdgeQuery _queryBuilder);
 }

@@ -44,6 +44,18 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
                     break;
                 }
 
+                case "processableQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
+                case "processedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
                 case "quantity": {
                     responseData.put(key, jsonAsInteger(field.getValue(), key));
 
@@ -92,6 +104,12 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
                     }
 
                     responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "unprocessedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
 
                     break;
                 }
@@ -154,6 +172,32 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
 
     public ID getId() {
         return (ID) get("id");
+    }
+
+    /**
+    * The quantity that can be processed.
+    */
+
+    public Integer getProcessableQuantity() {
+        return (Integer) get("processableQuantity");
+    }
+
+    public ReturnLineItem setProcessableQuantity(Integer arg) {
+        optimisticData.put(getKey("processableQuantity"), arg);
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+
+    public Integer getProcessedQuantity() {
+        return (Integer) get("processedQuantity");
+    }
+
+    public ReturnLineItem setProcessedQuantity(Integer arg) {
+        optimisticData.put(getKey("processedQuantity"), arg);
+        return this;
     }
 
     /**
@@ -248,6 +292,19 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
     }
 
     /**
+    * The quantity that has't been processed.
+    */
+
+    public Integer getUnprocessedQuantity() {
+        return (Integer) get("unprocessedQuantity");
+    }
+
+    public ReturnLineItem setUnprocessedQuantity(Integer arg) {
+        optimisticData.put(getKey("unprocessedQuantity"), arg);
+        return this;
+    }
+
+    /**
     * The total line price after all discounts on the line item, including both line item level discounts
     * and code-based line item discounts, are applied.
     */
@@ -269,6 +326,10 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
 
             case "id": return false;
 
+            case "processableQuantity": return false;
+
+            case "processedQuantity": return false;
+
             case "quantity": return false;
 
             case "refundableQuantity": return false;
@@ -282,6 +343,8 @@ public class ReturnLineItem extends AbstractResponse<ReturnLineItem> implements 
             case "returnReasonNote": return false;
 
             case "totalWeight": return true;
+
+            case "unprocessedQuantity": return false;
 
             case "withCodeDiscountedTotalPriceSet": return true;
 

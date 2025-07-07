@@ -51,13 +51,4 @@ public class ChannelDefinitionQuery extends Query<ChannelDefinitionQuery> {
 
         return this;
     }
-
-    /**
-    * Icon displayed when showing the channel in admin.
-    */
-    public ChannelDefinitionQuery svgIcon() {
-        startField("svgIcon");
-
-        return this;
-    }
 }

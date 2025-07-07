@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ExternalVideoQueryDefinition {
     void define(ExternalVideoQuery _queryBuilder);
 }

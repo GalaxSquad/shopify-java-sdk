@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductFeedQueryDefinition {
     void define(ProductFeedQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StagedUploadTargetGeneratePayloadQueryDefinition {
     void define(StagedUploadTargetGeneratePayloadQuery _queryBuilder);
 }

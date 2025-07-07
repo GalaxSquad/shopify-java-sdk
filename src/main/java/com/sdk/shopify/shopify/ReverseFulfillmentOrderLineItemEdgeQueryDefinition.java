@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReverseFulfillmentOrderLineItemEdgeQueryDefinition {
     void define(ReverseFulfillmentOrderLineItemEdgeQuery _queryBuilder);
 }

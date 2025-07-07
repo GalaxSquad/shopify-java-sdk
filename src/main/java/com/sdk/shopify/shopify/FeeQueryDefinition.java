@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FeeQueryDefinition {
     void define(FeeQuery _queryBuilder);
 }

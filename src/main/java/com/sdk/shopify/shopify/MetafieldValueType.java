@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Legacy type information for the stored value.
 * Replaced by `type`.

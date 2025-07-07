@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentCustomizationUpdatePayloadQueryDefinition {
     void define(PaymentCustomizationUpdatePayloadQuery _queryBuilder);
 }

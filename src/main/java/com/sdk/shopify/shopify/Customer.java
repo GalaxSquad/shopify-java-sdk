@@ -91,6 +91,28 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
                     break;
                 }
 
+                case "defaultEmailAddress": {
+                    CustomerEmailAddress optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerEmailAddress(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "defaultPhoneNumber": {
+                    CustomerPhoneNumber optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerPhoneNumber(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "displayName": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -162,17 +184,6 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
 
                 case "locale": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
-
-                    break;
-                }
-
-                case "market": {
-                    Market optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = new Market(jsonAsObject(field.getValue(), key));
-                    }
-
-                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -330,11 +341,6 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
         return "Customer";
     }
 
-    @Override
-    public Boolean getHasTimelineComment() {
-        return (Boolean) get("hasTimelineComment");
-    }
-
     /**
     * A list of addresses associated with the customer.
     */
@@ -439,6 +445,32 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
 
     public Customer setDefaultAddress(MailingAddress arg) {
         optimisticData.put(getKey("defaultAddress"), arg);
+        return this;
+    }
+
+    /**
+    * The customer's default email address.
+    */
+
+    public CustomerEmailAddress getDefaultEmailAddress() {
+        return (CustomerEmailAddress) get("defaultEmailAddress");
+    }
+
+    public Customer setDefaultEmailAddress(CustomerEmailAddress arg) {
+        optimisticData.put(getKey("defaultEmailAddress"), arg);
+        return this;
+    }
+
+    /**
+    * The customer's default phone number.
+    */
+
+    public CustomerPhoneNumber getDefaultPhoneNumber() {
+        return (CustomerPhoneNumber) get("defaultPhoneNumber");
+    }
+
+    public Customer setDefaultPhoneNumber(CustomerPhoneNumber arg) {
+        optimisticData.put(getKey("defaultPhoneNumber"), arg);
         return this;
     }
 
@@ -568,19 +600,6 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
 
     public Customer setLocale(String arg) {
         optimisticData.put(getKey("locale"), arg);
-        return this;
-    }
-
-    /**
-    * The market that includes the customer’s default address.
-    */
-
-    public Market getMarket() {
-        return (Market) get("market");
-    }
-
-    public Customer setMarket(Market arg) {
-        optimisticData.put(getKey("market"), arg);
         return this;
     }
 
@@ -842,6 +861,10 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
 
             case "defaultAddress": return true;
 
+            case "defaultEmailAddress": return true;
+
+            case "defaultPhoneNumber": return true;
+
             case "displayName": return false;
 
             case "events": return true;
@@ -861,8 +884,6 @@ public class Customer extends AbstractResponse<Customer> implements CommentEvent
             case "lifetimeDuration": return false;
 
             case "locale": return false;
-
-            case "market": return true;
 
             case "mergeable": return true;
 

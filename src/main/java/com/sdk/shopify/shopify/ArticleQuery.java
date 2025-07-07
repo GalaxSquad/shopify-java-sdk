@@ -120,11 +120,17 @@ public class ArticleQuery extends Query<ArticleQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time | Filter by the date and time when the comment was created. | | | -
+        * `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | published_at | time | Filter by the date and time when the comment was published. | | | -
+        * `published_at:>'2020-10-21T23:39:20Z'`<br/> - `published_at:<now`<br/> - `published_at:<=2024` |
         * | published_status | string | Filter by published status | - `any`<br/> - `published`<br/> -
         * `unpublished` | | - `published_status:any`<br/> - `published_status:published`<br/> -
         * `published_status:unpublished` |
         * | status | string |
+        * | updated_at | time | Filter by the date and time when the comment was last updated. | | | -
+        * `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> - `updated_at:<=2024` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
         * syntax](https://shopify.dev/api/usage/search-syntax).
         */
@@ -176,11 +182,17 @@ public class ArticleQuery extends Query<ArticleQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time | Filter by the date and time when the comment was created. | | | -
+        * `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | published_at | time | Filter by the date and time when the comment was published. | | | -
+        * `published_at:>'2020-10-21T23:39:20Z'`<br/> - `published_at:<now`<br/> - `published_at:<=2024` |
         * | published_status | string | Filter by published status | - `any`<br/> - `published`<br/> -
         * `unpublished` | | - `published_status:any`<br/> - `published_status:published`<br/> -
         * `published_status:unpublished` |
         * | status | string |
+        * | updated_at | time | Filter by the date and time when the comment was last updated. | | | -
+        * `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> - `updated_at:<=2024` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
         * syntax](https://shopify.dev/api/usage/search-syntax).
         */
@@ -191,6 +203,17 @@ public class ArticleQuery extends Query<ArticleQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CommentsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface CommentsCountArgumentsDefinition {
@@ -198,14 +221,14 @@ public class ArticleQuery extends Query<ArticleQuery> {
     }
 
     /**
-    * Count of comments.
+    * Count of comments. Limited to a maximum of 10000 by default.
     */
     public ArticleQuery commentsCount(CountQueryDefinition queryDef) {
         return commentsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of comments.
+    * Count of comments. Limited to a maximum of 10000 by default.
     */
     public ArticleQuery commentsCount(CommentsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("commentsCount");

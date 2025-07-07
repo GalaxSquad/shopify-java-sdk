@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CalculatedDraftOrderQueryDefinition {
     void define(CalculatedDraftOrderQuery _queryBuilder);
 }

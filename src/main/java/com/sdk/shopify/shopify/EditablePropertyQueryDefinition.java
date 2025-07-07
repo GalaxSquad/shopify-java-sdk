@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface EditablePropertyQueryDefinition {
     void define(EditablePropertyQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderUpdatePayloadQueryDefinition {
     void define(OrderUpdatePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The [discount
 * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)

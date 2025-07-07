@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountAutomaticFreeShippingCreatePayloadQueryDefinition {
     void define(DiscountAutomaticFreeShippingCreatePayloadQuery _queryBuilder);
 }

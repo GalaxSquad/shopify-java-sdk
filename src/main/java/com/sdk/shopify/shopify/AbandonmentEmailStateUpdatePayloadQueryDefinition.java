@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AbandonmentEmailStateUpdatePayloadQueryDefinition {
     void define(AbandonmentEmailStateUpdatePayloadQuery _queryBuilder);
 }

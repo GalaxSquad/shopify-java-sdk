@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SuggestedOrderTransactionQueryDefinition {
     void define(SuggestedOrderTransactionQuery _queryBuilder);
 }

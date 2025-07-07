@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceRuleEntitlementToPrerequisiteQuantityRatioQueryDefinition {
     void define(PriceRuleEntitlementToPrerequisiteQuantityRatioQuery _queryBuilder);
 }

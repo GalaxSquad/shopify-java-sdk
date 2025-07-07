@@ -5,6 +5,7 @@ package com.sdk.shopify.shopify;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.shopify.graphql.support.AbstractResponse;
+import com.shopify.graphql.support.ID;
 import com.shopify.graphql.support.SchemaViolationError;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,17 @@ public class ProductFullSyncPayload extends AbstractResponse<ProductFullSyncPayl
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
+                case "id": {
+                    ID optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ID(jsonAsString(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "userErrors": {
                     List<ProductFullSyncUserError> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -49,6 +61,19 @@ public class ProductFullSyncPayload extends AbstractResponse<ProductFullSyncPayl
     }
 
     /**
+    * The ID for the full sync operation.
+    */
+
+    public ID getId() {
+        return (ID) get("id");
+    }
+
+    public ProductFullSyncPayload setId(ID arg) {
+        optimisticData.put(getKey("id"), arg);
+        return this;
+    }
+
+    /**
     * The list of errors that occurred from executing the mutation.
     */
 
@@ -63,6 +88,8 @@ public class ProductFullSyncPayload extends AbstractResponse<ProductFullSyncPayl
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
+            case "id": return false;
+
             case "userErrors": return true;
 
             default: return false;

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ValidationUpdatePayloadQueryDefinition {
     void define(ValidationUpdatePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShippingRefundQueryDefinition {
     void define(ShippingRefundQuery _queryBuilder);
 }

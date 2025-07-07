@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SellingPlanGroupEdgeQueryDefinition {
     void define(SellingPlanGroupEdgeQuery _queryBuilder);
 }

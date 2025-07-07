@@ -72,6 +72,17 @@ public class AppDiscountTypeQuery extends Query<AppDiscountTypeQuery> {
     }
 
     /**
+    * The list of [discount
+    * classes](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
+    * that this app extension supports.
+    */
+    public AppDiscountTypeQuery discountClasses() {
+        startField("discountClasses");
+
+        return this;
+    }
+
+    /**
     * The
     * [function
     * ID](https://shopify.dev/docs/apps/build/functions/input-output/metafields-for-input-queries)

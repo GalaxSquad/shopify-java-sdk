@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyLocationCreateTaxRegistrationPayloadQueryDefinition {
     void define(CompanyLocationCreateTaxRegistrationPayloadQuery _queryBuilder);
 }

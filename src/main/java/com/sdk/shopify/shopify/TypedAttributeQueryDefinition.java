@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TypedAttributeQueryDefinition {
     void define(TypedAttributeQuery _queryBuilder);
 }

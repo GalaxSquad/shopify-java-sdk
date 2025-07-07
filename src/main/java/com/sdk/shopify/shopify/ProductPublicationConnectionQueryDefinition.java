@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductPublicationConnectionQueryDefinition {
     void define(ProductPublicationConnectionQuery _queryBuilder);
 }

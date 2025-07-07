@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyAddressQueryDefinition {
     void define(CompanyAddressQuery _queryBuilder);
 }

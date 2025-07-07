@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MediaWarningQueryDefinition {
     void define(MediaWarningQuery _queryBuilder);
 }

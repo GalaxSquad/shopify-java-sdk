@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FunctionsErrorHistoryQueryDefinition {
     void define(FunctionsErrorHistoryQuery _queryBuilder);
 }

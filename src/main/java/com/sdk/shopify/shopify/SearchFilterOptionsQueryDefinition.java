@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SearchFilterOptionsQueryDefinition {
     void define(SearchFilterOptionsQuery _queryBuilder);
 }

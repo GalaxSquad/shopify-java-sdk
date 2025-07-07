@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeletionEventQueryDefinition {
     void define(DeletionEventQuery _queryBuilder);
 }

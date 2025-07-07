@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionDeliveryOptionQueryDefinition {
     void define(SubscriptionDeliveryOptionQuery _queryBuilder);
 }

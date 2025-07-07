@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StandardMetaobjectDefinitionEnablePayloadQueryDefinition {
     void define(StandardMetaobjectDefinitionEnablePayloadQuery _queryBuilder);
 }

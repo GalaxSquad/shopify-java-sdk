@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderEditAddCustomItemPayloadQueryDefinition {
     void define(OrderEditAddCustomItemPayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GiftCardSendNotificationToCustomerPayloadQueryDefinition {
     void define(GiftCardSendNotificationToCustomerPayloadQuery _queryBuilder);
 }

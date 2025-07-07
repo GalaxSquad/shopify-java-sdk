@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ScriptTagConnectionQueryDefinition {
     void define(ScriptTagConnectionQuery _queryBuilder);
 }

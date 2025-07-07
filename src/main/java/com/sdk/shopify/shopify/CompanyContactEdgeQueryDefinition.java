@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyContactEdgeQueryDefinition {
     void define(CompanyContactEdgeQuery _queryBuilder);
 }

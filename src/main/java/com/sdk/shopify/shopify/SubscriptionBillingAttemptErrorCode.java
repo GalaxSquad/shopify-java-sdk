@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The possible error codes associated with making billing attempts. The error codes supplement the
 * `error_message` to provide consistent results and help with dunning management.
@@ -48,6 +52,11 @@ public enum SubscriptionBillingAttemptErrorCode {
     FRAUD_SUSPECTED,
 
     /**
+    * Gift cards must have a price greater than zero.
+    */
+    FREE_GIFT_CARD_NOT_ALLOWED,
+
+    /**
     * Insufficient funds.
     */
     INSUFFICIENT_FUNDS,
@@ -81,6 +90,11 @@ public enum SubscriptionBillingAttemptErrorCode {
     * A payment has already been made for this invoice.
     */
     INVOICE_ALREADY_PAID,
+
+    /**
+    * Non-test order limit reached. Use a test payment gateway to place another order.
+    */
+    NON_TEST_ORDER_LIMIT_REACHED,
 
     /**
     * Payment method was declined by processor.
@@ -167,6 +181,10 @@ public enum SubscriptionBillingAttemptErrorCode {
                 return FRAUD_SUSPECTED;
             }
 
+            case "FREE_GIFT_CARD_NOT_ALLOWED": {
+                return FREE_GIFT_CARD_NOT_ALLOWED;
+            }
+
             case "INSUFFICIENT_FUNDS": {
                 return INSUFFICIENT_FUNDS;
             }
@@ -193,6 +211,10 @@ public enum SubscriptionBillingAttemptErrorCode {
 
             case "INVOICE_ALREADY_PAID": {
                 return INVOICE_ALREADY_PAID;
+            }
+
+            case "NON_TEST_ORDER_LIMIT_REACHED": {
+                return NON_TEST_ORDER_LIMIT_REACHED;
             }
 
             case "PAYMENT_METHOD_DECLINED": {
@@ -270,6 +292,10 @@ public enum SubscriptionBillingAttemptErrorCode {
                 return "FRAUD_SUSPECTED";
             }
 
+            case FREE_GIFT_CARD_NOT_ALLOWED: {
+                return "FREE_GIFT_CARD_NOT_ALLOWED";
+            }
+
             case INSUFFICIENT_FUNDS: {
                 return "INSUFFICIENT_FUNDS";
             }
@@ -296,6 +322,10 @@ public enum SubscriptionBillingAttemptErrorCode {
 
             case INVOICE_ALREADY_PAID: {
                 return "INVOICE_ALREADY_PAID";
+            }
+
+            case NON_TEST_ORDER_LIMIT_REACHED: {
+                return "NON_TEST_ORDER_LIMIT_REACHED";
             }
 
             case PAYMENT_METHOD_DECLINED: {

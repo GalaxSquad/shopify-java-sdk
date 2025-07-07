@@ -2,10 +2,19 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `FulfillmentOrderHoldUserError`.
 */
 public enum FulfillmentOrderHoldUserErrorCode {
+    /**
+    * The fulfillment order line items are not unique.
+    */
+    DUPLICATED_FULFILLMENT_ORDER_LINE_ITEMS,
+
     /**
     * The handle provided for the fulfillment hold is already in use by this app for another hold on this
     * fulfillment order.
@@ -51,6 +60,10 @@ public enum FulfillmentOrderHoldUserErrorCode {
         }
 
         switch (value) {
+            case "DUPLICATED_FULFILLMENT_ORDER_LINE_ITEMS": {
+                return DUPLICATED_FULFILLMENT_ORDER_LINE_ITEMS;
+            }
+
             case "DUPLICATE_FULFILLMENT_HOLD_HANDLE": {
                 return DUPLICATE_FULFILLMENT_HOLD_HANDLE;
             }
@@ -86,6 +99,10 @@ public enum FulfillmentOrderHoldUserErrorCode {
     }
     public String toString() {
         switch (this) {
+            case DUPLICATED_FULFILLMENT_ORDER_LINE_ITEMS: {
+                return "DUPLICATED_FULFILLMENT_ORDER_LINE_ITEMS";
+            }
+
             case DUPLICATE_FULFILLMENT_HOLD_HANDLE: {
                 return "DUPLICATE_FULFILLMENT_HOLD_HANDLE";
             }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionBillingCycleScheduleEditPayloadQueryDefinition {
     void define(SubscriptionBillingCycleScheduleEditPayloadQuery _queryBuilder);
 }

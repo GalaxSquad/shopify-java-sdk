@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountCodeBasicUpdatePayloadQueryDefinition {
     void define(DiscountCodeBasicUpdatePayloadQuery _queryBuilder);
 }

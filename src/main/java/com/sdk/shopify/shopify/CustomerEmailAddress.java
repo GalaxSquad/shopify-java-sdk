@@ -26,6 +26,17 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
                     break;
                 }
 
+                case "marketingOptInLevel": {
+                    CustomerMarketingOptInLevel optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = CustomerMarketingOptInLevel.fromGraphQl(jsonAsString(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "marketingState": {
                     responseData.put(key, CustomerEmailAddressMarketingState.fromGraphQl(jsonAsString(field.getValue(), key)));
 
@@ -38,6 +49,17 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
                     break;
                 }
 
+                case "marketingUpdatedAt": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "openTrackingLevel": {
                     responseData.put(key, CustomerEmailAddressOpenTrackingLevel.fromGraphQl(jsonAsString(field.getValue(), key)));
 
@@ -46,6 +68,23 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
 
                 case "openTrackingUrl": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
+
+                    break;
+                }
+
+                case "sourceLocation": {
+                    Location optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Location(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "validFormat": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
 
                     break;
                 }
@@ -79,6 +118,20 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
     }
 
     /**
+    * The marketing subscription opt-in level, as described by the M3AAWG best practices guidelines,
+    * received when the marketing consent was updated.
+    */
+
+    public CustomerMarketingOptInLevel getMarketingOptInLevel() {
+        return (CustomerMarketingOptInLevel) get("marketingOptInLevel");
+    }
+
+    public CustomerEmailAddress setMarketingOptInLevel(CustomerMarketingOptInLevel arg) {
+        optimisticData.put(getKey("marketingOptInLevel"), arg);
+        return this;
+    }
+
+    /**
     * Whether the customer has subscribed to email marketing.
     */
 
@@ -101,6 +154,20 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
 
     public CustomerEmailAddress setMarketingUnsubscribeUrl(String arg) {
         optimisticData.put(getKey("marketingUnsubscribeUrl"), arg);
+        return this;
+    }
+
+    /**
+    * The date and time at which the marketing consent was updated.
+    * No date is provided if the email address never updated its marketing consent.
+    */
+
+    public String getMarketingUpdatedAt() {
+        return (String) get("marketingUpdatedAt");
+    }
+
+    public CustomerEmailAddress setMarketingUpdatedAt(String arg) {
+        optimisticData.put(getKey("marketingUpdatedAt"), arg);
         return this;
     }
 
@@ -130,17 +197,53 @@ public class CustomerEmailAddress extends AbstractResponse<CustomerEmailAddress>
         return this;
     }
 
+    /**
+    * The location where the customer consented to receive marketing material by email.
+    */
+
+    public Location getSourceLocation() {
+        return (Location) get("sourceLocation");
+    }
+
+    public CustomerEmailAddress setSourceLocation(Location arg) {
+        optimisticData.put(getKey("sourceLocation"), arg);
+        return this;
+    }
+
+    /**
+    * Whether the email address is formatted correctly.
+    * Returns `true` when the email is formatted correctly. This doesn't guarantee that the email address
+    * actually exists.
+    */
+
+    public Boolean getValidFormat() {
+        return (Boolean) get("validFormat");
+    }
+
+    public CustomerEmailAddress setValidFormat(Boolean arg) {
+        optimisticData.put(getKey("validFormat"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "emailAddress": return false;
+
+            case "marketingOptInLevel": return false;
 
             case "marketingState": return false;
 
             case "marketingUnsubscribeUrl": return false;
 
+            case "marketingUpdatedAt": return false;
+
             case "openTrackingLevel": return false;
 
             case "openTrackingUrl": return false;
+
+            case "sourceLocation": return true;
+
+            case "validFormat": return false;
 
             default: return false;
         }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface Vector3QueryDefinition {
     void define(Vector3Query _queryBuilder);
 }

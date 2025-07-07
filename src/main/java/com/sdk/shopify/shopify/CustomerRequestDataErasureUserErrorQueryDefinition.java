@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerRequestDataErasureUserErrorQueryDefinition {
     void define(CustomerRequestDataErasureUserErrorQuery _queryBuilder);
 }

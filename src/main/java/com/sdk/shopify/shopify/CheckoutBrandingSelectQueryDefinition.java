@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingSelectQueryDefinition {
     void define(CheckoutBrandingSelectQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductCategoryQueryDefinition {
     void define(ProductCategoryQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionDiscountPercentageValueQueryDefinition {
     void define(SubscriptionDiscountPercentageValueQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `MarketingActivityUserError`.
 */
@@ -126,6 +128,21 @@ public enum MarketingActivityUserErrorCode {
     MARKETING_ACTIVITY_DOES_NOT_EXIST,
 
     /**
+    * A marketing activity with the same remote ID already exists.
+    */
+    MARKETING_ACTIVITY_WITH_REMOTE_ID_ALREADY_EXISTS,
+
+    /**
+    * A marketing activity with the same URL parameter value already exists.
+    */
+    MARKETING_ACTIVITY_WITH_URL_PARAMETER_VALUE_ALREADY_EXISTS,
+
+    /**
+    * A marketing activity with the same UTM campaign, medium, and source already exists.
+    */
+    MARKETING_ACTIVITY_WITH_UTM_CAMPAIGN_ALREADY_EXISTS,
+
+    /**
     * Marketing activity is not valid, the associated marketing event does not exist.
     */
     MARKETING_EVENT_DOES_NOT_EXIST,
@@ -236,6 +253,18 @@ public enum MarketingActivityUserErrorCode {
                 return MARKETING_ACTIVITY_DOES_NOT_EXIST;
             }
 
+            case "MARKETING_ACTIVITY_WITH_REMOTE_ID_ALREADY_EXISTS": {
+                return MARKETING_ACTIVITY_WITH_REMOTE_ID_ALREADY_EXISTS;
+            }
+
+            case "MARKETING_ACTIVITY_WITH_URL_PARAMETER_VALUE_ALREADY_EXISTS": {
+                return MARKETING_ACTIVITY_WITH_URL_PARAMETER_VALUE_ALREADY_EXISTS;
+            }
+
+            case "MARKETING_ACTIVITY_WITH_UTM_CAMPAIGN_ALREADY_EXISTS": {
+                return MARKETING_ACTIVITY_WITH_UTM_CAMPAIGN_ALREADY_EXISTS;
+            }
+
             case "MARKETING_EVENT_DOES_NOT_EXIST": {
                 return MARKETING_EVENT_DOES_NOT_EXIST;
             }
@@ -341,6 +370,18 @@ public enum MarketingActivityUserErrorCode {
 
             case MARKETING_ACTIVITY_DOES_NOT_EXIST: {
                 return "MARKETING_ACTIVITY_DOES_NOT_EXIST";
+            }
+
+            case MARKETING_ACTIVITY_WITH_REMOTE_ID_ALREADY_EXISTS: {
+                return "MARKETING_ACTIVITY_WITH_REMOTE_ID_ALREADY_EXISTS";
+            }
+
+            case MARKETING_ACTIVITY_WITH_URL_PARAMETER_VALUE_ALREADY_EXISTS: {
+                return "MARKETING_ACTIVITY_WITH_URL_PARAMETER_VALUE_ALREADY_EXISTS";
+            }
+
+            case MARKETING_ACTIVITY_WITH_UTM_CAMPAIGN_ALREADY_EXISTS: {
+                return "MARKETING_ACTIVITY_WITH_UTM_CAMPAIGN_ALREADY_EXISTS";
             }
 
             case MARKETING_EVENT_DOES_NOT_EXIST: {

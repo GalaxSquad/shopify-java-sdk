@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsExtendedAuthorizationQueryDefinition {
     void define(ShopifyPaymentsExtendedAuthorizationQuery _queryBuilder);
 }

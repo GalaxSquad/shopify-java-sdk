@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CheckoutBrandingShopifyFontQueryDefinition {
     void define(CheckoutBrandingShopifyFontQuery _queryBuilder);
 }

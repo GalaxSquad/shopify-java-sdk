@@ -3,6 +3,8 @@
 package com.sdk.shopify.shopify;
 
 
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the DiscountCode query.
 */

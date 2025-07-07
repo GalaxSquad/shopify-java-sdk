@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderDeleteUserErrorQueryDefinition {
     void define(OrderDeleteUserErrorQuery _queryBuilder);
 }

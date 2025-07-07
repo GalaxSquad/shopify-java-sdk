@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductFullSyncUserErrorQueryDefinition {
     void define(ProductFullSyncUserErrorQuery _queryBuilder);
 }

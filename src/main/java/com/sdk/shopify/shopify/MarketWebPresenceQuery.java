@@ -2,6 +2,7 @@
 
 package com.sdk.shopify.shopify;
 
+import com.shopify.graphql.support.Arguments;
 import com.shopify.graphql.support.Query;
 
 /**
@@ -71,14 +72,92 @@ public class MarketWebPresenceQuery extends Query<MarketWebPresenceQuery> {
         return this;
     }
 
+    public class MarketsArguments extends Arguments {
+        MarketsArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public MarketsArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public MarketsArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public MarketsArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public MarketsArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public MarketsArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface MarketsArgumentsDefinition {
+        void define(MarketsArguments args);
+    }
+
     /**
-    * The associated market.
+    * The associated markets for this web presence.
     */
-    public MarketWebPresenceQuery market(MarketQueryDefinition queryDef) {
-        startField("market");
+    public MarketWebPresenceQuery markets(MarketConnectionQueryDefinition queryDef) {
+        return markets(args -> {}, queryDef);
+    }
+
+    /**
+    * The associated markets for this web presence.
+    */
+    public MarketWebPresenceQuery markets(MarketsArgumentsDefinition argsDef, MarketConnectionQueryDefinition queryDef) {
+        startField("markets");
+
+        MarketsArguments args = new MarketsArguments(_queryBuilder);
+        argsDef.define(args);
+        MarketsArguments.end(args);
 
         _queryBuilder.append('{');
-        queryDef.define(new MarketQuery(_queryBuilder));
+        queryDef.define(new MarketConnectionQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;

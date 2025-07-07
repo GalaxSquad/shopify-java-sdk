@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UrlRedirectImportCreatePayloadQueryDefinition {
     void define(UrlRedirectImportCreatePayloadQuery _queryBuilder);
 }

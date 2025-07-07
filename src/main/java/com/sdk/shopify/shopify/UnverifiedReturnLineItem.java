@@ -38,6 +38,18 @@ public class UnverifiedReturnLineItem extends AbstractResponse<UnverifiedReturnL
                     break;
                 }
 
+                case "processableQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
+                case "processedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
                 case "quantity": {
                     responseData.put(key, jsonAsInteger(field.getValue(), key));
 
@@ -70,6 +82,12 @@ public class UnverifiedReturnLineItem extends AbstractResponse<UnverifiedReturnL
 
                 case "unitPrice": {
                     responseData.put(key, new MoneyV2(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "unprocessedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
 
                     break;
                 }
@@ -113,6 +131,32 @@ public class UnverifiedReturnLineItem extends AbstractResponse<UnverifiedReturnL
 
     public ID getId() {
         return (ID) get("id");
+    }
+
+    /**
+    * The quantity that can be processed.
+    */
+
+    public Integer getProcessableQuantity() {
+        return (Integer) get("processableQuantity");
+    }
+
+    public UnverifiedReturnLineItem setProcessableQuantity(Integer arg) {
+        optimisticData.put(getKey("processableQuantity"), arg);
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+
+    public Integer getProcessedQuantity() {
+        return (Integer) get("processedQuantity");
+    }
+
+    public UnverifiedReturnLineItem setProcessedQuantity(Integer arg) {
+        optimisticData.put(getKey("processedQuantity"), arg);
+        return this;
     }
 
     /**
@@ -193,11 +237,28 @@ public class UnverifiedReturnLineItem extends AbstractResponse<UnverifiedReturnL
         return this;
     }
 
+    /**
+    * The quantity that has't been processed.
+    */
+
+    public Integer getUnprocessedQuantity() {
+        return (Integer) get("unprocessedQuantity");
+    }
+
+    public UnverifiedReturnLineItem setUnprocessedQuantity(Integer arg) {
+        optimisticData.put(getKey("unprocessedQuantity"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "customerNote": return false;
 
             case "id": return false;
+
+            case "processableQuantity": return false;
+
+            case "processedQuantity": return false;
 
             case "quantity": return false;
 
@@ -210,6 +271,8 @@ public class UnverifiedReturnLineItem extends AbstractResponse<UnverifiedReturnL
             case "returnReasonNote": return false;
 
             case "unitPrice": return true;
+
+            case "unprocessedQuantity": return false;
 
             default: return false;
         }

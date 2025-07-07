@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ScriptDiscountApplicationQueryDefinition {
     void define(ScriptDiscountApplicationQuery _queryBuilder);
 }

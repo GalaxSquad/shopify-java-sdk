@@ -156,4 +156,17 @@ public class ProductVariantContextualPricingQuery extends Query<ProductVariantCo
 
         return this;
     }
+
+    /**
+    * The unit price value for the given context based on the variant measurement.
+    */
+    public ProductVariantContextualPricingQuery unitPrice(MoneyV2QueryDefinition queryDef) {
+        startField("unitPrice");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MoneyV2Query(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
 }

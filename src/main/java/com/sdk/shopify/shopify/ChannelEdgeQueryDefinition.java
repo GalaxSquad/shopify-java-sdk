@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ChannelEdgeQueryDefinition {
     void define(ChannelEdgeQuery _queryBuilder);
 }

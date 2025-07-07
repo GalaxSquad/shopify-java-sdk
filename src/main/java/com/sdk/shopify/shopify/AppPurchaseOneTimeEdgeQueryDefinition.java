@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppPurchaseOneTimeEdgeQueryDefinition {
     void define(AppPurchaseOneTimeEdgeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PageCreatePayloadQueryDefinition {
     void define(PageCreatePayloadQuery _queryBuilder);
 }

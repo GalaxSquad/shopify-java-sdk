@@ -13,6 +13,15 @@ public class ProductFullSyncPayloadQuery extends Query<ProductFullSyncPayloadQue
     }
 
     /**
+    * The ID for the full sync operation.
+    */
+    public ProductFullSyncPayloadQuery id() {
+        startField("id");
+
+        return this;
+    }
+
+    /**
     * The list of errors that occurred from executing the mutation.
     */
     public ProductFullSyncPayloadQuery userErrors(ProductFullSyncUserErrorQueryDefinition queryDef) {

@@ -77,8 +77,10 @@ public class WebhookSubscriptionQuery extends Query<WebhookSubscriptionQuery> {
     }
 
     /**
-    * An optional array of top-level resource fields that should be serialized and sent in the webhook
-    * message. If null, then all fields will be sent.
+    * The list of fields to be included in the webhook subscription. Only the fields specified will be
+    * included in the webhook payload. If null, then all fields will be included. Learn more about
+    * [modifying webhook
+    * payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads).
     */
     public WebhookSubscriptionQuery includeFields() {
         startField("includeFields");
@@ -100,6 +102,19 @@ public class WebhookSubscriptionQuery extends Query<WebhookSubscriptionQuery> {
     */
     public WebhookSubscriptionQuery metafieldNamespaces() {
         startField("metafieldNamespaces");
+
+        return this;
+    }
+
+    /**
+    * The list of identifiers specifying metafields to include in the webhook subscription.
+    */
+    public WebhookSubscriptionQuery metafields(WebhookSubscriptionMetafieldIdentifierQueryDefinition queryDef) {
+        startField("metafields");
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebhookSubscriptionMetafieldIdentifierQuery(_queryBuilder));
+        _queryBuilder.append('}');
 
         return this;
     }

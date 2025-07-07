@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SegmentMigrationQueryDefinition {
     void define(SegmentMigrationQuery _queryBuilder);
 }

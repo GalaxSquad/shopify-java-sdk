@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface InventoryScheduledChangeEdgeQueryDefinition {
     void define(InventoryScheduledChangeEdgeQuery _queryBuilder);
 }

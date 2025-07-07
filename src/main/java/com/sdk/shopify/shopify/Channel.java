@@ -207,7 +207,7 @@ public class Channel extends AbstractResponse<Channel> implements Node {
     }
 
     /**
-    * The count of products published to the channel. Limited to a maximum of 10000.
+    * The count of products published to the channel. Limited to a maximum of 10000 by default.
     */
 
     public Count getProductsCount() {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CheckoutBrandingControlColorRolesQueryDefinition {
     void define(CheckoutBrandingControlColorRolesQuery _queryBuilder);
 }

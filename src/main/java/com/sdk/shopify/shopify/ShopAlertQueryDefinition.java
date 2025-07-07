@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopAlertQueryDefinition {
     void define(ShopAlertQuery _queryBuilder);
 }

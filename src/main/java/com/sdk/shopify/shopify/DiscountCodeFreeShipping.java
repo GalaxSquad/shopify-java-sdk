@@ -109,8 +109,13 @@ public class DiscountCodeFreeShipping extends AbstractResponse<DiscountCodeFreeS
                     break;
                 }
 
-                case "discountClass": {
-                    responseData.put(key, ShippingDiscountClass.fromGraphQl(jsonAsString(field.getValue(), key)));
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -402,17 +407,15 @@ public class DiscountCodeFreeShipping extends AbstractResponse<DiscountCodeFreeS
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
 
-    public ShippingDiscountClass getDiscountClass() {
-        return (ShippingDiscountClass) get("discountClass");
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
     }
 
-    public DiscountCodeFreeShipping setDiscountClass(ShippingDiscountClass arg) {
-        optimisticData.put(getKey("discountClass"), arg);
+    public DiscountCodeFreeShipping setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
         return this;
     }
 
@@ -635,7 +638,7 @@ public class DiscountCodeFreeShipping extends AbstractResponse<DiscountCodeFreeS
 
             case "destinationSelection": return false;
 
-            case "discountClass": return false;
+            case "discountClasses": return false;
 
             case "endsAt": return false;
 

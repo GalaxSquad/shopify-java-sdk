@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PriceListDeletePayloadQueryDefinition {
     void define(PriceListDeletePayloadQuery _queryBuilder);
 }

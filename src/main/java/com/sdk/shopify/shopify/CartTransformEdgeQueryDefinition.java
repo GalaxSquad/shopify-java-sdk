@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CartTransformEdgeQueryDefinition {
     void define(CartTransformEdgeQuery _queryBuilder);
 }

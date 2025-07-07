@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocationSuggestedAddressQueryDefinition {
     void define(LocationSuggestedAddressQuery _queryBuilder);
 }

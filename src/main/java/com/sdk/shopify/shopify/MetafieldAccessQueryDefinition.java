@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldAccessQueryDefinition {
     void define(MetafieldAccessQuery _queryBuilder);
 }

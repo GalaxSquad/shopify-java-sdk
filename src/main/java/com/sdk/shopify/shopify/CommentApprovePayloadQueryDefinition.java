@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentApprovePayloadQueryDefinition {
     void define(CommentApprovePayloadQuery _queryBuilder);
 }

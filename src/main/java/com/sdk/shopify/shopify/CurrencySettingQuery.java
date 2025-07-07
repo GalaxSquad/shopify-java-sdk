@@ -41,6 +41,16 @@ public class CurrencySettingQuery extends Query<CurrencySettingQuery> {
     }
 
     /**
+    * The manual rate, if enabled, that applies to this currency when converting from shop currency. This
+    * rate is specific to the associated market's currency setting.
+    */
+    public CurrencySettingQuery manualRate() {
+        startField("manualRate");
+
+        return this;
+    }
+
+    /**
     * The date and time when the active exchange rate for the currency was last modified. It can be the
     * automatic rate's creation date, or the manual rate's last updated at date if active.
     */

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderReschedulePayloadQueryDefinition {
     void define(FulfillmentOrderReschedulePayloadQuery _queryBuilder);
 }

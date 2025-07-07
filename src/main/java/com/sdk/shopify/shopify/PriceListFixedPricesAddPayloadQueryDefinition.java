@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceListFixedPricesAddPayloadQueryDefinition {
     void define(PriceListFixedPricesAddPayloadQuery _queryBuilder);
 }

@@ -40,6 +40,17 @@ public class AppRecurringPricing extends AbstractResponse<AppRecurringPricing> i
                     break;
                 }
 
+                case "planHandle": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "price": {
                     responseData.put(key, new MoneyV2(jsonAsObject(field.getValue(), key)));
 
@@ -88,6 +99,19 @@ public class AppRecurringPricing extends AbstractResponse<AppRecurringPricing> i
     }
 
     /**
+    * The app store pricing plan handle.
+    */
+
+    public String getPlanHandle() {
+        return (String) get("planHandle");
+    }
+
+    public AppRecurringPricing setPlanHandle(String arg) {
+        optimisticData.put(getKey("planHandle"), arg);
+        return this;
+    }
+
+    /**
     * The amount and currency to be charged to the subscribing shop every billing interval.
     */
 
@@ -105,6 +129,8 @@ public class AppRecurringPricing extends AbstractResponse<AppRecurringPricing> i
             case "discount": return true;
 
             case "interval": return false;
+
+            case "planHandle": return false;
 
             case "price": return true;
 

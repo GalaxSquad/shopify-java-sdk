@@ -14,7 +14,7 @@ import java.util.Map;
 /**
 * Represents a collection of general settings and information about the shop.
 */
-public class Shop extends AbstractResponse<Shop> implements HasMetafields, HasPublishedTranslations, MetafieldReferencer, Node {
+public class Shop extends AbstractResponse<Shop> implements HasMetafieldDefinitions, HasMetafields, HasPublishedTranslations, MetafieldReferencer, Node {
     public Shop() {
     }
 
@@ -164,6 +164,12 @@ public class Shop extends AbstractResponse<Shop> implements HasMetafields, HasPu
                     }
 
                     responseData.put(key, list1);
+
+                    break;
+                }
+
+                case "entitlements": {
+                    responseData.put(key, new EntitlementsType(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -708,6 +714,19 @@ public class Shop extends AbstractResponse<Shop> implements HasMetafields, HasPu
     }
 
     /**
+    * The entitlements for a shop.
+    */
+
+    public EntitlementsType getEntitlements() {
+        return (EntitlementsType) get("entitlements");
+    }
+
+    public Shop setEntitlements(EntitlementsType arg) {
+        optimisticData.put(getKey("entitlements"), arg);
+        return this;
+    }
+
+    /**
     * The set of features enabled for the shop.
     */
 
@@ -1229,6 +1248,8 @@ public class Shop extends AbstractResponse<Shop> implements HasMetafields, HasPu
             case "email": return false;
 
             case "enabledPresentmentCurrencies": return false;
+
+            case "entitlements": return true;
 
             case "features": return true;
 

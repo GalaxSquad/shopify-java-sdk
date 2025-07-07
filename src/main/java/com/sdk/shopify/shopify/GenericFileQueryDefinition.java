@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GenericFileQueryDefinition {
     void define(GenericFileQuery _queryBuilder);
 }

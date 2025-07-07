@@ -22,13 +22,14 @@ import java.util.Map;
 * - Re-create orders manually from active sales channels.
 * - Sell products at discount or wholesale rates.
 * - Take pre-orders.
-* - Save an order as a draft and resume working on it later.
 * For draft orders in multiple currencies `presentment_money` is the source of truth for what a
 * customer is going to be charged and `shop_money` is an estimate of what the merchant might receive
 * in their shop currency.
 * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict
 * [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a
 * legitimate use for the associated data.
+* Draft orders created on or after April 1, 2025 will be automatically purged after one year of
+* inactivity.
 */
 public class DraftOrder extends AbstractResponse<DraftOrder> implements CommentEventEmbed, CommentEventSubject, HasEvents, HasLocalizationExtensions, HasLocalizedFields, HasMetafields, LegacyInteroperability, MetafieldReferencer, Navigable, Node {
     public DraftOrder() {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `QuantityPricingByVariantUserError`.
 */
@@ -95,6 +99,11 @@ public enum QuantityPricingByVariantUserErrorCode {
     * Quantity price break variant not found.
     */
     QUANTITY_PRICE_BREAK_ADD_VARIANT_NOT_FOUND,
+
+    /**
+    * Variant to delete by is not found.
+    */
+    QUANTITY_PRICE_BREAK_DELETE_BY_VARIANT_ID_VARIANT_NOT_FOUND,
 
     /**
     * Failed to delete quantity price break.
@@ -261,6 +270,10 @@ public enum QuantityPricingByVariantUserErrorCode {
                 return QUANTITY_PRICE_BREAK_ADD_VARIANT_NOT_FOUND;
             }
 
+            case "QUANTITY_PRICE_BREAK_DELETE_BY_VARIANT_ID_VARIANT_NOT_FOUND": {
+                return QUANTITY_PRICE_BREAK_DELETE_BY_VARIANT_ID_VARIANT_NOT_FOUND;
+            }
+
             case "QUANTITY_PRICE_BREAK_DELETE_FAILED": {
                 return QUANTITY_PRICE_BREAK_DELETE_FAILED;
             }
@@ -406,6 +419,10 @@ public enum QuantityPricingByVariantUserErrorCode {
 
             case QUANTITY_PRICE_BREAK_ADD_VARIANT_NOT_FOUND: {
                 return "QUANTITY_PRICE_BREAK_ADD_VARIANT_NOT_FOUND";
+            }
+
+            case QUANTITY_PRICE_BREAK_DELETE_BY_VARIANT_ID_VARIANT_NOT_FOUND: {
+                return "QUANTITY_PRICE_BREAK_DELETE_BY_VARIANT_ID_VARIANT_NOT_FOUND";
             }
 
             case QUANTITY_PRICE_BREAK_DELETE_FAILED: {

@@ -44,6 +44,17 @@ public class ChannelInformation extends AbstractResponse<ChannelInformation> imp
                     break;
                 }
 
+                case "displayName": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "id": {
                     responseData.put(key, new ID(jsonAsString(field.getValue(), key)));
 
@@ -110,6 +121,19 @@ public class ChannelInformation extends AbstractResponse<ChannelInformation> imp
     }
 
     /**
+    * The publishing destination display name or channel name.
+    */
+
+    public String getDisplayName() {
+        return (String) get("displayName");
+    }
+
+    public ChannelInformation setDisplayName(String arg) {
+        optimisticData.put(getKey("displayName"), arg);
+        return this;
+    }
+
+    /**
     * A globally-unique ID.
     */
 
@@ -124,6 +148,8 @@ public class ChannelInformation extends AbstractResponse<ChannelInformation> imp
             case "channelDefinition": return true;
 
             case "channelId": return false;
+
+            case "displayName": return false;
 
             case "id": return false;
 

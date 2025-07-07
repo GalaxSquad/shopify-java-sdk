@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface NavigableQueryDefinition {
     void define(NavigableQuery _queryBuilder);
 }

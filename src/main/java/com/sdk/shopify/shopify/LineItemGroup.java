@@ -40,6 +40,17 @@ public class LineItemGroup extends AbstractResponse<LineItemGroup> implements No
                     break;
                 }
 
+                case "productId": {
+                    ID optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ID(jsonAsString(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "quantity": {
                     responseData.put(key, jsonAsInteger(field.getValue(), key));
 
@@ -116,6 +127,19 @@ public class LineItemGroup extends AbstractResponse<LineItemGroup> implements No
     }
 
     /**
+    * ID of the product of the line item group.
+    */
+
+    public ID getProductId() {
+        return (ID) get("productId");
+    }
+
+    public LineItemGroup setProductId(ID arg) {
+        optimisticData.put(getKey("productId"), arg);
+        return this;
+    }
+
+    /**
     * Quantity of the line item group on the order.
     */
 
@@ -172,6 +196,8 @@ public class LineItemGroup extends AbstractResponse<LineItemGroup> implements No
             case "customAttributes": return true;
 
             case "id": return false;
+
+            case "productId": return false;
 
             case "quantity": return false;
 

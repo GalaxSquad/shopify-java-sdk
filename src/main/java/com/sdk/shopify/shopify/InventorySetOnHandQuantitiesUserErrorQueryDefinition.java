@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface InventorySetOnHandQuantitiesUserErrorQueryDefinition {
     void define(InventorySetOnHandQuantitiesUserErrorQuery _queryBuilder);
 }

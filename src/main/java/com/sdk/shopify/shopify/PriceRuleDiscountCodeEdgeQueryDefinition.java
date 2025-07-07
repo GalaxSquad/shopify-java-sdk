@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceRuleDiscountCodeEdgeQueryDefinition {
     void define(PriceRuleDiscountCodeEdgeQuery _queryBuilder);
 }

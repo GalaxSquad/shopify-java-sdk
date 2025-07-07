@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CashTrackingSessionConnectionQueryDefinition {
     void define(CashTrackingSessionConnectionQuery _queryBuilder);
 }

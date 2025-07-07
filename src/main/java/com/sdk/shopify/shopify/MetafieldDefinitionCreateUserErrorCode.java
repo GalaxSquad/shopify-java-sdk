@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `MetafieldDefinitionCreateUserError`.
 */
@@ -12,6 +16,11 @@ public enum MetafieldDefinitionCreateUserErrorCode {
     ADMIN_ACCESS_INPUT_NOT_ALLOWED,
 
     /**
+    * The input value is blank.
+    */
+    BLANK,
+
+    /**
     * A capability is required for the definition type but is disabled.
     */
     CAPABILITY_REQUIRED_BUT_DISABLED,
@@ -20,11 +29,6 @@ public enum MetafieldDefinitionCreateUserErrorCode {
     * A duplicate option.
     */
     DUPLICATE_OPTION,
-
-    /**
-    * The maximum limit of grants per definition type has been exceeded.
-    */
-    GRANT_LIMIT_EXCEEDED,
 
     /**
     * The input value isn't included in the list.
@@ -133,16 +137,16 @@ public enum MetafieldDefinitionCreateUserErrorCode {
                 return ADMIN_ACCESS_INPUT_NOT_ALLOWED;
             }
 
+            case "BLANK": {
+                return BLANK;
+            }
+
             case "CAPABILITY_REQUIRED_BUT_DISABLED": {
                 return CAPABILITY_REQUIRED_BUT_DISABLED;
             }
 
             case "DUPLICATE_OPTION": {
                 return DUPLICATE_OPTION;
-            }
-
-            case "GRANT_LIMIT_EXCEEDED": {
-                return GRANT_LIMIT_EXCEEDED;
             }
 
             case "INCLUSION": {
@@ -232,16 +236,16 @@ public enum MetafieldDefinitionCreateUserErrorCode {
                 return "ADMIN_ACCESS_INPUT_NOT_ALLOWED";
             }
 
+            case BLANK: {
+                return "BLANK";
+            }
+
             case CAPABILITY_REQUIRED_BUT_DISABLED: {
                 return "CAPABILITY_REQUIRED_BUT_DISABLED";
             }
 
             case DUPLICATE_OPTION: {
                 return "DUPLICATE_OPTION";
-            }
-
-            case GRANT_LIMIT_EXCEEDED: {
-                return "GRANT_LIMIT_EXCEEDED";
             }
 
             case INCLUSION: {

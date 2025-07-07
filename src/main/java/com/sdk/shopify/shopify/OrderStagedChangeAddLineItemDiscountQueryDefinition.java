@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderStagedChangeAddLineItemDiscountQueryDefinition {
     void define(OrderStagedChangeAddLineItemDiscountQuery _queryBuilder);
 }

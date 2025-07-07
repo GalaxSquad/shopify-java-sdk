@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CashTrackingAdjustmentQueryDefinition {
     void define(CashTrackingAdjustmentQuery _queryBuilder);
 }

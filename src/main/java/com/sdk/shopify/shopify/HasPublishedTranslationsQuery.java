@@ -85,6 +85,13 @@ public class HasPublishedTranslationsQuery extends Query<HasPublishedTranslation
         return this;
     }
 
+    public HasPublishedTranslationsQuery onCookieBanner(CookieBannerQueryDefinition queryDef) {
+        startInlineFragment("CookieBanner");
+        queryDef.define(new CookieBannerQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public HasPublishedTranslationsQuery onLink(LinkQueryDefinition queryDef) {
         startInlineFragment("Link");
         queryDef.define(new LinkQuery(_queryBuilder));

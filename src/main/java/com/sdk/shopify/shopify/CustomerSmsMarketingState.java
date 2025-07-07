@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The valid SMS marketing states for a customer’s phone number.
 */

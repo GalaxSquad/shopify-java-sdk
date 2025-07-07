@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GiftCardSendNotificationToCustomerUserErrorQueryDefinition {
     void define(GiftCardSendNotificationToCustomerUserErrorQuery _queryBuilder);
 }

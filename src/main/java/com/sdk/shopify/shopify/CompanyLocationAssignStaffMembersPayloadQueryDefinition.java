@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyLocationAssignStaffMembersPayloadQueryDefinition {
     void define(CompanyLocationAssignStaffMembersPayloadQuery _queryBuilder);
 }

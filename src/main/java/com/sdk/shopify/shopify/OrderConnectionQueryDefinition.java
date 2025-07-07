@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderConnectionQueryDefinition {
     void define(OrderConnectionQuery _queryBuilder);
 }

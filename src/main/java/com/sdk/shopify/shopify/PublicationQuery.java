@@ -234,6 +234,97 @@ public class PublicationQuery extends Query<PublicationQuery> {
         return this;
     }
 
+    public class IncludedProductsArguments extends Arguments {
+        IncludedProductsArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public IncludedProductsArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public IncludedProductsArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public IncludedProductsArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public IncludedProductsArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public IncludedProductsArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface IncludedProductsArgumentsDefinition {
+        void define(IncludedProductsArguments args);
+    }
+
+    /**
+    * The list of products included, but not necessarily published, in the publication.
+    */
+    public PublicationQuery includedProducts(ProductConnectionQueryDefinition queryDef) {
+        return includedProducts(args -> {}, queryDef);
+    }
+
+    /**
+    * The list of products included, but not necessarily published, in the publication.
+    */
+    public PublicationQuery includedProducts(IncludedProductsArgumentsDefinition argsDef, ProductConnectionQueryDefinition queryDef) {
+        startField("includedProducts");
+
+        IncludedProductsArguments args = new IncludedProductsArguments(_queryBuilder);
+        argsDef.define(args);
+        IncludedProductsArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     /**
     * A background operation associated with this publication.
     */

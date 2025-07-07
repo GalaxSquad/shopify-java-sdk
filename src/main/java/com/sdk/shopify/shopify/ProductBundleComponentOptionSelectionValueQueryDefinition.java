@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductBundleComponentOptionSelectionValueQueryDefinition {
     void define(ProductBundleComponentOptionSelectionValueQuery _queryBuilder);
 }

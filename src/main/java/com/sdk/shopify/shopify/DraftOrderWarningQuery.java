@@ -54,4 +54,11 @@ public class DraftOrderWarningQuery extends Query<DraftOrderWarningQuery> {
         _queryBuilder.append('}');
         return this;
     }
+
+    public DraftOrderWarningQuery onDraftOrderMarketRegionCountryCodeNotSupportedWarning(DraftOrderMarketRegionCountryCodeNotSupportedWarningQueryDefinition queryDef) {
+        startInlineFragment("DraftOrderMarketRegionCountryCodeNotSupportedWarning");
+        queryDef.define(new DraftOrderMarketRegionCountryCodeNotSupportedWarningQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
 }

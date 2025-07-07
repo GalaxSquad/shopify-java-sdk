@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The method by which the discount's value is allocated onto its entitled lines.
 */

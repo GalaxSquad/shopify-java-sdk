@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingExpressCheckoutButtonQueryDefinition {
     void define(CheckoutBrandingExpressCheckoutButtonQuery _queryBuilder);
 }

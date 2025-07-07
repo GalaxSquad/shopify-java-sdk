@@ -75,6 +75,17 @@ public class SuggestedRefund extends AbstractResponse<SuggestedRefund> {
                     break;
                 }
 
+                case "suggestedRefundMethods": {
+                    List<SuggestedRefundMethod> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(UnknownSuggestedRefundMethod.create(jsonAsObject(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
+
+                    break;
+                }
+
                 case "suggestedTransactions": {
                     List<SuggestedOrderTransaction> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -211,6 +222,19 @@ public class SuggestedRefund extends AbstractResponse<SuggestedRefund> {
     }
 
     /**
+    * A list of suggested refund methods.
+    */
+
+    public List<SuggestedRefundMethod> getSuggestedRefundMethods() {
+        return (List<SuggestedRefundMethod>) get("suggestedRefundMethods");
+    }
+
+    public SuggestedRefund setSuggestedRefundMethods(List<SuggestedRefundMethod> arg) {
+        optimisticData.put(getKey("suggestedRefundMethods"), arg);
+        return this;
+    }
+
+    /**
     * A list of suggested order transactions.
     */
 
@@ -279,6 +303,8 @@ public class SuggestedRefund extends AbstractResponse<SuggestedRefund> {
             case "shipping": return true;
 
             case "subtotalSet": return true;
+
+            case "suggestedRefundMethods": return false;
 
             case "suggestedTransactions": return true;
 

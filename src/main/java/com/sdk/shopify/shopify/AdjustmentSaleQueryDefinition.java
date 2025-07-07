@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AdjustmentSaleQueryDefinition {
     void define(AdjustmentSaleQuery _queryBuilder);
 }

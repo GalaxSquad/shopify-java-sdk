@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The result of the query to fetch delivery options for the subscription contract.
 */

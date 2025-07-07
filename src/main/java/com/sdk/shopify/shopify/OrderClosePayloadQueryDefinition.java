@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderClosePayloadQueryDefinition {
     void define(OrderClosePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ThemePublishPayloadQueryDefinition {
     void define(ThemePublishPayloadQuery _queryBuilder);
 }

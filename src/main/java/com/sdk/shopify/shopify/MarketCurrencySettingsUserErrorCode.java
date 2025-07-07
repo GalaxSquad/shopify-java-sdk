@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `MarketCurrencySettingsUserError`.
 */
@@ -33,6 +35,11 @@ public enum MarketCurrencySettingsUserErrorCode {
     * The primary market must use the shop currency.
     */
     PRIMARY_MARKET_USES_SHOP_CURRENCY,
+
+    /**
+    * This action is restricted if unified markets is enabled.
+    */
+    UNIFIED_MARKETS_ENABLED,
 
     /**
     * The specified currency is not supported.
@@ -67,6 +74,10 @@ public enum MarketCurrencySettingsUserErrorCode {
                 return PRIMARY_MARKET_USES_SHOP_CURRENCY;
             }
 
+            case "UNIFIED_MARKETS_ENABLED": {
+                return UNIFIED_MARKETS_ENABLED;
+            }
+
             case "UNSUPPORTED_CURRENCY": {
                 return UNSUPPORTED_CURRENCY;
             }
@@ -96,6 +107,10 @@ public enum MarketCurrencySettingsUserErrorCode {
 
             case PRIMARY_MARKET_USES_SHOP_CURRENCY: {
                 return "PRIMARY_MARKET_USES_SHOP_CURRENCY";
+            }
+
+            case UNIFIED_MARKETS_ENABLED: {
+                return "UNIFIED_MARKETS_ENABLED";
             }
 
             case UNSUPPORTED_CURRENCY: {

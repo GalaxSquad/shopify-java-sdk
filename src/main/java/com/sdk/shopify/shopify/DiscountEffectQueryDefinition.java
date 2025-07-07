@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountEffectQueryDefinition {
     void define(DiscountEffectQuery _queryBuilder);
 }

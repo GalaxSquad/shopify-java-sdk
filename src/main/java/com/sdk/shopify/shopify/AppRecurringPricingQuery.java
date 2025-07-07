@@ -38,6 +38,15 @@ public class AppRecurringPricingQuery extends Query<AppRecurringPricingQuery> {
     }
 
     /**
+    * The app store pricing plan handle.
+    */
+    public AppRecurringPricingQuery planHandle() {
+        startField("planHandle");
+
+        return this;
+    }
+
+    /**
     * The amount and currency to be charged to the subscribing shop every billing interval.
     */
     public AppRecurringPricingQuery price(MoneyV2QueryDefinition queryDef) {

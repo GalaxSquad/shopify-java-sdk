@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanGroupRemoveProductsPayloadQueryDefinition {
     void define(SellingPlanGroupRemoveProductsPayloadQuery _queryBuilder);
 }

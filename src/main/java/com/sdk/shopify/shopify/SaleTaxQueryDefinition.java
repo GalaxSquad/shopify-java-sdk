@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SaleTaxQueryDefinition {
     void define(SaleTaxQuery _queryBuilder);
 }

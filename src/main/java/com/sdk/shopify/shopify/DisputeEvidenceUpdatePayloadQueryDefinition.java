@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DisputeEvidenceUpdatePayloadQueryDefinition {
     void define(DisputeEvidenceUpdatePayloadQuery _queryBuilder);
 }

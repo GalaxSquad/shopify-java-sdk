@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.SchemaViolationError;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -34,6 +35,17 @@ public class CurrencySetting extends AbstractResponse<CurrencySetting> {
 
                 case "enabled": {
                     responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
+                case "manualRate": {
+                    BigDecimal optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new BigDecimal(jsonAsString(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -105,6 +117,20 @@ public class CurrencySetting extends AbstractResponse<CurrencySetting> {
     }
 
     /**
+    * The manual rate, if enabled, that applies to this currency when converting from shop currency. This
+    * rate is specific to the associated market's currency setting.
+    */
+
+    public BigDecimal getManualRate() {
+        return (BigDecimal) get("manualRate");
+    }
+
+    public CurrencySetting setManualRate(BigDecimal arg) {
+        optimisticData.put(getKey("manualRate"), arg);
+        return this;
+    }
+
+    /**
     * The date and time when the active exchange rate for the currency was last modified. It can be the
     * automatic rate's creation date, or the manual rate's last updated at date if active.
     */
@@ -125,6 +151,8 @@ public class CurrencySetting extends AbstractResponse<CurrencySetting> {
             case "currencyName": return false;
 
             case "enabled": return false;
+
+            case "manualRate": return false;
 
             case "rateUpdatedAt": return false;
 

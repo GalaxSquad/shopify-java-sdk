@@ -272,7 +272,7 @@ public class Article extends AbstractResponse<Article> implements HasEvents, Has
     }
 
     /**
-    * Count of comments.
+    * Count of comments. Limited to a maximum of 10000 by default.
     */
 
     public Count getCommentsCount() {

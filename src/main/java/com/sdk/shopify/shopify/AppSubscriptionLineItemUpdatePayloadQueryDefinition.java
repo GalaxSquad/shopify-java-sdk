@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AppSubscriptionLineItemUpdatePayloadQueryDefinition {
     void define(AppSubscriptionLineItemUpdatePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerAccountAppExtensionPageQueryDefinition {
     void define(CustomerAccountAppExtensionPageQuery _queryBuilder);
 }

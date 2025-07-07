@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderReleaseHoldUserErrorQueryDefinition {
     void define(FulfillmentOrderReleaseHoldUserErrorQuery _queryBuilder);
 }

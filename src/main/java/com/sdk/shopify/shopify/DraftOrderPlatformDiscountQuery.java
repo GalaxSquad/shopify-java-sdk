@@ -53,6 +53,15 @@ public class DraftOrderPlatformDiscountQuery extends Query<DraftOrderPlatformDis
     }
 
     /**
+    * The discount classes.
+    */
+    public DraftOrderPlatformDiscountQuery discountClasses() {
+        startField("discountClasses");
+
+        return this;
+    }
+
+    /**
     * The discount node for the platform discount.
     */
     public DraftOrderPlatformDiscountQuery discountNode(DiscountNodeQueryDefinition queryDef) {

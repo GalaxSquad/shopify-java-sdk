@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderCreateMandatePaymentUserErrorQueryDefinition {
     void define(OrderCreateMandatePaymentUserErrorQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionBillingCycleSkipUserErrorQueryDefinition {
     void define(SubscriptionBillingCycleSkipUserErrorQuery _queryBuilder);
 }

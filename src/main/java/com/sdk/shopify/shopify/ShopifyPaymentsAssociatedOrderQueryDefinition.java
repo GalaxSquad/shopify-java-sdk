@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsAssociatedOrderQueryDefinition {
     void define(ShopifyPaymentsAssociatedOrderQuery _queryBuilder);
 }

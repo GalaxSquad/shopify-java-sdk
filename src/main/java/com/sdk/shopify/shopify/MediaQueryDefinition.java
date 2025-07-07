@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MediaQueryDefinition {
     void define(MediaQuery _queryBuilder);
 }

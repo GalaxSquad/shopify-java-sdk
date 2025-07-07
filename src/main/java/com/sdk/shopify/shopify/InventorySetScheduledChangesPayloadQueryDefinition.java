@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface InventorySetScheduledChangesPayloadQueryDefinition {
     void define(InventorySetScheduledChangesPayloadQuery _queryBuilder);
 }

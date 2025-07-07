@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutProfileEdgeQueryDefinition {
     void define(CheckoutProfileEdgeQuery _queryBuilder);
 }

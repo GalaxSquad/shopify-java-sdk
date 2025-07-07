@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryPromiseParticipantsUpdatePayloadQueryDefinition {
     void define(DeliveryPromiseParticipantsUpdatePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ErrorsServerPixelUserErrorQueryDefinition {
     void define(ErrorsServerPixelUserErrorQuery _queryBuilder);
 }

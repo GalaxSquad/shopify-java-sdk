@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderEditRemoveDiscountUserErrorQueryDefinition {
     void define(OrderEditRemoveDiscountUserErrorQuery _queryBuilder);
 }

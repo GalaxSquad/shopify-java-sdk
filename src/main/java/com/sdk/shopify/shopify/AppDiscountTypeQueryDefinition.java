@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppDiscountTypeQueryDefinition {
     void define(AppDiscountTypeQuery _queryBuilder);
 }

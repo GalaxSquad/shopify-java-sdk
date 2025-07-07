@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface WebPixelUpdatePayloadQueryDefinition {
     void define(WebPixelUpdatePayloadQuery _queryBuilder);
 }

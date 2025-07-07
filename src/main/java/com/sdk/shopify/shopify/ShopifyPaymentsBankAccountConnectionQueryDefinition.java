@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsBankAccountConnectionQueryDefinition {
     void define(ShopifyPaymentsBankAccountConnectionQuery _queryBuilder);
 }

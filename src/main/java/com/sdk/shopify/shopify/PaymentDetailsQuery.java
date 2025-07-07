@@ -28,6 +28,13 @@ public class PaymentDetailsQuery extends Query<PaymentDetailsQuery> {
         return this;
     }
 
+    public PaymentDetailsQuery onPaypalWalletPaymentDetails(PaypalWalletPaymentDetailsQueryDefinition queryDef) {
+        startInlineFragment("PaypalWalletPaymentDetails");
+        queryDef.define(new PaypalWalletPaymentDetailsQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public PaymentDetailsQuery onShopPayInstallmentsPaymentDetails(ShopPayInstallmentsPaymentDetailsQueryDefinition queryDef) {
         startInlineFragment("ShopPayInstallmentsPaymentDetails");
         queryDef.define(new ShopPayInstallmentsPaymentDetailsQuery(_queryBuilder));

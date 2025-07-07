@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerRequestDataErasurePayloadQueryDefinition {
     void define(CustomerRequestDataErasurePayloadQuery _queryBuilder);
 }

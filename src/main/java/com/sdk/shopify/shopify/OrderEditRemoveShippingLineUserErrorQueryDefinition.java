@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderEditRemoveShippingLineUserErrorQueryDefinition {
     void define(OrderEditRemoveShippingLineUserErrorQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentTermsUpdateUserErrorQueryDefinition {
     void define(PaymentTermsUpdateUserErrorQuery _queryBuilder);
 }

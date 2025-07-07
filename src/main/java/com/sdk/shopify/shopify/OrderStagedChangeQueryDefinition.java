@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderStagedChangeQueryDefinition {
     void define(OrderStagedChangeQuery _queryBuilder);
 }

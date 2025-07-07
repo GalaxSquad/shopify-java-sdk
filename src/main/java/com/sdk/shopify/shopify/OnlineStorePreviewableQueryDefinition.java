@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OnlineStorePreviewableQueryDefinition {
     void define(OnlineStorePreviewableQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderDisputeSummaryQueryDefinition {
     void define(OrderDisputeSummaryQuery _queryBuilder);
 }

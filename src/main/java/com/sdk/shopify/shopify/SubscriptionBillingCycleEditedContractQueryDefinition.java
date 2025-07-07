@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionBillingCycleEditedContractQueryDefinition {
     void define(SubscriptionBillingCycleEditedContractQuery _queryBuilder);
 }

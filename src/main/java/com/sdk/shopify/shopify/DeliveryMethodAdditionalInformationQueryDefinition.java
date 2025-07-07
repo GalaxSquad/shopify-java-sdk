@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryMethodAdditionalInformationQueryDefinition {
     void define(DeliveryMethodAdditionalInformationQuery _queryBuilder);
 }

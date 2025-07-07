@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductOptionsDeleteUserErrorQueryDefinition {
     void define(ProductOptionsDeleteUserErrorQuery _queryBuilder);
 }

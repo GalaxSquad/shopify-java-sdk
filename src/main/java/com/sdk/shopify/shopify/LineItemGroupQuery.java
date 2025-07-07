@@ -28,6 +28,15 @@ public class LineItemGroupQuery extends Query<LineItemGroupQuery> {
     }
 
     /**
+    * ID of the product of the line item group.
+    */
+    public LineItemGroupQuery productId() {
+        startField("productId");
+
+        return this;
+    }
+
+    /**
     * Quantity of the line item group on the order.
     */
     public LineItemGroupQuery quantity() {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MediaEdgeQueryDefinition {
     void define(MediaEdgeQuery _queryBuilder);
 }

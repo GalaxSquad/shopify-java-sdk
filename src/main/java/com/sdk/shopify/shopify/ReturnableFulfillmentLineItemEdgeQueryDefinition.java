@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnableFulfillmentLineItemEdgeQueryDefinition {
     void define(ReturnableFulfillmentLineItemEdgeQuery _queryBuilder);
 }

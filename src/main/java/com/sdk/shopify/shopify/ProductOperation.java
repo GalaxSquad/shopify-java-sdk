@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * An entity that represents details of an asynchronous operation on a product.
 */

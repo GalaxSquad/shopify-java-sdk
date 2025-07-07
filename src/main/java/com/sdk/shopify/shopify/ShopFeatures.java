@@ -82,18 +82,6 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
                     break;
                 }
 
-                case "internationalPriceOverrides": {
-                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
-
-                    break;
-                }
-
-                case "internationalPriceRules": {
-                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
-
-                    break;
-                }
-
                 case "legacySubscriptionGatewayEnabled": {
                     responseData.put(key, jsonAsBoolean(field.getValue(), key));
 
@@ -131,6 +119,12 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
                 }
 
                 case "storefront": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
+                case "unifiedMarkets": {
                     responseData.put(key, jsonAsBoolean(field.getValue(), key));
 
                     break;
@@ -289,32 +283,6 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
     }
 
     /**
-    * Whether a shop can enable international price overrides.
-    */
-
-    public Boolean getInternationalPriceOverrides() {
-        return (Boolean) get("internationalPriceOverrides");
-    }
-
-    public ShopFeatures setInternationalPriceOverrides(Boolean arg) {
-        optimisticData.put(getKey("internationalPriceOverrides"), arg);
-        return this;
-    }
-
-    /**
-    * Whether a shop can enable international price rules.
-    */
-
-    public Boolean getInternationalPriceRules() {
-        return (Boolean) get("internationalPriceRules");
-    }
-
-    public ShopFeatures setInternationalPriceRules(Boolean arg) {
-        optimisticData.put(getKey("internationalPriceRules"), arg);
-        return this;
-    }
-
-    /**
     * Whether a shop has enabled a legacy subscription gateway to handle older subscriptions.
     */
 
@@ -409,6 +377,19 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
     }
 
     /**
+    * Whether a shop is eligible for Unified Markets.
+    */
+
+    public Boolean getUnifiedMarkets() {
+        return (Boolean) get("unifiedMarkets");
+    }
+
+    public ShopFeatures setUnifiedMarkets(Boolean arg) {
+        optimisticData.put(getKey("unifiedMarkets"), arg);
+        return this;
+    }
+
+    /**
     * Whether a shop is using Shopify Balance.
     */
 
@@ -443,10 +424,6 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
 
             case "harmonizedSystemCode": return false;
 
-            case "internationalPriceOverrides": return false;
-
-            case "internationalPriceRules": return false;
-
             case "legacySubscriptionGatewayEnabled": return false;
 
             case "liveView": return false;
@@ -460,6 +437,8 @@ public class ShopFeatures extends AbstractResponse<ShopFeatures> {
             case "showMetrics": return false;
 
             case "storefront": return false;
+
+            case "unifiedMarkets": return false;
 
             case "usingShopifyBalance": return false;
 

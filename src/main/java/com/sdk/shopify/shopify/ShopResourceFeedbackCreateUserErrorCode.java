@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `ShopResourceFeedbackCreateUserError`.
 */
@@ -10,6 +14,11 @@ public enum ShopResourceFeedbackCreateUserErrorCode {
     * The input value is blank.
     */
     BLANK,
+
+    /**
+    * The feedback date cannot be set in the future.
+    */
+    FEEDBACK_DATE_IN_FUTURE,
 
     /**
     * The input value is invalid.
@@ -38,6 +47,10 @@ public enum ShopResourceFeedbackCreateUserErrorCode {
                 return BLANK;
             }
 
+            case "FEEDBACK_DATE_IN_FUTURE": {
+                return FEEDBACK_DATE_IN_FUTURE;
+            }
+
             case "INVALID": {
                 return INVALID;
             }
@@ -59,6 +72,10 @@ public enum ShopResourceFeedbackCreateUserErrorCode {
         switch (this) {
             case BLANK: {
                 return "BLANK";
+            }
+
+            case FEEDBACK_DATE_IN_FUTURE: {
+                return "FEEDBACK_DATE_IN_FUTURE";
             }
 
             case INVALID: {

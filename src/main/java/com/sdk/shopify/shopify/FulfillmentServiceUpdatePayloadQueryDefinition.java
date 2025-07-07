@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentServiceUpdatePayloadQueryDefinition {
     void define(FulfillmentServiceUpdatePayloadQuery _queryBuilder);
 }

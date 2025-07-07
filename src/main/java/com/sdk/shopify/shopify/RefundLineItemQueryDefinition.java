@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface RefundLineItemQueryDefinition {
     void define(RefundLineItemQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CalculatedRestockingFeeQueryDefinition {
     void define(CalculatedRestockingFeeQuery _queryBuilder);
 }

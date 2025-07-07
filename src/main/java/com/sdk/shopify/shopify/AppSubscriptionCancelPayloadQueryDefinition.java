@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppSubscriptionCancelPayloadQueryDefinition {
     void define(AppSubscriptionCancelPayloadQuery _queryBuilder);
 }

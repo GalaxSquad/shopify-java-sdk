@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaypalBillingAgreementQueryDefinition {
     void define(CustomerPaypalBillingAgreementQuery _queryBuilder);
 }

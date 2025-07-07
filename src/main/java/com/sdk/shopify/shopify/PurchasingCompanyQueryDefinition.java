@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PurchasingCompanyQueryDefinition {
     void define(PurchasingCompanyQuery _queryBuilder);
 }

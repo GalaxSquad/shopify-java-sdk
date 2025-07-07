@@ -36,7 +36,7 @@ public class SaleConnection extends AbstractResponse<SaleConnection> {
                 case "nodes": {
                     List<Sale> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
-                        list1.add(new UnknownSale(jsonAsObject(element1, key)));
+                        list1.add(UnknownSale.create(jsonAsObject(element1, key)));
                     }
 
                     responseData.put(key, list1);

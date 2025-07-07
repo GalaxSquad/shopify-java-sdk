@@ -16,11 +16,11 @@ public class SubscriptionDeliveryMethodLocalDeliveryQuery extends Query<Subscrip
     /**
     * The address to deliver to.
     */
-    public SubscriptionDeliveryMethodLocalDeliveryQuery address(SubscriptionMailingAddressQueryDefinition queryDef) {
+    public SubscriptionDeliveryMethodLocalDeliveryQuery address(MailingAddressQueryDefinition queryDef) {
         startField("address");
 
         _queryBuilder.append('{');
-        queryDef.define(new SubscriptionMailingAddressQuery(_queryBuilder));
+        queryDef.define(new MailingAddressQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;

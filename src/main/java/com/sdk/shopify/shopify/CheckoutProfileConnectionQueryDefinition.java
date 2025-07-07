@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutProfileConnectionQueryDefinition {
     void define(CheckoutProfileConnectionQuery _queryBuilder);
 }

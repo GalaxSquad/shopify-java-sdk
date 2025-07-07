@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerJourneySummaryQueryDefinition {
     void define(CustomerJourneySummaryQuery _queryBuilder);
 }

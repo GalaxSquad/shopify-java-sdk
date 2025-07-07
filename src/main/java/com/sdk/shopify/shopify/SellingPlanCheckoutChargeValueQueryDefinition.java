@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanCheckoutChargeValueQueryDefinition {
     void define(SellingPlanCheckoutChargeValueQuery _queryBuilder);
 }

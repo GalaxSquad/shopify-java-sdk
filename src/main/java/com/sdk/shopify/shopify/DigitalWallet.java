@@ -2,10 +2,19 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Digital wallet, such as Apple Pay, which can be used for accelerated checkouts.
 */
 public enum DigitalWallet {
+    /**
+    * Amazon Pay.
+    */
+    AMAZON_PAY,
+
     /**
     * Android Pay.
     */
@@ -15,6 +24,11 @@ public enum DigitalWallet {
     * Apple Pay.
     */
     APPLE_PAY,
+
+    /**
+    * Facebook Pay.
+    */
+    FACEBOOK_PAY,
 
     /**
     * Google Pay.
@@ -34,12 +48,20 @@ public enum DigitalWallet {
         }
 
         switch (value) {
+            case "AMAZON_PAY": {
+                return AMAZON_PAY;
+            }
+
             case "ANDROID_PAY": {
                 return ANDROID_PAY;
             }
 
             case "APPLE_PAY": {
                 return APPLE_PAY;
+            }
+
+            case "FACEBOOK_PAY": {
+                return FACEBOOK_PAY;
             }
 
             case "GOOGLE_PAY": {
@@ -57,12 +79,20 @@ public enum DigitalWallet {
     }
     public String toString() {
         switch (this) {
+            case AMAZON_PAY: {
+                return "AMAZON_PAY";
+            }
+
             case ANDROID_PAY: {
                 return "ANDROID_PAY";
             }
 
             case APPLE_PAY: {
                 return "APPLE_PAY";
+            }
+
+            case FACEBOOK_PAY: {
+                return "FACEBOOK_PAY";
             }
 
             case GOOGLE_PAY: {

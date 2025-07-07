@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The type used for targeting a set of customers who are eligible for the discount. For example, the
 * discount might be available to all customers or it might only be available to a specific set of

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryZoneQueryDefinition {
     void define(DeliveryZoneQuery _queryBuilder);
 }

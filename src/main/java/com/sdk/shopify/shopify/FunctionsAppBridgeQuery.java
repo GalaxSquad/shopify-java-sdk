@@ -8,7 +8,7 @@ import com.shopify.graphql.support.Query;
 * The App Bridge information for a Shopify Function.
 */
 public class FunctionsAppBridgeQuery extends Query<FunctionsAppBridgeQuery> {
-    public FunctionsAppBridgeQuery(StringBuilder _queryBuilder) {
+    FunctionsAppBridgeQuery(StringBuilder _queryBuilder) {
         super(_queryBuilder);
     }
 

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductFeedCreateUserErrorQueryDefinition {
     void define(ProductFeedCreateUserErrorQuery _queryBuilder);
 }

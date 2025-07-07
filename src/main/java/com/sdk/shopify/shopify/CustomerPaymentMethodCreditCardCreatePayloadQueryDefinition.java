@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerPaymentMethodCreditCardCreatePayloadQueryDefinition {
     void define(CustomerPaymentMethodCreditCardCreatePayloadQuery _queryBuilder);
 }

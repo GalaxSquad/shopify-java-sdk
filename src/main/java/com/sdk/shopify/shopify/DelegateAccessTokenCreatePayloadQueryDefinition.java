@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DelegateAccessTokenCreatePayloadQueryDefinition {
     void define(DelegateAccessTokenCreatePayloadQuery _queryBuilder);
 }

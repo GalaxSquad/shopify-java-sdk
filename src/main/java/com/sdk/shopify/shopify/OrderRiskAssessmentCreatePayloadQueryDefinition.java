@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderRiskAssessmentCreatePayloadQueryDefinition {
     void define(OrderRiskAssessmentCreatePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Represents the fallback avatar image for a staff member. This is used only if the staff member has
 * no avatar image.

@@ -59,6 +59,10 @@ public class UnknownHasPublishedTranslations extends AbstractResponse<UnknownHas
                 return new Collection(fields);
             }
 
+            case "CookieBanner": {
+                return new CookieBanner(fields);
+            }
+
             case "Link": {
                 return new Link(fields);
             }

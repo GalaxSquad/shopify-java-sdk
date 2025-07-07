@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The reason for the dispute provided by the cardholder's bank.
 */
@@ -55,6 +57,13 @@ public enum ShopifyPaymentsDisputeReason {
     * The customer's bank account has insufficient funds.
     */
     INSUFFICIENT_FUNDS,
+
+    /**
+    * The card issuer believes the disputed transaction doesn't conform to the network rules. These
+    * disputes occur when transactions don't meet card network requirements and may incur additional
+    * network fees if escalated for resolution.
+    */
+    NONCOMPLIANT,
 
     /**
     * The customer claims they did not receive the products or services purchased.
@@ -120,6 +129,10 @@ public enum ShopifyPaymentsDisputeReason {
                 return INSUFFICIENT_FUNDS;
             }
 
+            case "NONCOMPLIANT": {
+                return NONCOMPLIANT;
+            }
+
             case "PRODUCT_NOT_RECEIVED": {
                 return PRODUCT_NOT_RECEIVED;
             }
@@ -177,6 +190,10 @@ public enum ShopifyPaymentsDisputeReason {
 
             case INSUFFICIENT_FUNDS: {
                 return "INSUFFICIENT_FUNDS";
+            }
+
+            case NONCOMPLIANT: {
+                return "NONCOMPLIANT";
             }
 
             case PRODUCT_NOT_RECEIVED: {

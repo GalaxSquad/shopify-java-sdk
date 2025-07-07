@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerCancelDataErasureUserErrorQueryDefinition {
     void define(CustomerCancelDataErasureUserErrorQuery _queryBuilder);
 }

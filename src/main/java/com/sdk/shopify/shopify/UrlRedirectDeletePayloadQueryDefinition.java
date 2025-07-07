@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface UrlRedirectDeletePayloadQueryDefinition {
     void define(UrlRedirectDeletePayloadQuery _queryBuilder);
 }

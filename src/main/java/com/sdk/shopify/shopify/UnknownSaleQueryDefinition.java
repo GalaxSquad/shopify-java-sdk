@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UnknownSaleQueryDefinition {
     void define(UnknownSaleQuery _queryBuilder);
 }

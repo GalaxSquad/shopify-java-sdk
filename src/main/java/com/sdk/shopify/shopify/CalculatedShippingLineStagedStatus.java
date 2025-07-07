@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Represents the staged status of a CalculatedShippingLine on a CalculatedOrder.
 */

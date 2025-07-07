@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface HasLocalizationExtensionsQueryDefinition {
     void define(HasLocalizationExtensionsQuery _queryBuilder);
 }

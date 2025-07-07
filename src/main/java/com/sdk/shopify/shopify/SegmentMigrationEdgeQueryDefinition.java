@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentMigrationEdgeQueryDefinition {
     void define(SegmentMigrationEdgeQuery _queryBuilder);
 }

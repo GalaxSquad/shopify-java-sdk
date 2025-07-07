@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanDeliveryPolicyQueryDefinition {
     void define(SellingPlanDeliveryPolicyQuery _queryBuilder);
 }

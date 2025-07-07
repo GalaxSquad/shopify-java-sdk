@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanPricingPolicyBaseQueryDefinition {
     void define(SellingPlanPricingPolicyBaseQuery _queryBuilder);
 }

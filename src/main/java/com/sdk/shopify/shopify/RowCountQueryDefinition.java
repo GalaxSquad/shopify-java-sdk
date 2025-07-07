@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface RowCountQueryDefinition {
     void define(RowCountQuery _queryBuilder);
 }

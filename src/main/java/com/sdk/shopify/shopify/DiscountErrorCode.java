@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `DiscountUserError`.
 */
@@ -31,6 +35,11 @@ public enum DiscountErrorCode {
     * The input value is already present.
     */
     DUPLICATE,
+
+    /**
+    * The end date should be after the start date.
+    */
+    END_DATE_BEFORE_START_DATE,
 
     /**
     * The input value should be equal to the value allowed.
@@ -176,6 +185,10 @@ public enum DiscountErrorCode {
                 return DUPLICATE;
             }
 
+            case "END_DATE_BEFORE_START_DATE": {
+                return END_DATE_BEFORE_START_DATE;
+            }
+
             case "EQUAL_TO": {
                 return EQUAL_TO;
             }
@@ -293,6 +306,10 @@ public enum DiscountErrorCode {
 
             case DUPLICATE: {
                 return "DUPLICATE";
+            }
+
+            case END_DATE_BEFORE_START_DATE: {
+                return "END_DATE_BEFORE_START_DATE";
             }
 
             case EQUAL_TO: {

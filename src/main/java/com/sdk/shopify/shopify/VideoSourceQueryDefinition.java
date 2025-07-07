@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface VideoSourceQueryDefinition {
     void define(VideoSourceQuery _queryBuilder);
 }

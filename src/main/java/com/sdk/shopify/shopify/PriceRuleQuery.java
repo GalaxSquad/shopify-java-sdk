@@ -92,13 +92,10 @@ public class PriceRuleQuery extends Query<PriceRuleQuery> {
     }
 
     /**
-    * The
-    * [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
-    public PriceRuleQuery discountClass() {
-        startField("discountClass");
+    public PriceRuleQuery discountClasses() {
+        startField("discountClasses");
 
         return this;
     }

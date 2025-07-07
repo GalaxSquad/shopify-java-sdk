@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsRefundSetQueryDefinition {
     void define(ShopifyPaymentsRefundSetQuery _queryBuilder);
 }

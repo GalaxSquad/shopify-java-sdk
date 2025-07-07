@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of the price rule value. The price rule value might be a percentage value, or a fixed
 * amount.

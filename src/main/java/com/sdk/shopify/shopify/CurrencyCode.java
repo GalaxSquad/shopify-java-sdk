@@ -2,10 +2,15 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
-* The three-letter currency codes that represent the world currencies used in stores. These include
-* standard ISO 4217 codes, legacy codes,
-* and non-standard codes.
+* The currency codes that represent the world currencies throughout the Admin API. Currency codes
+* include
+* [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes, non-standard codes,
+* digital currency codes.
 */
 public enum CurrencyCode {
     /**
@@ -724,6 +729,11 @@ public enum CurrencyCode {
     USD,
 
     /**
+    * United States Dollars Coin (USDC).
+    */
+    USDC,
+
+    /**
     * Uruguayan Pesos (UYU).
     */
     UYU,
@@ -1378,6 +1388,10 @@ public enum CurrencyCode {
                 return USD;
             }
 
+            case "USDC": {
+                return USDC;
+            }
+
             case "UYU": {
                 return UYU;
             }
@@ -2015,6 +2029,10 @@ public enum CurrencyCode {
 
             case USD: {
                 return "USD";
+            }
+
+            case USDC: {
+                return "USDC";
             }
 
             case UYU: {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionLocalDeliveryOptionQueryDefinition {
     void define(SubscriptionLocalDeliveryOptionQuery _queryBuilder);
 }

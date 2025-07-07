@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocalizedFieldConnectionQueryDefinition {
     void define(LocalizedFieldConnectionQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The type of discount associated to the automatic discount. For example, the automatic discount might
 * offer a basic discount using a fixed percentage, or a fixed amount, on specific products from the

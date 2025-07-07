@@ -13,8 +13,7 @@ public class MarketCurrencySettingsQuery extends Query<MarketCurrencySettingsQue
     }
 
     /**
-    * The currency which this market's prices are defined in, and the
-    * currency which its customers must use if local currencies are disabled.
+    * The currency which this market's customers must use if local currencies are disabled.
     */
     public MarketCurrencySettingsQuery baseCurrency(CurrencySettingQueryDefinition queryDef) {
         startField("baseCurrency");
@@ -30,11 +29,19 @@ public class MarketCurrencySettingsQuery extends Query<MarketCurrencySettingsQue
     * Whether or not local currencies are enabled. If enabled, then prices will
     * be converted to give each customer the best experience based on their
     * region. If disabled, then all customers in this market will see prices
-    * in the market's base currency. For single country markets this will be true when
-    * the market's base currency is the same as the default currency for the region.
+    * in the market's base currency.
     */
     public MarketCurrencySettingsQuery localCurrencies() {
         startField("localCurrencies");
+
+        return this;
+    }
+
+    /**
+    * Whether or not rounding is enabled on multi-currency prices.
+    */
+    public MarketCurrencySettingsQuery roundingEnabled() {
+        startField("roundingEnabled");
 
         return this;
     }

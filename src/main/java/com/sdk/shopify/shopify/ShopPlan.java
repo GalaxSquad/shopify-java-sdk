@@ -20,14 +20,14 @@ public class ShopPlan extends AbstractResponse<ShopPlan> {
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
-                case "displayName": {
-                    responseData.put(key, jsonAsString(field.getValue(), key));
+                case "partnerDevelopment": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
 
                     break;
                 }
 
-                case "partnerDevelopment": {
-                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+                case "publicDisplayName": {
+                    responseData.put(key, jsonAsString(field.getValue(), key));
 
                     break;
                 }
@@ -54,19 +54,6 @@ public class ShopPlan extends AbstractResponse<ShopPlan> {
     }
 
     /**
-    * The name of the shop's billing plan.
-    */
-
-    public String getDisplayName() {
-        return (String) get("displayName");
-    }
-
-    public ShopPlan setDisplayName(String arg) {
-        optimisticData.put(getKey("displayName"), arg);
-        return this;
-    }
-
-    /**
     * Whether the shop is a partner development shop for testing purposes.
     */
 
@@ -76,6 +63,21 @@ public class ShopPlan extends AbstractResponse<ShopPlan> {
 
     public ShopPlan setPartnerDevelopment(Boolean arg) {
         optimisticData.put(getKey("partnerDevelopment"), arg);
+        return this;
+    }
+
+    /**
+    * The public display name of the shop's billing plan. Possible values are: Advanced, Basic,
+    * Development, Grow, Inactive, Lite, Other, Paused, Plus, Plus Trial, Retail, Shop Component, Staff
+    * Business, Starter, and Trial.
+    */
+
+    public String getPublicDisplayName() {
+        return (String) get("publicDisplayName");
+    }
+
+    public ShopPlan setPublicDisplayName(String arg) {
+        optimisticData.put(getKey("publicDisplayName"), arg);
         return this;
     }
 
@@ -94,9 +96,9 @@ public class ShopPlan extends AbstractResponse<ShopPlan> {
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
-            case "displayName": return false;
-
             case "partnerDevelopment": return false;
+
+            case "publicDisplayName": return false;
 
             case "shopifyPlus": return false;
 

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `StandardMetafieldDefinitionEnableUserError`.
 */
@@ -10,6 +14,11 @@ public enum StandardMetafieldDefinitionEnableUserErrorCode {
     * Admin access can only be specified for app-owned metafield definitions.
     */
     ADMIN_ACCESS_INPUT_NOT_ALLOWED,
+
+    /**
+    * The metafield definition capability cannot be disabled.
+    */
+    CAPABILITY_CANNOT_BE_DISABLED,
 
     /**
     * The input value is invalid.
@@ -68,6 +77,10 @@ public enum StandardMetafieldDefinitionEnableUserErrorCode {
                 return ADMIN_ACCESS_INPUT_NOT_ALLOWED;
             }
 
+            case "CAPABILITY_CANNOT_BE_DISABLED": {
+                return CAPABILITY_CANNOT_BE_DISABLED;
+            }
+
             case "INVALID": {
                 return INVALID;
             }
@@ -113,6 +126,10 @@ public enum StandardMetafieldDefinitionEnableUserErrorCode {
         switch (this) {
             case ADMIN_ACCESS_INPUT_NOT_ALLOWED: {
                 return "ADMIN_ACCESS_INPUT_NOT_ALLOWED";
+            }
+
+            case CAPABILITY_CANNOT_BE_DISABLED: {
+                return "CAPABILITY_CANNOT_BE_DISABLED";
             }
 
             case INVALID: {

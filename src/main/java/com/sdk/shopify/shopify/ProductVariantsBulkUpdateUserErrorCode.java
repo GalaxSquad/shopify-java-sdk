@@ -4,10 +4,17 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `ProductVariantsBulkUpdateUserError`.
 */
 public enum ProductVariantsBulkUpdateUserErrorCode {
+    /**
+    * The input value is blank.
+    */
+    BLANK,
+
     /**
     * Cannot set name for an option value linked to a metafield.
     */
@@ -27,6 +34,11 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
     * Input is invalid.
     */
     INVALID_INPUT,
+
+    /**
+    * Metafield value is invalid.
+    */
+    INVALID_VALUE,
 
     /**
     * Input must be for this product.
@@ -80,6 +92,11 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
     OPTION_VALUE_DOES_NOT_EXIST,
 
     /**
+    * Option value name is too long.
+    */
+    OPTION_VALUE_NAME_TOO_LONG,
+
+    /**
     * Product does not exist.
     */
     PRODUCT_DOES_NOT_EXIST,
@@ -105,6 +122,16 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
     SUBSCRIPTION_VIOLATION,
 
     /**
+    * The input value is too long.
+    */
+    TOO_LONG,
+
+    /**
+    * The input value is too short.
+    */
+    TOO_SHORT,
+
+    /**
     * Operation is not supported for a combined listing parent product.
     */
     UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION,
@@ -122,6 +149,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
         }
 
         switch (value) {
+            case "BLANK": {
+                return BLANK;
+            }
+
             case "CANNOT_SET_NAME_FOR_LINKED_OPTION_VALUE": {
                 return CANNOT_SET_NAME_FOR_LINKED_OPTION_VALUE;
             }
@@ -136,6 +167,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
 
             case "INVALID_INPUT": {
                 return INVALID_INPUT;
+            }
+
+            case "INVALID_VALUE": {
+                return INVALID_VALUE;
             }
 
             case "MUST_BE_FOR_THIS_PRODUCT": {
@@ -178,6 +213,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
                 return OPTION_VALUE_DOES_NOT_EXIST;
             }
 
+            case "OPTION_VALUE_NAME_TOO_LONG": {
+                return OPTION_VALUE_NAME_TOO_LONG;
+            }
+
             case "PRODUCT_DOES_NOT_EXIST": {
                 return PRODUCT_DOES_NOT_EXIST;
             }
@@ -198,6 +237,14 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
                 return SUBSCRIPTION_VIOLATION;
             }
 
+            case "TOO_LONG": {
+                return TOO_LONG;
+            }
+
+            case "TOO_SHORT": {
+                return TOO_SHORT;
+            }
+
             case "UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION": {
                 return UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION;
             }
@@ -213,6 +260,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
     }
     public String toString() {
         switch (this) {
+            case BLANK: {
+                return "BLANK";
+            }
+
             case CANNOT_SET_NAME_FOR_LINKED_OPTION_VALUE: {
                 return "CANNOT_SET_NAME_FOR_LINKED_OPTION_VALUE";
             }
@@ -227,6 +278,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
 
             case INVALID_INPUT: {
                 return "INVALID_INPUT";
+            }
+
+            case INVALID_VALUE: {
+                return "INVALID_VALUE";
             }
 
             case MUST_BE_FOR_THIS_PRODUCT: {
@@ -269,6 +324,10 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
                 return "OPTION_VALUE_DOES_NOT_EXIST";
             }
 
+            case OPTION_VALUE_NAME_TOO_LONG: {
+                return "OPTION_VALUE_NAME_TOO_LONG";
+            }
+
             case PRODUCT_DOES_NOT_EXIST: {
                 return "PRODUCT_DOES_NOT_EXIST";
             }
@@ -287,6 +346,14 @@ public enum ProductVariantsBulkUpdateUserErrorCode {
 
             case SUBSCRIPTION_VIOLATION: {
                 return "SUBSCRIPTION_VIOLATION";
+            }
+
+            case TOO_LONG: {
+                return "TOO_LONG";
+            }
+
+            case TOO_SHORT: {
+                return "TOO_SHORT";
             }
 
             case UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION: {

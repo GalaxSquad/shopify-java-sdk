@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BulkOperationCancelPayloadQueryDefinition {
     void define(BulkOperationCancelPayloadQuery _queryBuilder);
 }

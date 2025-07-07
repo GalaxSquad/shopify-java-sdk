@@ -13,28 +13,6 @@ public class MarketingActivityCreatePayloadQuery extends Query<MarketingActivity
     }
 
     /**
-    * The created marketing activity.
-    */
-    public MarketingActivityCreatePayloadQuery marketingActivity(MarketingActivityQueryDefinition queryDef) {
-        startField("marketingActivity");
-
-        _queryBuilder.append('{');
-        queryDef.define(new MarketingActivityQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
-    }
-
-    /**
-    * The path to return back to shopify admin from embedded editor.
-    */
-    public MarketingActivityCreatePayloadQuery redirectPath() {
-        startField("redirectPath");
-
-        return this;
-    }
-
-    /**
     * The list of errors that occurred from executing the mutation.
     */
     public MarketingActivityCreatePayloadQuery userErrors(UserErrorQueryDefinition queryDef) {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MenuCreatePayloadQueryDefinition {
     void define(MenuCreatePayloadQuery _queryBuilder);
 }

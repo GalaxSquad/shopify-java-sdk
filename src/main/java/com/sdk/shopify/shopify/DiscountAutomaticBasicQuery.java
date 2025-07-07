@@ -88,12 +88,10 @@ public class DiscountAutomaticBasicQuery extends Query<DiscountAutomaticBasicQue
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
-    public DiscountAutomaticBasicQuery discountClass() {
-        startField("discountClass");
+    public DiscountAutomaticBasicQuery discountClasses() {
+        startField("discountClasses");
 
         return this;
     }

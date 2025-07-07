@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductDuplicatePayloadQueryDefinition {
     void define(ProductDuplicatePayloadQuery _queryBuilder);
 }

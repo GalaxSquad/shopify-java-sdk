@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnLineItemTypeQueryDefinition {
     void define(ReturnLineItemTypeQuery _queryBuilder);
 }

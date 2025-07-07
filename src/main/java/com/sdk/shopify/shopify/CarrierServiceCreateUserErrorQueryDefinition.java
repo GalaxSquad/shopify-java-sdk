@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CarrierServiceCreateUserErrorQueryDefinition {
     void define(CarrierServiceCreateUserErrorQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionContractExpirePayloadQueryDefinition {
     void define(SubscriptionContractExpirePayloadQuery _queryBuilder);
 }

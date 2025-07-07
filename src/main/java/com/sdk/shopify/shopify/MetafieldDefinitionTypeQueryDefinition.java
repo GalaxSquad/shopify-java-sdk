@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldDefinitionTypeQueryDefinition {
     void define(MetafieldDefinitionTypeQuery _queryBuilder);
 }

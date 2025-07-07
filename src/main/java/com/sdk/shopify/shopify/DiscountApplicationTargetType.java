@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of line (i.e. line item or shipping line) on an order that the discount is applicable
 * towards.

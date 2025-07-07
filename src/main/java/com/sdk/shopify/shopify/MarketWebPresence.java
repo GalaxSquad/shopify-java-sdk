@@ -69,8 +69,13 @@ public class MarketWebPresence extends AbstractResponse<MarketWebPresence> imple
                     break;
                 }
 
-                case "market": {
-                    responseData.put(key, new Market(jsonAsObject(field.getValue(), key)));
+                case "markets": {
+                    MarketConnection optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MarketConnection(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -171,15 +176,15 @@ public class MarketWebPresence extends AbstractResponse<MarketWebPresence> imple
     }
 
     /**
-    * The associated market.
+    * The associated markets for this web presence.
     */
 
-    public Market getMarket() {
-        return (Market) get("market");
+    public MarketConnection getMarkets() {
+        return (MarketConnection) get("markets");
     }
 
-    public MarketWebPresence setMarket(Market arg) {
-        optimisticData.put(getKey("market"), arg);
+    public MarketWebPresence setMarkets(MarketConnection arg) {
+        optimisticData.put(getKey("markets"), arg);
         return this;
     }
 
@@ -221,7 +226,7 @@ public class MarketWebPresence extends AbstractResponse<MarketWebPresence> imple
 
             case "id": return false;
 
-            case "market": return true;
+            case "markets": return true;
 
             case "rootUrls": return true;
 

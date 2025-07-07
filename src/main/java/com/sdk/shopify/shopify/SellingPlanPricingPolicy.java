@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Represents the type of pricing associated to the selling plan (for example, a $10 or 20% discount
 * that is set

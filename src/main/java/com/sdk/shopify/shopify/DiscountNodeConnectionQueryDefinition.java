@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountNodeConnectionQueryDefinition {
     void define(DiscountNodeConnectionQuery _queryBuilder);
 }

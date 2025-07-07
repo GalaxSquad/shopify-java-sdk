@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface InventoryMoveQuantitiesUserErrorQueryDefinition {
     void define(InventoryMoveQuantitiesUserErrorQuery _queryBuilder);
 }

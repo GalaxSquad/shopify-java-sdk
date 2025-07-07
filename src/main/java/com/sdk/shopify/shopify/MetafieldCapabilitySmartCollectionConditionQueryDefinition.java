@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldCapabilitySmartCollectionConditionQueryDefinition {
     void define(MetafieldCapabilitySmartCollectionConditionQuery _queryBuilder);
 }

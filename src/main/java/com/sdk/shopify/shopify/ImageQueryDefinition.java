@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ImageQueryDefinition {
     void define(ImageQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryCarrierServiceEdgeQueryDefinition {
     void define(DeliveryCarrierServiceEdgeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnAgreementQueryDefinition {
     void define(ReturnAgreementQuery _queryBuilder);
 }

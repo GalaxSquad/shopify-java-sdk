@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderDiscountNotAppliedWarningQueryDefinition {
     void define(DraftOrderDiscountNotAppliedWarningQuery _queryBuilder);
 }

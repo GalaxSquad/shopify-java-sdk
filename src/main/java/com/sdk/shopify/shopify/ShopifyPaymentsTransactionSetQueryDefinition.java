@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsTransactionSetQueryDefinition {
     void define(ShopifyPaymentsTransactionSetQuery _queryBuilder);
 }

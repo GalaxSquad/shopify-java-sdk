@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class WebhookSubscriptionInput implements Serializable {
-    private Input<String> callbackUrl = Input.undefined();
-
     private Input<WebhookSubscriptionFormat> format = Input.undefined();
 
     private Input<List<String>> includeFields = Input.undefined();
@@ -18,26 +16,9 @@ public class WebhookSubscriptionInput implements Serializable {
 
     private Input<List<String>> metafieldNamespaces = Input.undefined();
 
-    public String getCallbackUrl() {
-        return callbackUrl.getValue();
-    }
+    private Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields = Input.undefined();
 
-    public Input<String> getCallbackUrlInput() {
-        return callbackUrl;
-    }
-
-    public WebhookSubscriptionInput setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = Input.optional(callbackUrl);
-        return this;
-    }
-
-    public WebhookSubscriptionInput setCallbackUrlInput(Input<String> callbackUrl) {
-        if (callbackUrl == null) {
-            throw new IllegalArgumentException("Input can not be null");
-        }
-        this.callbackUrl = callbackUrl;
-        return this;
-    }
+    private Input<String> callbackUrl = Input.undefined();
 
     public WebhookSubscriptionFormat getFormat() {
         return format.getValue();
@@ -123,20 +104,51 @@ public class WebhookSubscriptionInput implements Serializable {
         return this;
     }
 
+    public List<HasMetafieldsMetafieldIdentifierInput> getMetafields() {
+        return metafields.getValue();
+    }
+
+    public Input<List<HasMetafieldsMetafieldIdentifierInput>> getMetafieldsInput() {
+        return metafields;
+    }
+
+    public WebhookSubscriptionInput setMetafields(List<HasMetafieldsMetafieldIdentifierInput> metafields) {
+        this.metafields = Input.optional(metafields);
+        return this;
+    }
+
+    public WebhookSubscriptionInput setMetafieldsInput(Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields) {
+        if (metafields == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.metafields = metafields;
+        return this;
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl.getValue();
+    }
+
+    public Input<String> getCallbackUrlInput() {
+        return callbackUrl;
+    }
+
+    public WebhookSubscriptionInput setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = Input.optional(callbackUrl);
+        return this;
+    }
+
+    public WebhookSubscriptionInput setCallbackUrlInput(Input<String> callbackUrl) {
+        if (callbackUrl == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.callbackUrl = callbackUrl;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
-
-        if (this.callbackUrl.isDefined()) {
-            _queryBuilder.append(separator);
-            separator = ",";
-            _queryBuilder.append("callbackUrl:");
-            if (callbackUrl.getValue() != null) {
-                Query.appendQuotedString(_queryBuilder, callbackUrl.getValue().toString());
-            } else {
-                _queryBuilder.append("null");
-            }
-        }
 
         if (this.format.isDefined()) {
             _queryBuilder.append(separator);
@@ -195,6 +207,37 @@ public class WebhookSubscriptionInput implements Serializable {
                     }
                 }
                 _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.metafields.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("metafields:");
+            if (metafields.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (HasMetafieldsMetafieldIdentifierInput item1 : metafields.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.callbackUrl.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("callbackUrl:");
+            if (callbackUrl.getValue() != null) {
+                Query.appendQuotedString(_queryBuilder, callbackUrl.getValue().toString());
             } else {
                 _queryBuilder.append("null");
             }

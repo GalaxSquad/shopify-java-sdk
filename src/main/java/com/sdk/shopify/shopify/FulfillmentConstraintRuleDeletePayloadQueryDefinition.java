@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentConstraintRuleDeletePayloadQueryDefinition {
     void define(FulfillmentConstraintRuleDeletePayloadQuery _queryBuilder);
 }

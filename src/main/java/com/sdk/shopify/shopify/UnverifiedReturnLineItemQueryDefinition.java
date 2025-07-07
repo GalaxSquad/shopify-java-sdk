@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface UnverifiedReturnLineItemQueryDefinition {
     void define(UnverifiedReturnLineItemQuery _queryBuilder);
 }

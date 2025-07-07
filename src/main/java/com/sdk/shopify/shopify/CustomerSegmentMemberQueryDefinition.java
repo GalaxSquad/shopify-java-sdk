@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerSegmentMemberQueryDefinition {
     void define(CustomerSegmentMemberQuery _queryBuilder);
 }

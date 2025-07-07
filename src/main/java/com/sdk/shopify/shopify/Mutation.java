@@ -97,6 +97,17 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "appUninstall": {
+                    AppUninstallPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new AppUninstallPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "appUsageRecordCreate": {
                     AppUsageRecordCreatePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -134,6 +145,17 @@ public class Mutation extends AbstractResponse<Mutation> {
                     ArticleUpdatePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new ArticleUpdatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "backupRegionUpdate": {
+                    BackupRegionUpdatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new BackupRegionUpdatePayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -768,10 +790,54 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "consentPolicyUpdate": {
+                    ConsentPolicyUpdatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ConsentPolicyUpdatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "customerAddTaxExemptions": {
                     CustomerAddTaxExemptionsPayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new CustomerAddTaxExemptionsPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "customerAddressCreate": {
+                    CustomerAddressCreatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerAddressCreatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "customerAddressDelete": {
+                    CustomerAddressDeletePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerAddressDeletePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "customerAddressUpdate": {
+                    CustomerAddressUpdatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerAddressUpdatePayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -1003,6 +1069,17 @@ public class Mutation extends AbstractResponse<Mutation> {
                     CustomerSendAccountInviteEmailPayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new CustomerSendAccountInviteEmailPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "customerSet": {
+                    CustomerSetPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CustomerSetPayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -1586,17 +1663,6 @@ public class Mutation extends AbstractResponse<Mutation> {
                     DraftOrderCreateFromOrderPayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new DraftOrderCreateFromOrderPayload(jsonAsObject(field.getValue(), key));
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
-                case "draftOrderCreateMerchantCheckout": {
-                    DraftOrderCreateMerchantCheckoutPayload optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = new DraftOrderCreateMerchantCheckoutPayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -2220,6 +2286,204 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "inventoryShipmentAddItems": {
+                    InventoryShipmentAddItemsPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentAddItemsPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentCreate": {
+                    InventoryShipmentCreatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentCreatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentCreateInTransit": {
+                    InventoryShipmentCreateInTransitPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentCreateInTransitPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentDelete": {
+                    InventoryShipmentDeletePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentDeletePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentMarkInTransit": {
+                    InventoryShipmentMarkInTransitPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentMarkInTransitPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentReceive": {
+                    InventoryShipmentReceivePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentReceivePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentRemoveItems": {
+                    InventoryShipmentRemoveItemsPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentRemoveItemsPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentSetTracking": {
+                    InventoryShipmentSetTrackingPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentSetTrackingPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryShipmentUpdateItemQuantities": {
+                    InventoryShipmentUpdateItemQuantitiesPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipmentUpdateItemQuantitiesPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferCancel": {
+                    InventoryTransferCancelPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferCancelPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferCreate": {
+                    InventoryTransferCreatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferCreatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferCreateAsReadyToShip": {
+                    InventoryTransferCreateAsReadyToShipPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferCreateAsReadyToShipPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferDelete": {
+                    InventoryTransferDeletePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferDeletePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferDuplicate": {
+                    InventoryTransferDuplicatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferDuplicatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferEdit": {
+                    InventoryTransferEditPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferEditPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferMarkAsReadyToShip": {
+                    InventoryTransferMarkAsReadyToShipPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferMarkAsReadyToShipPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferRemoveItems": {
+                    InventoryTransferRemoveItemsPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferRemoveItemsPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransferSetItems": {
+                    InventoryTransferSetItemsPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransferSetItemsPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "locationActivate": {
                     LocationActivatePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -2748,6 +3012,39 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "orderCreateManualPayment": {
+                    OrderCreateManualPaymentPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new OrderCreateManualPaymentPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "orderCustomerRemove": {
+                    OrderCustomerRemovePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new OrderCustomerRemovePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "orderCustomerSet": {
+                    OrderCustomerSetPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new OrderCustomerSetPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "orderDelete": {
                     OrderDeletePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -3126,6 +3423,17 @@ public class Mutation extends AbstractResponse<Mutation> {
                     PriceListUpdatePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new PriceListUpdatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "privacyFeaturesDisable": {
+                    PrivacyFeaturesDisablePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new PrivacyFeaturesDisablePayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -3573,6 +3881,17 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "removeFromReturn": {
+                    RemoveFromReturnPayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new RemoveFromReturnPayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "returnApproveRequest": {
                     ReturnApproveRequestPayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -3628,21 +3947,10 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
-                case "returnLineItemRemoveFromReturn": {
-                    ReturnLineItemRemoveFromReturnPayload optional1 = null;
+                case "returnProcess": {
+                    ReturnProcessPayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
-                        optional1 = new ReturnLineItemRemoveFromReturnPayload(jsonAsObject(field.getValue(), key));
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
-                case "returnRefund": {
-                    ReturnRefundPayload optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = new ReturnRefundPayload(jsonAsObject(field.getValue(), key));
+                        optional1 = new ReturnProcessPayload(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -4750,6 +5058,39 @@ public class Mutation extends AbstractResponse<Mutation> {
                     break;
                 }
 
+                case "webPresenceCreate": {
+                    WebPresenceCreatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new WebPresenceCreatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "webPresenceDelete": {
+                    WebPresenceDeletePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new WebPresenceDeletePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "webPresenceUpdate": {
+                    WebPresenceUpdatePayload optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new WebPresenceUpdatePayload(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "webhookSubscriptionCreate": {
                     WebhookSubscriptionCreatePayload optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -4892,6 +5233,19 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
+    * Uninstalls an app.
+    */
+
+    public AppUninstallPayload getAppUninstall() {
+        return (AppUninstallPayload) get("appUninstall");
+    }
+
+    public Mutation setAppUninstall(AppUninstallPayload arg) {
+        optimisticData.put(getKey("appUninstall"), arg);
+        return this;
+    }
+
+    /**
     * Enables an app to charge a store for features or services on a per-use basis.
     * The usage charge value is counted towards the `cappedAmount` limit that was specified in the
     * `appUsagePricingDetails` field when the app subscription was created.
@@ -4944,6 +5298,19 @@ public class Mutation extends AbstractResponse<Mutation> {
 
     public Mutation setArticleUpdate(ArticleUpdatePayload arg) {
         optimisticData.put(getKey("articleUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Update the backup region that is used when we have no better signal of what region a buyer is in.
+    */
+
+    public BackupRegionUpdatePayload getBackupRegionUpdate() {
+        return (BackupRegionUpdatePayload) get("backupRegionUpdate");
+    }
+
+    public Mutation setBackupRegionUpdate(BackupRegionUpdatePayload arg) {
+        optimisticData.put(getKey("backupRegionUpdate"), arg);
         return this;
     }
 
@@ -5209,7 +5576,32 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Creates a collection.
+    * Creates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+    * to group [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+    * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * For example, an athletics store might create different collections for running attire, shoes, and
+    * accessories.
+    * There are two types of collections:
+    * - **[Custom (manual)
+    * collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You
+    * specify the products to include in a collection.
+    * - **[Smart (automated)
+    * collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You
+    * define rules, and products matching those rules are automatically
+    * included in the collection.
+    * Use the `collectionCreate` mutation when you need to:
+    * - Create a new collection for a product launch or campaign
+    * - Organize products by category, season, or promotion
+    * - Automate product grouping using rules (for example, by tag, type, or price)
+    * > Note:
+    * > The created collection is unpublished by default. To make it available to customers,
+    * use the
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h)
+    * mutation after creation.
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
 
     public CollectionCreatePayload getCollectionCreate() {
@@ -5269,7 +5661,39 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Updates a collection.
+    * Updates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection),
+    * modifying its properties, products, or publication settings. Collections help organize
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+    * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * Use the `collectionUpdate` mutation to programmatically modify collections in scenarios such as:
+    * - Updating collection details, like title, description, or image
+    * - Modifying SEO metadata for better search visibility
+    * - Changing which products are included (using rule updates for smart collections)
+    * - Publishing or unpublishing collections across different sales channels
+    * - Updating custom data using
+    * [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields)
+    * There are two types of collections with different update capabilities:
+    * - **[Custom (manual)
+    * collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You
+    * can update collection properties, but rule sets can't be modified since products are manually
+    * selected.
+    * - **[Smart (automated)
+    * collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You can
+    * update both collection properties and the rules that automatically determine which products are
+    * included.
+    * When updating [rule
+    * sets](https://shopify.dev/docs/api/admin-graphql/latest/objects/CollectionRuleConditions) for smart
+    * collections, the operation might be processed asynchronously. In these cases, the mutation returns a
+    * [`job`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Job) object that you can use to
+    * track the progress of the update.
+    * To publish or unpublish collections to specific sales channels, use the dedicated
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h) and
+    * [`publishableUnpublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishableUnpu
+    * blish) mutations.
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
 
     public CollectionUpdatePayload getCollectionUpdate() {
@@ -5724,6 +6148,19 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
+    * Update or create consent policies in bulk.
+    */
+
+    public ConsentPolicyUpdatePayload getConsentPolicyUpdate() {
+        return (ConsentPolicyUpdatePayload) get("consentPolicyUpdate");
+    }
+
+    public Mutation setConsentPolicyUpdate(ConsentPolicyUpdatePayload arg) {
+        optimisticData.put(getKey("consentPolicyUpdate"), arg);
+        return this;
+    }
+
+    /**
     * Add tax exemptions for the customer.
     */
 
@@ -5737,7 +6174,48 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Cancels a pending erasure of a customer's data.
+    * Create a new customer address.
+    */
+
+    public CustomerAddressCreatePayload getCustomerAddressCreate() {
+        return (CustomerAddressCreatePayload) get("customerAddressCreate");
+    }
+
+    public Mutation setCustomerAddressCreate(CustomerAddressCreatePayload arg) {
+        optimisticData.put(getKey("customerAddressCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a customer's address.
+    */
+
+    public CustomerAddressDeletePayload getCustomerAddressDelete() {
+        return (CustomerAddressDeletePayload) get("customerAddressDelete");
+    }
+
+    public Mutation setCustomerAddressDelete(CustomerAddressDeletePayload arg) {
+        optimisticData.put(getKey("customerAddressDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Update a customer's address information.
+    */
+
+    public CustomerAddressUpdatePayload getCustomerAddressUpdate() {
+        return (CustomerAddressUpdatePayload) get("customerAddressUpdate");
+    }
+
+    public Mutation setCustomerAddressUpdate(CustomerAddressUpdatePayload arg) {
+        optimisticData.put(getKey("customerAddressUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Cancels a pending erasure of a customer's data. Read more
+    * [here](https://help.shopify.com/manual/privacy-and-security/privacy/processing-customer-data-request
+    * s#cancel-customer-data-erasure).
     * To request an erasure of a customer's data use the [customerRequestDataErasure
     * mutation](https://shopify.dev/api/admin-graphql/unstable/mutations/customerRequestDataErasure).
     */
@@ -5921,7 +6399,10 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Create a payment method from remote gateway identifiers.
+    * Create a payment method from remote gateway identifiers. NOTE: This operation processes payment
+    * methods asynchronously. The returned payment method will initially have incomplete details.
+    * Developers must poll this payment method using customerPaymentMethod query until all payment method
+    * details are available, or the payment method is revoked (usually within seconds).
     */
 
     public CustomerPaymentMethodRemoteCreatePayload getCustomerPaymentMethodRemoteCreate() {
@@ -6025,6 +6506,38 @@ public class Mutation extends AbstractResponse<Mutation> {
 
     public Mutation setCustomerSendAccountInviteEmail(CustomerSendAccountInviteEmailPayload arg) {
         optimisticData.put(getKey("customerSendAccountInviteEmail"), arg);
+        return this;
+    }
+
+    /**
+    * Creates or updates a customer in a single mutation.
+    * Use this mutation when syncing information from an external data source into Shopify.
+    * This mutation can be used to create a new customer, update an existing customer by id, or
+    * upsert a customer by a unique key (email or phone).
+    * To create a new customer omit the `identifier` argument.
+    * To update an existing customer, include the `identifier` with the id of the customer to update.
+    * To perform an 'upsert' by unique key (email or phone)
+    * use the `identifier` argument to upsert a customer by a unique key (email or phone). If a customer
+    * with the specified unique key exists, it will be updated. If not, a new customer will be created
+    * with
+    * that unique key.
+    * As of API version 2022-10, apps using protected customer data must meet the
+    * protected customer data
+    * [requirements](https://shopify.dev/apps/store/data-protection/protected-customer-data)
+    * Any list field (e.g.
+    * [addresses](https://shopify.dev/api/admin-graphql/unstable/input-objects/MailingAddressInput),
+    * will be updated so that all included entries are either created or updated, and all existing entries
+    * not
+    * included will be deleted.
+    * All other fields will be updated to the value passed. Omitted fields will not be updated.
+    */
+
+    public CustomerSetPayload getCustomerSet() {
+        return (CustomerSetPayload) get("customerSet");
+    }
+
+    public Mutation setCustomerSet(CustomerSetPayload arg) {
+        optimisticData.put(getKey("customerSet"), arg);
         return this;
     }
 
@@ -6853,7 +7366,32 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Completes a draft order and creates an order.
+    * Completes a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) and
+    * converts it into a [regular order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+    * The order appears in the merchant's orders list, and the customer can be notified about their order.
+    * Use the `draftOrderComplete` mutation when a merchant is ready to finalize a draft order and create
+    * a real
+    * order in their store. The `draftOrderComplete` mutation also supports sales channel attribution for
+    * tracking
+    * order sources using the
+    * [`sourceName`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete#argume
+    * nts-sourceName)
+    * argument, [cart validation](https://shopify.dev/docs/apps/build/checkout/cart-checkout-validation)
+    * controls for app integrations, and detailed error reporting for failed completions.
+    * You can complete a draft order with different [payment
+    * scenarios](https://help.shopify.com/manual/fulfillment/managing-orders/payments):
+    * - Mark the order as paid immediately.
+    * - Set the order as payment pending using [payment
+    * terms](https://shopify.dev/docs/api/admin-graphql/latest/objects/PaymentTerms).
+    * - Specify a custom payment amount.
+    * - Select a specific payment gateway.
+    * > Note:
+    * > When completing a draft order, inventory is
+    * [reserved](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventor
+    * y-states)
+    * for the items in the order. This means the items will no longer be available for other customers to
+    * purchase.
+    * Make sure to verify inventory availability before completing the draft order.
     */
 
     public DraftOrderCompletePayload getDraftOrderComplete() {
@@ -6866,7 +7404,40 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Creates a draft order.
+    * Creates a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder)
+    * with attributes such as customer information, line items, shipping and billing addresses, and
+    * payment terms.
+    * Draft orders are useful for merchants that need to:
+    * - Create new orders for sales made by phone, in person, by chat, or elsewhere. When a merchant
+    * accepts payment for a draft order, an order is created.
+    * - Send invoices to customers with a secure checkout link.
+    * - Use custom items to represent additional costs or products not in inventory.
+    * - Re-create orders manually from active sales channels.
+    * - Sell products at discount or wholesale rates.
+    * - Take pre-orders.
+    * After creating a draft order, you can:
+    * - Send an invoice to the customer using the
+    * [`draftOrderInvoiceSend`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderInvo
+    * iceSend) mutation.
+    * - Complete the draft order using the
+    * [`draftOrderComplete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplet
+    * e) mutation.
+    * - Update the draft order using the
+    * [`draftOrderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderUpdate)
+    * mutation.
+    * - Duplicate a draft order using the
+    * [`draftOrderDuplicate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDuplic
+    * ate) mutation.
+    * - Delete the draft order using the
+    * [`draftOrderDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDelete)
+    * mutation.
+    * > Note:
+    * > When you create a draft order, you can't [reserve or hold
+    * inventory](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventor
+    * y-states) for the items in the order by default.
+    * > However, you can reserve inventory using the
+    * [`reserveInventoryUntil`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderCrea
+    * te#arguments-input.fields.reserveInventoryUntil) input.
     */
 
     public DraftOrderCreatePayload getDraftOrderCreate() {
@@ -6888,19 +7459,6 @@ public class Mutation extends AbstractResponse<Mutation> {
 
     public Mutation setDraftOrderCreateFromOrder(DraftOrderCreateFromOrderPayload arg) {
         optimisticData.put(getKey("draftOrderCreateFromOrder"), arg);
-        return this;
-    }
-
-    /**
-    * Creates a merchant checkout for the given draft order.
-    */
-
-    public DraftOrderCreateMerchantCheckoutPayload getDraftOrderCreateMerchantCheckout() {
-        return (DraftOrderCreateMerchantCheckoutPayload) get("draftOrderCreateMerchantCheckout");
-    }
-
-    public Mutation setDraftOrderCreateMerchantCheckout(DraftOrderCreateMerchantCheckoutPayload arg) {
-        optimisticData.put(getKey("draftOrderCreateMerchantCheckout"), arg);
         return this;
     }
 
@@ -7042,19 +7600,40 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Creates file assets using an external URL or for files that were previously uploaded using the
-    * [stagedUploadsCreate
-    * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-    * These files are added to the [Files page](https://shopify.com/admin/settings/files) in Shopify
-    * admin.
-    * Files are processed asynchronously. Some data is not available until processing is completed.
-    * Check
-    * [fileStatus](https://shopify.dev/api/admin-graphql/latest/interfaces/File#field-file-filestatus)
-    * to know when the files are READY or FAILED. See the
-    * [FileStatus](https://shopify.dev/api/admin-graphql/latest/enums/filestatus)
-    * for the complete set of possible fileStatus values.
-    * To get a list of all files, use the [files
-    * query](https://shopify.dev/api/admin-graphql/latest/queries/files).
+    * Creates file assets for a store from external URLs or files that were previously uploaded using the
+    * [`stagedUploadsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/stageduploadscre
+    * ate)
+    * mutation.
+    * Use the `fileCreate` mutation to add various types of media and documents to your store. These files
+    * are added to the
+    * [**Files** page](https://shopify.com/admin/settings/files) in the Shopify admin and can be
+    * referenced by other
+    * resources in your store.
+    * The `fileCreate` mutation supports multiple file types:
+    * - **Images**: Product photos, variant images, and general store imagery
+    * - **Videos**: Shopify-hosted videos for product demonstrations and marketing
+    * - **External videos**: YouTube and Vimeo videos for enhanced product experiences
+    * - **3D models**: Interactive 3D representations of products
+    * - **Generic files**: PDFs, documents, and other file types for store resources
+    * The mutation handles duplicate filenames using configurable resolution modes that automatically
+    * append UUIDs,
+    * replace existing files, or raise errors when conflicts occur.
+    * > Note:
+    * > Files are processed asynchronously. Check the
+    * >
+    * [`fileStatus`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/File#fields-fileStatus)
+    * > field to monitor processing completion. The maximum number of files that can be created in a
+    * single batch is 250.
+    * After creating files, you can make subsequent updates using the following mutations:
+    * - [`fileUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileUpdate):
+    * Update file properties such as alt text or replace file contents while preserving the same URL.
+    * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+    * Remove files from your store when they are no longer needed.
+    * To list all files in your store, use the
+    * [`files`](https://shopify.dev/docs/api/admin-graphql/latest/queries/files) query.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
 
     public FileCreatePayload getFileCreate() {
@@ -7067,7 +7646,42 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Deletes existing file assets that were uploaded to Shopify.
+    * Deletes file assets that were previously uploaded to your store.
+    * Use the `fileDelete` mutation to permanently remove media and file assets from your store when they
+    * are no longer needed.
+    * This mutation handles the complete removal of files from both your store's file library and any
+    * associated references
+    * to products or other resources.
+    * The `fileDelete` mutation supports removal of multiple file types:
+    * - **Images**: Product photos, variant images, and general store imagery
+    * - **Videos**: Shopify-hosted videos for product demonstrations and marketing content
+    * - **External Videos**: YouTube and Vimeo videos linked to your products
+    * - **3D models**: Interactive 3D representations of products
+    * - **Generic files**: PDFs, documents, and other file types stored in your
+    * [**Files** page](https://shopify.com/admin/settings/files)
+    * When you delete files that are referenced by products, the mutation automatically removes those
+    * references and
+    * reorders any remaining media to maintain proper positioning. Product file references are database
+    * relationships
+    * managed through a media reference system, not just links in product descriptions. The Shopify admin
+    * provides a UI
+    * to manage these relationships, and when files are deleted, the system automatically cleans up all
+    * references.
+    * Files that are currently being processed by other operations are rejected to prevent conflicts.
+    * > Caution:
+    * > File deletion is permanent and can't be undone. When you delete a file that's being used in your
+    * store,
+    * > it will immediately stop appearing wherever it was displayed. For example, if you delete a product
+    * image,
+    * > that product will show a broken image or placeholder on your storefront and in the admin. The same
+    * applies
+    * > to any other files linked from themes, blog posts, or pages. Before deleting files, you can use
+    * the
+    * > [`files` query](https://shopify.dev/api/admin-graphql/latest/queries/files) to list and review
+    * > your store's file assets.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
 
     public FileDeletePayload getFileDelete() {
@@ -7080,7 +7694,35 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Updates an existing file asset that was uploaded to Shopify.
+    * Updates properties, content, and metadata associated with an existing file asset that has already
+    * been uploaded to Shopify.
+    * Use the `fileUpdate` mutation to modify various aspects of files already stored in your store.
+    * Files can be updated individually or in batches.
+    * The `fileUpdate` mutation supports updating multiple file properties:
+    * - **Alt text**: Update accessibility descriptions for images and other media.
+    * - **File content**: Replace image or generic file content while maintaining the same URL.
+    * - **Filename**: Modify file names (extension must match the original).
+    * - **Product references**: Add or remove associations between files and products. Removing
+    * file-product associations
+    * deletes the file from the product's media gallery and clears the image from any product variants
+    * that were using it.
+    * The mutation handles different file types with specific capabilities:
+    * - **Images**: Update preview images, original source, filename, and alt text.
+    * - **Generic files**: Update original source, filename, and alt text.
+    * - **Videos and 3D models**: Update alt text and product references.
+    * > Note:
+    * > Files must be in `ready` state before they can be updated. The mutation includes file locking to
+    * prevent
+    * > conflicts during updates. You can't simultaneously update both `originalSource` and
+    * `previewImageSource`.
+    * After updating files, you can use related mutations for additional file management:
+    * - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+    * Create new file assets from external URLs or staged uploads.
+    * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+    * Remove files from your store when they are no longer needed.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
 
     public FileUpdatePayload getFileUpdate() {
@@ -7325,7 +7967,7 @@ public class Mutation extends AbstractResponse<Mutation> {
     * items.
     * Moving a fulfillment order will fail in the following circumstances:
     * * The fulfillment order is closed.
-    * * The destination location has never stocked the requested inventory item.
+    * * The destination location doesn't stock the requested inventory item.
     * * The API client doesn't have the correct permissions.
     * Line items which have already been fulfilled can't be re-assigned
     * and will always remain assigned to the original location.
@@ -7771,6 +8413,244 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
+    * Adds items to an inventory shipment.
+    */
+
+    public InventoryShipmentAddItemsPayload getInventoryShipmentAddItems() {
+        return (InventoryShipmentAddItemsPayload) get("inventoryShipmentAddItems");
+    }
+
+    public Mutation setInventoryShipmentAddItems(InventoryShipmentAddItemsPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentAddItems"), arg);
+        return this;
+    }
+
+    /**
+    * Adds a draft shipment to an inventory transfer.
+    */
+
+    public InventoryShipmentCreatePayload getInventoryShipmentCreate() {
+        return (InventoryShipmentCreatePayload) get("inventoryShipmentCreate");
+    }
+
+    public Mutation setInventoryShipmentCreate(InventoryShipmentCreatePayload arg) {
+        optimisticData.put(getKey("inventoryShipmentCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Adds an in-transit shipment to an inventory transfer.
+    */
+
+    public InventoryShipmentCreateInTransitPayload getInventoryShipmentCreateInTransit() {
+        return (InventoryShipmentCreateInTransitPayload) get("inventoryShipmentCreateInTransit");
+    }
+
+    public Mutation setInventoryShipmentCreateInTransit(InventoryShipmentCreateInTransitPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentCreateInTransit"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes an inventory shipment. Only draft shipments can be deleted.
+    */
+
+    public InventoryShipmentDeletePayload getInventoryShipmentDelete() {
+        return (InventoryShipmentDeletePayload) get("inventoryShipmentDelete");
+    }
+
+    public Mutation setInventoryShipmentDelete(InventoryShipmentDeletePayload arg) {
+        optimisticData.put(getKey("inventoryShipmentDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Marks a draft inventory shipment as in transit.
+    */
+
+    public InventoryShipmentMarkInTransitPayload getInventoryShipmentMarkInTransit() {
+        return (InventoryShipmentMarkInTransitPayload) get("inventoryShipmentMarkInTransit");
+    }
+
+    public Mutation setInventoryShipmentMarkInTransit(InventoryShipmentMarkInTransitPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentMarkInTransit"), arg);
+        return this;
+    }
+
+    /**
+    * Receive an inventory shipment.
+    */
+
+    public InventoryShipmentReceivePayload getInventoryShipmentReceive() {
+        return (InventoryShipmentReceivePayload) get("inventoryShipmentReceive");
+    }
+
+    public Mutation setInventoryShipmentReceive(InventoryShipmentReceivePayload arg) {
+        optimisticData.put(getKey("inventoryShipmentReceive"), arg);
+        return this;
+    }
+
+    /**
+    * Remove items from an inventory shipment.
+    */
+
+    public InventoryShipmentRemoveItemsPayload getInventoryShipmentRemoveItems() {
+        return (InventoryShipmentRemoveItemsPayload) get("inventoryShipmentRemoveItems");
+    }
+
+    public Mutation setInventoryShipmentRemoveItems(InventoryShipmentRemoveItemsPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentRemoveItems"), arg);
+        return this;
+    }
+
+    /**
+    * Edits the tracking info on an inventory shipment.
+    */
+
+    public InventoryShipmentSetTrackingPayload getInventoryShipmentSetTracking() {
+        return (InventoryShipmentSetTrackingPayload) get("inventoryShipmentSetTracking");
+    }
+
+    public Mutation setInventoryShipmentSetTracking(InventoryShipmentSetTrackingPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentSetTracking"), arg);
+        return this;
+    }
+
+    /**
+    * Updates items on an inventory shipment.
+    */
+
+    public InventoryShipmentUpdateItemQuantitiesPayload getInventoryShipmentUpdateItemQuantities() {
+        return (InventoryShipmentUpdateItemQuantitiesPayload) get("inventoryShipmentUpdateItemQuantities");
+    }
+
+    public Mutation setInventoryShipmentUpdateItemQuantities(InventoryShipmentUpdateItemQuantitiesPayload arg) {
+        optimisticData.put(getKey("inventoryShipmentUpdateItemQuantities"), arg);
+        return this;
+    }
+
+    /**
+    * Cancels an inventory transfer.
+    */
+
+    public InventoryTransferCancelPayload getInventoryTransferCancel() {
+        return (InventoryTransferCancelPayload) get("inventoryTransferCancel");
+    }
+
+    public Mutation setInventoryTransferCancel(InventoryTransferCancelPayload arg) {
+        optimisticData.put(getKey("inventoryTransferCancel"), arg);
+        return this;
+    }
+
+    /**
+    * Creates an inventory transfer.
+    */
+
+    public InventoryTransferCreatePayload getInventoryTransferCreate() {
+        return (InventoryTransferCreatePayload) get("inventoryTransferCreate");
+    }
+
+    public Mutation setInventoryTransferCreate(InventoryTransferCreatePayload arg) {
+        optimisticData.put(getKey("inventoryTransferCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates an inventory transfer in ready to ship.
+    */
+
+    public InventoryTransferCreateAsReadyToShipPayload getInventoryTransferCreateAsReadyToShip() {
+        return (InventoryTransferCreateAsReadyToShipPayload) get("inventoryTransferCreateAsReadyToShip");
+    }
+
+    public Mutation setInventoryTransferCreateAsReadyToShip(InventoryTransferCreateAsReadyToShipPayload arg) {
+        optimisticData.put(getKey("inventoryTransferCreateAsReadyToShip"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes an inventory transfer.
+    */
+
+    public InventoryTransferDeletePayload getInventoryTransferDelete() {
+        return (InventoryTransferDeletePayload) get("inventoryTransferDelete");
+    }
+
+    public Mutation setInventoryTransferDelete(InventoryTransferDeletePayload arg) {
+        optimisticData.put(getKey("inventoryTransferDelete"), arg);
+        return this;
+    }
+
+    /**
+    * This mutation allows duplicating an existing inventory transfer. The duplicated transfer will have
+    * the same
+    * line items and quantities as the original transfer, but will be in a draft state with no shipments.
+    */
+
+    public InventoryTransferDuplicatePayload getInventoryTransferDuplicate() {
+        return (InventoryTransferDuplicatePayload) get("inventoryTransferDuplicate");
+    }
+
+    public Mutation setInventoryTransferDuplicate(InventoryTransferDuplicatePayload arg) {
+        optimisticData.put(getKey("inventoryTransferDuplicate"), arg);
+        return this;
+    }
+
+    /**
+    * Edits an inventory transfer.
+    */
+
+    public InventoryTransferEditPayload getInventoryTransferEdit() {
+        return (InventoryTransferEditPayload) get("inventoryTransferEdit");
+    }
+
+    public Mutation setInventoryTransferEdit(InventoryTransferEditPayload arg) {
+        optimisticData.put(getKey("inventoryTransferEdit"), arg);
+        return this;
+    }
+
+    /**
+    * Sets an inventory transfer to ready to ship.
+    */
+
+    public InventoryTransferMarkAsReadyToShipPayload getInventoryTransferMarkAsReadyToShip() {
+        return (InventoryTransferMarkAsReadyToShipPayload) get("inventoryTransferMarkAsReadyToShip");
+    }
+
+    public Mutation setInventoryTransferMarkAsReadyToShip(InventoryTransferMarkAsReadyToShipPayload arg) {
+        optimisticData.put(getKey("inventoryTransferMarkAsReadyToShip"), arg);
+        return this;
+    }
+
+    /**
+    * This mutation allows removing the shippable quantities of line items on a Transfer.
+    * It removes all quantities of the item from the transfer that are not associated with shipments.
+    */
+
+    public InventoryTransferRemoveItemsPayload getInventoryTransferRemoveItems() {
+        return (InventoryTransferRemoveItemsPayload) get("inventoryTransferRemoveItems");
+    }
+
+    public Mutation setInventoryTransferRemoveItems(InventoryTransferRemoveItemsPayload arg) {
+        optimisticData.put(getKey("inventoryTransferRemoveItems"), arg);
+        return this;
+    }
+
+    /**
+    * This mutation allows for the setting of line items on a Transfer. Will replace the items already
+    * set, if any.
+    */
+
+    public InventoryTransferSetItemsPayload getInventoryTransferSetItems() {
+        return (InventoryTransferSetItemsPayload) get("inventoryTransferSetItems");
+    }
+
+    public Mutation setInventoryTransferSetItems(InventoryTransferSetItemsPayload arg) {
+        optimisticData.put(getKey("inventoryTransferSetItems"), arg);
+        return this;
+    }
+
+    /**
     * Activates a location so that you can stock inventory at the location. Refer to the
     * [`isActive`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-isactive) and
     * [`activatable`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-activatable
@@ -7964,7 +8844,8 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Create new marketing activity.
+    * Create new marketing activity. Marketing activity app extensions are deprecated and will be removed
+    * in the near future.
     */
 
     public MarketingActivityCreatePayload getMarketingActivityCreate() {
@@ -8003,7 +8884,8 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Updates a marketing activity with the latest information.
+    * Updates a marketing activity with the latest information. Marketing activity app extensions are
+    * deprecated and will be removed in the near future.
     */
 
     public MarketingActivityUpdatePayload getMarketingActivityUpdate() {
@@ -8374,7 +9256,51 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Cancels an order.
+    * Cancels an order, with options for refunding, restocking inventory, and customer notification.
+    * > Caution:
+    * > Order cancellation is irreversible. An order that has been cancelled can't be restored to its
+    * original state.
+    * Use the `orderCancel` mutation to programmatically cancel orders in scenarios such as:
+    * - Customer-requested cancellations due to size, color, or other preference changes
+    * - Payment processing failures or declined transactions
+    * - Fraud detection and prevention
+    * - Insufficient inventory availability
+    * - Staff errors in order processing
+    * - Wholesale or B2B order management workflows
+    * The `orderCancel` mutation provides flexible refund options including refunding to original payment
+    * methods
+    * or issuing store credit. If a payment was only authorized (temporarily held) but not yet charged,
+    * that hold will be automatically released when the order is cancelled, even if you choose not to
+    * refund other payments.
+    * The mutation supports different cancellation reasons: customer requests, payment declines, fraud,
+    * inventory issues, staff errors, or other unspecified reasons. Each cancellation can include optional
+    * staff notes for internal documentation (notes aren't visible to customers).
+    * An order can only be cancelled if it meets the following criteria:
+    * - The order hasn't already been cancelled.
+    * - The order has no pending payment authorizations.
+    * - The order has no active returns in progress.
+    * - The order has no outstanding fulfillments that can't be cancelled.
+    * Orders might be assigned to locations that become
+    * [deactivated](https://help.shopify.com/manual/fulfillment/setup/locations-management#deactivate-and-
+    * reactivate-locations)
+    * after the order was created. When cancelling such orders, inventory behavior depends on payment
+    * status:
+    * - **Paid orders**: Cancellation will fail with an error if restocking is enabled, since inventory
+    * can't be returned to deactivated locations.
+    * - **Unpaid orders**: Cancellation succeeds but inventory is not restocked anywhere, even when the
+    * restock option is enabled. The committed inventory effectively becomes unavailable rather than being
+    * returned to stock at the deactivated location.
+    * After you cancel an order, you can still make limited updates to certain fields (like
+    * notes and tags) using the
+    * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate).
+    * For partial refunds or more complex refund scenarios on active orders,
+    * such as refunding only specific line items while keeping the rest of the order fulfilled,
+    * consider using the
+    * [`refundCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate)
+    * mutation instead of full order cancellation.
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
 
     public OrderCancelPayload getOrderCancel() {
@@ -8387,11 +9313,30 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Captures payment for an authorized transaction on an order. An order can only be captured if it has
-    * a successful authorization transaction. Capturing an order will claim the money reserved by the
-    * authorization. orderCapture can be used to capture multiple times as long as the OrderTransaction is
-    * multi-capturable. To capture a partial payment, the included `amount` value should be less than the
-    * total order amount. Multi-capture is available only to stores on a Shopify Plus plan.
+    * Captures payment for an authorized transaction on an order. Use this mutation to claim the money
+    * that was previously
+    * reserved by an authorization transaction.
+    * The `orderCapture` mutation can be used in the following scenarios:
+    * - To capture the full amount of an authorized transaction
+    * - To capture a partial payment by specifying an amount less than the total order amount
+    * - To perform multiple captures on the same order, as long as the order transaction is
+    * [multi-capturable](https://shopify.dev/docs/api/admin-graphql/latest/objects/ordertransaction#field-
+    * OrderTransaction.fields.multiCapturable)
+    * > Note:
+    * > Multi-capture functionality is only available to stores on a
+    * [Shopify Plus
+    * plan](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/plans-features/shopify-plus-pla
+    * n).
+    * For multi-currency orders, the
+    * [`currency`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderCapture#arguments-inpu
+    * t.fields.currency)
+    * field is required and should match the presentment currency from the order.
+    * After capturing a payment, you can:
+    * - View the transaction details including status, amount, and processing information.
+    * - Track the captured amount in both shop and presentment currencies.
+    * - Monitor the transaction's settlement status.
+    * Learn more about [order
+    * transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction).
     */
 
     public OrderCapturePayload getOrderCapture() {
@@ -8417,7 +9362,41 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Creates an order.
+    * Creates an order with attributes such as customer information, line items, and shipping and billing
+    * addresses.
+    * Use the `orderCreate` mutation to programmatically generate orders in scenarios where
+    * orders aren't created through the standard checkout process, such as when importing orders from an
+    * external
+    * system or creating orders for wholesale customers.
+    * The `orderCreate` mutation doesn't support applying multiple discounts, such as discounts on line
+    * items.
+    * Automatic discounts won't be applied unless you replicate the logic of those discounts in your
+    * custom
+    * implementation. You can [apply a discount
+    * code](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/OrderCreateDiscountCodeInput),
+    * but only one discount code can be set for each order.
+    * > Note:
+    * > If you're using the `orderCreate` mutation with a
+    * > [trial](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/free-trial) or
+    * > [development store](https://shopify.dev/docs/api/development-stores), then you can create a
+    * > maximum of five new orders per minute.
+    * After you create an order, you can make subsequent edits to the order using one of the following
+    * mutations:
+    * * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate):
+    * Used for simple updates to an order, such as changing the order's note, tags, or customer
+    * information.
+    * * [`orderEditBegin`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderEditBegin):
+    * Used when you need to make significant updates to an order, such as adding or removing line items,
+    * changing
+    * quantities, or modifying discounts. The `orderEditBegin` mutation initiates an order editing
+    * session,
+    * allowing you to make multiple changes before finalizing them. Learn more about using the
+    * `orderEditBegin`
+    * mutation to [edit existing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders).
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
 
     public OrderCreatePayload getOrderCreate() {
@@ -8439,6 +9418,47 @@ public class Mutation extends AbstractResponse<Mutation> {
 
     public Mutation setOrderCreateMandatePayment(OrderCreateMandatePaymentPayload arg) {
         optimisticData.put(getKey("orderCreateMandatePayment"), arg);
+        return this;
+    }
+
+    /**
+    * Create a manual payment for an order. You can only create a manual payment for an order if it isn't
+    * already
+    * fully paid.
+    */
+
+    public OrderCreateManualPaymentPayload getOrderCreateManualPayment() {
+        return (OrderCreateManualPaymentPayload) get("orderCreateManualPayment");
+    }
+
+    public Mutation setOrderCreateManualPayment(OrderCreateManualPaymentPayload arg) {
+        optimisticData.put(getKey("orderCreateManualPayment"), arg);
+        return this;
+    }
+
+    /**
+    * Removes customer from an order.
+    */
+
+    public OrderCustomerRemovePayload getOrderCustomerRemove() {
+        return (OrderCustomerRemovePayload) get("orderCustomerRemove");
+    }
+
+    public Mutation setOrderCustomerRemove(OrderCustomerRemovePayload arg) {
+        optimisticData.put(getKey("orderCustomerRemove"), arg);
+        return this;
+    }
+
+    /**
+    * Sets a customer on an order.
+    */
+
+    public OrderCustomerSetPayload getOrderCustomerSet() {
+        return (OrderCustomerSetPayload) get("orderCustomerSet");
+    }
+
+    public Mutation setOrderCustomerSet(OrderCustomerSetPayload arg) {
+        optimisticData.put(getKey("orderCustomerSet"), arg);
         return this;
     }
 
@@ -8637,7 +9657,27 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Marks an order as paid. You can only mark an order as paid if it isn't already fully paid.
+    * Marks an order as paid by recording a payment transaction for the outstanding amount.
+    * Use the `orderMarkAsPaid` mutation to record payments received outside the standard checkout
+    * process. The `orderMarkAsPaid` mutation is particularly useful in scenarios where:
+    * - Orders were created with manual payment methods (cash on delivery, bank deposit, money order)
+    * - Payments were received offline and need to be recorded in the system
+    * - Previously authorized payments need to be captured manually
+    * - Orders require manual payment reconciliation due to external payment processing
+    * The mutation validates that the order can be marked as paid before processing.
+    * An order can be marked as paid only if it has a positive outstanding balance and its
+    * [financial
+    * status](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.displayFi
+    * nancialStatus)
+    * isn't already `PAID`. The mutation will either create a new sale transaction for the full
+    * outstanding amount or capture an existing authorized transaction, depending on the order's current
+    * payment state.
+    * After successfully marking an order as paid, the order's financial status is updated to
+    * reflect the payment, and payment events are logged for tracking and analytics
+    * purposes.
+    * Learn more about [managing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+    * in apps.
     */
 
     public OrderMarkAsPaidPayload getOrderMarkAsPaid() {
@@ -8676,7 +9716,20 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Updates the fields of an order.
+    * Updates the attributes of an order, such as the customer's email, the shipping address for the
+    * order,
+    * tags, and [metafields](https://shopify.dev/docs/apps/build/custom-data) associated with the order.
+    * If you need to make significant updates to an order, such as adding or removing line items, changing
+    * quantities, or modifying discounts, then use
+    * the [`orderEditBegin`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderEditBegin)
+    * mutation instead. The `orderEditBegin` mutation initiates an order editing session,
+    * allowing you to make multiple changes before finalizing them. Learn more about using the
+    * `orderEditBegin`
+    * mutation to [edit existing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders).
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
 
     public OrderUpdatePayload getOrderUpdate() {
@@ -8938,6 +9991,19 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
+    * Disable a shop's privacy features.
+    */
+
+    public PrivacyFeaturesDisablePayload getPrivacyFeaturesDisable() {
+        return (PrivacyFeaturesDisablePayload) get("privacyFeaturesDisable");
+    }
+
+    public Mutation setPrivacyFeaturesDisable(PrivacyFeaturesDisablePayload arg) {
+        optimisticData.put(getKey("privacyFeaturesDisable"), arg);
+        return this;
+    }
+
+    /**
     * Creates a new componentized product.
     */
 
@@ -8965,19 +10031,44 @@ public class Mutation extends AbstractResponse<Mutation> {
 
     /**
     * Creates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
-    * with attributes such as title, description, and vendor.
-    * You can use the `productCreate` mutation to define
+    * with attributes such as title, description, vendor, and media.
+    * The `productCreate` mutation helps you create many products at once, avoiding the tedious or
+    * time-consuming
+    * process of adding them one by one in the Shopify admin. Common examples include creating products
+    * for a
+    * new collection, launching a new product line, or adding seasonal products.
+    * You can define product
     * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
-    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue)
-    * for products with
-    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant),
-    * such as different sizes or colors.
+    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue),
+    * allowing you to create products with different variations like sizes or colors. You can also
+    * associate media
+    * files to your products, including images and videos.
+    * The `productCreate` mutation only supports creating a product with its initial
+    * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
     * To create multiple product variants for a single product and manage prices, use the
     * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
     * iantsBulkCreate)
     * mutation.
-    * To create or update a product in a single request, use the
-    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation.
+    * > Note:
+    * > The `productCreate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be created per day.
+    * After you create a product, you can make subsequent edits to the product using one of the following
+    * mutations:
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers. The `productCreate` mutation creates
+    * products
+    * in an unpublished state by default, so you must perform a separate operation to publish the product.
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Used to update a single product, such as changing the product's title, description, vendor, or
+    * associated media.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
     * Learn more about the [product
     * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
     * and [adding product
@@ -8994,15 +10085,56 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Deletes a product, including all associated variants and media.
-    * As of API version `2023-01`, if you need to delete a large product, such as one that has many
-    * [variants](https://shopify.dev/api/admin-graphql/latest/input-objects/ProductVariantInput)
+    * Permanently deletes a product and all its associated data, including variants, media, publications,
+    * and inventory items.
+    * Use the `productDelete` mutation to programmatically remove products from your store when they need
+    * to be
+    * permanently deleted from your catalog, such as when removing discontinued items, cleaning up test
+    * data, or
+    * synchronizing with external inventory management systems.
+    * The `productDelete` mutation removes the product from all associated collections,
+    * and removes all associated data for the product, including:
+    * - All product variants and their inventory items
+    * - Product media (images, videos) that are not referenced by other products
+    * - [Product options](https://shopify.dev/api/admin-graphql/latest/objects/ProductOption) and [option
+    * values](https://shopify.dev/api/admin-graphql/latest/objects/ProductOptionValue)
+    * - Product publications across all sales channels
+    * - Product tags and metadata associations
+    * The `productDelete` mutation also has the following effects on existing orders and transactions:
+    * - **Draft orders**: Existing draft orders that reference this product will retain the product
+    * information as stored data, but the product reference will be removed. Draft orders can still be
+    * completed with the stored product details.
+    * - **Completed orders and refunds**: Previously completed orders that included this product aren't
+    * affected. The product information in completed orders is preserved for record-keeping, and existing
+    * refunds for this product remain valid and processable.
+    * > Caution:
+    * > Product deletion is irreversible. After a product is deleted, it can't be recovered. Consider
+    * archiving
+    * > or unpublishing products instead if you might need to restore them later.
+    * If you need to delete a large product, such as one that has many
+    * [variants](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant)
     * that are active at several
-    * [locations](https://shopify.dev/api/admin-graphql/latest/input-objects/InventoryLevelInput),
-    * you may encounter timeout errors. To avoid these timeout errors, you can instead use the
-    * asynchronous
-    * [ProductDeleteAsync](https://shopify.dev/api/admin-graphql/latest/mutations/productDeleteAsync)
-    * mutation.
+    * [locations](https://shopify.dev/api/admin-graphql/latest/objects/Location),
+    * you might encounter timeout errors. To avoid these timeout errors, you can set the
+    * [`synchronous`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productDelete#arguments-
+    * synchronous)
+    * parameter to `false` to run the deletion asynchronously, which returns a
+    * [`ProductDeleteOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductDeleteOp
+    * eration)
+    * that you can monitor for completion status.
+    * If you need more granular control over product cleanup, consider using these alternative mutations:
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Update the product status to archived or unpublished instead of deleting.
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete):
+    * Delete specific variants while keeping the product.
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete):
+    * Delete the choices available for a product, such as size, color, or material.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model).
     */
 
     public ProductDeletePayload getProductDelete() {
@@ -9105,7 +10237,52 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Updates a product option.
+    * Updates an [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionUpdate` mutation for the following use cases:
+    * - **Update product choices**: Modify an existing option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), so customers can select their preferred variant.
+    * - **Enable personalization features**: Update an option (for example, "Engraving text") to let
+    * customers customize their purchase.
+    * - **Offer seasonal or limited edition products**: Update a value
+    * (for example, "Holiday red") on an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to update
+    * options, like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionUpdate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * After you update a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
 
     public ProductOptionUpdatePayload getProductOptionUpdate() {
@@ -9118,7 +10295,60 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Creates options on a product.
+    * Creates one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionsCreate` mutation for the following use cases:
+    * - **Add product choices**: Add a new option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), to an existing product so customers can select their preferred variant.
+    * - **Enable personalization features**: Add options such as "Engraving text" to let customers
+    * customize their purchase.
+    * - **Offer seasonal or limited edition products**: Add a new value
+    * (for example, "Holiday red") to an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to add options,
+    * like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionsCreate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * If you use the [`CREATE` variant
+    * strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate#arguments
+    * -variantStrategy.enums.CREATE), consider the maximum allowed number of variants for each product
+    * (100 by default, and 2,048 if you've
+    * [enabled the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)).
+    * After you create product options, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
 
     public ProductOptionsCreatePayload getProductOptionsCreate() {
@@ -9131,7 +10361,54 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Deletes the specified options.
+    * Deletes one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * from a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product). Product options
+    * define the choices available for a product, such as size, color, or material.
+    * > Caution:
+    * > Removing an option can affect a product's
+    * > [variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) and their
+    * > configuration. Deleting an option might also delete associated option values and, depending on the
+    * chosen
+    * >
+    * [strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productoptionsdelete#argument
+    * s-strategy),
+    * > might affect variants.
+    * Use the `productOptionsDelete` mutation for the following use cases:
+    * - **Simplify product configuration**: Remove obsolete or unnecessary options
+    * (for example, discontinue "Material" if all variants are now the same material).
+    * - **Clean up after seasonal or limited-time offerings**: Delete options that are no longer
+    * relevant (for example, "Holiday edition").
+    * - **Automate catalog management**: Enable apps or integrations to programmatically remove options as
+    * product
+    * data changes.
+    * > Note:
+    * > The `productOptionsDelete` mutation enforces strict data integrity for product options and
+    * variants.
+    * > All option positions must remain sequential, and every remaining option must be used by at least
+    * one variant.
+    * After you delete a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
 
     public ProductOptionsDeletePayload getProductOptionsDelete() {
@@ -9144,2918 +10421,3279 @@ public class Mutation extends AbstractResponse<Mutation> {
     }
 
     /**
-    * Reorders options and option values on a product, causing product variants to alter their position.
-    * Options order take precedence over option values order. Depending on the existing product variants,
-    * some input orders might not be achieved.
-    * Example:
-    * Existing product variants:
-    * ["Red / Small", "Green / Medium", "Blue / Small"].
-    * New order:
-    * [
-    * {
-        * name: "Size", values: [{ name: "Small" }, { name: "Medium" }],
-        * name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }]
-        * }
-        * ].
-        * Description:
-        * Variants with "Green" value are expected to appear before variants with "Red" and "Blue" values.
-        * However, "Size" option appears before "Color".
-        * Therefore, output will be:
-        * ["Small / "Red", "Small / Blue", "Medium / Green"].
-        */
-
-        public ProductOptionsReorderPayload getProductOptionsReorder() {
-            return (ProductOptionsReorderPayload) get("productOptionsReorder");
-        }
-
-        public Mutation setProductOptionsReorder(ProductOptionsReorderPayload arg) {
-            optimisticData.put(getKey("productOptionsReorder"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously reorders the media attached to a product.
-        */
-
-        public ProductReorderMediaPayload getProductReorderMedia() {
-            return (ProductReorderMediaPayload) get("productReorderMedia");
-        }
-
-        public Mutation setProductReorderMedia(ProductReorderMediaPayload arg) {
-            optimisticData.put(getKey("productReorderMedia"), arg);
-            return this;
-        }
-
-        /**
-        * Creates or updates a product in a single request.
-        * Use this mutation when syncing information from an external data source into Shopify.
-        * When using this mutation to update a product, specify that product's `id` in the input.
-        * Any list field (e.g.
-        * [collections](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-prod
-        * uctsetinput-collections),
-        * [metafields](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-produ
-        * ctsetinput-metafields),
-        * [variants](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-product
-        * setinput-variants))
-        * will be updated so that all included entries are either created or updated, and all existing entries
-        * not
-        * included will be deleted.
-        * All other fields will be updated to the value passed. Omitted fields will not be updated.
-        * When run in synchronous mode, you will get the product back in the response.
-        * For versions `2024-04` and earlier, the synchronous mode has an input limit of 100 variants.
-        * This limit has been removed for versions `2024-07` and later.
-        * In asynchronous mode, you will instead get a
-        * [ProductSetOperation](https://shopify.dev/api/admin-graphql/current/objects/ProductSetOperation)
-        * object back. You can then use the
-        * [productOperation](https://shopify.dev/api/admin-graphql/current/queries/productOperation) query to
-        * retrieve the updated product data. This query uses the `ProductSetOperation` object to
-        * check the status of the operation and to retrieve the details of the updated product and its
-        * variants.
-        * If you need to update a subset of variants, use one of the bulk variant mutations:
-        * -
-        * [productVariantsBulkCreate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkCreate)
-        * -
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkUpdate)
-        * -
-        * [productVariantsBulkDelete](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkDelete)
-        * If you need to update options, use one of the product option mutations:
-        * -
-        * [productOptionsCreate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsCreate)
-        * - [productOptionUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionUpdate)
-        * -
-        * [productOptionsDelete](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsDelete)
-        * -
-        * [productOptionsReorder](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsReorde
-        * r)
-        * See our guide to
-        * [sync product data from an external
-        * source](https://shopify.dev/api/admin/migrate/new-product-model/sync-data)
-        * for more.
-        */
-
-        public ProductSetPayload getProductSet() {
-            return (ProductSetPayload) get("productSet");
-        }
-
-        public Mutation setProductSet(ProductSetPayload arg) {
-            optimisticData.put(getKey("productSet"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a product.
-        * For versions `2024-01` and older:
-        * If you update a product and only include some variants in the update,
-        * then any variants not included will be deleted.
-        * To safely manage variants without the risk of
-        * deleting excluded variants, use
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantsbu
-        * lkupdate).
-        * If you want to update a single variant, then use
-        * [productVariantUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantupdate).
-        */
-
-        public ProductUpdatePayload getProductUpdate() {
-            return (ProductUpdatePayload) get("productUpdate");
-        }
-
-        public Mutation setProductUpdate(ProductUpdatePayload arg) {
-            optimisticData.put(getKey("productUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Appends media from a product to variants of the product.
-        */
-
-        public ProductVariantAppendMediaPayload getProductVariantAppendMedia() {
-            return (ProductVariantAppendMediaPayload) get("productVariantAppendMedia");
-        }
-
-        public Mutation setProductVariantAppendMedia(ProductVariantAppendMediaPayload arg) {
-            optimisticData.put(getKey("productVariantAppendMedia"), arg);
-            return this;
-        }
-
-        /**
-        * Detaches media from product variants.
-        */
-
-        public ProductVariantDetachMediaPayload getProductVariantDetachMedia() {
-            return (ProductVariantDetachMediaPayload) get("productVariantDetachMedia");
-        }
-
-        public Mutation setProductVariantDetachMedia(ProductVariantDetachMediaPayload arg) {
-            optimisticData.put(getKey("productVariantDetachMedia"), arg);
-            return this;
-        }
-
-        /**
-        * Adds multiple selling plan groups to a product variant.
-        */
-
-        public ProductVariantJoinSellingPlanGroupsPayload getProductVariantJoinSellingPlanGroups() {
-            return (ProductVariantJoinSellingPlanGroupsPayload) get("productVariantJoinSellingPlanGroups");
-        }
-
-        public Mutation setProductVariantJoinSellingPlanGroups(ProductVariantJoinSellingPlanGroupsPayload arg) {
-            optimisticData.put(getKey("productVariantJoinSellingPlanGroups"), arg);
-            return this;
-        }
-
-        /**
-        * Remove multiple groups from a product variant.
-        */
-
-        public ProductVariantLeaveSellingPlanGroupsPayload getProductVariantLeaveSellingPlanGroups() {
-            return (ProductVariantLeaveSellingPlanGroupsPayload) get("productVariantLeaveSellingPlanGroups");
-        }
-
-        public Mutation setProductVariantLeaveSellingPlanGroups(ProductVariantLeaveSellingPlanGroupsPayload arg) {
-            optimisticData.put(getKey("productVariantLeaveSellingPlanGroups"), arg);
-            return this;
-        }
-
-        /**
-        * Creates new bundles, updates existing bundles, and removes bundle components for one or multiple
-        * bundles.
-        */
-
-        public ProductVariantRelationshipBulkUpdatePayload getProductVariantRelationshipBulkUpdate() {
-            return (ProductVariantRelationshipBulkUpdatePayload) get("productVariantRelationshipBulkUpdate");
-        }
-
-        public Mutation setProductVariantRelationshipBulkUpdate(ProductVariantRelationshipBulkUpdatePayload arg) {
-            optimisticData.put(getKey("productVariantRelationshipBulkUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-
-        public ProductVariantsBulkCreatePayload getProductVariantsBulkCreate() {
-            return (ProductVariantsBulkCreatePayload) get("productVariantsBulkCreate");
-        }
-
-        public Mutation setProductVariantsBulkCreate(ProductVariantsBulkCreatePayload arg) {
-            optimisticData.put(getKey("productVariantsBulkCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-
-        public ProductVariantsBulkDeletePayload getProductVariantsBulkDelete() {
-            return (ProductVariantsBulkDeletePayload) get("productVariantsBulkDelete");
-        }
-
-        public Mutation setProductVariantsBulkDelete(ProductVariantsBulkDeletePayload arg) {
-            optimisticData.put(getKey("productVariantsBulkDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Reorders multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-
-        public ProductVariantsBulkReorderPayload getProductVariantsBulkReorder() {
-            return (ProductVariantsBulkReorderPayload) get("productVariantsBulkReorder");
-        }
-
-        public Mutation setProductVariantsBulkReorder(ProductVariantsBulkReorderPayload arg) {
-            optimisticData.put(getKey("productVariantsBulkReorder"), arg);
-            return this;
-        }
-
-        /**
-        * Updates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-
-        public ProductVariantsBulkUpdatePayload getProductVariantsBulkUpdate() {
-            return (ProductVariantsBulkUpdatePayload) get("productVariantsBulkUpdate");
-        }
-
-        public Mutation setProductVariantsBulkUpdate(ProductVariantsBulkUpdatePayload arg) {
-            optimisticData.put(getKey("productVariantsBulkUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Updates the server pixel to connect to a Google PubSub endpoint.
-        * Running this mutation deletes any previous subscriptions for the server pixel.
-        */
-
-        public PubSubServerPixelUpdatePayload getPubSubServerPixelUpdate() {
-            return (PubSubServerPixelUpdatePayload) get("pubSubServerPixelUpdate");
-        }
-
-        public Mutation setPubSubServerPixelUpdate(PubSubServerPixelUpdatePayload arg) {
-            optimisticData.put(getKey("pubSubServerPixelUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new Google Cloud Pub/Sub webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-
-        public PubSubWebhookSubscriptionCreatePayload getPubSubWebhookSubscriptionCreate() {
-            return (PubSubWebhookSubscriptionCreatePayload) get("pubSubWebhookSubscriptionCreate");
-        }
-
-        public Mutation setPubSubWebhookSubscriptionCreate(PubSubWebhookSubscriptionCreatePayload arg) {
-            optimisticData.put(getKey("pubSubWebhookSubscriptionCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a Google Cloud Pub/Sub webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-
-        public PubSubWebhookSubscriptionUpdatePayload getPubSubWebhookSubscriptionUpdate() {
-            return (PubSubWebhookSubscriptionUpdatePayload) get("pubSubWebhookSubscriptionUpdate");
-        }
-
-        public Mutation setPubSubWebhookSubscriptionUpdate(PubSubWebhookSubscriptionUpdatePayload arg) {
-            optimisticData.put(getKey("pubSubWebhookSubscriptionUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a publication.
-        */
-
-        public PublicationCreatePayload getPublicationCreate() {
-            return (PublicationCreatePayload) get("publicationCreate");
-        }
-
-        public Mutation setPublicationCreate(PublicationCreatePayload arg) {
-            optimisticData.put(getKey("publicationCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a publication.
-        */
-
-        public PublicationDeletePayload getPublicationDelete() {
-            return (PublicationDeletePayload) get("publicationDelete");
-        }
-
-        public Mutation setPublicationDelete(PublicationDeletePayload arg) {
-            optimisticData.put(getKey("publicationDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a publication.
-        */
-
-        public PublicationUpdatePayload getPublicationUpdate() {
-            return (PublicationUpdatePayload) get("publicationUpdate");
-        }
-
-        public Mutation setPublicationUpdate(PublicationUpdatePayload arg) {
-            optimisticData.put(getKey("publicationUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Publishes a resource to a channel. If the resource is a product, then it's visible in the channel
-        * only if the product status is `active`. Products that are sold exclusively on subscription
-        * (`requiresSellingPlan: true`) can be published only on online stores.
-        */
-
-        public PublishablePublishPayload getPublishablePublish() {
-            return (PublishablePublishPayload) get("publishablePublish");
-        }
-
-        public Mutation setPublishablePublish(PublishablePublishPayload arg) {
-            optimisticData.put(getKey("publishablePublish"), arg);
-            return this;
-        }
-
-        /**
-        * Publishes a resource to current channel. If the resource is a product, then it's visible in the
-        * channel only if the product status is `active`. Products that are sold exclusively on subscription
-        * (`requiresSellingPlan: true`) can be published only on online stores.
-        */
-
-        public PublishablePublishToCurrentChannelPayload getPublishablePublishToCurrentChannel() {
-            return (PublishablePublishToCurrentChannelPayload) get("publishablePublishToCurrentChannel");
-        }
-
-        public Mutation setPublishablePublishToCurrentChannel(PublishablePublishToCurrentChannelPayload arg) {
-            optimisticData.put(getKey("publishablePublishToCurrentChannel"), arg);
-            return this;
-        }
-
-        /**
-        * Unpublishes a resource from a channel. If the resource is a product, then it's visible in the
-        * channel only if the product status is `active`.
-        */
-
-        public PublishableUnpublishPayload getPublishableUnpublish() {
-            return (PublishableUnpublishPayload) get("publishableUnpublish");
-        }
-
-        public Mutation setPublishableUnpublish(PublishableUnpublishPayload arg) {
-            optimisticData.put(getKey("publishableUnpublish"), arg);
-            return this;
-        }
-
-        /**
-        * Unpublishes a resource from the current channel. If the resource is a product, then it's visible in
-        * the channel only if the product status is `active`.
-        */
-
-        public PublishableUnpublishToCurrentChannelPayload getPublishableUnpublishToCurrentChannel() {
-            return (PublishableUnpublishToCurrentChannelPayload) get("publishableUnpublishToCurrentChannel");
-        }
-
-        public Mutation setPublishableUnpublishToCurrentChannel(PublishableUnpublishToCurrentChannelPayload arg) {
-            optimisticData.put(getKey("publishableUnpublishToCurrentChannel"), arg);
-            return this;
-        }
-
-        /**
-        * Updates quantity pricing on a price list. You can use the `quantityPricingByVariantUpdate` mutation
-        * to set fixed prices, quantity rules, and quantity price breaks. This mutation does not allow partial
-        * successes. If any of the requested resources fail to update, none of the requested resources will be
-        * updated. Delete operations are executed before create operations.
-        */
-
-        public QuantityPricingByVariantUpdatePayload getQuantityPricingByVariantUpdate() {
-            return (QuantityPricingByVariantUpdatePayload) get("quantityPricingByVariantUpdate");
-        }
-
-        public Mutation setQuantityPricingByVariantUpdate(QuantityPricingByVariantUpdatePayload arg) {
-            optimisticData.put(getKey("quantityPricingByVariantUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates or updates existing quantity rules on a price list.
-        * You can use the `quantityRulesAdd` mutation to set order level minimums, maximumums and increments
-        * for specific product variants.
-        */
-
-        public QuantityRulesAddPayload getQuantityRulesAdd() {
-            return (QuantityRulesAddPayload) get("quantityRulesAdd");
-        }
-
-        public Mutation setQuantityRulesAdd(QuantityRulesAddPayload arg) {
-            optimisticData.put(getKey("quantityRulesAdd"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes specific quantity rules from a price list using a product variant ID.
-        * You can use the `quantityRulesDelete` mutation to delete a set of quantity rules from a price list.
-        */
-
-        public QuantityRulesDeletePayload getQuantityRulesDelete() {
-            return (QuantityRulesDeletePayload) get("quantityRulesDelete");
-        }
-
-        public Mutation setQuantityRulesDelete(QuantityRulesDeletePayload arg) {
-            optimisticData.put(getKey("quantityRulesDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a refund.
-        */
-
-        public RefundCreatePayload getRefundCreate() {
-            return (RefundCreatePayload) get("refundCreate");
-        }
-
-        public Mutation setRefundCreate(RefundCreatePayload arg) {
-            optimisticData.put(getKey("refundCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Approves a customer's return request.
-        * If this mutation is successful, then the `Return.status` field of the
-        * approved return is set to `OPEN`.
-        */
-
-        public ReturnApproveRequestPayload getReturnApproveRequest() {
-            return (ReturnApproveRequestPayload) get("returnApproveRequest");
-        }
-
-        public Mutation setReturnApproveRequest(ReturnApproveRequestPayload arg) {
-            optimisticData.put(getKey("returnApproveRequest"), arg);
-            return this;
-        }
-
-        /**
-        * Cancels a return and restores the items back to being fulfilled.
-        * Canceling a return is only available before any work has been done
-        * on the return (such as an inspection or refund).
-        */
-
-        public ReturnCancelPayload getReturnCancel() {
-            return (ReturnCancelPayload) get("returnCancel");
-        }
-
-        public Mutation setReturnCancel(ReturnCancelPayload arg) {
-            optimisticData.put(getKey("returnCancel"), arg);
-            return this;
-        }
-
-        /**
-        * Indicates a return is complete, either when a refund has been made and items restocked,
-        * or simply when it has been marked as returned in the system.
-        */
-
-        public ReturnClosePayload getReturnClose() {
-            return (ReturnClosePayload) get("returnClose");
-        }
-
-        public Mutation setReturnClose(ReturnClosePayload arg) {
-            optimisticData.put(getKey("returnClose"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a return.
-        */
-
-        public ReturnCreatePayload getReturnCreate() {
-            return (ReturnCreatePayload) get("returnCreate");
-        }
-
-        public Mutation setReturnCreate(ReturnCreatePayload arg) {
-            optimisticData.put(getKey("returnCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Declines a return on an order.
-        * When a return is declined, each `ReturnLineItem.fulfillmentLineItem` can be associated to a new
-        * return.
-        * Use the `ReturnCreate` or `ReturnRequest` mutation to initiate a new return.
-        */
-
-        public ReturnDeclineRequestPayload getReturnDeclineRequest() {
-            return (ReturnDeclineRequestPayload) get("returnDeclineRequest");
-        }
-
-        public Mutation setReturnDeclineRequest(ReturnDeclineRequestPayload arg) {
-            optimisticData.put(getKey("returnDeclineRequest"), arg);
-            return this;
-        }
-
-        /**
-        * Removes return lines from a return.
-        */
-
-        public ReturnLineItemRemoveFromReturnPayload getReturnLineItemRemoveFromReturn() {
-            return (ReturnLineItemRemoveFromReturnPayload) get("returnLineItemRemoveFromReturn");
-        }
-
-        public Mutation setReturnLineItemRemoveFromReturn(ReturnLineItemRemoveFromReturnPayload arg) {
-            optimisticData.put(getKey("returnLineItemRemoveFromReturn"), arg);
-            return this;
-        }
-
-        /**
-        * Refunds a return when its status is `OPEN` or `CLOSED` and associates it with the related return
-        * request.
-        */
-
-        public ReturnRefundPayload getReturnRefund() {
-            return (ReturnRefundPayload) get("returnRefund");
-        }
-
-        public Mutation setReturnRefund(ReturnRefundPayload arg) {
-            optimisticData.put(getKey("returnRefund"), arg);
-            return this;
-        }
-
-        /**
-        * Reopens a closed return.
-        */
-
-        public ReturnReopenPayload getReturnReopen() {
-            return (ReturnReopenPayload) get("returnReopen");
-        }
-
-        public Mutation setReturnReopen(ReturnReopenPayload arg) {
-            optimisticData.put(getKey("returnReopen"), arg);
-            return this;
-        }
-
-        /**
-        * A customer's return request that hasn't been approved or declined.
-        * This mutation sets the value of the `Return.status` field to `REQUESTED`.
-        * To create a return that has the `Return.status` field set to `OPEN`, use the `returnCreate`
-        * mutation.
-        */
-
-        public ReturnRequestPayload getReturnRequest() {
-            return (ReturnRequestPayload) get("returnRequest");
-        }
-
-        public Mutation setReturnRequest(ReturnRequestPayload arg) {
-            optimisticData.put(getKey("returnRequest"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new reverse delivery with associated external shipping information.
-        */
-
-        public ReverseDeliveryCreateWithShippingPayload getReverseDeliveryCreateWithShipping() {
-            return (ReverseDeliveryCreateWithShippingPayload) get("reverseDeliveryCreateWithShipping");
-        }
-
-        public Mutation setReverseDeliveryCreateWithShipping(ReverseDeliveryCreateWithShippingPayload arg) {
-            optimisticData.put(getKey("reverseDeliveryCreateWithShipping"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a reverse delivery with associated external shipping information.
-        */
-
-        public ReverseDeliveryShippingUpdatePayload getReverseDeliveryShippingUpdate() {
-            return (ReverseDeliveryShippingUpdatePayload) get("reverseDeliveryShippingUpdate");
-        }
-
-        public Mutation setReverseDeliveryShippingUpdate(ReverseDeliveryShippingUpdatePayload arg) {
-            optimisticData.put(getKey("reverseDeliveryShippingUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Disposes reverse fulfillment order line items.
-        */
-
-        public ReverseFulfillmentOrderDisposePayload getReverseFulfillmentOrderDispose() {
-            return (ReverseFulfillmentOrderDisposePayload) get("reverseFulfillmentOrderDispose");
-        }
-
-        public Mutation setReverseFulfillmentOrderDispose(ReverseFulfillmentOrderDisposePayload arg) {
-            optimisticData.put(getKey("reverseFulfillmentOrderDispose"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a saved search.
-        */
-
-        public SavedSearchCreatePayload getSavedSearchCreate() {
-            return (SavedSearchCreatePayload) get("savedSearchCreate");
-        }
-
-        public Mutation setSavedSearchCreate(SavedSearchCreatePayload arg) {
-            optimisticData.put(getKey("savedSearchCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Delete a saved search.
-        */
-
-        public SavedSearchDeletePayload getSavedSearchDelete() {
-            return (SavedSearchDeletePayload) get("savedSearchDelete");
-        }
-
-        public Mutation setSavedSearchDelete(SavedSearchDeletePayload arg) {
-            optimisticData.put(getKey("savedSearchDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a saved search.
-        */
-
-        public SavedSearchUpdatePayload getSavedSearchUpdate() {
-            return (SavedSearchUpdatePayload) get("savedSearchUpdate");
-        }
-
-        public Mutation setSavedSearchUpdate(SavedSearchUpdatePayload arg) {
-            optimisticData.put(getKey("savedSearchUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Creates a new script tag.
-        */
-
-        public ScriptTagCreatePayload getScriptTagCreate() {
-            return (ScriptTagCreatePayload) get("scriptTagCreate");
-        }
-
-        public Mutation setScriptTagCreate(ScriptTagCreatePayload arg) {
-            optimisticData.put(getKey("scriptTagCreate"), arg);
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Deletes a script tag.
-        */
-
-        public ScriptTagDeletePayload getScriptTagDelete() {
-            return (ScriptTagDeletePayload) get("scriptTagDelete");
-        }
-
-        public Mutation setScriptTagDelete(ScriptTagDeletePayload arg) {
-            optimisticData.put(getKey("scriptTagDelete"), arg);
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Updates a script tag.
-        */
-
-        public ScriptTagUpdatePayload getScriptTagUpdate() {
-            return (ScriptTagUpdatePayload) get("scriptTagUpdate");
-        }
-
-        public Mutation setScriptTagUpdate(ScriptTagUpdatePayload arg) {
-            optimisticData.put(getKey("scriptTagUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a segment.
-        */
-
-        public SegmentCreatePayload getSegmentCreate() {
-            return (SegmentCreatePayload) get("segmentCreate");
-        }
-
-        public Mutation setSegmentCreate(SegmentCreatePayload arg) {
-            optimisticData.put(getKey("segmentCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a segment.
-        */
-
-        public SegmentDeletePayload getSegmentDelete() {
-            return (SegmentDeletePayload) get("segmentDelete");
-        }
-
-        public Mutation setSegmentDelete(SegmentDeletePayload arg) {
-            optimisticData.put(getKey("segmentDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a segment.
-        */
-
-        public SegmentUpdatePayload getSegmentUpdate() {
-            return (SegmentUpdatePayload) get("segmentUpdate");
-        }
-
-        public Mutation setSegmentUpdate(SegmentUpdatePayload arg) {
-            optimisticData.put(getKey("segmentUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Adds multiple product variants to a selling plan group.
-        */
-
-        public SellingPlanGroupAddProductVariantsPayload getSellingPlanGroupAddProductVariants() {
-            return (SellingPlanGroupAddProductVariantsPayload) get("sellingPlanGroupAddProductVariants");
-        }
-
-        public Mutation setSellingPlanGroupAddProductVariants(SellingPlanGroupAddProductVariantsPayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupAddProductVariants"), arg);
-            return this;
-        }
-
-        /**
-        * Adds multiple products to a selling plan group.
-        */
-
-        public SellingPlanGroupAddProductsPayload getSellingPlanGroupAddProducts() {
-            return (SellingPlanGroupAddProductsPayload) get("sellingPlanGroupAddProducts");
-        }
-
-        public Mutation setSellingPlanGroupAddProducts(SellingPlanGroupAddProductsPayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupAddProducts"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a Selling Plan Group.
-        */
-
-        public SellingPlanGroupCreatePayload getSellingPlanGroupCreate() {
-            return (SellingPlanGroupCreatePayload) get("sellingPlanGroupCreate");
-        }
-
-        public Mutation setSellingPlanGroupCreate(SellingPlanGroupCreatePayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Delete a Selling Plan Group. This does not affect subscription contracts.
-        */
-
-        public SellingPlanGroupDeletePayload getSellingPlanGroupDelete() {
-            return (SellingPlanGroupDeletePayload) get("sellingPlanGroupDelete");
-        }
-
-        public Mutation setSellingPlanGroupDelete(SellingPlanGroupDeletePayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Removes multiple product variants from a selling plan group.
-        */
-
-        public SellingPlanGroupRemoveProductVariantsPayload getSellingPlanGroupRemoveProductVariants() {
-            return (SellingPlanGroupRemoveProductVariantsPayload) get("sellingPlanGroupRemoveProductVariants");
-        }
-
-        public Mutation setSellingPlanGroupRemoveProductVariants(SellingPlanGroupRemoveProductVariantsPayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupRemoveProductVariants"), arg);
-            return this;
-        }
-
-        /**
-        * Removes multiple products from a selling plan group.
-        */
-
-        public SellingPlanGroupRemoveProductsPayload getSellingPlanGroupRemoveProducts() {
-            return (SellingPlanGroupRemoveProductsPayload) get("sellingPlanGroupRemoveProducts");
-        }
-
-        public Mutation setSellingPlanGroupRemoveProducts(SellingPlanGroupRemoveProductsPayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupRemoveProducts"), arg);
-            return this;
-        }
-
-        /**
-        * Update a Selling Plan Group.
-        */
-
-        public SellingPlanGroupUpdatePayload getSellingPlanGroupUpdate() {
-            return (SellingPlanGroupUpdatePayload) get("sellingPlanGroupUpdate");
-        }
-
-        public Mutation setSellingPlanGroupUpdate(SellingPlanGroupUpdatePayload arg) {
-            optimisticData.put(getKey("sellingPlanGroupUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new unconfigured server pixel. A single server pixel can exist for an app and shop
-        * combination. If you call this mutation when a server pixel already exists, then an error will
-        * return.
-        */
-
-        public ServerPixelCreatePayload getServerPixelCreate() {
-            return (ServerPixelCreatePayload) get("serverPixelCreate");
-        }
-
-        public Mutation setServerPixelCreate(ServerPixelCreatePayload arg) {
-            optimisticData.put(getKey("serverPixelCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes the Server Pixel associated with the current app & shop.
-        */
-
-        public ServerPixelDeletePayload getServerPixelDelete() {
-            return (ServerPixelDeletePayload) get("serverPixelDelete");
-        }
-
-        public Mutation setServerPixelDelete(ServerPixelDeletePayload arg) {
-            optimisticData.put(getKey("serverPixelDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a shipping package.
-        */
-
-        public ShippingPackageDeletePayload getShippingPackageDelete() {
-            return (ShippingPackageDeletePayload) get("shippingPackageDelete");
-        }
-
-        public Mutation setShippingPackageDelete(ShippingPackageDeletePayload arg) {
-            optimisticData.put(getKey("shippingPackageDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Set a shipping package as the default.
-        * The default shipping package is the one used to calculate shipping costs on checkout.
-        */
-
-        public ShippingPackageMakeDefaultPayload getShippingPackageMakeDefault() {
-            return (ShippingPackageMakeDefaultPayload) get("shippingPackageMakeDefault");
-        }
-
-        public Mutation setShippingPackageMakeDefault(ShippingPackageMakeDefaultPayload arg) {
-            optimisticData.put(getKey("shippingPackageMakeDefault"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a shipping package.
-        */
-
-        public ShippingPackageUpdatePayload getShippingPackageUpdate() {
-            return (ShippingPackageUpdatePayload) get("shippingPackageUpdate");
-        }
-
-        public Mutation setShippingPackageUpdate(ShippingPackageUpdatePayload arg) {
-            optimisticData.put(getKey("shippingPackageUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a locale for a shop. This also deletes all translations of this locale.
-        */
-
-        public ShopLocaleDisablePayload getShopLocaleDisable() {
-            return (ShopLocaleDisablePayload) get("shopLocaleDisable");
-        }
-
-        public Mutation setShopLocaleDisable(ShopLocaleDisablePayload arg) {
-            optimisticData.put(getKey("shopLocaleDisable"), arg);
-            return this;
-        }
-
-        /**
-        * Adds a locale for a shop. The newly added locale is in the unpublished state.
-        */
-
-        public ShopLocaleEnablePayload getShopLocaleEnable() {
-            return (ShopLocaleEnablePayload) get("shopLocaleEnable");
-        }
-
-        public Mutation setShopLocaleEnable(ShopLocaleEnablePayload arg) {
-            optimisticData.put(getKey("shopLocaleEnable"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a locale for a shop.
-        */
-
-        public ShopLocaleUpdatePayload getShopLocaleUpdate() {
-            return (ShopLocaleUpdatePayload) get("shopLocaleUpdate");
-        }
-
-        public Mutation setShopLocaleUpdate(ShopLocaleUpdatePayload arg) {
-            optimisticData.put(getKey("shopLocaleUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a shop policy.
-        */
-
-        public ShopPolicyUpdatePayload getShopPolicyUpdate() {
-            return (ShopPolicyUpdatePayload) get("shopPolicyUpdate");
-        }
-
-        public Mutation setShopPolicyUpdate(ShopPolicyUpdatePayload arg) {
-            optimisticData.put(getKey("shopPolicyUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * The `ResourceFeedback` object lets your app report the status of shops and their resources. For
-        * example, if
-        * your app is a marketplace channel, then you can use resource feedback to alert merchants that they
-        * need to connect their marketplace account by signing in.
-        * Resource feedback notifications are displayed to the merchant on the home screen of their Shopify
-        * admin, and in the product details view for any products that are published to your app.
-        * This resource should be used only in cases where you're describing steps that a merchant is required
-        * to complete. If your app offers optional or promotional set-up steps, or if it makes
-        * recommendations, then don't use resource feedback to let merchants know about them.
-        * ## Sending feedback on a shop
-        * You can send resource feedback on a shop to let the merchant know what steps they need to take to
-        * make sure that your app is set up correctly. Feedback can have one of two states: `requires_action`
-        * or `success`. You need to send a `requires_action` feedback request for each step that the merchant
-        * is required to complete.
-        * If there are multiple set-up steps that require merchant action, then send feedback with a state of
-        * `requires_action` as merchants complete prior steps. And to remove the feedback message from the
-        * Shopify admin, send a `success` feedback request.
-        * #### Important
-        * Sending feedback replaces previously sent feedback for the shop. Send a new
-        * `shopResourceFeedbackCreate` mutation to push the latest state of a shop or its resources to
-        * Shopify.
-        */
-
-        public ShopResourceFeedbackCreatePayload getShopResourceFeedbackCreate() {
-            return (ShopResourceFeedbackCreatePayload) get("shopResourceFeedbackCreate");
-        }
-
-        public Mutation setShopResourceFeedbackCreate(ShopResourceFeedbackCreatePayload arg) {
-            optimisticData.put(getKey("shopResourceFeedbackCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates an alternate currency payout for a Shopify Payments account.
-        */
-
-        public ShopifyPaymentsPayoutAlternateCurrencyCreatePayload getShopifyPaymentsPayoutAlternateCurrencyCreate() {
-            return (ShopifyPaymentsPayoutAlternateCurrencyCreatePayload) get("shopifyPaymentsPayoutAlternateCurrencyCreate");
-        }
-
-        public Mutation setShopifyPaymentsPayoutAlternateCurrencyCreate(ShopifyPaymentsPayoutAlternateCurrencyCreatePayload arg) {
-            optimisticData.put(getKey("shopifyPaymentsPayoutAlternateCurrencyCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates staged upload targets for each input. This is the first step in the upload process.
-        * The returned staged upload targets' URL and parameter fields can be used to send a request
-        * to upload the file described in the corresponding input.
-        * For more information on the upload process, refer to
-        * [Upload media to
-        * Shopify](https://shopify.dev/apps/online-store/media/products#step-1-upload-media-to-shopify).
-        */
-
-        public StagedUploadsCreatePayload getStagedUploadsCreate() {
-            return (StagedUploadsCreatePayload) get("stagedUploadsCreate");
-        }
-
-        public Mutation setStagedUploadsCreate(StagedUploadsCreatePayload arg) {
-            optimisticData.put(getKey("stagedUploadsCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Activates the specified standard metafield definition from its template.
-        * Refer to the [list of standard metafield definition
-        * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
-        */
-
-        public StandardMetafieldDefinitionEnablePayload getStandardMetafieldDefinitionEnable() {
-            return (StandardMetafieldDefinitionEnablePayload) get("standardMetafieldDefinitionEnable");
-        }
-
-        public Mutation setStandardMetafieldDefinitionEnable(StandardMetafieldDefinitionEnablePayload arg) {
-            optimisticData.put(getKey("standardMetafieldDefinitionEnable"), arg);
-            return this;
-        }
-
-        /**
-        * Enables the specified standard metaobject definition from its template.
-        */
-
-        public StandardMetaobjectDefinitionEnablePayload getStandardMetaobjectDefinitionEnable() {
-            return (StandardMetaobjectDefinitionEnablePayload) get("standardMetaobjectDefinitionEnable");
-        }
-
-        public Mutation setStandardMetaobjectDefinitionEnable(StandardMetaobjectDefinitionEnablePayload arg) {
-            optimisticData.put(getKey("standardMetaobjectDefinitionEnable"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a credit transaction that increases the store credit account balance by the given amount.
-        * This operation will create an account if one does not already exist.
-        * A store credit account owner can hold multiple accounts each with a different currency.
-        * Use the most appropriate currency for the given store credit account owner.
-        */
-
-        public StoreCreditAccountCreditPayload getStoreCreditAccountCredit() {
-            return (StoreCreditAccountCreditPayload) get("storeCreditAccountCredit");
-        }
-
-        public Mutation setStoreCreditAccountCredit(StoreCreditAccountCreditPayload arg) {
-            optimisticData.put(getKey("storeCreditAccountCredit"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a debit transaction that decreases the store credit account balance by the given amount.
-        */
-
-        public StoreCreditAccountDebitPayload getStoreCreditAccountDebit() {
-            return (StoreCreditAccountDebitPayload) get("storeCreditAccountDebit");
-        }
-
-        public Mutation setStoreCreditAccountDebit(StoreCreditAccountDebitPayload arg) {
-            optimisticData.put(getKey("storeCreditAccountDebit"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a storefront access token for use with the [Storefront
-        * API](https://shopify.dev/docs/api/storefront).
-        * An app can have a maximum of 100 active storefront access tokens for each shop.
-        * [Get started with the Storefront
-        * API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/getting-started)
-        * .
-        */
-
-        public StorefrontAccessTokenCreatePayload getStorefrontAccessTokenCreate() {
-            return (StorefrontAccessTokenCreatePayload) get("storefrontAccessTokenCreate");
-        }
-
-        public Mutation setStorefrontAccessTokenCreate(StorefrontAccessTokenCreatePayload arg) {
-            optimisticData.put(getKey("storefrontAccessTokenCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a storefront access token.
-        */
-
-        public StorefrontAccessTokenDeletePayload getStorefrontAccessTokenDelete() {
-            return (StorefrontAccessTokenDeletePayload) get("storefrontAccessTokenDelete");
-        }
-
-        public Mutation setStorefrontAccessTokenDelete(StorefrontAccessTokenDeletePayload arg) {
-            optimisticData.put(getKey("storefrontAccessTokenDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new subscription billing attempt. For more information, refer to [Create a subscription
-        * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
-        * ate-a-billing-attempt).
-        */
-
-        public SubscriptionBillingAttemptCreatePayload getSubscriptionBillingAttemptCreate() {
-            return (SubscriptionBillingAttemptCreatePayload) get("subscriptionBillingAttemptCreate");
-        }
-
-        public Mutation setSubscriptionBillingAttemptCreate(SubscriptionBillingAttemptCreatePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingAttemptCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously queries and charges all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-
-        public SubscriptionBillingCycleBulkChargePayload getSubscriptionBillingCycleBulkCharge() {
-            return (SubscriptionBillingCycleBulkChargePayload) get("subscriptionBillingCycleBulkCharge");
-        }
-
-        public Mutation setSubscriptionBillingCycleBulkCharge(SubscriptionBillingCycleBulkChargePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleBulkCharge"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously queries all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-
-        public SubscriptionBillingCycleBulkSearchPayload getSubscriptionBillingCycleBulkSearch() {
-            return (SubscriptionBillingCycleBulkSearchPayload) get("subscriptionBillingCycleBulkSearch");
-        }
-
-        public Mutation setSubscriptionBillingCycleBulkSearch(SubscriptionBillingCycleBulkSearchPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleBulkSearch"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
-        * mutation for
-        * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
-        * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
-        * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
-        * ate-a-billing-attempt).
-        */
-
-        public SubscriptionBillingCycleChargePayload getSubscriptionBillingCycleCharge() {
-            return (SubscriptionBillingCycleChargePayload) get("subscriptionBillingCycleCharge");
-        }
-
-        public Mutation setSubscriptionBillingCycleCharge(SubscriptionBillingCycleChargePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleCharge"), arg);
-            return this;
-        }
-
-        /**
-        * Commits the updates of a Subscription Billing Cycle Contract draft.
-        */
-
-        public SubscriptionBillingCycleContractDraftCommitPayload getSubscriptionBillingCycleContractDraftCommit() {
-            return (SubscriptionBillingCycleContractDraftCommitPayload) get("subscriptionBillingCycleContractDraftCommit");
-        }
-
-        public Mutation setSubscriptionBillingCycleContractDraftCommit(SubscriptionBillingCycleContractDraftCommitPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleContractDraftCommit"), arg);
-            return this;
-        }
-
-        /**
-        * Concatenates a contract to a Subscription Draft.
-        */
-
-        public SubscriptionBillingCycleContractDraftConcatenatePayload getSubscriptionBillingCycleContractDraftConcatenate() {
-            return (SubscriptionBillingCycleContractDraftConcatenatePayload) get("subscriptionBillingCycleContractDraftConcatenate");
-        }
-
-        public Mutation setSubscriptionBillingCycleContractDraftConcatenate(SubscriptionBillingCycleContractDraftConcatenatePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleContractDraftConcatenate"), arg);
-            return this;
-        }
-
-        /**
-        * Edit the contents of a subscription contract for the specified billing cycle.
-        */
-
-        public SubscriptionBillingCycleContractEditPayload getSubscriptionBillingCycleContractEdit() {
-            return (SubscriptionBillingCycleContractEditPayload) get("subscriptionBillingCycleContractEdit");
-        }
-
-        public Mutation setSubscriptionBillingCycleContractEdit(SubscriptionBillingCycleContractEditPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleContractEdit"), arg);
-            return this;
-        }
-
-        /**
-        * Delete the schedule and contract edits of the selected subscription billing cycle.
-        */
-
-        public SubscriptionBillingCycleEditDeletePayload getSubscriptionBillingCycleEditDelete() {
-            return (SubscriptionBillingCycleEditDeletePayload) get("subscriptionBillingCycleEditDelete");
-        }
-
-        public Mutation setSubscriptionBillingCycleEditDelete(SubscriptionBillingCycleEditDeletePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleEditDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Delete the current and future schedule and contract edits of a list of subscription billing cycles.
-        */
-
-        public SubscriptionBillingCycleEditsDeletePayload getSubscriptionBillingCycleEditsDelete() {
-            return (SubscriptionBillingCycleEditsDeletePayload) get("subscriptionBillingCycleEditsDelete");
-        }
-
-        public Mutation setSubscriptionBillingCycleEditsDelete(SubscriptionBillingCycleEditsDeletePayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleEditsDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Modify the schedule of a specific billing cycle.
-        */
-
-        public SubscriptionBillingCycleScheduleEditPayload getSubscriptionBillingCycleScheduleEdit() {
-            return (SubscriptionBillingCycleScheduleEditPayload) get("subscriptionBillingCycleScheduleEdit");
-        }
-
-        public Mutation setSubscriptionBillingCycleScheduleEdit(SubscriptionBillingCycleScheduleEditPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleScheduleEdit"), arg);
-            return this;
-        }
-
-        /**
-        * Skips a Subscription Billing Cycle.
-        */
-
-        public SubscriptionBillingCycleSkipPayload getSubscriptionBillingCycleSkip() {
-            return (SubscriptionBillingCycleSkipPayload) get("subscriptionBillingCycleSkip");
-        }
-
-        public Mutation setSubscriptionBillingCycleSkip(SubscriptionBillingCycleSkipPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleSkip"), arg);
-            return this;
-        }
-
-        /**
-        * Unskips a Subscription Billing Cycle.
-        */
-
-        public SubscriptionBillingCycleUnskipPayload getSubscriptionBillingCycleUnskip() {
-            return (SubscriptionBillingCycleUnskipPayload) get("subscriptionBillingCycleUnskip");
-        }
-
-        public Mutation setSubscriptionBillingCycleUnskip(SubscriptionBillingCycleUnskipPayload arg) {
-            optimisticData.put(getKey("subscriptionBillingCycleUnskip"), arg);
-            return this;
-        }
-
-        /**
-        * Activates a Subscription Contract. Contract status must be either active, paused, or failed.
-        */
-
-        public SubscriptionContractActivatePayload getSubscriptionContractActivate() {
-            return (SubscriptionContractActivatePayload) get("subscriptionContractActivate");
-        }
-
-        public Mutation setSubscriptionContractActivate(SubscriptionContractActivatePayload arg) {
-            optimisticData.put(getKey("subscriptionContractActivate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a Subscription Contract.
-        */
-
-        public SubscriptionContractAtomicCreatePayload getSubscriptionContractAtomicCreate() {
-            return (SubscriptionContractAtomicCreatePayload) get("subscriptionContractAtomicCreate");
-        }
-
-        public Mutation setSubscriptionContractAtomicCreate(SubscriptionContractAtomicCreatePayload arg) {
-            optimisticData.put(getKey("subscriptionContractAtomicCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Cancels a Subscription Contract.
-        */
-
-        public SubscriptionContractCancelPayload getSubscriptionContractCancel() {
-            return (SubscriptionContractCancelPayload) get("subscriptionContractCancel");
-        }
-
-        public Mutation setSubscriptionContractCancel(SubscriptionContractCancelPayload arg) {
-            optimisticData.put(getKey("subscriptionContractCancel"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a Subscription Contract Draft.
-        * You can submit all the desired information for the draft using [Subscription Draft Input
-        * object](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/SubscriptionDraftInput).
-        * You can also update the draft using the [Subscription Contract
-        * Update](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionContractUpdate)
-        * mutation.
-        * The draft is not saved until you call the [Subscription Draft
-        * Commit](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionDraftCommit)
-        * mutation.
-        */
-
-        public SubscriptionContractCreatePayload getSubscriptionContractCreate() {
-            return (SubscriptionContractCreatePayload) get("subscriptionContractCreate");
-        }
-
-        public Mutation setSubscriptionContractCreate(SubscriptionContractCreatePayload arg) {
-            optimisticData.put(getKey("subscriptionContractCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Expires a Subscription Contract.
-        */
-
-        public SubscriptionContractExpirePayload getSubscriptionContractExpire() {
-            return (SubscriptionContractExpirePayload) get("subscriptionContractExpire");
-        }
-
-        public Mutation setSubscriptionContractExpire(SubscriptionContractExpirePayload arg) {
-            optimisticData.put(getKey("subscriptionContractExpire"), arg);
-            return this;
-        }
-
-        /**
-        * Fails a Subscription Contract.
-        */
-
-        public SubscriptionContractFailPayload getSubscriptionContractFail() {
-            return (SubscriptionContractFailPayload) get("subscriptionContractFail");
-        }
-
-        public Mutation setSubscriptionContractFail(SubscriptionContractFailPayload arg) {
-            optimisticData.put(getKey("subscriptionContractFail"), arg);
-            return this;
-        }
-
-        /**
-        * Pauses a Subscription Contract.
-        */
-
-        public SubscriptionContractPausePayload getSubscriptionContractPause() {
-            return (SubscriptionContractPausePayload) get("subscriptionContractPause");
-        }
-
-        public Mutation setSubscriptionContractPause(SubscriptionContractPausePayload arg) {
-            optimisticData.put(getKey("subscriptionContractPause"), arg);
-            return this;
-        }
-
-        /**
-        * Allows for the easy change of a Product in a Contract or a Product price change.
-        */
-
-        public SubscriptionContractProductChangePayload getSubscriptionContractProductChange() {
-            return (SubscriptionContractProductChangePayload) get("subscriptionContractProductChange");
-        }
-
-        public Mutation setSubscriptionContractProductChange(SubscriptionContractProductChangePayload arg) {
-            optimisticData.put(getKey("subscriptionContractProductChange"), arg);
-            return this;
-        }
-
-        /**
-        * Sets the next billing date of a Subscription Contract. This field is managed by the apps.
-        * Alternatively you can utilize our
-        * [Billing Cycles
-        * APIs](https://shopify.dev/docs/apps/selling-strategies/subscriptions/billing-cycles),
-        * which provide auto-computed billing dates and additional functionalities.
-        */
-
-        public SubscriptionContractSetNextBillingDatePayload getSubscriptionContractSetNextBillingDate() {
-            return (SubscriptionContractSetNextBillingDatePayload) get("subscriptionContractSetNextBillingDate");
-        }
-
-        public Mutation setSubscriptionContractSetNextBillingDate(SubscriptionContractSetNextBillingDatePayload arg) {
-            optimisticData.put(getKey("subscriptionContractSetNextBillingDate"), arg);
-            return this;
-        }
-
-        /**
-        * The subscriptionContractUpdate mutation allows you to create a draft of an existing subscription
-        * contract. This [draft](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionDraft) can
-        * be reviewed and modified as needed. Once the draft is committed with
-        * [subscriptionDraftCommit](https://shopify.dev/api/admin-graphql/latest/mutations/subscriptionDraftCo
-        * mmit), the changes are applied to the original subscription contract.
-        */
-
-        public SubscriptionContractUpdatePayload getSubscriptionContractUpdate() {
-            return (SubscriptionContractUpdatePayload) get("subscriptionContractUpdate");
-        }
-
-        public Mutation setSubscriptionContractUpdate(SubscriptionContractUpdatePayload arg) {
-            optimisticData.put(getKey("subscriptionContractUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Commits the updates of a Subscription Contract draft.
-        */
-
-        public SubscriptionDraftCommitPayload getSubscriptionDraftCommit() {
-            return (SubscriptionDraftCommitPayload) get("subscriptionDraftCommit");
-        }
-
-        public Mutation setSubscriptionDraftCommit(SubscriptionDraftCommitPayload arg) {
-            optimisticData.put(getKey("subscriptionDraftCommit"), arg);
-            return this;
-        }
-
-        /**
-        * Adds a subscription discount to a subscription draft.
-        */
-
-        public SubscriptionDraftDiscountAddPayload getSubscriptionDraftDiscountAdd() {
-            return (SubscriptionDraftDiscountAddPayload) get("subscriptionDraftDiscountAdd");
-        }
-
-        public Mutation setSubscriptionDraftDiscountAdd(SubscriptionDraftDiscountAddPayload arg) {
-            optimisticData.put(getKey("subscriptionDraftDiscountAdd"), arg);
-            return this;
-        }
-
-        /**
-        * Applies a code discount on the subscription draft.
-        */
-
-        public SubscriptionDraftDiscountCodeApplyPayload getSubscriptionDraftDiscountCodeApply() {
-            return (SubscriptionDraftDiscountCodeApplyPayload) get("subscriptionDraftDiscountCodeApply");
-        }
-
-        public Mutation setSubscriptionDraftDiscountCodeApply(SubscriptionDraftDiscountCodeApplyPayload arg) {
-            optimisticData.put(getKey("subscriptionDraftDiscountCodeApply"), arg);
-            return this;
-        }
-
-        /**
-        * Removes a subscription discount from a subscription draft.
-        */
-
-        public SubscriptionDraftDiscountRemovePayload getSubscriptionDraftDiscountRemove() {
-            return (SubscriptionDraftDiscountRemovePayload) get("subscriptionDraftDiscountRemove");
-        }
-
-        public Mutation setSubscriptionDraftDiscountRemove(SubscriptionDraftDiscountRemovePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftDiscountRemove"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a subscription discount on a subscription draft.
-        */
-
-        public SubscriptionDraftDiscountUpdatePayload getSubscriptionDraftDiscountUpdate() {
-            return (SubscriptionDraftDiscountUpdatePayload) get("subscriptionDraftDiscountUpdate");
-        }
-
-        public Mutation setSubscriptionDraftDiscountUpdate(SubscriptionDraftDiscountUpdatePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftDiscountUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Adds a subscription free shipping discount to a subscription draft.
-        */
-
-        public SubscriptionDraftFreeShippingDiscountAddPayload getSubscriptionDraftFreeShippingDiscountAdd() {
-            return (SubscriptionDraftFreeShippingDiscountAddPayload) get("subscriptionDraftFreeShippingDiscountAdd");
-        }
-
-        public Mutation setSubscriptionDraftFreeShippingDiscountAdd(SubscriptionDraftFreeShippingDiscountAddPayload arg) {
-            optimisticData.put(getKey("subscriptionDraftFreeShippingDiscountAdd"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a subscription free shipping discount on a subscription draft.
-        */
-
-        public SubscriptionDraftFreeShippingDiscountUpdatePayload getSubscriptionDraftFreeShippingDiscountUpdate() {
-            return (SubscriptionDraftFreeShippingDiscountUpdatePayload) get("subscriptionDraftFreeShippingDiscountUpdate");
-        }
-
-        public Mutation setSubscriptionDraftFreeShippingDiscountUpdate(SubscriptionDraftFreeShippingDiscountUpdatePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftFreeShippingDiscountUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Adds a subscription line to a subscription draft.
-        */
-
-        public SubscriptionDraftLineAddPayload getSubscriptionDraftLineAdd() {
-            return (SubscriptionDraftLineAddPayload) get("subscriptionDraftLineAdd");
-        }
-
-        public Mutation setSubscriptionDraftLineAdd(SubscriptionDraftLineAddPayload arg) {
-            optimisticData.put(getKey("subscriptionDraftLineAdd"), arg);
-            return this;
-        }
-
-        /**
-        * Removes a subscription line from a subscription draft.
-        */
-
-        public SubscriptionDraftLineRemovePayload getSubscriptionDraftLineRemove() {
-            return (SubscriptionDraftLineRemovePayload) get("subscriptionDraftLineRemove");
-        }
-
-        public Mutation setSubscriptionDraftLineRemove(SubscriptionDraftLineRemovePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftLineRemove"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a subscription line on a subscription draft.
-        */
-
-        public SubscriptionDraftLineUpdatePayload getSubscriptionDraftLineUpdate() {
-            return (SubscriptionDraftLineUpdatePayload) get("subscriptionDraftLineUpdate");
-        }
-
-        public Mutation setSubscriptionDraftLineUpdate(SubscriptionDraftLineUpdatePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftLineUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a Subscription Draft.
-        */
-
-        public SubscriptionDraftUpdatePayload getSubscriptionDraftUpdate() {
-            return (SubscriptionDraftUpdatePayload) get("subscriptionDraftUpdate");
-        }
-
-        public Mutation setSubscriptionDraftUpdate(SubscriptionDraftUpdatePayload arg) {
-            optimisticData.put(getKey("subscriptionDraftUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Add tags to an order, a draft order, a customer, a product, or an online store article.
-        */
-
-        public TagsAddPayload getTagsAdd() {
-            return (TagsAddPayload) get("tagsAdd");
-        }
-
-        public Mutation setTagsAdd(TagsAddPayload arg) {
-            optimisticData.put(getKey("tagsAdd"), arg);
-            return this;
-        }
-
-        /**
-        * Remove tags from an order, a draft order, a customer, a product, or an online store article.
-        */
-
-        public TagsRemovePayload getTagsRemove() {
-            return (TagsRemovePayload) get("tagsRemove");
-        }
-
-        public Mutation setTagsRemove(TagsRemovePayload arg) {
-            optimisticData.put(getKey("tagsRemove"), arg);
-            return this;
-        }
-
-        /**
-        * Allows tax app configurations for tax partners.
-        */
-
-        public TaxAppConfigurePayload getTaxAppConfigure() {
-            return (TaxAppConfigurePayload) get("taxAppConfigure");
-        }
-
-        public Mutation setTaxAppConfigure(TaxAppConfigurePayload arg) {
-            optimisticData.put(getKey("taxAppConfigure"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a theme using an external URL or for files that were previously uploaded using the
-        * [stagedUploadsCreate
-        * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-        * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
-        */
-
-        public ThemeCreatePayload getThemeCreate() {
-            return (ThemeCreatePayload) get("themeCreate");
-        }
-
-        public Mutation setThemeCreate(ThemeCreatePayload arg) {
-            optimisticData.put(getKey("themeCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a theme.
-        */
-
-        public ThemeDeletePayload getThemeDelete() {
-            return (ThemeDeletePayload) get("themeDelete");
-        }
-
-        public Mutation setThemeDelete(ThemeDeletePayload arg) {
-            optimisticData.put(getKey("themeDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Copy theme files. Copying to existing theme files will overwrite them.
-        */
-
-        public ThemeFilesCopyPayload getThemeFilesCopy() {
-            return (ThemeFilesCopyPayload) get("themeFilesCopy");
-        }
-
-        public Mutation setThemeFilesCopy(ThemeFilesCopyPayload arg) {
-            optimisticData.put(getKey("themeFilesCopy"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a theme's files.
-        */
-
-        public ThemeFilesDeletePayload getThemeFilesDelete() {
-            return (ThemeFilesDeletePayload) get("themeFilesDelete");
-        }
-
-        public Mutation setThemeFilesDelete(ThemeFilesDeletePayload arg) {
-            optimisticData.put(getKey("themeFilesDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Create or update theme files.
-        */
-
-        public ThemeFilesUpsertPayload getThemeFilesUpsert() {
-            return (ThemeFilesUpsertPayload) get("themeFilesUpsert");
-        }
-
-        public Mutation setThemeFilesUpsert(ThemeFilesUpsertPayload arg) {
-            optimisticData.put(getKey("themeFilesUpsert"), arg);
-            return this;
-        }
-
-        /**
-        * Publishes a theme.
-        */
-
-        public ThemePublishPayload getThemePublish() {
-            return (ThemePublishPayload) get("themePublish");
-        }
-
-        public Mutation setThemePublish(ThemePublishPayload arg) {
-            optimisticData.put(getKey("themePublish"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a theme.
-        */
-
-        public ThemeUpdatePayload getThemeUpdate() {
-            return (ThemeUpdatePayload) get("themeUpdate");
-        }
-
-        public Mutation setThemeUpdate(ThemeUpdatePayload arg) {
-            optimisticData.put(getKey("themeUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Trigger the voiding of an uncaptured authorization transaction.
-        */
-
-        public TransactionVoidPayload getTransactionVoid() {
-            return (TransactionVoidPayload) get("transactionVoid");
-        }
-
-        public Mutation setTransactionVoid(TransactionVoidPayload arg) {
-            optimisticData.put(getKey("transactionVoid"), arg);
-            return this;
-        }
-
-        /**
-        * Creates or updates translations.
-        */
-
-        public TranslationsRegisterPayload getTranslationsRegister() {
-            return (TranslationsRegisterPayload) get("translationsRegister");
-        }
-
-        public Mutation setTranslationsRegister(TranslationsRegisterPayload arg) {
-            optimisticData.put(getKey("translationsRegister"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes translations.
-        */
-
-        public TranslationsRemovePayload getTranslationsRemove() {
-            return (TranslationsRemovePayload) get("translationsRemove");
-        }
-
-        public Mutation setTranslationsRemove(TranslationsRemovePayload arg) {
-            optimisticData.put(getKey("translationsRemove"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously delete [URL
-        * redirects](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) in bulk.
-        */
-
-        public UrlRedirectBulkDeleteAllPayload getUrlRedirectBulkDeleteAll() {
-            return (UrlRedirectBulkDeleteAllPayload) get("urlRedirectBulkDeleteAll");
-        }
-
-        public Mutation setUrlRedirectBulkDeleteAll(UrlRedirectBulkDeleteAllPayload arg) {
-            optimisticData.put(getKey("urlRedirectBulkDeleteAll"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously delete
-        * [URLRedirect](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) 
-        * objects in bulk by IDs.
-        * Learn more about
-        * [URLRedirect](https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect) 
-        * objects.
-        */
-
-        public UrlRedirectBulkDeleteByIdsPayload getUrlRedirectBulkDeleteByIds() {
-            return (UrlRedirectBulkDeleteByIdsPayload) get("urlRedirectBulkDeleteByIds");
-        }
-
-        public Mutation setUrlRedirectBulkDeleteByIds(UrlRedirectBulkDeleteByIdsPayload arg) {
-            optimisticData.put(getKey("urlRedirectBulkDeleteByIds"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously delete redirects in bulk.
-        */
-
-        public UrlRedirectBulkDeleteBySavedSearchPayload getUrlRedirectBulkDeleteBySavedSearch() {
-            return (UrlRedirectBulkDeleteBySavedSearchPayload) get("urlRedirectBulkDeleteBySavedSearch");
-        }
-
-        public Mutation setUrlRedirectBulkDeleteBySavedSearch(UrlRedirectBulkDeleteBySavedSearchPayload arg) {
-            optimisticData.put(getKey("urlRedirectBulkDeleteBySavedSearch"), arg);
-            return this;
-        }
-
-        /**
-        * Asynchronously delete redirects in bulk.
-        */
-
-        public UrlRedirectBulkDeleteBySearchPayload getUrlRedirectBulkDeleteBySearch() {
-            return (UrlRedirectBulkDeleteBySearchPayload) get("urlRedirectBulkDeleteBySearch");
-        }
-
-        public Mutation setUrlRedirectBulkDeleteBySearch(UrlRedirectBulkDeleteBySearchPayload arg) {
-            optimisticData.put(getKey("urlRedirectBulkDeleteBySearch"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
-        */
-
-        public UrlRedirectCreatePayload getUrlRedirectCreate() {
-            return (UrlRedirectCreatePayload) get("urlRedirectCreate");
-        }
-
-        public Mutation setUrlRedirectCreate(UrlRedirectCreatePayload arg) {
-            optimisticData.put(getKey("urlRedirectCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
-        */
-
-        public UrlRedirectDeletePayload getUrlRedirectDelete() {
-            return (UrlRedirectDeletePayload) get("urlRedirectDelete");
-        }
-
-        public Mutation setUrlRedirectDelete(UrlRedirectDeletePayload arg) {
-            optimisticData.put(getKey("urlRedirectDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a
-        * [`UrlRedirectImport`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirectImport)
-        * object.
-        * After creating the `UrlRedirectImport` object, the `UrlRedirectImport` request can be performed
-        * using the
-        * [`urlRedirectImportSubmit`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
-        * Submit) mutation.
-        */
-
-        public UrlRedirectImportCreatePayload getUrlRedirectImportCreate() {
-            return (UrlRedirectImportCreatePayload) get("urlRedirectImportCreate");
-        }
-
-        public Mutation setUrlRedirectImportCreate(UrlRedirectImportCreatePayload arg) {
-            optimisticData.put(getKey("urlRedirectImportCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Submits a `UrlRedirectImport` request to be processed.
-        * The `UrlRedirectImport` request is first created with the
-        * [`urlRedirectImportCreate`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
-        * Create) mutation.
-        */
-
-        public UrlRedirectImportSubmitPayload getUrlRedirectImportSubmit() {
-            return (UrlRedirectImportSubmitPayload) get("urlRedirectImportSubmit");
-        }
-
-        public Mutation setUrlRedirectImportSubmit(UrlRedirectImportSubmitPayload arg) {
-            optimisticData.put(getKey("urlRedirectImportSubmit"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a URL redirect.
-        */
-
-        public UrlRedirectUpdatePayload getUrlRedirectUpdate() {
-            return (UrlRedirectUpdatePayload) get("urlRedirectUpdate");
-        }
-
-        public Mutation setUrlRedirectUpdate(UrlRedirectUpdatePayload arg) {
-            optimisticData.put(getKey("urlRedirectUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a validation.
-        */
-
-        public ValidationCreatePayload getValidationCreate() {
-            return (ValidationCreatePayload) get("validationCreate");
-        }
-
-        public Mutation setValidationCreate(ValidationCreatePayload arg) {
-            optimisticData.put(getKey("validationCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a validation.
-        */
-
-        public ValidationDeletePayload getValidationDelete() {
-            return (ValidationDeletePayload) get("validationDelete");
-        }
-
-        public Mutation setValidationDelete(ValidationDeletePayload arg) {
-            optimisticData.put(getKey("validationDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Update a validation.
-        */
-
-        public ValidationUpdatePayload getValidationUpdate() {
-            return (ValidationUpdatePayload) get("validationUpdate");
-        }
-
-        public Mutation setValidationUpdate(ValidationUpdatePayload arg) {
-            optimisticData.put(getKey("validationUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Activate a [web pixel
-        * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
-        * by creating a web pixel record on the store where you installed your app.
-        * When you run the `webPixelCreate` mutation, Shopify validates it
-        * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
-        * match
-        * the schema that you defined, then the mutation fails. Learn how to
-        * define [web pixel
-        * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
-        * r-web-pixel-settings).
-        */
-
-        public WebPixelCreatePayload getWebPixelCreate() {
-            return (WebPixelCreatePayload) get("webPixelCreate");
-        }
-
-        public Mutation setWebPixelCreate(WebPixelCreatePayload arg) {
-            optimisticData.put(getKey("webPixelCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes the web pixel shop settings.
-        */
-
-        public WebPixelDeletePayload getWebPixelDelete() {
-            return (WebPixelDeletePayload) get("webPixelDelete");
-        }
-
-        public Mutation setWebPixelDelete(WebPixelDeletePayload arg) {
-            optimisticData.put(getKey("webPixelDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Activate a [web pixel
-        * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
-        * by updating a web pixel record on the store where you installed your app.
-        * When you run the `webPixelUpdate` mutation, Shopify validates it
-        * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
-        * match
-        * the schema that you defined, then the mutation fails. Learn how to
-        * define [web pixel
-        * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
-        * r-web-pixel-settings).
-        */
-
-        public WebPixelUpdatePayload getWebPixelUpdate() {
-            return (WebPixelUpdatePayload) get("webPixelUpdate");
-        }
-
-        public Mutation setWebPixelUpdate(WebPixelUpdatePayload arg) {
-            optimisticData.put(getKey("webPixelUpdate"), arg);
-            return this;
-        }
-
-        /**
-        * Creates a new webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-
-        public WebhookSubscriptionCreatePayload getWebhookSubscriptionCreate() {
-            return (WebhookSubscriptionCreatePayload) get("webhookSubscriptionCreate");
-        }
-
-        public Mutation setWebhookSubscriptionCreate(WebhookSubscriptionCreatePayload arg) {
-            optimisticData.put(getKey("webhookSubscriptionCreate"), arg);
-            return this;
-        }
-
-        /**
-        * Deletes a webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-
-        public WebhookSubscriptionDeletePayload getWebhookSubscriptionDelete() {
-            return (WebhookSubscriptionDeletePayload) get("webhookSubscriptionDelete");
-        }
-
-        public Mutation setWebhookSubscriptionDelete(WebhookSubscriptionDeletePayload arg) {
-            optimisticData.put(getKey("webhookSubscriptionDelete"), arg);
-            return this;
-        }
-
-        /**
-        * Updates a webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-
-        public WebhookSubscriptionUpdatePayload getWebhookSubscriptionUpdate() {
-            return (WebhookSubscriptionUpdatePayload) get("webhookSubscriptionUpdate");
-        }
-
-        public Mutation setWebhookSubscriptionUpdate(WebhookSubscriptionUpdatePayload arg) {
-            optimisticData.put(getKey("webhookSubscriptionUpdate"), arg);
-            return this;
-        }
-
-        public boolean unwrapsToObject(String key) {
-            switch (getFieldName(key)) {
-                case "abandonmentUpdateActivitiesDeliveryStatuses": return true;
-
-                case "appPurchaseOneTimeCreate": return true;
-
-                case "appRevokeAccessScopes": return true;
-
-                case "appSubscriptionCancel": return true;
-
-                case "appSubscriptionCreate": return true;
-
-                case "appSubscriptionLineItemUpdate": return true;
-
-                case "appSubscriptionTrialExtend": return true;
-
-                case "appUsageRecordCreate": return true;
-
-                case "articleCreate": return true;
-
-                case "articleDelete": return true;
-
-                case "articleUpdate": return true;
-
-                case "blogCreate": return true;
-
-                case "blogDelete": return true;
-
-                case "blogUpdate": return true;
-
-                case "bulkOperationCancel": return true;
-
-                case "bulkOperationRunMutation": return true;
-
-                case "bulkOperationRunQuery": return true;
-
-                case "bulkProductResourceFeedbackCreate": return true;
-
-                case "carrierServiceCreate": return true;
-
-                case "carrierServiceDelete": return true;
-
-                case "carrierServiceUpdate": return true;
-
-                case "cartTransformCreate": return true;
-
-                case "cartTransformDelete": return true;
-
-                case "catalogContextUpdate": return true;
-
-                case "catalogCreate": return true;
-
-                case "catalogDelete": return true;
-
-                case "catalogUpdate": return true;
-
-                case "checkoutBrandingUpsert": return true;
-
-                case "collectionAddProducts": return true;
-
-                case "collectionAddProductsV2": return true;
-
-                case "collectionCreate": return true;
-
-                case "collectionDelete": return true;
-
-                case "collectionRemoveProducts": return true;
-
-                case "collectionReorderProducts": return true;
-
-                case "collectionUpdate": return true;
-
-                case "combinedListingUpdate": return true;
-
-                case "commentApprove": return true;
-
-                case "commentDelete": return true;
-
-                case "commentNotSpam": return true;
-
-                case "commentSpam": return true;
-
-                case "companiesDelete": return true;
-
-                case "companyAddressDelete": return true;
-
-                case "companyAssignCustomerAsContact": return true;
-
-                case "companyAssignMainContact": return true;
-
-                case "companyContactAssignRole": return true;
-
-                case "companyContactAssignRoles": return true;
-
-                case "companyContactCreate": return true;
-
-                case "companyContactDelete": return true;
-
-                case "companyContactRemoveFromCompany": return true;
-
-                case "companyContactRevokeRole": return true;
-
-                case "companyContactRevokeRoles": return true;
-
-                case "companyContactSendWelcomeEmail": return true;
-
-                case "companyContactUpdate": return true;
-
-                case "companyContactsDelete": return true;
-
-                case "companyCreate": return true;
-
-                case "companyDelete": return true;
-
-                case "companyLocationAssignAddress": return true;
-
-                case "companyLocationAssignRoles": return true;
-
-                case "companyLocationAssignStaffMembers": return true;
-
-                case "companyLocationCreate": return true;
-
-                case "companyLocationDelete": return true;
-
-                case "companyLocationRemoveStaffMembers": return true;
-
-                case "companyLocationRevokeRoles": return true;
-
-                case "companyLocationTaxSettingsUpdate": return true;
-
-                case "companyLocationUpdate": return true;
-
-                case "companyLocationsDelete": return true;
-
-                case "companyRevokeMainContact": return true;
-
-                case "companyUpdate": return true;
-
-                case "customerAddTaxExemptions": return true;
-
-                case "customerCancelDataErasure": return true;
-
-                case "customerCreate": return true;
-
-                case "customerDelete": return true;
-
-                case "customerEmailMarketingConsentUpdate": return true;
-
-                case "customerGenerateAccountActivationUrl": return true;
-
-                case "customerMerge": return true;
-
-                case "customerPaymentMethodCreateFromDuplicationData": return true;
-
-                case "customerPaymentMethodCreditCardCreate": return true;
-
-                case "customerPaymentMethodCreditCardUpdate": return true;
-
-                case "customerPaymentMethodGetDuplicationData": return true;
-
-                case "customerPaymentMethodGetUpdateUrl": return true;
-
-                case "customerPaymentMethodPaypalBillingAgreementCreate": return true;
-
-                case "customerPaymentMethodPaypalBillingAgreementUpdate": return true;
-
-                case "customerPaymentMethodRemoteCreate": return true;
-
-                case "customerPaymentMethodRevoke": return true;
-
-                case "customerPaymentMethodSendUpdateEmail": return true;
-
-                case "customerRemoveTaxExemptions": return true;
-
-                case "customerReplaceTaxExemptions": return true;
-
-                case "customerRequestDataErasure": return true;
-
-                case "customerSegmentMembersQueryCreate": return true;
-
-                case "customerSendAccountInviteEmail": return true;
-
-                case "customerSmsMarketingConsentUpdate": return true;
-
-                case "customerUpdate": return true;
-
-                case "customerUpdateDefaultAddress": return true;
-
-                case "dataSaleOptOut": return true;
-
-                case "delegateAccessTokenCreate": return true;
-
-                case "delegateAccessTokenDestroy": return true;
-
-                case "deliveryCustomizationActivation": return true;
-
-                case "deliveryCustomizationCreate": return true;
-
-                case "deliveryCustomizationDelete": return true;
-
-                case "deliveryCustomizationUpdate": return true;
-
-                case "deliveryProfileCreate": return true;
-
-                case "deliveryProfileRemove": return true;
-
-                case "deliveryProfileUpdate": return true;
-
-                case "deliveryPromiseParticipantsUpdate": return true;
-
-                case "deliveryPromiseProviderUpsert": return true;
-
-                case "deliverySettingUpdate": return true;
-
-                case "deliveryShippingOriginAssign": return true;
-
-                case "discountAutomaticActivate": return true;
-
-                case "discountAutomaticAppCreate": return true;
-
-                case "discountAutomaticAppUpdate": return true;
-
-                case "discountAutomaticBasicCreate": return true;
-
-                case "discountAutomaticBasicUpdate": return true;
-
-                case "discountAutomaticBulkDelete": return true;
-
-                case "discountAutomaticBxgyCreate": return true;
-
-                case "discountAutomaticBxgyUpdate": return true;
-
-                case "discountAutomaticDeactivate": return true;
-
-                case "discountAutomaticDelete": return true;
-
-                case "discountAutomaticFreeShippingCreate": return true;
+    * Reorders the [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
+    * [option values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue) on a
+    * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * updating the order in which [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * are presented to customers.
+    * The `productOptionsReorder` mutation accepts a list of product options, each identified by `id` or
+    * `name`, and an
+    * optional list of values (also by `id` or `name`) specifying the new order. The order of options in
+    * the
+    * mutation's input determines their new positions (for example, the first option becomes `option1`).
+    * The order of values within each option determines their new positions. The mutation recalculates the
+    * order of
+    * variants based on the new option and value order.
+    * Suppose a product has the following variants:
+    * 1. `"Red / Small"`
+    * 2. `"Green / Medium"`
+    * 3. `"Blue / Small"`
+    * You reorder options and values:
+    * ```
+    * options: [
+    * { name: "Size", values: [{ name: "Small" }, { name: "Medium" }] },
+    * { name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }] }
+    * ]
+    * ```
+    * The resulting variant order will be:
+    * 1. `"Small / Green"`
+    * 2. `"Small / Red"`
+    * 3. `"Small / Blue"`
+    * 4. `"Medium / Green"`
+    * Use the `productOptionsReorder` mutation for the following use cases:
+    * - **Change the order of product options**: For example, display "Color" before "Size" in a store.
+    * - **Reorder option values within an option**: For example, show "Red" before "Blue" in a color
+    * picker.
+    * - **Control the order of product variants**: The order of options and their values determines the
+    * sequence in which variants are listed and selected.
+    * - **Highlight best-selling options**: Present the most popular or relevant options and values first.
+    * - **Promote merchandising strategies**: Highlight seasonal colors, limited editions, or featured
+    * sizes.
+    * > Note:
+    * > The `productOptionsReorder` mutation enforces strict data integrity for product options and
+    * variants.
+    * > All option positions must be sequential, and every option should be used by at least one variant.
+    * After you reorder product options, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [managing product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+
+    public ProductOptionsReorderPayload getProductOptionsReorder() {
+        return (ProductOptionsReorderPayload) get("productOptionsReorder");
+    }
+
+    public Mutation setProductOptionsReorder(ProductOptionsReorderPayload arg) {
+        optimisticData.put(getKey("productOptionsReorder"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously reorders the media attached to a product.
+    */
+
+    public ProductReorderMediaPayload getProductReorderMedia() {
+        return (ProductReorderMediaPayload) get("productReorderMedia");
+    }
+
+    public Mutation setProductReorderMedia(ProductReorderMediaPayload arg) {
+        optimisticData.put(getKey("productReorderMedia"), arg);
+        return this;
+    }
+
+    /**
+    * Performs multiple operations to create or update products in a single request.
+    * Use the `productSet` mutation to sync information from an external data source into Shopify, manage
+    * large
+    * product catalogs, and perform batch updates. The mutation is helpful for bulk product management,
+    * including price
+    * adjustments, inventory updates, and product lifecycle management.
+    * The behavior of `productSet` depends on the type of field it's modifying:
+    * - **For list fields**: Creates new entries, updates existing entries, and deletes existing entries
+    * that aren't included in the mutation's input. Common examples of list fields include
+    * [`collections`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inp
+    * ut.fields.collections),
+    * [`metafields`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inpu
+    * t.fields.metafields),
+    * and
+    * [`variants`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.
+    * fields.variants).
+    * - **For all other field types**: Updates only the included fields. Any omitted fields will remain
+    * unchanged.
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create or update a maximum of 2,048 product variants in a single operation.
+    * You can run `productSet` in one of the following modes:
+    * - **Synchronously**: Returns the updated product in the response.
+    * - **Asynchronously**: Returns a
+    * [`ProductSetOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductSetOperatio
+    * n) object.
+    * Use the [`productOperation`](https://shopify.dev/api/admin-graphql/latest/queries/productOperation)
+    * query to check the status of the operation and
+    * retrieve details of the updated product and its product variants.
+    * If you need to only manage product variants, then use one of the following mutations:
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete)
+    * If you need to only manage product options, then use one of the following mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about [syncing product data from an external
+    * source](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/sync-data).
+    */
+
+    public ProductSetPayload getProductSet() {
+        return (ProductSetPayload) get("productSet");
+    }
+
+    public Mutation setProductSet(ProductSetPayload arg) {
+        optimisticData.put(getKey("productSet"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * with attributes such as title, description, vendor, and media.
+    * The `productUpdate` mutation helps you modify many products at once, avoiding the tedious or
+    * time-consuming
+    * process of updating them one by one in the Shopify admin. Common examples including updating
+    * product details like status or tags.
+    * The `productUpdate` mutation doesn't support updating
+    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * To update multiple product variants for a single product and manage prices, use the
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * mutation.
+    * > Note:
+    * > The `productUpdate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be updated per day.
+    * After updating a product, you can make additional changes using one of the following mutations:
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers, if the product is currently
+    * unpublished.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+
+    public ProductUpdatePayload getProductUpdate() {
+        return (ProductUpdatePayload) get("productUpdate");
+    }
+
+    public Mutation setProductUpdate(ProductUpdatePayload arg) {
+        optimisticData.put(getKey("productUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Appends media from a product to variants of the product.
+    */
+
+    public ProductVariantAppendMediaPayload getProductVariantAppendMedia() {
+        return (ProductVariantAppendMediaPayload) get("productVariantAppendMedia");
+    }
+
+    public Mutation setProductVariantAppendMedia(ProductVariantAppendMediaPayload arg) {
+        optimisticData.put(getKey("productVariantAppendMedia"), arg);
+        return this;
+    }
+
+    /**
+    * Detaches media from product variants.
+    */
+
+    public ProductVariantDetachMediaPayload getProductVariantDetachMedia() {
+        return (ProductVariantDetachMediaPayload) get("productVariantDetachMedia");
+    }
+
+    public Mutation setProductVariantDetachMedia(ProductVariantDetachMediaPayload arg) {
+        optimisticData.put(getKey("productVariantDetachMedia"), arg);
+        return this;
+    }
+
+    /**
+    * Adds multiple selling plan groups to a product variant.
+    */
+
+    public ProductVariantJoinSellingPlanGroupsPayload getProductVariantJoinSellingPlanGroups() {
+        return (ProductVariantJoinSellingPlanGroupsPayload) get("productVariantJoinSellingPlanGroups");
+    }
+
+    public Mutation setProductVariantJoinSellingPlanGroups(ProductVariantJoinSellingPlanGroupsPayload arg) {
+        optimisticData.put(getKey("productVariantJoinSellingPlanGroups"), arg);
+        return this;
+    }
+
+    /**
+    * Remove multiple groups from a product variant.
+    */
+
+    public ProductVariantLeaveSellingPlanGroupsPayload getProductVariantLeaveSellingPlanGroups() {
+        return (ProductVariantLeaveSellingPlanGroupsPayload) get("productVariantLeaveSellingPlanGroups");
+    }
+
+    public Mutation setProductVariantLeaveSellingPlanGroups(ProductVariantLeaveSellingPlanGroupsPayload arg) {
+        optimisticData.put(getKey("productVariantLeaveSellingPlanGroups"), arg);
+        return this;
+    }
+
+    /**
+    * Creates new bundles, updates existing bundles, and removes bundle components for one or multiple
+    * bundles.
+    */
+
+    public ProductVariantRelationshipBulkUpdatePayload getProductVariantRelationshipBulkUpdate() {
+        return (ProductVariantRelationshipBulkUpdatePayload) get("productVariantRelationshipBulkUpdate");
+    }
+
+    public Mutation setProductVariantRelationshipBulkUpdate(ProductVariantRelationshipBulkUpdatePayload arg) {
+        optimisticData.put(getKey("productVariantRelationshipBulkUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkCreate` mutation to efficiently add new product variants—such as
+    * different sizes,
+    * colors, or materials—to an existing product. The mutation is helpful if you need to add product
+    * variants in bulk,
+    * such as importing from an external system.
+    * The mutation supports:
+    * - Creating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using one of the following mutations:
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate):
+    * Updates multiple product variants for a single product in one operation.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+
+    public ProductVariantsBulkCreatePayload getProductVariantsBulkCreate() {
+        return (ProductVariantsBulkCreatePayload) get("productVariantsBulkCreate");
+    }
+
+    public Mutation setProductVariantsBulkCreate(ProductVariantsBulkCreatePayload arg) {
+        optimisticData.put(getKey("productVariantsBulkCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes multiple variants in a single product. This mutation can be called directly or via the
+    * bulkOperation.
+    */
+
+    public ProductVariantsBulkDeletePayload getProductVariantsBulkDelete() {
+        return (ProductVariantsBulkDeletePayload) get("productVariantsBulkDelete");
+    }
+
+    public Mutation setProductVariantsBulkDelete(ProductVariantsBulkDeletePayload arg) {
+        optimisticData.put(getKey("productVariantsBulkDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Reorders multiple variants in a single product. This mutation can be called directly or via the
+    * bulkOperation.
+    */
+
+    public ProductVariantsBulkReorderPayload getProductVariantsBulkReorder() {
+        return (ProductVariantsBulkReorderPayload) get("productVariantsBulkReorder");
+    }
+
+    public Mutation setProductVariantsBulkReorder(ProductVariantsBulkReorderPayload arg) {
+        optimisticData.put(getKey("productVariantsBulkReorder"), arg);
+        return this;
+    }
+
+    /**
+    * Updates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkUpdate` mutation to efficiently modify product variants—such as
+    * different sizes,
+    * colors, or materials—associated with an existing product. The mutation is helpful if you need to
+    * update a
+    * product's variants in bulk, such as importing from an external system.
+    * The mutation supports:
+    * - Updating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to update a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using the
+    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation,
+    * which is used to perform multiple operations on products, such as creating or modifying product
+    * options and variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+
+    public ProductVariantsBulkUpdatePayload getProductVariantsBulkUpdate() {
+        return (ProductVariantsBulkUpdatePayload) get("productVariantsBulkUpdate");
+    }
+
+    public Mutation setProductVariantsBulkUpdate(ProductVariantsBulkUpdatePayload arg) {
+        optimisticData.put(getKey("productVariantsBulkUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Updates the server pixel to connect to a Google PubSub endpoint.
+    * Running this mutation deletes any previous subscriptions for the server pixel.
+    */
+
+    public PubSubServerPixelUpdatePayload getPubSubServerPixelUpdate() {
+        return (PubSubServerPixelUpdatePayload) get("pubSubServerPixelUpdate");
+    }
+
+    public Mutation setPubSubServerPixelUpdate(PubSubServerPixelUpdatePayload arg) {
+        optimisticData.put(getKey("pubSubServerPixelUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new Google Cloud Pub/Sub webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+
+    public PubSubWebhookSubscriptionCreatePayload getPubSubWebhookSubscriptionCreate() {
+        return (PubSubWebhookSubscriptionCreatePayload) get("pubSubWebhookSubscriptionCreate");
+    }
+
+    public Mutation setPubSubWebhookSubscriptionCreate(PubSubWebhookSubscriptionCreatePayload arg) {
+        optimisticData.put(getKey("pubSubWebhookSubscriptionCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a Google Cloud Pub/Sub webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+
+    public PubSubWebhookSubscriptionUpdatePayload getPubSubWebhookSubscriptionUpdate() {
+        return (PubSubWebhookSubscriptionUpdatePayload) get("pubSubWebhookSubscriptionUpdate");
+    }
+
+    public Mutation setPubSubWebhookSubscriptionUpdate(PubSubWebhookSubscriptionUpdatePayload arg) {
+        optimisticData.put(getKey("pubSubWebhookSubscriptionUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a publication.
+    */
+
+    public PublicationCreatePayload getPublicationCreate() {
+        return (PublicationCreatePayload) get("publicationCreate");
+    }
+
+    public Mutation setPublicationCreate(PublicationCreatePayload arg) {
+        optimisticData.put(getKey("publicationCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a publication.
+    */
+
+    public PublicationDeletePayload getPublicationDelete() {
+        return (PublicationDeletePayload) get("publicationDelete");
+    }
+
+    public Mutation setPublicationDelete(PublicationDeletePayload arg) {
+        optimisticData.put(getKey("publicationDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a publication.
+    */
+
+    public PublicationUpdatePayload getPublicationUpdate() {
+        return (PublicationUpdatePayload) get("publicationUpdate");
+    }
+
+    public Mutation setPublicationUpdate(PublicationUpdatePayload arg) {
+        optimisticData.put(getKey("publicationUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Publishes a resource to a channel. If the resource is a product, then it's visible in the channel
+    * only if the product status is `active`. Products that are sold exclusively on subscription
+    * (`requiresSellingPlan: true`) can be published only on online stores.
+    */
+
+    public PublishablePublishPayload getPublishablePublish() {
+        return (PublishablePublishPayload) get("publishablePublish");
+    }
+
+    public Mutation setPublishablePublish(PublishablePublishPayload arg) {
+        optimisticData.put(getKey("publishablePublish"), arg);
+        return this;
+    }
+
+    /**
+    * Publishes a resource to current channel. If the resource is a product, then it's visible in the
+    * channel only if the product status is `active`. Products that are sold exclusively on subscription
+    * (`requiresSellingPlan: true`) can be published only on online stores.
+    */
+
+    public PublishablePublishToCurrentChannelPayload getPublishablePublishToCurrentChannel() {
+        return (PublishablePublishToCurrentChannelPayload) get("publishablePublishToCurrentChannel");
+    }
+
+    public Mutation setPublishablePublishToCurrentChannel(PublishablePublishToCurrentChannelPayload arg) {
+        optimisticData.put(getKey("publishablePublishToCurrentChannel"), arg);
+        return this;
+    }
+
+    /**
+    * Unpublishes a resource from a channel. If the resource is a product, then it's visible in the
+    * channel only if the product status is `active`.
+    */
+
+    public PublishableUnpublishPayload getPublishableUnpublish() {
+        return (PublishableUnpublishPayload) get("publishableUnpublish");
+    }
+
+    public Mutation setPublishableUnpublish(PublishableUnpublishPayload arg) {
+        optimisticData.put(getKey("publishableUnpublish"), arg);
+        return this;
+    }
+
+    /**
+    * Unpublishes a resource from the current channel. If the resource is a product, then it's visible in
+    * the channel only if the product status is `active`.
+    */
+
+    public PublishableUnpublishToCurrentChannelPayload getPublishableUnpublishToCurrentChannel() {
+        return (PublishableUnpublishToCurrentChannelPayload) get("publishableUnpublishToCurrentChannel");
+    }
+
+    public Mutation setPublishableUnpublishToCurrentChannel(PublishableUnpublishToCurrentChannelPayload arg) {
+        optimisticData.put(getKey("publishableUnpublishToCurrentChannel"), arg);
+        return this;
+    }
+
+    /**
+    * Updates quantity pricing on a price list. You can use the `quantityPricingByVariantUpdate` mutation
+    * to set fixed prices, quantity rules, and quantity price breaks. This mutation does not allow partial
+    * successes. If any of the requested resources fail to update, none of the requested resources will be
+    * updated. Delete operations are executed before create operations.
+    */
+
+    public QuantityPricingByVariantUpdatePayload getQuantityPricingByVariantUpdate() {
+        return (QuantityPricingByVariantUpdatePayload) get("quantityPricingByVariantUpdate");
+    }
+
+    public Mutation setQuantityPricingByVariantUpdate(QuantityPricingByVariantUpdatePayload arg) {
+        optimisticData.put(getKey("quantityPricingByVariantUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates or updates existing quantity rules on a price list.
+    * You can use the `quantityRulesAdd` mutation to set order level minimums, maximumums and increments
+    * for specific product variants.
+    */
+
+    public QuantityRulesAddPayload getQuantityRulesAdd() {
+        return (QuantityRulesAddPayload) get("quantityRulesAdd");
+    }
+
+    public Mutation setQuantityRulesAdd(QuantityRulesAddPayload arg) {
+        optimisticData.put(getKey("quantityRulesAdd"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes specific quantity rules from a price list using a product variant ID.
+    * You can use the `quantityRulesDelete` mutation to delete a set of quantity rules from a price list.
+    */
+
+    public QuantityRulesDeletePayload getQuantityRulesDelete() {
+        return (QuantityRulesDeletePayload) get("quantityRulesDelete");
+    }
+
+    public Mutation setQuantityRulesDelete(QuantityRulesDeletePayload arg) {
+        optimisticData.put(getKey("quantityRulesDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a refund for an order, allowing you to process returns and issue payments back to customers.
+    * Use the `refundCreate` mutation to programmatically process refunds in scenarios where you need to
+    * return money to customers, such as when handling returns, processing chargebacks, or correcting
+    * order errors.
+    * The `refundCreate` mutation supports various refund scenarios:
+    * - Refunding line items with optional restocking
+    * - Refunding shipping costs
+    * - Refunding duties and import taxes
+    * - Refunding additional fees
+    * - Processing refunds through different payment methods
+    * - Issuing store credit refunds (when enabled)
+    * You can create both full and partial refunds, and optionally allow over-refunding in specific
+    * cases.
+    * After creating a refund, you can track its status and details through the order's
+    * [`refunds`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.refun
+    * ds)
+    * field. The refund is associated with the order and can be used for reporting and reconciliation
+    * purposes.
+    * Learn more about
+    * [managing
+    * returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management
+    * )
+    * and [refunding
+    * duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties).
+    * > Note:
+    * > The refunding behavior of the `refundCreate` mutation is similar to the
+    * [`refundReturn`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnRefund)
+    * mutation. The key difference is that the `refundCreate` mutation lets you to specify restocking
+    * behavior
+    * for line items, whereas the `returnRefund` mutation focuses solely on handling the financial refund
+    * without
+    * any restocking input.
+    */
+
+    public RefundCreatePayload getRefundCreate() {
+        return (RefundCreatePayload) get("refundCreate");
+    }
+
+    public Mutation setRefundCreate(RefundCreatePayload arg) {
+        optimisticData.put(getKey("refundCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Removes return and/or exchange lines from a return.
+    */
+
+    public RemoveFromReturnPayload getRemoveFromReturn() {
+        return (RemoveFromReturnPayload) get("removeFromReturn");
+    }
+
+    public Mutation setRemoveFromReturn(RemoveFromReturnPayload arg) {
+        optimisticData.put(getKey("removeFromReturn"), arg);
+        return this;
+    }
+
+    /**
+    * Approves a customer's return request.
+    * If this mutation is successful, then the `Return.status` field of the
+    * approved return is set to `OPEN`.
+    */
+
+    public ReturnApproveRequestPayload getReturnApproveRequest() {
+        return (ReturnApproveRequestPayload) get("returnApproveRequest");
+    }
+
+    public Mutation setReturnApproveRequest(ReturnApproveRequestPayload arg) {
+        optimisticData.put(getKey("returnApproveRequest"), arg);
+        return this;
+    }
+
+    /**
+    * Cancels a return and restores the items back to being fulfilled.
+    * Canceling a return is only available before any work has been done
+    * on the return (such as an inspection or refund).
+    */
+
+    public ReturnCancelPayload getReturnCancel() {
+        return (ReturnCancelPayload) get("returnCancel");
+    }
+
+    public Mutation setReturnCancel(ReturnCancelPayload arg) {
+        optimisticData.put(getKey("returnCancel"), arg);
+        return this;
+    }
+
+    /**
+    * Indicates a return is complete, either when a refund has been made and items restocked,
+    * or simply when it has been marked as returned in the system.
+    */
+
+    public ReturnClosePayload getReturnClose() {
+        return (ReturnClosePayload) get("returnClose");
+    }
+
+    public Mutation setReturnClose(ReturnClosePayload arg) {
+        optimisticData.put(getKey("returnClose"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a return from an existing order that has at least one fulfilled
+    * [line item](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem)
+    * that hasn't yet been refunded. If you create a return on an archived order, then the order is
+    * automatically
+    * unarchived.
+    * Use the `returnCreate` mutation when your workflow involves
+    * [approving](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnApproveRequest) or
+    * [declining](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnDeclineRequest)
+    * requested returns
+    * outside of the Shopify platform.
+    * The `returnCreate` mutation performs the following actions:
+    * - Creates a return in the `OPEN` state, and assumes that the return request from the customer has
+    * already been
+    * approved
+    * - Creates a [reverse fulfillment
+    * order](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillmen
+    * t-orders),
+    * and enables you to create a [reverse
+    * delivery](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliver
+    * ies)
+    * for the reverse fulfillment order
+    * - Creates a sales agreement with a `RETURN` reason, which links to all sales created for the return
+    * or exchange
+    * - Generates sales records that reverse the sales records for the items being returned
+    * - Generates sales records for any exchange line items
+    * After you've created a return, use the
+    * [`return`](https://shopify.dev/docs/api/admin-graphql/latest/queries/return) query to retrieve the
+    * return by its ID. Learn more about providing a
+    * [return management
+    * workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-managemen
+    * t)
+    * for merchants.
+    */
+
+    public ReturnCreatePayload getReturnCreate() {
+        return (ReturnCreatePayload) get("returnCreate");
+    }
+
+    public Mutation setReturnCreate(ReturnCreatePayload arg) {
+        optimisticData.put(getKey("returnCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Declines a return on an order.
+    * When a return is declined, each `ReturnLineItem.fulfillmentLineItem` can be associated to a new
+    * return.
+    * Use the `ReturnCreate` or `ReturnRequest` mutation to initiate a new return.
+    */
+
+    public ReturnDeclineRequestPayload getReturnDeclineRequest() {
+        return (ReturnDeclineRequestPayload) get("returnDeclineRequest");
+    }
+
+    public Mutation setReturnDeclineRequest(ReturnDeclineRequestPayload arg) {
+        optimisticData.put(getKey("returnDeclineRequest"), arg);
+        return this;
+    }
+
+    /**
+    * Process a return.
+    */
+
+    public ReturnProcessPayload getReturnProcess() {
+        return (ReturnProcessPayload) get("returnProcess");
+    }
+
+    public Mutation setReturnProcess(ReturnProcessPayload arg) {
+        optimisticData.put(getKey("returnProcess"), arg);
+        return this;
+    }
+
+    /**
+    * Reopens a closed return.
+    */
+
+    public ReturnReopenPayload getReturnReopen() {
+        return (ReturnReopenPayload) get("returnReopen");
+    }
+
+    public Mutation setReturnReopen(ReturnReopenPayload arg) {
+        optimisticData.put(getKey("returnReopen"), arg);
+        return this;
+    }
+
+    /**
+    * A customer's return request that hasn't been approved or declined.
+    * This mutation sets the value of the `Return.status` field to `REQUESTED`.
+    * To create a return that has the `Return.status` field set to `OPEN`, use the `returnCreate`
+    * mutation.
+    */
+
+    public ReturnRequestPayload getReturnRequest() {
+        return (ReturnRequestPayload) get("returnRequest");
+    }
+
+    public Mutation setReturnRequest(ReturnRequestPayload arg) {
+        optimisticData.put(getKey("returnRequest"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new reverse delivery with associated external shipping information.
+    */
+
+    public ReverseDeliveryCreateWithShippingPayload getReverseDeliveryCreateWithShipping() {
+        return (ReverseDeliveryCreateWithShippingPayload) get("reverseDeliveryCreateWithShipping");
+    }
+
+    public Mutation setReverseDeliveryCreateWithShipping(ReverseDeliveryCreateWithShippingPayload arg) {
+        optimisticData.put(getKey("reverseDeliveryCreateWithShipping"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a reverse delivery with associated external shipping information.
+    */
+
+    public ReverseDeliveryShippingUpdatePayload getReverseDeliveryShippingUpdate() {
+        return (ReverseDeliveryShippingUpdatePayload) get("reverseDeliveryShippingUpdate");
+    }
+
+    public Mutation setReverseDeliveryShippingUpdate(ReverseDeliveryShippingUpdatePayload arg) {
+        optimisticData.put(getKey("reverseDeliveryShippingUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Disposes reverse fulfillment order line items.
+    */
+
+    public ReverseFulfillmentOrderDisposePayload getReverseFulfillmentOrderDispose() {
+        return (ReverseFulfillmentOrderDisposePayload) get("reverseFulfillmentOrderDispose");
+    }
+
+    public Mutation setReverseFulfillmentOrderDispose(ReverseFulfillmentOrderDisposePayload arg) {
+        optimisticData.put(getKey("reverseFulfillmentOrderDispose"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a saved search.
+    */
+
+    public SavedSearchCreatePayload getSavedSearchCreate() {
+        return (SavedSearchCreatePayload) get("savedSearchCreate");
+    }
+
+    public Mutation setSavedSearchCreate(SavedSearchCreatePayload arg) {
+        optimisticData.put(getKey("savedSearchCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Delete a saved search.
+    */
+
+    public SavedSearchDeletePayload getSavedSearchDelete() {
+        return (SavedSearchDeletePayload) get("savedSearchDelete");
+    }
+
+    public Mutation setSavedSearchDelete(SavedSearchDeletePayload arg) {
+        optimisticData.put(getKey("savedSearchDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a saved search.
+    */
+
+    public SavedSearchUpdatePayload getSavedSearchUpdate() {
+        return (SavedSearchUpdatePayload) get("savedSearchUpdate");
+    }
+
+    public Mutation setSavedSearchUpdate(SavedSearchUpdatePayload arg) {
+        optimisticData.put(getKey("savedSearchUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Creates a new script tag.
+    */
+
+    public ScriptTagCreatePayload getScriptTagCreate() {
+        return (ScriptTagCreatePayload) get("scriptTagCreate");
+    }
+
+    public Mutation setScriptTagCreate(ScriptTagCreatePayload arg) {
+        optimisticData.put(getKey("scriptTagCreate"), arg);
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Deletes a script tag.
+    */
+
+    public ScriptTagDeletePayload getScriptTagDelete() {
+        return (ScriptTagDeletePayload) get("scriptTagDelete");
+    }
+
+    public Mutation setScriptTagDelete(ScriptTagDeletePayload arg) {
+        optimisticData.put(getKey("scriptTagDelete"), arg);
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Updates a script tag.
+    */
+
+    public ScriptTagUpdatePayload getScriptTagUpdate() {
+        return (ScriptTagUpdatePayload) get("scriptTagUpdate");
+    }
+
+    public Mutation setScriptTagUpdate(ScriptTagUpdatePayload arg) {
+        optimisticData.put(getKey("scriptTagUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a segment.
+    */
+
+    public SegmentCreatePayload getSegmentCreate() {
+        return (SegmentCreatePayload) get("segmentCreate");
+    }
+
+    public Mutation setSegmentCreate(SegmentCreatePayload arg) {
+        optimisticData.put(getKey("segmentCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a segment.
+    */
+
+    public SegmentDeletePayload getSegmentDelete() {
+        return (SegmentDeletePayload) get("segmentDelete");
+    }
+
+    public Mutation setSegmentDelete(SegmentDeletePayload arg) {
+        optimisticData.put(getKey("segmentDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a segment.
+    */
+
+    public SegmentUpdatePayload getSegmentUpdate() {
+        return (SegmentUpdatePayload) get("segmentUpdate");
+    }
+
+    public Mutation setSegmentUpdate(SegmentUpdatePayload arg) {
+        optimisticData.put(getKey("segmentUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Adds multiple product variants to a selling plan group.
+    */
+
+    public SellingPlanGroupAddProductVariantsPayload getSellingPlanGroupAddProductVariants() {
+        return (SellingPlanGroupAddProductVariantsPayload) get("sellingPlanGroupAddProductVariants");
+    }
+
+    public Mutation setSellingPlanGroupAddProductVariants(SellingPlanGroupAddProductVariantsPayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupAddProductVariants"), arg);
+        return this;
+    }
+
+    /**
+    * Adds multiple products to a selling plan group.
+    */
+
+    public SellingPlanGroupAddProductsPayload getSellingPlanGroupAddProducts() {
+        return (SellingPlanGroupAddProductsPayload) get("sellingPlanGroupAddProducts");
+    }
+
+    public Mutation setSellingPlanGroupAddProducts(SellingPlanGroupAddProductsPayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupAddProducts"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a Selling Plan Group.
+    */
+
+    public SellingPlanGroupCreatePayload getSellingPlanGroupCreate() {
+        return (SellingPlanGroupCreatePayload) get("sellingPlanGroupCreate");
+    }
+
+    public Mutation setSellingPlanGroupCreate(SellingPlanGroupCreatePayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Delete a Selling Plan Group. This does not affect subscription contracts.
+    */
+
+    public SellingPlanGroupDeletePayload getSellingPlanGroupDelete() {
+        return (SellingPlanGroupDeletePayload) get("sellingPlanGroupDelete");
+    }
+
+    public Mutation setSellingPlanGroupDelete(SellingPlanGroupDeletePayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Removes multiple product variants from a selling plan group.
+    */
+
+    public SellingPlanGroupRemoveProductVariantsPayload getSellingPlanGroupRemoveProductVariants() {
+        return (SellingPlanGroupRemoveProductVariantsPayload) get("sellingPlanGroupRemoveProductVariants");
+    }
+
+    public Mutation setSellingPlanGroupRemoveProductVariants(SellingPlanGroupRemoveProductVariantsPayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupRemoveProductVariants"), arg);
+        return this;
+    }
+
+    /**
+    * Removes multiple products from a selling plan group.
+    */
+
+    public SellingPlanGroupRemoveProductsPayload getSellingPlanGroupRemoveProducts() {
+        return (SellingPlanGroupRemoveProductsPayload) get("sellingPlanGroupRemoveProducts");
+    }
+
+    public Mutation setSellingPlanGroupRemoveProducts(SellingPlanGroupRemoveProductsPayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupRemoveProducts"), arg);
+        return this;
+    }
+
+    /**
+    * Update a Selling Plan Group.
+    */
+
+    public SellingPlanGroupUpdatePayload getSellingPlanGroupUpdate() {
+        return (SellingPlanGroupUpdatePayload) get("sellingPlanGroupUpdate");
+    }
+
+    public Mutation setSellingPlanGroupUpdate(SellingPlanGroupUpdatePayload arg) {
+        optimisticData.put(getKey("sellingPlanGroupUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new unconfigured server pixel. A single server pixel can exist for an app and shop
+    * combination. If you call this mutation when a server pixel already exists, then an error will
+    * return.
+    */
+
+    public ServerPixelCreatePayload getServerPixelCreate() {
+        return (ServerPixelCreatePayload) get("serverPixelCreate");
+    }
+
+    public Mutation setServerPixelCreate(ServerPixelCreatePayload arg) {
+        optimisticData.put(getKey("serverPixelCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes the Server Pixel associated with the current app & shop.
+    */
+
+    public ServerPixelDeletePayload getServerPixelDelete() {
+        return (ServerPixelDeletePayload) get("serverPixelDelete");
+    }
+
+    public Mutation setServerPixelDelete(ServerPixelDeletePayload arg) {
+        optimisticData.put(getKey("serverPixelDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a shipping package.
+    */
+
+    public ShippingPackageDeletePayload getShippingPackageDelete() {
+        return (ShippingPackageDeletePayload) get("shippingPackageDelete");
+    }
+
+    public Mutation setShippingPackageDelete(ShippingPackageDeletePayload arg) {
+        optimisticData.put(getKey("shippingPackageDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Set a shipping package as the default.
+    * The default shipping package is the one used to calculate shipping costs on checkout.
+    */
+
+    public ShippingPackageMakeDefaultPayload getShippingPackageMakeDefault() {
+        return (ShippingPackageMakeDefaultPayload) get("shippingPackageMakeDefault");
+    }
+
+    public Mutation setShippingPackageMakeDefault(ShippingPackageMakeDefaultPayload arg) {
+        optimisticData.put(getKey("shippingPackageMakeDefault"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a shipping package.
+    */
+
+    public ShippingPackageUpdatePayload getShippingPackageUpdate() {
+        return (ShippingPackageUpdatePayload) get("shippingPackageUpdate");
+    }
+
+    public Mutation setShippingPackageUpdate(ShippingPackageUpdatePayload arg) {
+        optimisticData.put(getKey("shippingPackageUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a locale for a shop. This also deletes all translations of this locale.
+    */
+
+    public ShopLocaleDisablePayload getShopLocaleDisable() {
+        return (ShopLocaleDisablePayload) get("shopLocaleDisable");
+    }
+
+    public Mutation setShopLocaleDisable(ShopLocaleDisablePayload arg) {
+        optimisticData.put(getKey("shopLocaleDisable"), arg);
+        return this;
+    }
+
+    /**
+    * Adds a locale for a shop. The newly added locale is in the unpublished state.
+    */
+
+    public ShopLocaleEnablePayload getShopLocaleEnable() {
+        return (ShopLocaleEnablePayload) get("shopLocaleEnable");
+    }
+
+    public Mutation setShopLocaleEnable(ShopLocaleEnablePayload arg) {
+        optimisticData.put(getKey("shopLocaleEnable"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a locale for a shop.
+    */
+
+    public ShopLocaleUpdatePayload getShopLocaleUpdate() {
+        return (ShopLocaleUpdatePayload) get("shopLocaleUpdate");
+    }
+
+    public Mutation setShopLocaleUpdate(ShopLocaleUpdatePayload arg) {
+        optimisticData.put(getKey("shopLocaleUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a shop policy.
+    */
+
+    public ShopPolicyUpdatePayload getShopPolicyUpdate() {
+        return (ShopPolicyUpdatePayload) get("shopPolicyUpdate");
+    }
+
+    public Mutation setShopPolicyUpdate(ShopPolicyUpdatePayload arg) {
+        optimisticData.put(getKey("shopPolicyUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * The `ResourceFeedback` object lets your app report the status of shops and their resources. For
+    * example, if
+    * your app is a marketplace channel, then you can use resource feedback to alert merchants that they
+    * need to connect their marketplace account by signing in.
+    * Resource feedback notifications are displayed to the merchant on the home screen of their Shopify
+    * admin, and in the product details view for any products that are published to your app.
+    * This resource should be used only in cases where you're describing steps that a merchant is required
+    * to complete. If your app offers optional or promotional set-up steps, or if it makes
+    * recommendations, then don't use resource feedback to let merchants know about them.
+    * ## Sending feedback on a shop
+    * You can send resource feedback on a shop to let the merchant know what steps they need to take to
+    * make sure that your app is set up correctly. Feedback can have one of two states: `requires_action`
+    * or `success`. You need to send a `requires_action` feedback request for each step that the merchant
+    * is required to complete.
+    * If there are multiple set-up steps that require merchant action, then send feedback with a state of
+    * `requires_action` as merchants complete prior steps. And to remove the feedback message from the
+    * Shopify admin, send a `success` feedback request.
+    * #### Important
+    * Sending feedback replaces previously sent feedback for the shop. Send a new
+    * `shopResourceFeedbackCreate` mutation to push the latest state of a shop or its resources to
+    * Shopify.
+    */
+
+    public ShopResourceFeedbackCreatePayload getShopResourceFeedbackCreate() {
+        return (ShopResourceFeedbackCreatePayload) get("shopResourceFeedbackCreate");
+    }
+
+    public Mutation setShopResourceFeedbackCreate(ShopResourceFeedbackCreatePayload arg) {
+        optimisticData.put(getKey("shopResourceFeedbackCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates an alternate currency payout for a Shopify Payments account.
+    */
+
+    public ShopifyPaymentsPayoutAlternateCurrencyCreatePayload getShopifyPaymentsPayoutAlternateCurrencyCreate() {
+        return (ShopifyPaymentsPayoutAlternateCurrencyCreatePayload) get("shopifyPaymentsPayoutAlternateCurrencyCreate");
+    }
+
+    public Mutation setShopifyPaymentsPayoutAlternateCurrencyCreate(ShopifyPaymentsPayoutAlternateCurrencyCreatePayload arg) {
+        optimisticData.put(getKey("shopifyPaymentsPayoutAlternateCurrencyCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates staged upload targets for file uploads such as images, videos, and 3D models.
+    * Use the `stagedUploadsCreate` mutation instead of direct file creation mutations when:
+    * - **Uploading large files**: Files over a few MB benefit from staged uploads for better reliability
+    * - **Uploading media files**: Videos, 3D models, and high-resolution images
+    * - **Bulk importing**: CSV files, product catalogs, or other bulk data
+    * - **Using external file sources**: When files are stored remotely and need to be transferred to
+    * Shopify
+    * For small files or simple use cases, you can use
+    * [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate)
+    * directly by providing the file content inline.
+    * The `stagedUploadsCreate` mutation is the first step in Shopify's secure two-step upload process:
+    * **Step 1: Create staged upload targets** (this mutation)
+    * - Generate secure, temporary upload URLs for your files.
+    * - Receive authentication parameters for the upload.
+    * **Step 2: Upload files and create assets**
+    * - Upload your files directly to the provided URLs using the authentication parameters.
+    * - Use the returned `resourceUrl` as the `originalSource` in subsequent mutations like `fileCreate`.
+    * This approach provides better performance for large files, handles network interruptions gracefully,
+    * and ensures secure file transfers to Shopify's storage infrastructure.
+    * > Note:
+    * > File size is required when uploading
+    * >
+    * [`VIDEO`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploadRe
+    * source#enums-VIDEO) or
+    * >
+    * [`MODEL_3D`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploa
+    * dResource#enums-MODEL_3D)
+    * > resources.
+    * After creating staged upload targets, complete the process by:
+    * 1. **Uploading files**: Send your files to the returned
+    * [`url`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#field-Stag
+    * edMediaUploadTarget.fields.url) using the provided
+    * [`parameters`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#fie
+    * ld-StagedMediaUploadTarget.fields.parameters)
+    * for authentication
+    * 2. **Creating file assets**: Use the
+    * [`resourceUrl`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#fi
+    * eld-StagedMediaUploadTarget.fields.resourceUrl)
+    * as the `originalSource` in mutations such as:
+    * - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+    * Creates file assets from staged uploads
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Updates products with new media from staged uploads
+    * Learn more about [uploading media to Shopify](https://shopify.dev/apps/online-store/media/products).
+    */
+
+    public StagedUploadsCreatePayload getStagedUploadsCreate() {
+        return (StagedUploadsCreatePayload) get("stagedUploadsCreate");
+    }
+
+    public Mutation setStagedUploadsCreate(StagedUploadsCreatePayload arg) {
+        optimisticData.put(getKey("stagedUploadsCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Activates the specified standard metafield definition from its template.
+    * Refer to the [list of standard metafield definition
+    * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
+    */
+
+    public StandardMetafieldDefinitionEnablePayload getStandardMetafieldDefinitionEnable() {
+        return (StandardMetafieldDefinitionEnablePayload) get("standardMetafieldDefinitionEnable");
+    }
+
+    public Mutation setStandardMetafieldDefinitionEnable(StandardMetafieldDefinitionEnablePayload arg) {
+        optimisticData.put(getKey("standardMetafieldDefinitionEnable"), arg);
+        return this;
+    }
+
+    /**
+    * Enables the specified standard metaobject definition from its template.
+    */
+
+    public StandardMetaobjectDefinitionEnablePayload getStandardMetaobjectDefinitionEnable() {
+        return (StandardMetaobjectDefinitionEnablePayload) get("standardMetaobjectDefinitionEnable");
+    }
+
+    public Mutation setStandardMetaobjectDefinitionEnable(StandardMetaobjectDefinitionEnablePayload arg) {
+        optimisticData.put(getKey("standardMetaobjectDefinitionEnable"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a credit transaction that increases the store credit account balance by the given amount.
+    * This operation will create an account if one does not already exist.
+    * A store credit account owner can hold multiple accounts each with a different currency.
+    * Use the most appropriate currency for the given store credit account owner.
+    */
+
+    public StoreCreditAccountCreditPayload getStoreCreditAccountCredit() {
+        return (StoreCreditAccountCreditPayload) get("storeCreditAccountCredit");
+    }
+
+    public Mutation setStoreCreditAccountCredit(StoreCreditAccountCreditPayload arg) {
+        optimisticData.put(getKey("storeCreditAccountCredit"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a debit transaction that decreases the store credit account balance by the given amount.
+    */
+
+    public StoreCreditAccountDebitPayload getStoreCreditAccountDebit() {
+        return (StoreCreditAccountDebitPayload) get("storeCreditAccountDebit");
+    }
+
+    public Mutation setStoreCreditAccountDebit(StoreCreditAccountDebitPayload arg) {
+        optimisticData.put(getKey("storeCreditAccountDebit"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a storefront access token for use with the [Storefront
+    * API](https://shopify.dev/docs/api/storefront).
+    * An app can have a maximum of 100 active storefront access tokens for each shop.
+    * [Get started with the Storefront
+    * API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/getting-started)
+    * .
+    */
+
+    public StorefrontAccessTokenCreatePayload getStorefrontAccessTokenCreate() {
+        return (StorefrontAccessTokenCreatePayload) get("storefrontAccessTokenCreate");
+    }
+
+    public Mutation setStorefrontAccessTokenCreate(StorefrontAccessTokenCreatePayload arg) {
+        optimisticData.put(getKey("storefrontAccessTokenCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a storefront access token.
+    */
+
+    public StorefrontAccessTokenDeletePayload getStorefrontAccessTokenDelete() {
+        return (StorefrontAccessTokenDeletePayload) get("storefrontAccessTokenDelete");
+    }
+
+    public Mutation setStorefrontAccessTokenDelete(StorefrontAccessTokenDeletePayload arg) {
+        optimisticData.put(getKey("storefrontAccessTokenDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new subscription billing attempt. For more information, refer to [Create a subscription
+    * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
+    * ate-a-billing-attempt).
+    */
+
+    public SubscriptionBillingAttemptCreatePayload getSubscriptionBillingAttemptCreate() {
+        return (SubscriptionBillingAttemptCreatePayload) get("subscriptionBillingAttemptCreate");
+    }
+
+    public Mutation setSubscriptionBillingAttemptCreate(SubscriptionBillingAttemptCreatePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingAttemptCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously queries and charges all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+
+    public SubscriptionBillingCycleBulkChargePayload getSubscriptionBillingCycleBulkCharge() {
+        return (SubscriptionBillingCycleBulkChargePayload) get("subscriptionBillingCycleBulkCharge");
+    }
+
+    public Mutation setSubscriptionBillingCycleBulkCharge(SubscriptionBillingCycleBulkChargePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleBulkCharge"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously queries all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+
+    public SubscriptionBillingCycleBulkSearchPayload getSubscriptionBillingCycleBulkSearch() {
+        return (SubscriptionBillingCycleBulkSearchPayload) get("subscriptionBillingCycleBulkSearch");
+    }
+
+    public Mutation setSubscriptionBillingCycleBulkSearch(SubscriptionBillingCycleBulkSearchPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleBulkSearch"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
+    * mutation for
+    * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
+    * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
+    * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
+    * ate-a-billing-attempt).
+    */
+
+    public SubscriptionBillingCycleChargePayload getSubscriptionBillingCycleCharge() {
+        return (SubscriptionBillingCycleChargePayload) get("subscriptionBillingCycleCharge");
+    }
+
+    public Mutation setSubscriptionBillingCycleCharge(SubscriptionBillingCycleChargePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleCharge"), arg);
+        return this;
+    }
+
+    /**
+    * Commits the updates of a Subscription Billing Cycle Contract draft.
+    */
+
+    public SubscriptionBillingCycleContractDraftCommitPayload getSubscriptionBillingCycleContractDraftCommit() {
+        return (SubscriptionBillingCycleContractDraftCommitPayload) get("subscriptionBillingCycleContractDraftCommit");
+    }
+
+    public Mutation setSubscriptionBillingCycleContractDraftCommit(SubscriptionBillingCycleContractDraftCommitPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleContractDraftCommit"), arg);
+        return this;
+    }
+
+    /**
+    * Concatenates a contract to a Subscription Draft.
+    */
+
+    public SubscriptionBillingCycleContractDraftConcatenatePayload getSubscriptionBillingCycleContractDraftConcatenate() {
+        return (SubscriptionBillingCycleContractDraftConcatenatePayload) get("subscriptionBillingCycleContractDraftConcatenate");
+    }
+
+    public Mutation setSubscriptionBillingCycleContractDraftConcatenate(SubscriptionBillingCycleContractDraftConcatenatePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleContractDraftConcatenate"), arg);
+        return this;
+    }
+
+    /**
+    * Edit the contents of a subscription contract for the specified billing cycle.
+    */
+
+    public SubscriptionBillingCycleContractEditPayload getSubscriptionBillingCycleContractEdit() {
+        return (SubscriptionBillingCycleContractEditPayload) get("subscriptionBillingCycleContractEdit");
+    }
+
+    public Mutation setSubscriptionBillingCycleContractEdit(SubscriptionBillingCycleContractEditPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleContractEdit"), arg);
+        return this;
+    }
+
+    /**
+    * Delete the schedule and contract edits of the selected subscription billing cycle.
+    */
+
+    public SubscriptionBillingCycleEditDeletePayload getSubscriptionBillingCycleEditDelete() {
+        return (SubscriptionBillingCycleEditDeletePayload) get("subscriptionBillingCycleEditDelete");
+    }
+
+    public Mutation setSubscriptionBillingCycleEditDelete(SubscriptionBillingCycleEditDeletePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleEditDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Delete the current and future schedule and contract edits of a list of subscription billing cycles.
+    */
+
+    public SubscriptionBillingCycleEditsDeletePayload getSubscriptionBillingCycleEditsDelete() {
+        return (SubscriptionBillingCycleEditsDeletePayload) get("subscriptionBillingCycleEditsDelete");
+    }
+
+    public Mutation setSubscriptionBillingCycleEditsDelete(SubscriptionBillingCycleEditsDeletePayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleEditsDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Modify the schedule of a specific billing cycle.
+    */
+
+    public SubscriptionBillingCycleScheduleEditPayload getSubscriptionBillingCycleScheduleEdit() {
+        return (SubscriptionBillingCycleScheduleEditPayload) get("subscriptionBillingCycleScheduleEdit");
+    }
+
+    public Mutation setSubscriptionBillingCycleScheduleEdit(SubscriptionBillingCycleScheduleEditPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleScheduleEdit"), arg);
+        return this;
+    }
+
+    /**
+    * Skips a Subscription Billing Cycle.
+    */
+
+    public SubscriptionBillingCycleSkipPayload getSubscriptionBillingCycleSkip() {
+        return (SubscriptionBillingCycleSkipPayload) get("subscriptionBillingCycleSkip");
+    }
+
+    public Mutation setSubscriptionBillingCycleSkip(SubscriptionBillingCycleSkipPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleSkip"), arg);
+        return this;
+    }
+
+    /**
+    * Unskips a Subscription Billing Cycle.
+    */
+
+    public SubscriptionBillingCycleUnskipPayload getSubscriptionBillingCycleUnskip() {
+        return (SubscriptionBillingCycleUnskipPayload) get("subscriptionBillingCycleUnskip");
+    }
+
+    public Mutation setSubscriptionBillingCycleUnskip(SubscriptionBillingCycleUnskipPayload arg) {
+        optimisticData.put(getKey("subscriptionBillingCycleUnskip"), arg);
+        return this;
+    }
+
+    /**
+    * Activates a Subscription Contract. Contract status must be either active, paused, or failed.
+    */
+
+    public SubscriptionContractActivatePayload getSubscriptionContractActivate() {
+        return (SubscriptionContractActivatePayload) get("subscriptionContractActivate");
+    }
+
+    public Mutation setSubscriptionContractActivate(SubscriptionContractActivatePayload arg) {
+        optimisticData.put(getKey("subscriptionContractActivate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a Subscription Contract.
+    */
+
+    public SubscriptionContractAtomicCreatePayload getSubscriptionContractAtomicCreate() {
+        return (SubscriptionContractAtomicCreatePayload) get("subscriptionContractAtomicCreate");
+    }
+
+    public Mutation setSubscriptionContractAtomicCreate(SubscriptionContractAtomicCreatePayload arg) {
+        optimisticData.put(getKey("subscriptionContractAtomicCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Cancels a Subscription Contract.
+    */
+
+    public SubscriptionContractCancelPayload getSubscriptionContractCancel() {
+        return (SubscriptionContractCancelPayload) get("subscriptionContractCancel");
+    }
+
+    public Mutation setSubscriptionContractCancel(SubscriptionContractCancelPayload arg) {
+        optimisticData.put(getKey("subscriptionContractCancel"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a Subscription Contract Draft.
+    * You can submit all the desired information for the draft using [Subscription Draft Input
+    * object](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/SubscriptionDraftInput).
+    * You can also update the draft using the [Subscription Contract
+    * Update](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionContractUpdate)
+    * mutation.
+    * The draft is not saved until you call the [Subscription Draft
+    * Commit](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionDraftCommit)
+    * mutation.
+    */
+
+    public SubscriptionContractCreatePayload getSubscriptionContractCreate() {
+        return (SubscriptionContractCreatePayload) get("subscriptionContractCreate");
+    }
+
+    public Mutation setSubscriptionContractCreate(SubscriptionContractCreatePayload arg) {
+        optimisticData.put(getKey("subscriptionContractCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Expires a Subscription Contract.
+    */
+
+    public SubscriptionContractExpirePayload getSubscriptionContractExpire() {
+        return (SubscriptionContractExpirePayload) get("subscriptionContractExpire");
+    }
+
+    public Mutation setSubscriptionContractExpire(SubscriptionContractExpirePayload arg) {
+        optimisticData.put(getKey("subscriptionContractExpire"), arg);
+        return this;
+    }
+
+    /**
+    * Fails a Subscription Contract.
+    */
+
+    public SubscriptionContractFailPayload getSubscriptionContractFail() {
+        return (SubscriptionContractFailPayload) get("subscriptionContractFail");
+    }
+
+    public Mutation setSubscriptionContractFail(SubscriptionContractFailPayload arg) {
+        optimisticData.put(getKey("subscriptionContractFail"), arg);
+        return this;
+    }
+
+    /**
+    * Pauses a Subscription Contract.
+    */
+
+    public SubscriptionContractPausePayload getSubscriptionContractPause() {
+        return (SubscriptionContractPausePayload) get("subscriptionContractPause");
+    }
+
+    public Mutation setSubscriptionContractPause(SubscriptionContractPausePayload arg) {
+        optimisticData.put(getKey("subscriptionContractPause"), arg);
+        return this;
+    }
+
+    /**
+    * Allows for the easy change of a Product in a Contract or a Product price change.
+    */
+
+    public SubscriptionContractProductChangePayload getSubscriptionContractProductChange() {
+        return (SubscriptionContractProductChangePayload) get("subscriptionContractProductChange");
+    }
+
+    public Mutation setSubscriptionContractProductChange(SubscriptionContractProductChangePayload arg) {
+        optimisticData.put(getKey("subscriptionContractProductChange"), arg);
+        return this;
+    }
+
+    /**
+    * Sets the next billing date of a Subscription Contract. This field is managed by the apps.
+    * Alternatively you can utilize our
+    * [Billing Cycles
+    * APIs](https://shopify.dev/docs/apps/selling-strategies/subscriptions/billing-cycles),
+    * which provide auto-computed billing dates and additional functionalities.
+    */
+
+    public SubscriptionContractSetNextBillingDatePayload getSubscriptionContractSetNextBillingDate() {
+        return (SubscriptionContractSetNextBillingDatePayload) get("subscriptionContractSetNextBillingDate");
+    }
+
+    public Mutation setSubscriptionContractSetNextBillingDate(SubscriptionContractSetNextBillingDatePayload arg) {
+        optimisticData.put(getKey("subscriptionContractSetNextBillingDate"), arg);
+        return this;
+    }
+
+    /**
+    * The subscriptionContractUpdate mutation allows you to create a draft of an existing subscription
+    * contract. This [draft](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionDraft) can
+    * be reviewed and modified as needed. Once the draft is committed with
+    * [subscriptionDraftCommit](https://shopify.dev/api/admin-graphql/latest/mutations/subscriptionDraftCo
+    * mmit), the changes are applied to the original subscription contract.
+    */
+
+    public SubscriptionContractUpdatePayload getSubscriptionContractUpdate() {
+        return (SubscriptionContractUpdatePayload) get("subscriptionContractUpdate");
+    }
+
+    public Mutation setSubscriptionContractUpdate(SubscriptionContractUpdatePayload arg) {
+        optimisticData.put(getKey("subscriptionContractUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Commits the updates of a Subscription Contract draft.
+    */
+
+    public SubscriptionDraftCommitPayload getSubscriptionDraftCommit() {
+        return (SubscriptionDraftCommitPayload) get("subscriptionDraftCommit");
+    }
+
+    public Mutation setSubscriptionDraftCommit(SubscriptionDraftCommitPayload arg) {
+        optimisticData.put(getKey("subscriptionDraftCommit"), arg);
+        return this;
+    }
+
+    /**
+    * Adds a subscription discount to a subscription draft.
+    */
+
+    public SubscriptionDraftDiscountAddPayload getSubscriptionDraftDiscountAdd() {
+        return (SubscriptionDraftDiscountAddPayload) get("subscriptionDraftDiscountAdd");
+    }
+
+    public Mutation setSubscriptionDraftDiscountAdd(SubscriptionDraftDiscountAddPayload arg) {
+        optimisticData.put(getKey("subscriptionDraftDiscountAdd"), arg);
+        return this;
+    }
+
+    /**
+    * Applies a code discount on the subscription draft.
+    */
+
+    public SubscriptionDraftDiscountCodeApplyPayload getSubscriptionDraftDiscountCodeApply() {
+        return (SubscriptionDraftDiscountCodeApplyPayload) get("subscriptionDraftDiscountCodeApply");
+    }
+
+    public Mutation setSubscriptionDraftDiscountCodeApply(SubscriptionDraftDiscountCodeApplyPayload arg) {
+        optimisticData.put(getKey("subscriptionDraftDiscountCodeApply"), arg);
+        return this;
+    }
+
+    /**
+    * Removes a subscription discount from a subscription draft.
+    */
+
+    public SubscriptionDraftDiscountRemovePayload getSubscriptionDraftDiscountRemove() {
+        return (SubscriptionDraftDiscountRemovePayload) get("subscriptionDraftDiscountRemove");
+    }
+
+    public Mutation setSubscriptionDraftDiscountRemove(SubscriptionDraftDiscountRemovePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftDiscountRemove"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a subscription discount on a subscription draft.
+    */
+
+    public SubscriptionDraftDiscountUpdatePayload getSubscriptionDraftDiscountUpdate() {
+        return (SubscriptionDraftDiscountUpdatePayload) get("subscriptionDraftDiscountUpdate");
+    }
+
+    public Mutation setSubscriptionDraftDiscountUpdate(SubscriptionDraftDiscountUpdatePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftDiscountUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Adds a subscription free shipping discount to a subscription draft.
+    */
+
+    public SubscriptionDraftFreeShippingDiscountAddPayload getSubscriptionDraftFreeShippingDiscountAdd() {
+        return (SubscriptionDraftFreeShippingDiscountAddPayload) get("subscriptionDraftFreeShippingDiscountAdd");
+    }
+
+    public Mutation setSubscriptionDraftFreeShippingDiscountAdd(SubscriptionDraftFreeShippingDiscountAddPayload arg) {
+        optimisticData.put(getKey("subscriptionDraftFreeShippingDiscountAdd"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a subscription free shipping discount on a subscription draft.
+    */
+
+    public SubscriptionDraftFreeShippingDiscountUpdatePayload getSubscriptionDraftFreeShippingDiscountUpdate() {
+        return (SubscriptionDraftFreeShippingDiscountUpdatePayload) get("subscriptionDraftFreeShippingDiscountUpdate");
+    }
+
+    public Mutation setSubscriptionDraftFreeShippingDiscountUpdate(SubscriptionDraftFreeShippingDiscountUpdatePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftFreeShippingDiscountUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Adds a subscription line to a subscription draft.
+    */
+
+    public SubscriptionDraftLineAddPayload getSubscriptionDraftLineAdd() {
+        return (SubscriptionDraftLineAddPayload) get("subscriptionDraftLineAdd");
+    }
+
+    public Mutation setSubscriptionDraftLineAdd(SubscriptionDraftLineAddPayload arg) {
+        optimisticData.put(getKey("subscriptionDraftLineAdd"), arg);
+        return this;
+    }
+
+    /**
+    * Removes a subscription line from a subscription draft.
+    */
+
+    public SubscriptionDraftLineRemovePayload getSubscriptionDraftLineRemove() {
+        return (SubscriptionDraftLineRemovePayload) get("subscriptionDraftLineRemove");
+    }
+
+    public Mutation setSubscriptionDraftLineRemove(SubscriptionDraftLineRemovePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftLineRemove"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a subscription line on a subscription draft.
+    */
+
+    public SubscriptionDraftLineUpdatePayload getSubscriptionDraftLineUpdate() {
+        return (SubscriptionDraftLineUpdatePayload) get("subscriptionDraftLineUpdate");
+    }
+
+    public Mutation setSubscriptionDraftLineUpdate(SubscriptionDraftLineUpdatePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftLineUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a Subscription Draft.
+    */
+
+    public SubscriptionDraftUpdatePayload getSubscriptionDraftUpdate() {
+        return (SubscriptionDraftUpdatePayload) get("subscriptionDraftUpdate");
+    }
+
+    public Mutation setSubscriptionDraftUpdate(SubscriptionDraftUpdatePayload arg) {
+        optimisticData.put(getKey("subscriptionDraftUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Add tags to an order, a draft order, a customer, a product, or an online store article.
+    */
+
+    public TagsAddPayload getTagsAdd() {
+        return (TagsAddPayload) get("tagsAdd");
+    }
+
+    public Mutation setTagsAdd(TagsAddPayload arg) {
+        optimisticData.put(getKey("tagsAdd"), arg);
+        return this;
+    }
+
+    /**
+    * Remove tags from an order, a draft order, a customer, a product, or an online store article.
+    */
+
+    public TagsRemovePayload getTagsRemove() {
+        return (TagsRemovePayload) get("tagsRemove");
+    }
+
+    public Mutation setTagsRemove(TagsRemovePayload arg) {
+        optimisticData.put(getKey("tagsRemove"), arg);
+        return this;
+    }
+
+    /**
+    * Allows tax app configurations for tax partners.
+    */
+
+    public TaxAppConfigurePayload getTaxAppConfigure() {
+        return (TaxAppConfigurePayload) get("taxAppConfigure");
+    }
+
+    public Mutation setTaxAppConfigure(TaxAppConfigurePayload arg) {
+        optimisticData.put(getKey("taxAppConfigure"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a theme using an external URL or for files that were previously uploaded using the
+    * [stagedUploadsCreate
+    * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
+    * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
+    */
+
+    public ThemeCreatePayload getThemeCreate() {
+        return (ThemeCreatePayload) get("themeCreate");
+    }
+
+    public Mutation setThemeCreate(ThemeCreatePayload arg) {
+        optimisticData.put(getKey("themeCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a theme.
+    */
+
+    public ThemeDeletePayload getThemeDelete() {
+        return (ThemeDeletePayload) get("themeDelete");
+    }
+
+    public Mutation setThemeDelete(ThemeDeletePayload arg) {
+        optimisticData.put(getKey("themeDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Copy theme files. Copying to existing theme files will overwrite them.
+    */
+
+    public ThemeFilesCopyPayload getThemeFilesCopy() {
+        return (ThemeFilesCopyPayload) get("themeFilesCopy");
+    }
+
+    public Mutation setThemeFilesCopy(ThemeFilesCopyPayload arg) {
+        optimisticData.put(getKey("themeFilesCopy"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a theme's files.
+    */
+
+    public ThemeFilesDeletePayload getThemeFilesDelete() {
+        return (ThemeFilesDeletePayload) get("themeFilesDelete");
+    }
+
+    public Mutation setThemeFilesDelete(ThemeFilesDeletePayload arg) {
+        optimisticData.put(getKey("themeFilesDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Create or update theme files.
+    */
+
+    public ThemeFilesUpsertPayload getThemeFilesUpsert() {
+        return (ThemeFilesUpsertPayload) get("themeFilesUpsert");
+    }
+
+    public Mutation setThemeFilesUpsert(ThemeFilesUpsertPayload arg) {
+        optimisticData.put(getKey("themeFilesUpsert"), arg);
+        return this;
+    }
+
+    /**
+    * Publishes a theme.
+    */
+
+    public ThemePublishPayload getThemePublish() {
+        return (ThemePublishPayload) get("themePublish");
+    }
+
+    public Mutation setThemePublish(ThemePublishPayload arg) {
+        optimisticData.put(getKey("themePublish"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a theme.
+    */
+
+    public ThemeUpdatePayload getThemeUpdate() {
+        return (ThemeUpdatePayload) get("themeUpdate");
+    }
+
+    public Mutation setThemeUpdate(ThemeUpdatePayload arg) {
+        optimisticData.put(getKey("themeUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Trigger the voiding of an uncaptured authorization transaction.
+    */
+
+    public TransactionVoidPayload getTransactionVoid() {
+        return (TransactionVoidPayload) get("transactionVoid");
+    }
+
+    public Mutation setTransactionVoid(TransactionVoidPayload arg) {
+        optimisticData.put(getKey("transactionVoid"), arg);
+        return this;
+    }
+
+    /**
+    * Creates or updates translations.
+    */
+
+    public TranslationsRegisterPayload getTranslationsRegister() {
+        return (TranslationsRegisterPayload) get("translationsRegister");
+    }
+
+    public Mutation setTranslationsRegister(TranslationsRegisterPayload arg) {
+        optimisticData.put(getKey("translationsRegister"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes translations.
+    */
+
+    public TranslationsRemovePayload getTranslationsRemove() {
+        return (TranslationsRemovePayload) get("translationsRemove");
+    }
+
+    public Mutation setTranslationsRemove(TranslationsRemovePayload arg) {
+        optimisticData.put(getKey("translationsRemove"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously delete [URL
+    * redirects](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) in bulk.
+    */
+
+    public UrlRedirectBulkDeleteAllPayload getUrlRedirectBulkDeleteAll() {
+        return (UrlRedirectBulkDeleteAllPayload) get("urlRedirectBulkDeleteAll");
+    }
+
+    public Mutation setUrlRedirectBulkDeleteAll(UrlRedirectBulkDeleteAllPayload arg) {
+        optimisticData.put(getKey("urlRedirectBulkDeleteAll"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously delete
+    * [URLRedirect](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) 
+    * objects in bulk by IDs.
+    * Learn more about
+    * [URLRedirect](https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect) 
+    * objects.
+    */
+
+    public UrlRedirectBulkDeleteByIdsPayload getUrlRedirectBulkDeleteByIds() {
+        return (UrlRedirectBulkDeleteByIdsPayload) get("urlRedirectBulkDeleteByIds");
+    }
+
+    public Mutation setUrlRedirectBulkDeleteByIds(UrlRedirectBulkDeleteByIdsPayload arg) {
+        optimisticData.put(getKey("urlRedirectBulkDeleteByIds"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously delete redirects in bulk.
+    */
+
+    public UrlRedirectBulkDeleteBySavedSearchPayload getUrlRedirectBulkDeleteBySavedSearch() {
+        return (UrlRedirectBulkDeleteBySavedSearchPayload) get("urlRedirectBulkDeleteBySavedSearch");
+    }
+
+    public Mutation setUrlRedirectBulkDeleteBySavedSearch(UrlRedirectBulkDeleteBySavedSearchPayload arg) {
+        optimisticData.put(getKey("urlRedirectBulkDeleteBySavedSearch"), arg);
+        return this;
+    }
+
+    /**
+    * Asynchronously delete redirects in bulk.
+    */
+
+    public UrlRedirectBulkDeleteBySearchPayload getUrlRedirectBulkDeleteBySearch() {
+        return (UrlRedirectBulkDeleteBySearchPayload) get("urlRedirectBulkDeleteBySearch");
+    }
+
+    public Mutation setUrlRedirectBulkDeleteBySearch(UrlRedirectBulkDeleteBySearchPayload arg) {
+        optimisticData.put(getKey("urlRedirectBulkDeleteBySearch"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
+    */
+
+    public UrlRedirectCreatePayload getUrlRedirectCreate() {
+        return (UrlRedirectCreatePayload) get("urlRedirectCreate");
+    }
+
+    public Mutation setUrlRedirectCreate(UrlRedirectCreatePayload arg) {
+        optimisticData.put(getKey("urlRedirectCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
+    */
+
+    public UrlRedirectDeletePayload getUrlRedirectDelete() {
+        return (UrlRedirectDeletePayload) get("urlRedirectDelete");
+    }
+
+    public Mutation setUrlRedirectDelete(UrlRedirectDeletePayload arg) {
+        optimisticData.put(getKey("urlRedirectDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a
+    * [`UrlRedirectImport`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirectImport)
+    * object.
+    * After creating the `UrlRedirectImport` object, the `UrlRedirectImport` request can be performed
+    * using the
+    * [`urlRedirectImportSubmit`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
+    * Submit) mutation.
+    */
+
+    public UrlRedirectImportCreatePayload getUrlRedirectImportCreate() {
+        return (UrlRedirectImportCreatePayload) get("urlRedirectImportCreate");
+    }
+
+    public Mutation setUrlRedirectImportCreate(UrlRedirectImportCreatePayload arg) {
+        optimisticData.put(getKey("urlRedirectImportCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Submits a `UrlRedirectImport` request to be processed.
+    * The `UrlRedirectImport` request is first created with the
+    * [`urlRedirectImportCreate`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
+    * Create) mutation.
+    */
+
+    public UrlRedirectImportSubmitPayload getUrlRedirectImportSubmit() {
+        return (UrlRedirectImportSubmitPayload) get("urlRedirectImportSubmit");
+    }
+
+    public Mutation setUrlRedirectImportSubmit(UrlRedirectImportSubmitPayload arg) {
+        optimisticData.put(getKey("urlRedirectImportSubmit"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a URL redirect.
+    */
+
+    public UrlRedirectUpdatePayload getUrlRedirectUpdate() {
+        return (UrlRedirectUpdatePayload) get("urlRedirectUpdate");
+    }
+
+    public Mutation setUrlRedirectUpdate(UrlRedirectUpdatePayload arg) {
+        optimisticData.put(getKey("urlRedirectUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a validation.
+    */
+
+    public ValidationCreatePayload getValidationCreate() {
+        return (ValidationCreatePayload) get("validationCreate");
+    }
+
+    public Mutation setValidationCreate(ValidationCreatePayload arg) {
+        optimisticData.put(getKey("validationCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a validation.
+    */
+
+    public ValidationDeletePayload getValidationDelete() {
+        return (ValidationDeletePayload) get("validationDelete");
+    }
+
+    public Mutation setValidationDelete(ValidationDeletePayload arg) {
+        optimisticData.put(getKey("validationDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Update a validation.
+    */
+
+    public ValidationUpdatePayload getValidationUpdate() {
+        return (ValidationUpdatePayload) get("validationUpdate");
+    }
+
+    public Mutation setValidationUpdate(ValidationUpdatePayload arg) {
+        optimisticData.put(getKey("validationUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Activate a [web pixel
+    * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
+    * by creating a web pixel record on the store where you installed your app.
+    * When you run the `webPixelCreate` mutation, Shopify validates it
+    * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
+    * match
+    * the schema that you defined, then the mutation fails. Learn how to
+    * define [web pixel
+    * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
+    * r-web-pixel-settings).
+    */
+
+    public WebPixelCreatePayload getWebPixelCreate() {
+        return (WebPixelCreatePayload) get("webPixelCreate");
+    }
+
+    public Mutation setWebPixelCreate(WebPixelCreatePayload arg) {
+        optimisticData.put(getKey("webPixelCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes the web pixel shop settings.
+    */
+
+    public WebPixelDeletePayload getWebPixelDelete() {
+        return (WebPixelDeletePayload) get("webPixelDelete");
+    }
+
+    public Mutation setWebPixelDelete(WebPixelDeletePayload arg) {
+        optimisticData.put(getKey("webPixelDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Activate a [web pixel
+    * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
+    * by updating a web pixel record on the store where you installed your app.
+    * When you run the `webPixelUpdate` mutation, Shopify validates it
+    * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
+    * match
+    * the schema that you defined, then the mutation fails. Learn how to
+    * define [web pixel
+    * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
+    * r-web-pixel-settings).
+    */
+
+    public WebPixelUpdatePayload getWebPixelUpdate() {
+        return (WebPixelUpdatePayload) get("webPixelUpdate");
+    }
+
+    public Mutation setWebPixelUpdate(WebPixelUpdatePayload arg) {
+        optimisticData.put(getKey("webPixelUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a web presence.
+    */
+
+    public WebPresenceCreatePayload getWebPresenceCreate() {
+        return (WebPresenceCreatePayload) get("webPresenceCreate");
+    }
+
+    public Mutation setWebPresenceCreate(WebPresenceCreatePayload arg) {
+        optimisticData.put(getKey("webPresenceCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a web presence.
+    */
+
+    public WebPresenceDeletePayload getWebPresenceDelete() {
+        return (WebPresenceDeletePayload) get("webPresenceDelete");
+    }
+
+    public Mutation setWebPresenceDelete(WebPresenceDeletePayload arg) {
+        optimisticData.put(getKey("webPresenceDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a web presence.
+    */
+
+    public WebPresenceUpdatePayload getWebPresenceUpdate() {
+        return (WebPresenceUpdatePayload) get("webPresenceUpdate");
+    }
+
+    public Mutation setWebPresenceUpdate(WebPresenceUpdatePayload arg) {
+        optimisticData.put(getKey("webPresenceUpdate"), arg);
+        return this;
+    }
+
+    /**
+    * Creates a new webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+
+    public WebhookSubscriptionCreatePayload getWebhookSubscriptionCreate() {
+        return (WebhookSubscriptionCreatePayload) get("webhookSubscriptionCreate");
+    }
+
+    public Mutation setWebhookSubscriptionCreate(WebhookSubscriptionCreatePayload arg) {
+        optimisticData.put(getKey("webhookSubscriptionCreate"), arg);
+        return this;
+    }
+
+    /**
+    * Deletes a webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+
+    public WebhookSubscriptionDeletePayload getWebhookSubscriptionDelete() {
+        return (WebhookSubscriptionDeletePayload) get("webhookSubscriptionDelete");
+    }
+
+    public Mutation setWebhookSubscriptionDelete(WebhookSubscriptionDeletePayload arg) {
+        optimisticData.put(getKey("webhookSubscriptionDelete"), arg);
+        return this;
+    }
+
+    /**
+    * Updates a webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+
+    public WebhookSubscriptionUpdatePayload getWebhookSubscriptionUpdate() {
+        return (WebhookSubscriptionUpdatePayload) get("webhookSubscriptionUpdate");
+    }
+
+    public Mutation setWebhookSubscriptionUpdate(WebhookSubscriptionUpdatePayload arg) {
+        optimisticData.put(getKey("webhookSubscriptionUpdate"), arg);
+        return this;
+    }
+
+    public boolean unwrapsToObject(String key) {
+        switch (getFieldName(key)) {
+            case "abandonmentUpdateActivitiesDeliveryStatuses": return true;
+
+            case "appPurchaseOneTimeCreate": return true;
+
+            case "appRevokeAccessScopes": return true;
+
+            case "appSubscriptionCancel": return true;
+
+            case "appSubscriptionCreate": return true;
+
+            case "appSubscriptionLineItemUpdate": return true;
+
+            case "appSubscriptionTrialExtend": return true;
+
+            case "appUninstall": return true;
+
+            case "appUsageRecordCreate": return true;
+
+            case "articleCreate": return true;
+
+            case "articleDelete": return true;
+
+            case "articleUpdate": return true;
+
+            case "backupRegionUpdate": return true;
+
+            case "blogCreate": return true;
+
+            case "blogDelete": return true;
+
+            case "blogUpdate": return true;
+
+            case "bulkOperationCancel": return true;
+
+            case "bulkOperationRunMutation": return true;
+
+            case "bulkOperationRunQuery": return true;
+
+            case "bulkProductResourceFeedbackCreate": return true;
+
+            case "carrierServiceCreate": return true;
+
+            case "carrierServiceDelete": return true;
+
+            case "carrierServiceUpdate": return true;
+
+            case "cartTransformCreate": return true;
+
+            case "cartTransformDelete": return true;
+
+            case "catalogContextUpdate": return true;
+
+            case "catalogCreate": return true;
+
+            case "catalogDelete": return true;
+
+            case "catalogUpdate": return true;
+
+            case "checkoutBrandingUpsert": return true;
+
+            case "collectionAddProducts": return true;
+
+            case "collectionAddProductsV2": return true;
+
+            case "collectionCreate": return true;
+
+            case "collectionDelete": return true;
+
+            case "collectionRemoveProducts": return true;
+
+            case "collectionReorderProducts": return true;
+
+            case "collectionUpdate": return true;
+
+            case "combinedListingUpdate": return true;
+
+            case "commentApprove": return true;
+
+            case "commentDelete": return true;
+
+            case "commentNotSpam": return true;
+
+            case "commentSpam": return true;
+
+            case "companiesDelete": return true;
+
+            case "companyAddressDelete": return true;
+
+            case "companyAssignCustomerAsContact": return true;
+
+            case "companyAssignMainContact": return true;
+
+            case "companyContactAssignRole": return true;
+
+            case "companyContactAssignRoles": return true;
+
+            case "companyContactCreate": return true;
+
+            case "companyContactDelete": return true;
+
+            case "companyContactRemoveFromCompany": return true;
+
+            case "companyContactRevokeRole": return true;
+
+            case "companyContactRevokeRoles": return true;
+
+            case "companyContactSendWelcomeEmail": return true;
+
+            case "companyContactUpdate": return true;
+
+            case "companyContactsDelete": return true;
+
+            case "companyCreate": return true;
+
+            case "companyDelete": return true;
+
+            case "companyLocationAssignAddress": return true;
+
+            case "companyLocationAssignRoles": return true;
+
+            case "companyLocationAssignStaffMembers": return true;
+
+            case "companyLocationCreate": return true;
+
+            case "companyLocationDelete": return true;
+
+            case "companyLocationRemoveStaffMembers": return true;
+
+            case "companyLocationRevokeRoles": return true;
+
+            case "companyLocationTaxSettingsUpdate": return true;
+
+            case "companyLocationUpdate": return true;
+
+            case "companyLocationsDelete": return true;
+
+            case "companyRevokeMainContact": return true;
+
+            case "companyUpdate": return true;
+
+            case "consentPolicyUpdate": return true;
+
+            case "customerAddTaxExemptions": return true;
+
+            case "customerAddressCreate": return true;
+
+            case "customerAddressDelete": return true;
+
+            case "customerAddressUpdate": return true;
+
+            case "customerCancelDataErasure": return true;
+
+            case "customerCreate": return true;
+
+            case "customerDelete": return true;
+
+            case "customerEmailMarketingConsentUpdate": return true;
+
+            case "customerGenerateAccountActivationUrl": return true;
+
+            case "customerMerge": return true;
+
+            case "customerPaymentMethodCreateFromDuplicationData": return true;
+
+            case "customerPaymentMethodCreditCardCreate": return true;
+
+            case "customerPaymentMethodCreditCardUpdate": return true;
+
+            case "customerPaymentMethodGetDuplicationData": return true;
+
+            case "customerPaymentMethodGetUpdateUrl": return true;
+
+            case "customerPaymentMethodPaypalBillingAgreementCreate": return true;
+
+            case "customerPaymentMethodPaypalBillingAgreementUpdate": return true;
+
+            case "customerPaymentMethodRemoteCreate": return true;
+
+            case "customerPaymentMethodRevoke": return true;
+
+            case "customerPaymentMethodSendUpdateEmail": return true;
+
+            case "customerRemoveTaxExemptions": return true;
+
+            case "customerReplaceTaxExemptions": return true;
+
+            case "customerRequestDataErasure": return true;
+
+            case "customerSegmentMembersQueryCreate": return true;
+
+            case "customerSendAccountInviteEmail": return true;
+
+            case "customerSet": return true;
+
+            case "customerSmsMarketingConsentUpdate": return true;
+
+            case "customerUpdate": return true;
+
+            case "customerUpdateDefaultAddress": return true;
+
+            case "dataSaleOptOut": return true;
+
+            case "delegateAccessTokenCreate": return true;
+
+            case "delegateAccessTokenDestroy": return true;
+
+            case "deliveryCustomizationActivation": return true;
+
+            case "deliveryCustomizationCreate": return true;
+
+            case "deliveryCustomizationDelete": return true;
+
+            case "deliveryCustomizationUpdate": return true;
+
+            case "deliveryProfileCreate": return true;
+
+            case "deliveryProfileRemove": return true;
+
+            case "deliveryProfileUpdate": return true;
+
+            case "deliveryPromiseParticipantsUpdate": return true;
+
+            case "deliveryPromiseProviderUpsert": return true;
+
+            case "deliverySettingUpdate": return true;
+
+            case "deliveryShippingOriginAssign": return true;
+
+            case "discountAutomaticActivate": return true;
+
+            case "discountAutomaticAppCreate": return true;
+
+            case "discountAutomaticAppUpdate": return true;
+
+            case "discountAutomaticBasicCreate": return true;
+
+            case "discountAutomaticBasicUpdate": return true;
+
+            case "discountAutomaticBulkDelete": return true;
+
+            case "discountAutomaticBxgyCreate": return true;
+
+            case "discountAutomaticBxgyUpdate": return true;
+
+            case "discountAutomaticDeactivate": return true;
+
+            case "discountAutomaticDelete": return true;
+
+            case "discountAutomaticFreeShippingCreate": return true;
+
+            case "discountAutomaticFreeShippingUpdate": return true;
+
+            case "discountCodeActivate": return true;
+
+            case "discountCodeAppCreate": return true;
+
+            case "discountCodeAppUpdate": return true;
+
+            case "discountCodeBasicCreate": return true;
+
+            case "discountCodeBasicUpdate": return true;
+
+            case "discountCodeBulkActivate": return true;
+
+            case "discountCodeBulkDeactivate": return true;
+
+            case "discountCodeBulkDelete": return true;
+
+            case "discountCodeBxgyCreate": return true;
+
+            case "discountCodeBxgyUpdate": return true;
+
+            case "discountCodeDeactivate": return true;
+
+            case "discountCodeDelete": return true;
+
+            case "discountCodeFreeShippingCreate": return true;
+
+            case "discountCodeFreeShippingUpdate": return true;
+
+            case "discountCodeRedeemCodeBulkDelete": return true;
+
+            case "discountRedeemCodeBulkAdd": return true;
+
+            case "disputeEvidenceUpdate": return true;
+
+            case "draftOrderBulkAddTags": return true;
+
+            case "draftOrderBulkDelete": return true;
+
+            case "draftOrderBulkRemoveTags": return true;
+
+            case "draftOrderCalculate": return true;
+
+            case "draftOrderComplete": return true;
+
+            case "draftOrderCreate": return true;
+
+            case "draftOrderCreateFromOrder": return true;
+
+            case "draftOrderDelete": return true;
+
+            case "draftOrderDuplicate": return true;
+
+            case "draftOrderInvoicePreview": return true;
+
+            case "draftOrderInvoiceSend": return true;
+
+            case "draftOrderUpdate": return true;
+
+            case "eventBridgeServerPixelUpdate": return true;
+
+            case "eventBridgeWebhookSubscriptionCreate": return true;
+
+            case "eventBridgeWebhookSubscriptionUpdate": return true;
+
+            case "fileAcknowledgeUpdateFailed": return true;
+
+            case "fileCreate": return true;
+
+            case "fileDelete": return true;
+
+            case "fileUpdate": return true;
+
+            case "flowGenerateSignature": return true;
+
+            case "flowTriggerReceive": return true;
+
+            case "fulfillmentCancel": return true;
+
+            case "fulfillmentConstraintRuleCreate": return true;
+
+            case "fulfillmentConstraintRuleDelete": return true;
+
+            case "fulfillmentConstraintRuleUpdate": return true;
+
+            case "fulfillmentCreate": return true;
+
+            case "fulfillmentEventCreate": return true;
+
+            case "fulfillmentOrderAcceptCancellationRequest": return true;
+
+            case "fulfillmentOrderAcceptFulfillmentRequest": return true;
+
+            case "fulfillmentOrderCancel": return true;
+
+            case "fulfillmentOrderClose": return true;
+
+            case "fulfillmentOrderHold": return true;
+
+            case "fulfillmentOrderLineItemsPreparedForPickup": return true;
+
+            case "fulfillmentOrderMerge": return true;
+
+            case "fulfillmentOrderMove": return true;
+
+            case "fulfillmentOrderOpen": return true;
+
+            case "fulfillmentOrderRejectCancellationRequest": return true;
+
+            case "fulfillmentOrderRejectFulfillmentRequest": return true;
+
+            case "fulfillmentOrderReleaseHold": return true;
+
+            case "fulfillmentOrderReschedule": return true;
+
+            case "fulfillmentOrderSplit": return true;
+
+            case "fulfillmentOrderSubmitCancellationRequest": return true;
+
+            case "fulfillmentOrderSubmitFulfillmentRequest": return true;
+
+            case "fulfillmentOrdersSetFulfillmentDeadline": return true;
+
+            case "fulfillmentServiceCreate": return true;
+
+            case "fulfillmentServiceDelete": return true;
+
+            case "fulfillmentServiceUpdate": return true;
+
+            case "fulfillmentTrackingInfoUpdate": return true;
+
+            case "giftCardCreate": return true;
+
+            case "giftCardCredit": return true;
+
+            case "giftCardDeactivate": return true;
+
+            case "giftCardDebit": return true;
+
+            case "giftCardSendNotificationToCustomer": return true;
+
+            case "giftCardSendNotificationToRecipient": return true;
+
+            case "giftCardUpdate": return true;
+
+            case "inventoryActivate": return true;
+
+            case "inventoryAdjustQuantities": return true;
+
+            case "inventoryBulkToggleActivation": return true;
+
+            case "inventoryDeactivate": return true;
+
+            case "inventoryItemUpdate": return true;
+
+            case "inventoryMoveQuantities": return true;
+
+            case "inventorySetQuantities": return true;
+
+            case "inventorySetScheduledChanges": return true;
+
+            case "inventoryShipmentAddItems": return true;
+
+            case "inventoryShipmentCreate": return true;
+
+            case "inventoryShipmentCreateInTransit": return true;
+
+            case "inventoryShipmentDelete": return true;
+
+            case "inventoryShipmentMarkInTransit": return true;
+
+            case "inventoryShipmentReceive": return true;
+
+            case "inventoryShipmentRemoveItems": return true;
+
+            case "inventoryShipmentSetTracking": return true;
+
+            case "inventoryShipmentUpdateItemQuantities": return true;
+
+            case "inventoryTransferCancel": return true;
+
+            case "inventoryTransferCreate": return true;
+
+            case "inventoryTransferCreateAsReadyToShip": return true;
+
+            case "inventoryTransferDelete": return true;
+
+            case "inventoryTransferDuplicate": return true;
+
+            case "inventoryTransferEdit": return true;
+
+            case "inventoryTransferMarkAsReadyToShip": return true;
+
+            case "inventoryTransferRemoveItems": return true;
+
+            case "inventoryTransferSetItems": return true;
+
+            case "locationActivate": return true;
+
+            case "locationAdd": return true;
+
+            case "locationDeactivate": return true;
+
+            case "locationDelete": return true;
+
+            case "locationEdit": return true;
+
+            case "locationLocalPickupDisable": return true;
+
+            case "locationLocalPickupEnable": return true;
+
+            case "marketCreate": return true;
+
+            case "marketCurrencySettingsUpdate": return true;
+
+            case "marketDelete": return true;
+
+            case "marketLocalizationsRegister": return true;
+
+            case "marketLocalizationsRemove": return true;
+
+            case "marketUpdate": return true;
+
+            case "marketingActivitiesDeleteAllExternal": return true;
+
+            case "marketingActivityCreate": return true;
+
+            case "marketingActivityCreateExternal": return true;
+
+            case "marketingActivityDeleteExternal": return true;
+
+            case "marketingActivityUpdate": return true;
+
+            case "marketingActivityUpdateExternal": return true;
+
+            case "marketingActivityUpsertExternal": return true;
+
+            case "marketingEngagementCreate": return true;
 
-                case "discountAutomaticFreeShippingUpdate": return true;
+            case "marketingEngagementsDelete": return true;
 
-                case "discountCodeActivate": return true;
+            case "menuCreate": return true;
 
-                case "discountCodeAppCreate": return true;
+            case "menuDelete": return true;
 
-                case "discountCodeAppUpdate": return true;
+            case "menuUpdate": return true;
 
-                case "discountCodeBasicCreate": return true;
+            case "metafieldDefinitionCreate": return true;
 
-                case "discountCodeBasicUpdate": return true;
+            case "metafieldDefinitionDelete": return true;
 
-                case "discountCodeBulkActivate": return true;
+            case "metafieldDefinitionPin": return true;
 
-                case "discountCodeBulkDeactivate": return true;
+            case "metafieldDefinitionUnpin": return true;
 
-                case "discountCodeBulkDelete": return true;
+            case "metafieldDefinitionUpdate": return true;
 
-                case "discountCodeBxgyCreate": return true;
+            case "metafieldsDelete": return true;
 
-                case "discountCodeBxgyUpdate": return true;
+            case "metafieldsSet": return true;
 
-                case "discountCodeDeactivate": return true;
+            case "metaobjectBulkDelete": return true;
 
-                case "discountCodeDelete": return true;
+            case "metaobjectCreate": return true;
 
-                case "discountCodeFreeShippingCreate": return true;
+            case "metaobjectDefinitionCreate": return true;
 
-                case "discountCodeFreeShippingUpdate": return true;
+            case "metaobjectDefinitionDelete": return true;
 
-                case "discountCodeRedeemCodeBulkDelete": return true;
+            case "metaobjectDefinitionUpdate": return true;
 
-                case "discountRedeemCodeBulkAdd": return true;
+            case "metaobjectDelete": return true;
 
-                case "disputeEvidenceUpdate": return true;
+            case "metaobjectUpdate": return true;
 
-                case "draftOrderBulkAddTags": return true;
+            case "metaobjectUpsert": return true;
 
-                case "draftOrderBulkDelete": return true;
+            case "mobilePlatformApplicationCreate": return true;
 
-                case "draftOrderBulkRemoveTags": return true;
+            case "mobilePlatformApplicationDelete": return true;
 
-                case "draftOrderCalculate": return true;
+            case "mobilePlatformApplicationUpdate": return true;
 
-                case "draftOrderComplete": return true;
+            case "orderCancel": return true;
 
-                case "draftOrderCreate": return true;
+            case "orderCapture": return true;
 
-                case "draftOrderCreateFromOrder": return true;
+            case "orderClose": return true;
 
-                case "draftOrderCreateMerchantCheckout": return true;
+            case "orderCreate": return true;
 
-                case "draftOrderDelete": return true;
+            case "orderCreateMandatePayment": return true;
 
-                case "draftOrderDuplicate": return true;
+            case "orderCreateManualPayment": return true;
 
-                case "draftOrderInvoicePreview": return true;
+            case "orderCustomerRemove": return true;
 
-                case "draftOrderInvoiceSend": return true;
+            case "orderCustomerSet": return true;
 
-                case "draftOrderUpdate": return true;
+            case "orderDelete": return true;
 
-                case "eventBridgeServerPixelUpdate": return true;
+            case "orderEditAddCustomItem": return true;
 
-                case "eventBridgeWebhookSubscriptionCreate": return true;
+            case "orderEditAddLineItemDiscount": return true;
 
-                case "eventBridgeWebhookSubscriptionUpdate": return true;
+            case "orderEditAddShippingLine": return true;
 
-                case "fileAcknowledgeUpdateFailed": return true;
+            case "orderEditAddVariant": return true;
 
-                case "fileCreate": return true;
+            case "orderEditBegin": return true;
 
-                case "fileDelete": return true;
+            case "orderEditCommit": return true;
 
-                case "fileUpdate": return true;
+            case "orderEditRemoveDiscount": return true;
 
-                case "flowGenerateSignature": return true;
+            case "orderEditRemoveShippingLine": return true;
 
-                case "flowTriggerReceive": return true;
+            case "orderEditSetQuantity": return true;
 
-                case "fulfillmentCancel": return true;
+            case "orderEditUpdateDiscount": return true;
 
-                case "fulfillmentConstraintRuleCreate": return true;
+            case "orderEditUpdateShippingLine": return true;
 
-                case "fulfillmentConstraintRuleDelete": return true;
+            case "orderInvoiceSend": return true;
 
-                case "fulfillmentConstraintRuleUpdate": return true;
+            case "orderMarkAsPaid": return true;
 
-                case "fulfillmentCreate": return true;
+            case "orderOpen": return true;
 
-                case "fulfillmentEventCreate": return true;
+            case "orderRiskAssessmentCreate": return true;
 
-                case "fulfillmentOrderAcceptCancellationRequest": return true;
+            case "orderUpdate": return true;
 
-                case "fulfillmentOrderAcceptFulfillmentRequest": return true;
+            case "pageCreate": return true;
 
-                case "fulfillmentOrderCancel": return true;
+            case "pageDelete": return true;
 
-                case "fulfillmentOrderClose": return true;
+            case "pageUpdate": return true;
 
-                case "fulfillmentOrderHold": return true;
+            case "paymentCustomizationActivation": return true;
 
-                case "fulfillmentOrderLineItemsPreparedForPickup": return true;
+            case "paymentCustomizationCreate": return true;
 
-                case "fulfillmentOrderMerge": return true;
+            case "paymentCustomizationDelete": return true;
 
-                case "fulfillmentOrderMove": return true;
+            case "paymentCustomizationUpdate": return true;
 
-                case "fulfillmentOrderOpen": return true;
+            case "paymentReminderSend": return true;
 
-                case "fulfillmentOrderRejectCancellationRequest": return true;
+            case "paymentTermsCreate": return true;
 
-                case "fulfillmentOrderRejectFulfillmentRequest": return true;
+            case "paymentTermsDelete": return true;
 
-                case "fulfillmentOrderReleaseHold": return true;
+            case "paymentTermsUpdate": return true;
 
-                case "fulfillmentOrderReschedule": return true;
+            case "priceListCreate": return true;
 
-                case "fulfillmentOrderSplit": return true;
+            case "priceListDelete": return true;
 
-                case "fulfillmentOrderSubmitCancellationRequest": return true;
+            case "priceListFixedPricesAdd": return true;
 
-                case "fulfillmentOrderSubmitFulfillmentRequest": return true;
+            case "priceListFixedPricesByProductUpdate": return true;
 
-                case "fulfillmentOrdersSetFulfillmentDeadline": return true;
+            case "priceListFixedPricesDelete": return true;
 
-                case "fulfillmentServiceCreate": return true;
+            case "priceListFixedPricesUpdate": return true;
 
-                case "fulfillmentServiceDelete": return true;
+            case "priceListUpdate": return true;
 
-                case "fulfillmentServiceUpdate": return true;
+            case "privacyFeaturesDisable": return true;
 
-                case "fulfillmentTrackingInfoUpdate": return true;
+            case "productBundleCreate": return true;
 
-                case "giftCardCreate": return true;
+            case "productBundleUpdate": return true;
 
-                case "giftCardCredit": return true;
+            case "productCreate": return true;
 
-                case "giftCardDeactivate": return true;
+            case "productDelete": return true;
 
-                case "giftCardDebit": return true;
+            case "productDuplicate": return true;
 
-                case "giftCardSendNotificationToCustomer": return true;
+            case "productFeedCreate": return true;
 
-                case "giftCardSendNotificationToRecipient": return true;
+            case "productFeedDelete": return true;
 
-                case "giftCardUpdate": return true;
+            case "productFullSync": return true;
 
-                case "inventoryActivate": return true;
+            case "productJoinSellingPlanGroups": return true;
 
-                case "inventoryAdjustQuantities": return true;
+            case "productLeaveSellingPlanGroups": return true;
 
-                case "inventoryBulkToggleActivation": return true;
+            case "productOptionUpdate": return true;
 
-                case "inventoryDeactivate": return true;
+            case "productOptionsCreate": return true;
 
-                case "inventoryItemUpdate": return true;
+            case "productOptionsDelete": return true;
 
-                case "inventoryMoveQuantities": return true;
+            case "productOptionsReorder": return true;
 
-                case "inventorySetQuantities": return true;
+            case "productReorderMedia": return true;
 
-                case "inventorySetScheduledChanges": return true;
+            case "productSet": return true;
 
-                case "locationActivate": return true;
+            case "productUpdate": return true;
 
-                case "locationAdd": return true;
+            case "productVariantAppendMedia": return true;
 
-                case "locationDeactivate": return true;
+            case "productVariantDetachMedia": return true;
 
-                case "locationDelete": return true;
+            case "productVariantJoinSellingPlanGroups": return true;
 
-                case "locationEdit": return true;
+            case "productVariantLeaveSellingPlanGroups": return true;
 
-                case "locationLocalPickupDisable": return true;
+            case "productVariantRelationshipBulkUpdate": return true;
 
-                case "locationLocalPickupEnable": return true;
+            case "productVariantsBulkCreate": return true;
 
-                case "marketCreate": return true;
+            case "productVariantsBulkDelete": return true;
 
-                case "marketCurrencySettingsUpdate": return true;
+            case "productVariantsBulkReorder": return true;
 
-                case "marketDelete": return true;
+            case "productVariantsBulkUpdate": return true;
 
-                case "marketLocalizationsRegister": return true;
+            case "pubSubServerPixelUpdate": return true;
 
-                case "marketLocalizationsRemove": return true;
+            case "pubSubWebhookSubscriptionCreate": return true;
 
-                case "marketUpdate": return true;
+            case "pubSubWebhookSubscriptionUpdate": return true;
 
-                case "marketingActivitiesDeleteAllExternal": return true;
+            case "publicationCreate": return true;
 
-                case "marketingActivityCreate": return true;
+            case "publicationDelete": return true;
 
-                case "marketingActivityCreateExternal": return true;
+            case "publicationUpdate": return true;
 
-                case "marketingActivityDeleteExternal": return true;
+            case "publishablePublish": return true;
 
-                case "marketingActivityUpdate": return true;
+            case "publishablePublishToCurrentChannel": return true;
 
-                case "marketingActivityUpdateExternal": return true;
+            case "publishableUnpublish": return true;
 
-                case "marketingActivityUpsertExternal": return true;
+            case "publishableUnpublishToCurrentChannel": return true;
 
-                case "marketingEngagementCreate": return true;
+            case "quantityPricingByVariantUpdate": return true;
 
-                case "marketingEngagementsDelete": return true;
+            case "quantityRulesAdd": return true;
 
-                case "menuCreate": return true;
+            case "quantityRulesDelete": return true;
 
-                case "menuDelete": return true;
+            case "refundCreate": return true;
 
-                case "menuUpdate": return true;
+            case "removeFromReturn": return true;
 
-                case "metafieldDefinitionCreate": return true;
+            case "returnApproveRequest": return true;
 
-                case "metafieldDefinitionDelete": return true;
+            case "returnCancel": return true;
 
-                case "metafieldDefinitionPin": return true;
+            case "returnClose": return true;
 
-                case "metafieldDefinitionUnpin": return true;
+            case "returnCreate": return true;
 
-                case "metafieldDefinitionUpdate": return true;
+            case "returnDeclineRequest": return true;
 
-                case "metafieldsDelete": return true;
+            case "returnProcess": return true;
 
-                case "metafieldsSet": return true;
+            case "returnReopen": return true;
 
-                case "metaobjectBulkDelete": return true;
+            case "returnRequest": return true;
 
-                case "metaobjectCreate": return true;
+            case "reverseDeliveryCreateWithShipping": return true;
 
-                case "metaobjectDefinitionCreate": return true;
+            case "reverseDeliveryShippingUpdate": return true;
 
-                case "metaobjectDefinitionDelete": return true;
+            case "reverseFulfillmentOrderDispose": return true;
 
-                case "metaobjectDefinitionUpdate": return true;
+            case "savedSearchCreate": return true;
 
-                case "metaobjectDelete": return true;
+            case "savedSearchDelete": return true;
 
-                case "metaobjectUpdate": return true;
+            case "savedSearchUpdate": return true;
 
-                case "metaobjectUpsert": return true;
+            case "scriptTagCreate": return true;
 
-                case "mobilePlatformApplicationCreate": return true;
+            case "scriptTagDelete": return true;
 
-                case "mobilePlatformApplicationDelete": return true;
+            case "scriptTagUpdate": return true;
 
-                case "mobilePlatformApplicationUpdate": return true;
+            case "segmentCreate": return true;
 
-                case "orderCancel": return true;
+            case "segmentDelete": return true;
 
-                case "orderCapture": return true;
+            case "segmentUpdate": return true;
 
-                case "orderClose": return true;
+            case "sellingPlanGroupAddProductVariants": return true;
 
-                case "orderCreate": return true;
+            case "sellingPlanGroupAddProducts": return true;
 
-                case "orderCreateMandatePayment": return true;
+            case "sellingPlanGroupCreate": return true;
 
-                case "orderDelete": return true;
+            case "sellingPlanGroupDelete": return true;
 
-                case "orderEditAddCustomItem": return true;
+            case "sellingPlanGroupRemoveProductVariants": return true;
 
-                case "orderEditAddLineItemDiscount": return true;
+            case "sellingPlanGroupRemoveProducts": return true;
 
-                case "orderEditAddShippingLine": return true;
+            case "sellingPlanGroupUpdate": return true;
 
-                case "orderEditAddVariant": return true;
+            case "serverPixelCreate": return true;
 
-                case "orderEditBegin": return true;
+            case "serverPixelDelete": return true;
 
-                case "orderEditCommit": return true;
+            case "shippingPackageDelete": return true;
 
-                case "orderEditRemoveDiscount": return true;
+            case "shippingPackageMakeDefault": return true;
 
-                case "orderEditRemoveShippingLine": return true;
+            case "shippingPackageUpdate": return true;
 
-                case "orderEditSetQuantity": return true;
+            case "shopLocaleDisable": return true;
 
-                case "orderEditUpdateDiscount": return true;
+            case "shopLocaleEnable": return true;
 
-                case "orderEditUpdateShippingLine": return true;
+            case "shopLocaleUpdate": return true;
 
-                case "orderInvoiceSend": return true;
+            case "shopPolicyUpdate": return true;
 
-                case "orderMarkAsPaid": return true;
+            case "shopResourceFeedbackCreate": return true;
 
-                case "orderOpen": return true;
+            case "shopifyPaymentsPayoutAlternateCurrencyCreate": return true;
 
-                case "orderRiskAssessmentCreate": return true;
+            case "stagedUploadsCreate": return true;
 
-                case "orderUpdate": return true;
+            case "standardMetafieldDefinitionEnable": return true;
 
-                case "pageCreate": return true;
+            case "standardMetaobjectDefinitionEnable": return true;
 
-                case "pageDelete": return true;
+            case "storeCreditAccountCredit": return true;
 
-                case "pageUpdate": return true;
+            case "storeCreditAccountDebit": return true;
 
-                case "paymentCustomizationActivation": return true;
+            case "storefrontAccessTokenCreate": return true;
 
-                case "paymentCustomizationCreate": return true;
+            case "storefrontAccessTokenDelete": return true;
 
-                case "paymentCustomizationDelete": return true;
+            case "subscriptionBillingAttemptCreate": return true;
 
-                case "paymentCustomizationUpdate": return true;
+            case "subscriptionBillingCycleBulkCharge": return true;
 
-                case "paymentReminderSend": return true;
+            case "subscriptionBillingCycleBulkSearch": return true;
 
-                case "paymentTermsCreate": return true;
+            case "subscriptionBillingCycleCharge": return true;
 
-                case "paymentTermsDelete": return true;
+            case "subscriptionBillingCycleContractDraftCommit": return true;
 
-                case "paymentTermsUpdate": return true;
+            case "subscriptionBillingCycleContractDraftConcatenate": return true;
 
-                case "priceListCreate": return true;
+            case "subscriptionBillingCycleContractEdit": return true;
 
-                case "priceListDelete": return true;
+            case "subscriptionBillingCycleEditDelete": return true;
 
-                case "priceListFixedPricesAdd": return true;
+            case "subscriptionBillingCycleEditsDelete": return true;
 
-                case "priceListFixedPricesByProductUpdate": return true;
+            case "subscriptionBillingCycleScheduleEdit": return true;
 
-                case "priceListFixedPricesDelete": return true;
+            case "subscriptionBillingCycleSkip": return true;
 
-                case "priceListFixedPricesUpdate": return true;
+            case "subscriptionBillingCycleUnskip": return true;
 
-                case "priceListUpdate": return true;
+            case "subscriptionContractActivate": return true;
 
-                case "productBundleCreate": return true;
+            case "subscriptionContractAtomicCreate": return true;
 
-                case "productBundleUpdate": return true;
+            case "subscriptionContractCancel": return true;
 
-                case "productCreate": return true;
+            case "subscriptionContractCreate": return true;
 
-                case "productDelete": return true;
+            case "subscriptionContractExpire": return true;
 
-                case "productDuplicate": return true;
+            case "subscriptionContractFail": return true;
 
-                case "productFeedCreate": return true;
+            case "subscriptionContractPause": return true;
 
-                case "productFeedDelete": return true;
+            case "subscriptionContractProductChange": return true;
 
-                case "productFullSync": return true;
+            case "subscriptionContractSetNextBillingDate": return true;
 
-                case "productJoinSellingPlanGroups": return true;
+            case "subscriptionContractUpdate": return true;
 
-                case "productLeaveSellingPlanGroups": return true;
+            case "subscriptionDraftCommit": return true;
 
-                case "productOptionUpdate": return true;
+            case "subscriptionDraftDiscountAdd": return true;
 
-                case "productOptionsCreate": return true;
+            case "subscriptionDraftDiscountCodeApply": return true;
 
-                case "productOptionsDelete": return true;
+            case "subscriptionDraftDiscountRemove": return true;
 
-                case "productOptionsReorder": return true;
+            case "subscriptionDraftDiscountUpdate": return true;
 
-                case "productReorderMedia": return true;
+            case "subscriptionDraftFreeShippingDiscountAdd": return true;
 
-                case "productSet": return true;
+            case "subscriptionDraftFreeShippingDiscountUpdate": return true;
 
-                case "productUpdate": return true;
+            case "subscriptionDraftLineAdd": return true;
 
-                case "productVariantAppendMedia": return true;
+            case "subscriptionDraftLineRemove": return true;
 
-                case "productVariantDetachMedia": return true;
+            case "subscriptionDraftLineUpdate": return true;
 
-                case "productVariantJoinSellingPlanGroups": return true;
+            case "subscriptionDraftUpdate": return true;
 
-                case "productVariantLeaveSellingPlanGroups": return true;
+            case "tagsAdd": return true;
 
-                case "productVariantRelationshipBulkUpdate": return true;
+            case "tagsRemove": return true;
 
-                case "productVariantsBulkCreate": return true;
+            case "taxAppConfigure": return true;
 
-                case "productVariantsBulkDelete": return true;
+            case "themeCreate": return true;
 
-                case "productVariantsBulkReorder": return true;
+            case "themeDelete": return true;
 
-                case "productVariantsBulkUpdate": return true;
+            case "themeFilesCopy": return true;
 
-                case "pubSubServerPixelUpdate": return true;
+            case "themeFilesDelete": return true;
 
-                case "pubSubWebhookSubscriptionCreate": return true;
+            case "themeFilesUpsert": return true;
 
-                case "pubSubWebhookSubscriptionUpdate": return true;
+            case "themePublish": return true;
 
-                case "publicationCreate": return true;
+            case "themeUpdate": return true;
 
-                case "publicationDelete": return true;
+            case "transactionVoid": return true;
 
-                case "publicationUpdate": return true;
+            case "translationsRegister": return true;
 
-                case "publishablePublish": return true;
+            case "translationsRemove": return true;
 
-                case "publishablePublishToCurrentChannel": return true;
+            case "urlRedirectBulkDeleteAll": return true;
 
-                case "publishableUnpublish": return true;
+            case "urlRedirectBulkDeleteByIds": return true;
 
-                case "publishableUnpublishToCurrentChannel": return true;
+            case "urlRedirectBulkDeleteBySavedSearch": return true;
 
-                case "quantityPricingByVariantUpdate": return true;
+            case "urlRedirectBulkDeleteBySearch": return true;
 
-                case "quantityRulesAdd": return true;
+            case "urlRedirectCreate": return true;
 
-                case "quantityRulesDelete": return true;
+            case "urlRedirectDelete": return true;
 
-                case "refundCreate": return true;
+            case "urlRedirectImportCreate": return true;
 
-                case "returnApproveRequest": return true;
+            case "urlRedirectImportSubmit": return true;
 
-                case "returnCancel": return true;
+            case "urlRedirectUpdate": return true;
 
-                case "returnClose": return true;
+            case "validationCreate": return true;
 
-                case "returnCreate": return true;
+            case "validationDelete": return true;
 
-                case "returnDeclineRequest": return true;
+            case "validationUpdate": return true;
 
-                case "returnLineItemRemoveFromReturn": return true;
+            case "webPixelCreate": return true;
 
-                case "returnRefund": return true;
+            case "webPixelDelete": return true;
 
-                case "returnReopen": return true;
+            case "webPixelUpdate": return true;
 
-                case "returnRequest": return true;
+            case "webPresenceCreate": return true;
 
-                case "reverseDeliveryCreateWithShipping": return true;
+            case "webPresenceDelete": return true;
 
-                case "reverseDeliveryShippingUpdate": return true;
+            case "webPresenceUpdate": return true;
 
-                case "reverseFulfillmentOrderDispose": return true;
+            case "webhookSubscriptionCreate": return true;
 
-                case "savedSearchCreate": return true;
+            case "webhookSubscriptionDelete": return true;
 
-                case "savedSearchDelete": return true;
+            case "webhookSubscriptionUpdate": return true;
 
-                case "savedSearchUpdate": return true;
-
-                case "scriptTagCreate": return true;
-
-                case "scriptTagDelete": return true;
-
-                case "scriptTagUpdate": return true;
-
-                case "segmentCreate": return true;
-
-                case "segmentDelete": return true;
-
-                case "segmentUpdate": return true;
-
-                case "sellingPlanGroupAddProductVariants": return true;
-
-                case "sellingPlanGroupAddProducts": return true;
-
-                case "sellingPlanGroupCreate": return true;
-
-                case "sellingPlanGroupDelete": return true;
-
-                case "sellingPlanGroupRemoveProductVariants": return true;
-
-                case "sellingPlanGroupRemoveProducts": return true;
-
-                case "sellingPlanGroupUpdate": return true;
-
-                case "serverPixelCreate": return true;
-
-                case "serverPixelDelete": return true;
-
-                case "shippingPackageDelete": return true;
-
-                case "shippingPackageMakeDefault": return true;
-
-                case "shippingPackageUpdate": return true;
-
-                case "shopLocaleDisable": return true;
-
-                case "shopLocaleEnable": return true;
-
-                case "shopLocaleUpdate": return true;
-
-                case "shopPolicyUpdate": return true;
-
-                case "shopResourceFeedbackCreate": return true;
-
-                case "shopifyPaymentsPayoutAlternateCurrencyCreate": return true;
-
-                case "stagedUploadsCreate": return true;
-
-                case "standardMetafieldDefinitionEnable": return true;
-
-                case "standardMetaobjectDefinitionEnable": return true;
-
-                case "storeCreditAccountCredit": return true;
-
-                case "storeCreditAccountDebit": return true;
-
-                case "storefrontAccessTokenCreate": return true;
-
-                case "storefrontAccessTokenDelete": return true;
-
-                case "subscriptionBillingAttemptCreate": return true;
-
-                case "subscriptionBillingCycleBulkCharge": return true;
-
-                case "subscriptionBillingCycleBulkSearch": return true;
-
-                case "subscriptionBillingCycleCharge": return true;
-
-                case "subscriptionBillingCycleContractDraftCommit": return true;
-
-                case "subscriptionBillingCycleContractDraftConcatenate": return true;
-
-                case "subscriptionBillingCycleContractEdit": return true;
-
-                case "subscriptionBillingCycleEditDelete": return true;
-
-                case "subscriptionBillingCycleEditsDelete": return true;
-
-                case "subscriptionBillingCycleScheduleEdit": return true;
-
-                case "subscriptionBillingCycleSkip": return true;
-
-                case "subscriptionBillingCycleUnskip": return true;
-
-                case "subscriptionContractActivate": return true;
-
-                case "subscriptionContractAtomicCreate": return true;
-
-                case "subscriptionContractCancel": return true;
-
-                case "subscriptionContractCreate": return true;
-
-                case "subscriptionContractExpire": return true;
-
-                case "subscriptionContractFail": return true;
-
-                case "subscriptionContractPause": return true;
-
-                case "subscriptionContractProductChange": return true;
-
-                case "subscriptionContractSetNextBillingDate": return true;
-
-                case "subscriptionContractUpdate": return true;
-
-                case "subscriptionDraftCommit": return true;
-
-                case "subscriptionDraftDiscountAdd": return true;
-
-                case "subscriptionDraftDiscountCodeApply": return true;
-
-                case "subscriptionDraftDiscountRemove": return true;
-
-                case "subscriptionDraftDiscountUpdate": return true;
-
-                case "subscriptionDraftFreeShippingDiscountAdd": return true;
-
-                case "subscriptionDraftFreeShippingDiscountUpdate": return true;
-
-                case "subscriptionDraftLineAdd": return true;
-
-                case "subscriptionDraftLineRemove": return true;
-
-                case "subscriptionDraftLineUpdate": return true;
-
-                case "subscriptionDraftUpdate": return true;
-
-                case "tagsAdd": return true;
-
-                case "tagsRemove": return true;
-
-                case "taxAppConfigure": return true;
-
-                case "themeCreate": return true;
-
-                case "themeDelete": return true;
-
-                case "themeFilesCopy": return true;
-
-                case "themeFilesDelete": return true;
-
-                case "themeFilesUpsert": return true;
-
-                case "themePublish": return true;
-
-                case "themeUpdate": return true;
-
-                case "transactionVoid": return true;
-
-                case "translationsRegister": return true;
-
-                case "translationsRemove": return true;
-
-                case "urlRedirectBulkDeleteAll": return true;
-
-                case "urlRedirectBulkDeleteByIds": return true;
-
-                case "urlRedirectBulkDeleteBySavedSearch": return true;
-
-                case "urlRedirectBulkDeleteBySearch": return true;
-
-                case "urlRedirectCreate": return true;
-
-                case "urlRedirectDelete": return true;
-
-                case "urlRedirectImportCreate": return true;
-
-                case "urlRedirectImportSubmit": return true;
-
-                case "urlRedirectUpdate": return true;
-
-                case "validationCreate": return true;
-
-                case "validationDelete": return true;
-
-                case "validationUpdate": return true;
-
-                case "webPixelCreate": return true;
-
-                case "webPixelDelete": return true;
-
-                case "webPixelUpdate": return true;
-
-                case "webhookSubscriptionCreate": return true;
-
-                case "webhookSubscriptionDelete": return true;
-
-                case "webhookSubscriptionUpdate": return true;
-
-                default: return false;
-            }
+            default: return false;
         }
     }
+}
 

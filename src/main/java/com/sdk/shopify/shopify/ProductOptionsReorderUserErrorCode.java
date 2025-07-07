@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `ProductOptionsReorderUserError`.
 */
@@ -68,6 +70,11 @@ public enum ProductOptionsReorderUserErrorCode {
     */
     PRODUCT_DOES_NOT_EXIST,
 
+    /**
+    * Product is suspended.
+    */
+    PRODUCT_SUSPENDED,
+
     UNKNOWN_VALUE;
 
     public static ProductOptionsReorderUserErrorCode fromGraphQl(String value) {
@@ -124,6 +131,10 @@ public enum ProductOptionsReorderUserErrorCode {
                 return PRODUCT_DOES_NOT_EXIST;
             }
 
+            case "PRODUCT_SUSPENDED": {
+                return PRODUCT_SUSPENDED;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -177,6 +188,10 @@ public enum ProductOptionsReorderUserErrorCode {
 
             case PRODUCT_DOES_NOT_EXIST: {
                 return "PRODUCT_DOES_NOT_EXIST";
+            }
+
+            case PRODUCT_SUSPENDED: {
+                return "PRODUCT_SUSPENDED";
             }
 
             default: {

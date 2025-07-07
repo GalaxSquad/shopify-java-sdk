@@ -346,6 +346,19 @@ public class MutationQuery extends Query<MutationQuery> {
         return this;
     }
 
+    /**
+    * Uninstalls an app.
+    */
+    public MutationQuery appUninstall(AppUninstallPayloadQueryDefinition queryDef) {
+        startField("appUninstall");
+
+        _queryBuilder.append('{');
+        queryDef.define(new AppUninstallPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     public class AppUsageRecordCreateArguments extends Arguments {
         AppUsageRecordCreateArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, false);
@@ -525,6 +538,52 @@ public class MutationQuery extends Query<MutationQuery> {
         return this;
     }
 
+    public class BackupRegionUpdateArguments extends Arguments {
+        BackupRegionUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * Optional input representing the region to be updated. If not provided, the existing regions remain
+        * unchanged.
+        */
+        public BackupRegionUpdateArguments region(BackupRegionUpdateInput value) {
+            if (value != null) {
+                startArgument("region");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface BackupRegionUpdateArgumentsDefinition {
+        void define(BackupRegionUpdateArguments args);
+    }
+
+    /**
+    * Update the backup region that is used when we have no better signal of what region a buyer is in.
+    */
+    public MutationQuery backupRegionUpdate(BackupRegionUpdatePayloadQueryDefinition queryDef) {
+        return backupRegionUpdate(args -> {}, queryDef);
+    }
+
+    /**
+    * Update the backup region that is used when we have no better signal of what region a buyer is in.
+    */
+    public MutationQuery backupRegionUpdate(BackupRegionUpdateArgumentsDefinition argsDef, BackupRegionUpdatePayloadQueryDefinition queryDef) {
+        startField("backupRegionUpdate");
+
+        BackupRegionUpdateArguments args = new BackupRegionUpdateArguments(_queryBuilder);
+        argsDef.define(args);
+        BackupRegionUpdateArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new BackupRegionUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     /**
     * Creates a blog.
     */
@@ -627,8 +686,8 @@ public class MutationQuery extends Query<MutationQuery> {
     * To learn how to bulk import large volumes of data asynchronously, refer to the
     * [bulk import data guide](https://shopify.dev/api/usage/bulk-operations/imports).
     */
-    public MutationQuery bulkOperationRunMutation(String mutation, String stagedUploadPath, BulkOperationRunMutationPayloadQueryDefinition queryDef) {
-        return bulkOperationRunMutation(mutation, stagedUploadPath, args -> {}, queryDef);
+    public MutationQuery bulkOperationRunMutation(String mutation, String stagedUploadPath, boolean groupObjects, BulkOperationRunMutationPayloadQueryDefinition queryDef) {
+        return bulkOperationRunMutation(mutation, stagedUploadPath, groupObjects, args -> {}, queryDef);
     }
 
     /**
@@ -636,7 +695,7 @@ public class MutationQuery extends Query<MutationQuery> {
     * To learn how to bulk import large volumes of data asynchronously, refer to the
     * [bulk import data guide](https://shopify.dev/api/usage/bulk-operations/imports).
     */
-    public MutationQuery bulkOperationRunMutation(String mutation, String stagedUploadPath, BulkOperationRunMutationArgumentsDefinition argsDef, BulkOperationRunMutationPayloadQueryDefinition queryDef) {
+    public MutationQuery bulkOperationRunMutation(String mutation, String stagedUploadPath, boolean groupObjects, BulkOperationRunMutationArgumentsDefinition argsDef, BulkOperationRunMutationPayloadQueryDefinition queryDef) {
         startField("bulkOperationRunMutation");
 
         _queryBuilder.append("(mutation:");
@@ -644,6 +703,9 @@ public class MutationQuery extends Query<MutationQuery> {
 
         _queryBuilder.append(",stagedUploadPath:");
         Query.appendQuotedString(_queryBuilder, stagedUploadPath.toString());
+
+        _queryBuilder.append(",groupObjects:");
+        _queryBuilder.append(groupObjects);
 
         argsDef.define(new BulkOperationRunMutationArguments(_queryBuilder));
 
@@ -661,11 +723,14 @@ public class MutationQuery extends Query<MutationQuery> {
     * See the [bulk operations guide](https://shopify.dev/api/usage/bulk-operations/queries) for more
     * details.
     */
-    public MutationQuery bulkOperationRunQuery(String query, BulkOperationRunQueryPayloadQueryDefinition queryDef) {
+    public MutationQuery bulkOperationRunQuery(String query, boolean groupObjects, BulkOperationRunQueryPayloadQueryDefinition queryDef) {
         startField("bulkOperationRunQuery");
 
         _queryBuilder.append("(query:");
         Query.appendQuotedString(_queryBuilder, query.toString());
+
+        _queryBuilder.append(",groupObjects:");
+        _queryBuilder.append(groupObjects);
 
         _queryBuilder.append(')');
 
@@ -1116,7 +1181,32 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Creates a collection.
+    * Creates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+    * to group [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+    * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * For example, an athletics store might create different collections for running attire, shoes, and
+    * accessories.
+    * There are two types of collections:
+    * - **[Custom (manual)
+    * collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You
+    * specify the products to include in a collection.
+    * - **[Smart (automated)
+    * collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You
+    * define rules, and products matching those rules are automatically
+    * included in the collection.
+    * Use the `collectionCreate` mutation when you need to:
+    * - Create a new collection for a product launch or campaign
+    * - Organize products by category, season, or promotion
+    * - Automate product grouping using rules (for example, by tag, type, or price)
+    * > Note:
+    * > The created collection is unpublished by default. To make it available to customers,
+    * use the
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h)
+    * mutation after creation.
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
     public MutationQuery collectionCreate(CollectionInput input, CollectionCreatePayloadQueryDefinition queryDef) {
         startField("collectionCreate");
@@ -1220,7 +1310,39 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Updates a collection.
+    * Updates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection),
+    * modifying its properties, products, or publication settings. Collections help organize
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+    * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * Use the `collectionUpdate` mutation to programmatically modify collections in scenarios such as:
+    * - Updating collection details, like title, description, or image
+    * - Modifying SEO metadata for better search visibility
+    * - Changing which products are included (using rule updates for smart collections)
+    * - Publishing or unpublishing collections across different sales channels
+    * - Updating custom data using
+    * [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields)
+    * There are two types of collections with different update capabilities:
+    * - **[Custom (manual)
+    * collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You
+    * can update collection properties, but rule sets can't be modified since products are manually
+    * selected.
+    * - **[Smart (automated)
+    * collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You can
+    * update both collection properties and the rules that automatically determine which products are
+    * included.
+    * When updating [rule
+    * sets](https://shopify.dev/docs/api/admin-graphql/latest/objects/CollectionRuleConditions) for smart
+    * collections, the operation might be processed asynchronously. In these cases, the mutation returns a
+    * [`job`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Job) object that you can use to
+    * track the progress of the update.
+    * To publish or unpublish collections to specific sales channels, use the dedicated
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h) and
+    * [`publishableUnpublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishableUnpu
+    * blish) mutations.
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
     public MutationQuery collectionUpdate(CollectionInput input, CollectionUpdatePayloadQueryDefinition queryDef) {
         startField("collectionUpdate");
@@ -2259,6 +2381,33 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
+    * Update or create consent policies in bulk.
+    */
+    public MutationQuery consentPolicyUpdate(List<ConsentPolicyInput> consentPolicies, ConsentPolicyUpdatePayloadQueryDefinition queryDef) {
+        startField("consentPolicyUpdate");
+
+        _queryBuilder.append("(consentPolicies:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ConsentPolicyInput item1 : consentPolicies) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ConsentPolicyUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Add tax exemptions for the customer.
     */
     public MutationQuery customerAddTaxExemptions(ID customerId, List<TaxExemption> taxExemptions, CustomerAddTaxExemptionsPayloadQueryDefinition queryDef) {
@@ -2288,8 +2437,136 @@ public class MutationQuery extends Query<MutationQuery> {
         return this;
     }
 
+    public class CustomerAddressCreateArguments extends Arguments {
+        CustomerAddressCreateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * Whether to set the address as the customer's default address.
+        */
+        public CustomerAddressCreateArguments setAsDefault(Boolean value) {
+            if (value != null) {
+                startArgument("setAsDefault");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface CustomerAddressCreateArgumentsDefinition {
+        void define(CustomerAddressCreateArguments args);
+    }
+
     /**
-    * Cancels a pending erasure of a customer's data.
+    * Create a new customer address.
+    */
+    public MutationQuery customerAddressCreate(ID customerId, MailingAddressInput address, CustomerAddressCreatePayloadQueryDefinition queryDef) {
+        return customerAddressCreate(customerId, address, args -> {}, queryDef);
+    }
+
+    /**
+    * Create a new customer address.
+    */
+    public MutationQuery customerAddressCreate(ID customerId, MailingAddressInput address, CustomerAddressCreateArgumentsDefinition argsDef, CustomerAddressCreatePayloadQueryDefinition queryDef) {
+        startField("customerAddressCreate");
+
+        _queryBuilder.append("(customerId:");
+        Query.appendQuotedString(_queryBuilder, customerId.toString());
+
+        _queryBuilder.append(",address:");
+        address.appendTo(_queryBuilder);
+
+        argsDef.define(new CustomerAddressCreateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new CustomerAddressCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a customer's address.
+    */
+    public MutationQuery customerAddressDelete(ID customerId, ID addressId, CustomerAddressDeletePayloadQueryDefinition queryDef) {
+        startField("customerAddressDelete");
+
+        _queryBuilder.append("(customerId:");
+        Query.appendQuotedString(_queryBuilder, customerId.toString());
+
+        _queryBuilder.append(",addressId:");
+        Query.appendQuotedString(_queryBuilder, addressId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new CustomerAddressDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class CustomerAddressUpdateArguments extends Arguments {
+        CustomerAddressUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * Whether to set the address as the customer's default address.
+        */
+        public CustomerAddressUpdateArguments setAsDefault(Boolean value) {
+            if (value != null) {
+                startArgument("setAsDefault");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface CustomerAddressUpdateArgumentsDefinition {
+        void define(CustomerAddressUpdateArguments args);
+    }
+
+    /**
+    * Update a customer's address information.
+    */
+    public MutationQuery customerAddressUpdate(ID customerId, ID addressId, MailingAddressInput address, CustomerAddressUpdatePayloadQueryDefinition queryDef) {
+        return customerAddressUpdate(customerId, addressId, address, args -> {}, queryDef);
+    }
+
+    /**
+    * Update a customer's address information.
+    */
+    public MutationQuery customerAddressUpdate(ID customerId, ID addressId, MailingAddressInput address, CustomerAddressUpdateArgumentsDefinition argsDef, CustomerAddressUpdatePayloadQueryDefinition queryDef) {
+        startField("customerAddressUpdate");
+
+        _queryBuilder.append("(customerId:");
+        Query.appendQuotedString(_queryBuilder, customerId.toString());
+
+        _queryBuilder.append(",addressId:");
+        Query.appendQuotedString(_queryBuilder, addressId.toString());
+
+        _queryBuilder.append(",address:");
+        address.appendTo(_queryBuilder);
+
+        argsDef.define(new CustomerAddressUpdateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new CustomerAddressUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Cancels a pending erasure of a customer's data. Read more
+    * [here](https://help.shopify.com/manual/privacy-and-security/privacy/processing-customer-data-request
+    * s#cancel-customer-data-erasure).
     * To request an erasure of a customer's data use the [customerRequestDataErasure
     * mutation](https://shopify.dev/api/admin-graphql/unstable/mutations/customerRequestDataErasure).
     */
@@ -2642,7 +2919,10 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Create a payment method from remote gateway identifiers.
+    * Create a payment method from remote gateway identifiers. NOTE: This operation processes payment
+    * methods asynchronously. The returned payment method will initially have incomplete details.
+    * Developers must poll this payment method using customerPaymentMethod query until all payment method
+    * details are available, or the payment method is revoked (usually within seconds).
     */
     public MutationQuery customerPaymentMethodRemoteCreate(ID customerId, CustomerPaymentMethodRemoteInput remoteReference, CustomerPaymentMethodRemoteCreatePayloadQueryDefinition queryDef) {
         startField("customerPaymentMethodRemoteCreate");
@@ -2872,6 +3152,92 @@ public class MutationQuery extends Query<MutationQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new CustomerSendAccountInviteEmailPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class CustomerSetArguments extends Arguments {
+        CustomerSetArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * Specifies the identifier that will be used to lookup the resource.
+        */
+        public CustomerSetArguments identifier(CustomerSetIdentifiers value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface CustomerSetArgumentsDefinition {
+        void define(CustomerSetArguments args);
+    }
+
+    /**
+    * Creates or updates a customer in a single mutation.
+    * Use this mutation when syncing information from an external data source into Shopify.
+    * This mutation can be used to create a new customer, update an existing customer by id, or
+    * upsert a customer by a unique key (email or phone).
+    * To create a new customer omit the `identifier` argument.
+    * To update an existing customer, include the `identifier` with the id of the customer to update.
+    * To perform an 'upsert' by unique key (email or phone)
+    * use the `identifier` argument to upsert a customer by a unique key (email or phone). If a customer
+    * with the specified unique key exists, it will be updated. If not, a new customer will be created
+    * with
+    * that unique key.
+    * As of API version 2022-10, apps using protected customer data must meet the
+    * protected customer data
+    * [requirements](https://shopify.dev/apps/store/data-protection/protected-customer-data)
+    * Any list field (e.g.
+    * [addresses](https://shopify.dev/api/admin-graphql/unstable/input-objects/MailingAddressInput),
+    * will be updated so that all included entries are either created or updated, and all existing entries
+    * not
+    * included will be deleted.
+    * All other fields will be updated to the value passed. Omitted fields will not be updated.
+    */
+    public MutationQuery customerSet(CustomerSetInput input, CustomerSetPayloadQueryDefinition queryDef) {
+        return customerSet(input, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates or updates a customer in a single mutation.
+    * Use this mutation when syncing information from an external data source into Shopify.
+    * This mutation can be used to create a new customer, update an existing customer by id, or
+    * upsert a customer by a unique key (email or phone).
+    * To create a new customer omit the `identifier` argument.
+    * To update an existing customer, include the `identifier` with the id of the customer to update.
+    * To perform an 'upsert' by unique key (email or phone)
+    * use the `identifier` argument to upsert a customer by a unique key (email or phone). If a customer
+    * with the specified unique key exists, it will be updated. If not, a new customer will be created
+    * with
+    * that unique key.
+    * As of API version 2022-10, apps using protected customer data must meet the
+    * protected customer data
+    * [requirements](https://shopify.dev/apps/store/data-protection/protected-customer-data)
+    * Any list field (e.g.
+    * [addresses](https://shopify.dev/api/admin-graphql/unstable/input-objects/MailingAddressInput),
+    * will be updated so that all included entries are either created or updated, and all existing entries
+    * not
+    * included will be deleted.
+    * All other fields will be updated to the value passed. Omitted fields will not be updated.
+    */
+    public MutationQuery customerSet(CustomerSetInput input, CustomerSetArgumentsDefinition argsDef, CustomerSetPayloadQueryDefinition queryDef) {
+        startField("customerSet");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        argsDef.define(new CustomerSetArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new CustomerSetPayloadQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -4745,14 +5111,64 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Completes a draft order and creates an order.
+    * Completes a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) and
+    * converts it into a [regular order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+    * The order appears in the merchant's orders list, and the customer can be notified about their order.
+    * Use the `draftOrderComplete` mutation when a merchant is ready to finalize a draft order and create
+    * a real
+    * order in their store. The `draftOrderComplete` mutation also supports sales channel attribution for
+    * tracking
+    * order sources using the
+    * [`sourceName`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete#argume
+    * nts-sourceName)
+    * argument, [cart validation](https://shopify.dev/docs/apps/build/checkout/cart-checkout-validation)
+    * controls for app integrations, and detailed error reporting for failed completions.
+    * You can complete a draft order with different [payment
+    * scenarios](https://help.shopify.com/manual/fulfillment/managing-orders/payments):
+    * - Mark the order as paid immediately.
+    * - Set the order as payment pending using [payment
+    * terms](https://shopify.dev/docs/api/admin-graphql/latest/objects/PaymentTerms).
+    * - Specify a custom payment amount.
+    * - Select a specific payment gateway.
+    * > Note:
+    * > When completing a draft order, inventory is
+    * [reserved](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventor
+    * y-states)
+    * for the items in the order. This means the items will no longer be available for other customers to
+    * purchase.
+    * Make sure to verify inventory availability before completing the draft order.
     */
     public MutationQuery draftOrderComplete(ID id, DraftOrderCompletePayloadQueryDefinition queryDef) {
         return draftOrderComplete(id, args -> {}, queryDef);
     }
 
     /**
-    * Completes a draft order and creates an order.
+    * Completes a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) and
+    * converts it into a [regular order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+    * The order appears in the merchant's orders list, and the customer can be notified about their order.
+    * Use the `draftOrderComplete` mutation when a merchant is ready to finalize a draft order and create
+    * a real
+    * order in their store. The `draftOrderComplete` mutation also supports sales channel attribution for
+    * tracking
+    * order sources using the
+    * [`sourceName`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete#argume
+    * nts-sourceName)
+    * argument, [cart validation](https://shopify.dev/docs/apps/build/checkout/cart-checkout-validation)
+    * controls for app integrations, and detailed error reporting for failed completions.
+    * You can complete a draft order with different [payment
+    * scenarios](https://help.shopify.com/manual/fulfillment/managing-orders/payments):
+    * - Mark the order as paid immediately.
+    * - Set the order as payment pending using [payment
+    * terms](https://shopify.dev/docs/api/admin-graphql/latest/objects/PaymentTerms).
+    * - Specify a custom payment amount.
+    * - Select a specific payment gateway.
+    * > Note:
+    * > When completing a draft order, inventory is
+    * [reserved](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventor
+    * y-states)
+    * for the items in the order. This means the items will no longer be available for other customers to
+    * purchase.
+    * Make sure to verify inventory availability before completing the draft order.
     */
     public MutationQuery draftOrderComplete(ID id, DraftOrderCompleteArgumentsDefinition argsDef, DraftOrderCompletePayloadQueryDefinition queryDef) {
         startField("draftOrderComplete");
@@ -4772,7 +5188,40 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Creates a draft order.
+    * Creates a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder)
+    * with attributes such as customer information, line items, shipping and billing addresses, and
+    * payment terms.
+    * Draft orders are useful for merchants that need to:
+    * - Create new orders for sales made by phone, in person, by chat, or elsewhere. When a merchant
+    * accepts payment for a draft order, an order is created.
+    * - Send invoices to customers with a secure checkout link.
+    * - Use custom items to represent additional costs or products not in inventory.
+    * - Re-create orders manually from active sales channels.
+    * - Sell products at discount or wholesale rates.
+    * - Take pre-orders.
+    * After creating a draft order, you can:
+    * - Send an invoice to the customer using the
+    * [`draftOrderInvoiceSend`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderInvo
+    * iceSend) mutation.
+    * - Complete the draft order using the
+    * [`draftOrderComplete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplet
+    * e) mutation.
+    * - Update the draft order using the
+    * [`draftOrderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderUpdate)
+    * mutation.
+    * - Duplicate a draft order using the
+    * [`draftOrderDuplicate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDuplic
+    * ate) mutation.
+    * - Delete the draft order using the
+    * [`draftOrderDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDelete)
+    * mutation.
+    * > Note:
+    * > When you create a draft order, you can't [reserve or hold
+    * inventory](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventor
+    * y-states) for the items in the order by default.
+    * > However, you can reserve inventory using the
+    * [`reserveInventoryUntil`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderCrea
+    * te#arguments-input.fields.reserveInventoryUntil) input.
     */
     public MutationQuery draftOrderCreate(DraftOrderInput input, DraftOrderCreatePayloadQueryDefinition queryDef) {
         startField("draftOrderCreate");
@@ -4802,24 +5251,6 @@ public class MutationQuery extends Query<MutationQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new DraftOrderCreateFromOrderPayloadQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
-    }
-
-    /**
-    * Creates a merchant checkout for the given draft order.
-    */
-    public MutationQuery draftOrderCreateMerchantCheckout(ID id, DraftOrderCreateMerchantCheckoutPayloadQueryDefinition queryDef) {
-        startField("draftOrderCreateMerchantCheckout");
-
-        _queryBuilder.append("(id:");
-        Query.appendQuotedString(_queryBuilder, id.toString());
-
-        _queryBuilder.append(')');
-
-        _queryBuilder.append('{');
-        queryDef.define(new DraftOrderCreateMerchantCheckoutPayloadQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -5113,19 +5544,40 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Creates file assets using an external URL or for files that were previously uploaded using the
-    * [stagedUploadsCreate
-    * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-    * These files are added to the [Files page](https://shopify.com/admin/settings/files) in Shopify
-    * admin.
-    * Files are processed asynchronously. Some data is not available until processing is completed.
-    * Check
-    * [fileStatus](https://shopify.dev/api/admin-graphql/latest/interfaces/File#field-file-filestatus)
-    * to know when the files are READY or FAILED. See the
-    * [FileStatus](https://shopify.dev/api/admin-graphql/latest/enums/filestatus)
-    * for the complete set of possible fileStatus values.
-    * To get a list of all files, use the [files
-    * query](https://shopify.dev/api/admin-graphql/latest/queries/files).
+    * Creates file assets for a store from external URLs or files that were previously uploaded using the
+    * [`stagedUploadsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/stageduploadscre
+    * ate)
+    * mutation.
+    * Use the `fileCreate` mutation to add various types of media and documents to your store. These files
+    * are added to the
+    * [**Files** page](https://shopify.com/admin/settings/files) in the Shopify admin and can be
+    * referenced by other
+    * resources in your store.
+    * The `fileCreate` mutation supports multiple file types:
+    * - **Images**: Product photos, variant images, and general store imagery
+    * - **Videos**: Shopify-hosted videos for product demonstrations and marketing
+    * - **External videos**: YouTube and Vimeo videos for enhanced product experiences
+    * - **3D models**: Interactive 3D representations of products
+    * - **Generic files**: PDFs, documents, and other file types for store resources
+    * The mutation handles duplicate filenames using configurable resolution modes that automatically
+    * append UUIDs,
+    * replace existing files, or raise errors when conflicts occur.
+    * > Note:
+    * > Files are processed asynchronously. Check the
+    * >
+    * [`fileStatus`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/File#fields-fileStatus)
+    * > field to monitor processing completion. The maximum number of files that can be created in a
+    * single batch is 250.
+    * After creating files, you can make subsequent updates using the following mutations:
+    * - [`fileUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileUpdate):
+    * Update file properties such as alt text or replace file contents while preserving the same URL.
+    * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+    * Remove files from your store when they are no longer needed.
+    * To list all files in your store, use the
+    * [`files`](https://shopify.dev/docs/api/admin-graphql/latest/queries/files) query.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
     public MutationQuery fileCreate(List<FileCreateInput> files, FileCreatePayloadQueryDefinition queryDef) {
         startField("fileCreate");
@@ -5152,7 +5604,42 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Deletes existing file assets that were uploaded to Shopify.
+    * Deletes file assets that were previously uploaded to your store.
+    * Use the `fileDelete` mutation to permanently remove media and file assets from your store when they
+    * are no longer needed.
+    * This mutation handles the complete removal of files from both your store's file library and any
+    * associated references
+    * to products or other resources.
+    * The `fileDelete` mutation supports removal of multiple file types:
+    * - **Images**: Product photos, variant images, and general store imagery
+    * - **Videos**: Shopify-hosted videos for product demonstrations and marketing content
+    * - **External Videos**: YouTube and Vimeo videos linked to your products
+    * - **3D models**: Interactive 3D representations of products
+    * - **Generic files**: PDFs, documents, and other file types stored in your
+    * [**Files** page](https://shopify.com/admin/settings/files)
+    * When you delete files that are referenced by products, the mutation automatically removes those
+    * references and
+    * reorders any remaining media to maintain proper positioning. Product file references are database
+    * relationships
+    * managed through a media reference system, not just links in product descriptions. The Shopify admin
+    * provides a UI
+    * to manage these relationships, and when files are deleted, the system automatically cleans up all
+    * references.
+    * Files that are currently being processed by other operations are rejected to prevent conflicts.
+    * > Caution:
+    * > File deletion is permanent and can't be undone. When you delete a file that's being used in your
+    * store,
+    * > it will immediately stop appearing wherever it was displayed. For example, if you delete a product
+    * image,
+    * > that product will show a broken image or placeholder on your storefront and in the admin. The same
+    * applies
+    * > to any other files linked from themes, blog posts, or pages. Before deleting files, you can use
+    * the
+    * > [`files` query](https://shopify.dev/api/admin-graphql/latest/queries/files) to list and review
+    * > your store's file assets.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
     public MutationQuery fileDelete(List<ID> fileIds, FileDeletePayloadQueryDefinition queryDef) {
         startField("fileDelete");
@@ -5179,7 +5666,35 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Updates an existing file asset that was uploaded to Shopify.
+    * Updates properties, content, and metadata associated with an existing file asset that has already
+    * been uploaded to Shopify.
+    * Use the `fileUpdate` mutation to modify various aspects of files already stored in your store.
+    * Files can be updated individually or in batches.
+    * The `fileUpdate` mutation supports updating multiple file properties:
+    * - **Alt text**: Update accessibility descriptions for images and other media.
+    * - **File content**: Replace image or generic file content while maintaining the same URL.
+    * - **Filename**: Modify file names (extension must match the original).
+    * - **Product references**: Add or remove associations between files and products. Removing
+    * file-product associations
+    * deletes the file from the product's media gallery and clears the image from any product variants
+    * that were using it.
+    * The mutation handles different file types with specific capabilities:
+    * - **Images**: Update preview images, original source, filename, and alt text.
+    * - **Generic files**: Update original source, filename, and alt text.
+    * - **Videos and 3D models**: Update alt text and product references.
+    * > Note:
+    * > Files must be in `ready` state before they can be updated. The mutation includes file locking to
+    * prevent
+    * > conflicts during updates. You can't simultaneously update both `originalSource` and
+    * `previewImageSource`.
+    * After updating files, you can use related mutations for additional file management:
+    * - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+    * Create new file assets from external URLs or staged uploads.
+    * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+    * Remove files from your store when they are no longer needed.
+    * Learn how to manage
+    * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * in your app.
     */
     public MutationQuery fileUpdate(List<FileUpdateInput> files, FileUpdatePayloadQueryDefinition queryDef) {
         startField("fileUpdate");
@@ -5550,6 +6065,17 @@ public class MutationQuery extends Query<MutationQuery> {
             }
             return this;
         }
+
+        /**
+        * The estimated date and time when the fulfillment order will be shipped.
+        */
+        public FulfillmentOrderAcceptFulfillmentRequestArguments estimatedShippedAt(String value) {
+            if (value != null) {
+                startArgument("estimatedShippedAt");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
     }
 
     public interface FulfillmentOrderAcceptFulfillmentRequestArgumentsDefinition {
@@ -5797,7 +6323,7 @@ public class MutationQuery extends Query<MutationQuery> {
     * items.
     * Moving a fulfillment order will fail in the following circumstances:
     * * The fulfillment order is closed.
-    * * The destination location has never stocked the requested inventory item.
+    * * The destination location doesn't stock the requested inventory item.
     * * The API client doesn't have the correct permissions.
     * Line items which have already been fulfilled can't be re-assigned
     * and will always remain assigned to the original location.
@@ -5835,7 +6361,7 @@ public class MutationQuery extends Query<MutationQuery> {
     * items.
     * Moving a fulfillment order will fail in the following circumstances:
     * * The fulfillment order is closed.
-    * * The destination location has never stocked the requested inventory item.
+    * * The destination location doesn't stock the requested inventory item.
     * * The API client doesn't have the correct permissions.
     * Line items which have already been fulfilled can't be re-assigned
     * and will always remain assigned to the original location.
@@ -6343,6 +6869,17 @@ public class MutationQuery extends Query<MutationQuery> {
             }
             return this;
         }
+
+        /**
+        * Whether the fulfillment service requires products to be physically shipped.
+        */
+        public FulfillmentServiceCreateArguments requiresShippingMethod(Boolean value) {
+            if (value != null) {
+                startArgument("requiresShippingMethod");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface FulfillmentServiceCreateArgumentsDefinition {
@@ -6516,6 +7053,17 @@ public class MutationQuery extends Query<MutationQuery> {
         public FulfillmentServiceUpdateArguments inventoryManagement(Boolean value) {
             if (value != null) {
                 startArgument("inventoryManagement");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * Whether the fulfillment service requires products to be physically shipped.
+        */
+        public FulfillmentServiceUpdateArguments requiresShippingMethod(Boolean value) {
+            if (value != null) {
+                startArgument("requiresShippingMethod");
                 _queryBuilder.append(value);
             }
             return this;
@@ -6993,6 +7541,453 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
+    * Adds items to an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentAddItems(ID id, List<InventoryShipmentLineItemInput> lineItems, InventoryShipmentAddItemsPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentAddItems");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",lineItems:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (InventoryShipmentLineItemInput item1 : lineItems) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentAddItemsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds a draft shipment to an inventory transfer.
+    */
+    public MutationQuery inventoryShipmentCreate(InventoryShipmentCreateInput input, InventoryShipmentCreatePayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds an in-transit shipment to an inventory transfer.
+    */
+    public MutationQuery inventoryShipmentCreateInTransit(InventoryShipmentCreateInput input, InventoryShipmentCreateInTransitPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentCreateInTransit");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentCreateInTransitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes an inventory shipment. Only draft shipments can be deleted.
+    */
+    public MutationQuery inventoryShipmentDelete(ID id, InventoryShipmentDeletePayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Marks a draft inventory shipment as in transit.
+    */
+    public MutationQuery inventoryShipmentMarkInTransit(ID id, InventoryShipmentMarkInTransitPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentMarkInTransit");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentMarkInTransitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class InventoryShipmentReceiveArguments extends Arguments {
+        InventoryShipmentReceiveArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The list of receive line items for the inventory shipment.
+        */
+        public InventoryShipmentReceiveArguments lineItems(List<InventoryShipmentReceiveItemInput> value) {
+            if (value != null) {
+                startArgument("lineItems");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (InventoryShipmentReceiveItemInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+
+        /**
+        * The bulk receive action for the inventory shipment.
+        */
+        public InventoryShipmentReceiveArguments bulkReceiveAction(InventoryShipmentReceiveLineItemReason value) {
+            if (value != null) {
+                startArgument("bulkReceiveAction");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface InventoryShipmentReceiveArgumentsDefinition {
+        void define(InventoryShipmentReceiveArguments args);
+    }
+
+    /**
+    * Receive an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentReceive(ID id, InventoryShipmentReceivePayloadQueryDefinition queryDef) {
+        return inventoryShipmentReceive(id, args -> {}, queryDef);
+    }
+
+    /**
+    * Receive an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentReceive(ID id, InventoryShipmentReceiveArgumentsDefinition argsDef, InventoryShipmentReceivePayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentReceive");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        argsDef.define(new InventoryShipmentReceiveArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentReceivePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Remove items from an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentRemoveItems(ID id, List<ID> lineItems, InventoryShipmentRemoveItemsPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentRemoveItems");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",lineItems:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : lineItems) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentRemoveItemsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Edits the tracking info on an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentSetTracking(ID id, InventoryShipmentTrackingInput tracking, InventoryShipmentSetTrackingPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentSetTracking");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",tracking:");
+        tracking.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentSetTrackingPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class InventoryShipmentUpdateItemQuantitiesArguments extends Arguments {
+        InventoryShipmentUpdateItemQuantitiesArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The list of line items to be updated to the shipment.
+        */
+        public InventoryShipmentUpdateItemQuantitiesArguments items(List<InventoryShipmentUpdateItemQuantitiesInput> value) {
+            if (value != null) {
+                startArgument("items");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (InventoryShipmentUpdateItemQuantitiesInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+    }
+
+    public interface InventoryShipmentUpdateItemQuantitiesArgumentsDefinition {
+        void define(InventoryShipmentUpdateItemQuantitiesArguments args);
+    }
+
+    /**
+    * Updates items on an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentUpdateItemQuantities(ID id, InventoryShipmentUpdateItemQuantitiesPayloadQueryDefinition queryDef) {
+        return inventoryShipmentUpdateItemQuantities(id, args -> {}, queryDef);
+    }
+
+    /**
+    * Updates items on an inventory shipment.
+    */
+    public MutationQuery inventoryShipmentUpdateItemQuantities(ID id, InventoryShipmentUpdateItemQuantitiesArgumentsDefinition argsDef, InventoryShipmentUpdateItemQuantitiesPayloadQueryDefinition queryDef) {
+        startField("inventoryShipmentUpdateItemQuantities");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        argsDef.define(new InventoryShipmentUpdateItemQuantitiesArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentUpdateItemQuantitiesPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Cancels an inventory transfer.
+    */
+    public MutationQuery inventoryTransferCancel(ID id, InventoryTransferCancelPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferCancel");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferCancelPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates an inventory transfer.
+    */
+    public MutationQuery inventoryTransferCreate(InventoryTransferCreateInput input, InventoryTransferCreatePayloadQueryDefinition queryDef) {
+        startField("inventoryTransferCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates an inventory transfer in ready to ship.
+    */
+    public MutationQuery inventoryTransferCreateAsReadyToShip(InventoryTransferCreateAsReadyToShipInput input, InventoryTransferCreateAsReadyToShipPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferCreateAsReadyToShip");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferCreateAsReadyToShipPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes an inventory transfer.
+    */
+    public MutationQuery inventoryTransferDelete(ID id, InventoryTransferDeletePayloadQueryDefinition queryDef) {
+        startField("inventoryTransferDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * This mutation allows duplicating an existing inventory transfer. The duplicated transfer will have
+    * the same
+    * line items and quantities as the original transfer, but will be in a draft state with no shipments.
+    */
+    public MutationQuery inventoryTransferDuplicate(ID id, InventoryTransferDuplicatePayloadQueryDefinition queryDef) {
+        startField("inventoryTransferDuplicate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferDuplicatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Edits an inventory transfer.
+    */
+    public MutationQuery inventoryTransferEdit(ID id, InventoryTransferEditInput input, InventoryTransferEditPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferEdit");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferEditPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Sets an inventory transfer to ready to ship.
+    */
+    public MutationQuery inventoryTransferMarkAsReadyToShip(ID id, InventoryTransferMarkAsReadyToShipPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferMarkAsReadyToShip");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferMarkAsReadyToShipPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * This mutation allows removing the shippable quantities of line items on a Transfer.
+    * It removes all quantities of the item from the transfer that are not associated with shipments.
+    */
+    public MutationQuery inventoryTransferRemoveItems(InventoryTransferRemoveItemsInput input, InventoryTransferRemoveItemsPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferRemoveItems");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferRemoveItemsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * This mutation allows for the setting of line items on a Transfer. Will replace the items already
+    * set, if any.
+    */
+    public MutationQuery inventoryTransferSetItems(InventoryTransferSetItemsInput input, InventoryTransferSetItemsPayloadQueryDefinition queryDef) {
+        startField("inventoryTransferSetItems");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferSetItemsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Activates a location so that you can stock inventory at the location. Refer to the
     * [`isActive`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-isactive) and
     * [`activatable`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-activatable
@@ -7328,7 +8323,8 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Create new marketing activity.
+    * Create new marketing activity. Marketing activity app extensions are deprecated and will be removed
+    * in the near future.
     */
     public MutationQuery marketingActivityCreate(MarketingActivityCreateInput input, MarketingActivityCreatePayloadQueryDefinition queryDef) {
         startField("marketingActivityCreate");
@@ -7380,8 +8376,9 @@ public class MutationQuery extends Query<MutationQuery> {
         }
 
         /**
-        * The ID of an activity that's hosted outside of Shopify. A marketing activity ID or remote ID must be
-        * provided.
+        * A custom unique identifier for the marketing activity, which can be used to manage the activity and
+        * send engagement metrics without having to store our marketing activity ID in your systems. A
+        * marketing activity ID or remote ID must be provided.
         */
         public MarketingActivityDeleteExternalArguments remoteId(String value) {
             if (value != null) {
@@ -7421,7 +8418,8 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Updates a marketing activity with the latest information.
+    * Updates a marketing activity with the latest information. Marketing activity app extensions are
+    * deprecated and will be removed in the near future.
     */
     public MutationQuery marketingActivityUpdate(MarketingActivityUpdateInput input, MarketingActivityUpdatePayloadQueryDefinition queryDef) {
         startField("marketingActivityUpdate");
@@ -7456,8 +8454,9 @@ public class MutationQuery extends Query<MutationQuery> {
         }
 
         /**
-        * The ID of an activity that's hosted outside of Shopify. Specify either the marketing activity ID,
-        * remote ID, or UTM to update the marketing activity.
+        * A custom unique identifier for the marketing activity, which can be used to manage the activity and
+        * send engagement metrics without having to store our marketing activity ID in your systems. Specify
+        * either the marketing activity ID, remote ID, or UTM to update the marketing activity.
         */
         public MarketingActivityUpdateExternalArguments remoteId(String value) {
             if (value != null) {
@@ -7550,9 +8549,10 @@ public class MutationQuery extends Query<MutationQuery> {
         }
 
         /**
-        * The ID of an activity that's hosted outside of Shopify. This or the marketingActivityId should be
-        * set when and only when providing activity-level engagements. This should be nil when providing
-        * channel-level engagements.
+        * A custom unique identifier for the marketing activity, which can be used to manage the activity and
+        * send engagement metrics without having to store our marketing activity ID in your systems. This or
+        * the marketingActivityId should be set when and only when providing activity-level engagements. This
+        * should be nil when providing channel-level engagements.
         */
         public MarketingEngagementCreateArguments remoteId(String value) {
             if (value != null) {
@@ -7808,7 +8808,29 @@ public class MutationQuery extends Query<MutationQuery> {
 
     public class MetafieldDefinitionDeleteArguments extends Arguments {
         MetafieldDefinitionDeleteArguments(StringBuilder _queryBuilder) {
-            super(_queryBuilder, false);
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The id of the metafield definition to delete. Using `identifier` is preferred.
+        */
+        public MetafieldDefinitionDeleteArguments id(ID value) {
+            if (value != null) {
+                startArgument("id");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The identifier of the metafield definition to delete.
+        */
+        public MetafieldDefinitionDeleteArguments identifier(MetafieldDefinitionIdentifierInput value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
         }
 
         /**
@@ -7831,23 +8853,20 @@ public class MutationQuery extends Query<MutationQuery> {
     * Delete a metafield definition.
     * Optionally deletes all associated metafields asynchronously when specified.
     */
-    public MutationQuery metafieldDefinitionDelete(ID id, MetafieldDefinitionDeletePayloadQueryDefinition queryDef) {
-        return metafieldDefinitionDelete(id, args -> {}, queryDef);
+    public MutationQuery metafieldDefinitionDelete(MetafieldDefinitionDeletePayloadQueryDefinition queryDef) {
+        return metafieldDefinitionDelete(args -> {}, queryDef);
     }
 
     /**
     * Delete a metafield definition.
     * Optionally deletes all associated metafields asynchronously when specified.
     */
-    public MutationQuery metafieldDefinitionDelete(ID id, MetafieldDefinitionDeleteArgumentsDefinition argsDef, MetafieldDefinitionDeletePayloadQueryDefinition queryDef) {
+    public MutationQuery metafieldDefinitionDelete(MetafieldDefinitionDeleteArgumentsDefinition argsDef, MetafieldDefinitionDeletePayloadQueryDefinition queryDef) {
         startField("metafieldDefinitionDelete");
 
-        _queryBuilder.append("(id:");
-        Query.appendQuotedString(_queryBuilder, id.toString());
-
-        argsDef.define(new MetafieldDefinitionDeleteArguments(_queryBuilder));
-
-        _queryBuilder.append(')');
+        MetafieldDefinitionDeleteArguments args = new MetafieldDefinitionDeleteArguments(_queryBuilder);
+        argsDef.define(args);
+        MetafieldDefinitionDeleteArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new MetafieldDefinitionDeletePayloadQuery(_queryBuilder));
@@ -7856,26 +8875,36 @@ public class MutationQuery extends Query<MutationQuery> {
         return this;
     }
 
-    /**
-    * You can organize your metafields in your Shopify admin by pinning/unpinning metafield definitions.
-    * The order of your pinned metafield definitions determines the order in which your metafields are
-    * displayed
-    * on the corresponding pages in your Shopify admin. By default, only pinned metafields are
-    * automatically displayed.
-    */
-    public MutationQuery metafieldDefinitionPin(ID definitionId, MetafieldDefinitionPinPayloadQueryDefinition queryDef) {
-        startField("metafieldDefinitionPin");
+    public class MetafieldDefinitionPinArguments extends Arguments {
+        MetafieldDefinitionPinArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
 
-        _queryBuilder.append("(definitionId:");
-        Query.appendQuotedString(_queryBuilder, definitionId.toString());
+        /**
+        * The id of the metafield definition to pin. Using `identifier` is preferred.
+        */
+        public MetafieldDefinitionPinArguments definitionId(ID value) {
+            if (value != null) {
+                startArgument("definitionId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
 
-        _queryBuilder.append(')');
+        /**
+        * The identifier of the metafield definition to pin.
+        */
+        public MetafieldDefinitionPinArguments identifier(MetafieldDefinitionIdentifierInput value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
 
-        _queryBuilder.append('{');
-        queryDef.define(new MetafieldDefinitionPinPayloadQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
+    public interface MetafieldDefinitionPinArgumentsDefinition {
+        void define(MetafieldDefinitionPinArguments args);
     }
 
     /**
@@ -7885,13 +8914,87 @@ public class MutationQuery extends Query<MutationQuery> {
     * on the corresponding pages in your Shopify admin. By default, only pinned metafields are
     * automatically displayed.
     */
-    public MutationQuery metafieldDefinitionUnpin(ID definitionId, MetafieldDefinitionUnpinPayloadQueryDefinition queryDef) {
+    public MutationQuery metafieldDefinitionPin(MetafieldDefinitionPinPayloadQueryDefinition queryDef) {
+        return metafieldDefinitionPin(args -> {}, queryDef);
+    }
+
+    /**
+    * You can organize your metafields in your Shopify admin by pinning/unpinning metafield definitions.
+    * The order of your pinned metafield definitions determines the order in which your metafields are
+    * displayed
+    * on the corresponding pages in your Shopify admin. By default, only pinned metafields are
+    * automatically displayed.
+    */
+    public MutationQuery metafieldDefinitionPin(MetafieldDefinitionPinArgumentsDefinition argsDef, MetafieldDefinitionPinPayloadQueryDefinition queryDef) {
+        startField("metafieldDefinitionPin");
+
+        MetafieldDefinitionPinArguments args = new MetafieldDefinitionPinArguments(_queryBuilder);
+        argsDef.define(args);
+        MetafieldDefinitionPinArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new MetafieldDefinitionPinPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class MetafieldDefinitionUnpinArguments extends Arguments {
+        MetafieldDefinitionUnpinArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The ID of the metafield definition to unpin. Using `identifier` is preferred.
+        */
+        public MetafieldDefinitionUnpinArguments definitionId(ID value) {
+            if (value != null) {
+                startArgument("definitionId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The identifier of the metafield definition to unpin.
+        */
+        public MetafieldDefinitionUnpinArguments identifier(MetafieldDefinitionIdentifierInput value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface MetafieldDefinitionUnpinArgumentsDefinition {
+        void define(MetafieldDefinitionUnpinArguments args);
+    }
+
+    /**
+    * You can organize your metafields in your Shopify admin by pinning/unpinning metafield definitions.
+    * The order of your pinned metafield definitions determines the order in which your metafields are
+    * displayed
+    * on the corresponding pages in your Shopify admin. By default, only pinned metafields are
+    * automatically displayed.
+    */
+    public MutationQuery metafieldDefinitionUnpin(MetafieldDefinitionUnpinPayloadQueryDefinition queryDef) {
+        return metafieldDefinitionUnpin(args -> {}, queryDef);
+    }
+
+    /**
+    * You can organize your metafields in your Shopify admin by pinning/unpinning metafield definitions.
+    * The order of your pinned metafield definitions determines the order in which your metafields are
+    * displayed
+    * on the corresponding pages in your Shopify admin. By default, only pinned metafields are
+    * automatically displayed.
+    */
+    public MutationQuery metafieldDefinitionUnpin(MetafieldDefinitionUnpinArgumentsDefinition argsDef, MetafieldDefinitionUnpinPayloadQueryDefinition queryDef) {
         startField("metafieldDefinitionUnpin");
 
-        _queryBuilder.append("(definitionId:");
-        Query.appendQuotedString(_queryBuilder, definitionId.toString());
-
-        _queryBuilder.append(')');
+        MetafieldDefinitionUnpinArguments args = new MetafieldDefinitionUnpinArguments(_queryBuilder);
+        argsDef.define(args);
+        MetafieldDefinitionUnpinArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new MetafieldDefinitionUnpinPayloadQuery(_queryBuilder));
@@ -8204,6 +9307,18 @@ public class MutationQuery extends Query<MutationQuery> {
         }
 
         /**
+        * Indicates how to refund the amount paid by the customer. Authorized payments will be voided
+        * regardless of this setting.
+        */
+        public OrderCancelArguments refundMethod(OrderCancelRefundMethodInput value) {
+            if (value != null) {
+                startArgument("refundMethod");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
         * Whether to send a notification to the customer about the order cancellation.
         */
         public OrderCancelArguments notifyCustomer(Boolean value) {
@@ -8231,23 +9346,108 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Cancels an order.
+    * Cancels an order, with options for refunding, restocking inventory, and customer notification.
+    * > Caution:
+    * > Order cancellation is irreversible. An order that has been cancelled can't be restored to its
+    * original state.
+    * Use the `orderCancel` mutation to programmatically cancel orders in scenarios such as:
+    * - Customer-requested cancellations due to size, color, or other preference changes
+    * - Payment processing failures or declined transactions
+    * - Fraud detection and prevention
+    * - Insufficient inventory availability
+    * - Staff errors in order processing
+    * - Wholesale or B2B order management workflows
+    * The `orderCancel` mutation provides flexible refund options including refunding to original payment
+    * methods
+    * or issuing store credit. If a payment was only authorized (temporarily held) but not yet charged,
+    * that hold will be automatically released when the order is cancelled, even if you choose not to
+    * refund other payments.
+    * The mutation supports different cancellation reasons: customer requests, payment declines, fraud,
+    * inventory issues, staff errors, or other unspecified reasons. Each cancellation can include optional
+    * staff notes for internal documentation (notes aren't visible to customers).
+    * An order can only be cancelled if it meets the following criteria:
+    * - The order hasn't already been cancelled.
+    * - The order has no pending payment authorizations.
+    * - The order has no active returns in progress.
+    * - The order has no outstanding fulfillments that can't be cancelled.
+    * Orders might be assigned to locations that become
+    * [deactivated](https://help.shopify.com/manual/fulfillment/setup/locations-management#deactivate-and-
+    * reactivate-locations)
+    * after the order was created. When cancelling such orders, inventory behavior depends on payment
+    * status:
+    * - **Paid orders**: Cancellation will fail with an error if restocking is enabled, since inventory
+    * can't be returned to deactivated locations.
+    * - **Unpaid orders**: Cancellation succeeds but inventory is not restocked anywhere, even when the
+    * restock option is enabled. The committed inventory effectively becomes unavailable rather than being
+    * returned to stock at the deactivated location.
+    * After you cancel an order, you can still make limited updates to certain fields (like
+    * notes and tags) using the
+    * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate).
+    * For partial refunds or more complex refund scenarios on active orders,
+    * such as refunding only specific line items while keeping the rest of the order fulfilled,
+    * consider using the
+    * [`refundCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate)
+    * mutation instead of full order cancellation.
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
-    public MutationQuery orderCancel(ID orderId, boolean refund, boolean restock, OrderCancelReason reason, OrderCancelPayloadQueryDefinition queryDef) {
-        return orderCancel(orderId, refund, restock, reason, args -> {}, queryDef);
+    public MutationQuery orderCancel(ID orderId, boolean restock, OrderCancelReason reason, OrderCancelPayloadQueryDefinition queryDef) {
+        return orderCancel(orderId, restock, reason, args -> {}, queryDef);
     }
 
     /**
-    * Cancels an order.
+    * Cancels an order, with options for refunding, restocking inventory, and customer notification.
+    * > Caution:
+    * > Order cancellation is irreversible. An order that has been cancelled can't be restored to its
+    * original state.
+    * Use the `orderCancel` mutation to programmatically cancel orders in scenarios such as:
+    * - Customer-requested cancellations due to size, color, or other preference changes
+    * - Payment processing failures or declined transactions
+    * - Fraud detection and prevention
+    * - Insufficient inventory availability
+    * - Staff errors in order processing
+    * - Wholesale or B2B order management workflows
+    * The `orderCancel` mutation provides flexible refund options including refunding to original payment
+    * methods
+    * or issuing store credit. If a payment was only authorized (temporarily held) but not yet charged,
+    * that hold will be automatically released when the order is cancelled, even if you choose not to
+    * refund other payments.
+    * The mutation supports different cancellation reasons: customer requests, payment declines, fraud,
+    * inventory issues, staff errors, or other unspecified reasons. Each cancellation can include optional
+    * staff notes for internal documentation (notes aren't visible to customers).
+    * An order can only be cancelled if it meets the following criteria:
+    * - The order hasn't already been cancelled.
+    * - The order has no pending payment authorizations.
+    * - The order has no active returns in progress.
+    * - The order has no outstanding fulfillments that can't be cancelled.
+    * Orders might be assigned to locations that become
+    * [deactivated](https://help.shopify.com/manual/fulfillment/setup/locations-management#deactivate-and-
+    * reactivate-locations)
+    * after the order was created. When cancelling such orders, inventory behavior depends on payment
+    * status:
+    * - **Paid orders**: Cancellation will fail with an error if restocking is enabled, since inventory
+    * can't be returned to deactivated locations.
+    * - **Unpaid orders**: Cancellation succeeds but inventory is not restocked anywhere, even when the
+    * restock option is enabled. The committed inventory effectively becomes unavailable rather than being
+    * returned to stock at the deactivated location.
+    * After you cancel an order, you can still make limited updates to certain fields (like
+    * notes and tags) using the
+    * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate).
+    * For partial refunds or more complex refund scenarios on active orders,
+    * such as refunding only specific line items while keeping the rest of the order fulfilled,
+    * consider using the
+    * [`refundCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate)
+    * mutation instead of full order cancellation.
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
-    public MutationQuery orderCancel(ID orderId, boolean refund, boolean restock, OrderCancelReason reason, OrderCancelArgumentsDefinition argsDef, OrderCancelPayloadQueryDefinition queryDef) {
+    public MutationQuery orderCancel(ID orderId, boolean restock, OrderCancelReason reason, OrderCancelArgumentsDefinition argsDef, OrderCancelPayloadQueryDefinition queryDef) {
         startField("orderCancel");
 
         _queryBuilder.append("(orderId:");
         Query.appendQuotedString(_queryBuilder, orderId.toString());
-
-        _queryBuilder.append(",refund:");
-        _queryBuilder.append(refund);
 
         _queryBuilder.append(",restock:");
         _queryBuilder.append(restock);
@@ -8267,11 +9467,30 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Captures payment for an authorized transaction on an order. An order can only be captured if it has
-    * a successful authorization transaction. Capturing an order will claim the money reserved by the
-    * authorization. orderCapture can be used to capture multiple times as long as the OrderTransaction is
-    * multi-capturable. To capture a partial payment, the included `amount` value should be less than the
-    * total order amount. Multi-capture is available only to stores on a Shopify Plus plan.
+    * Captures payment for an authorized transaction on an order. Use this mutation to claim the money
+    * that was previously
+    * reserved by an authorization transaction.
+    * The `orderCapture` mutation can be used in the following scenarios:
+    * - To capture the full amount of an authorized transaction
+    * - To capture a partial payment by specifying an amount less than the total order amount
+    * - To perform multiple captures on the same order, as long as the order transaction is
+    * [multi-capturable](https://shopify.dev/docs/api/admin-graphql/latest/objects/ordertransaction#field-
+    * OrderTransaction.fields.multiCapturable)
+    * > Note:
+    * > Multi-capture functionality is only available to stores on a
+    * [Shopify Plus
+    * plan](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/plans-features/shopify-plus-pla
+    * n).
+    * For multi-currency orders, the
+    * [`currency`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderCapture#arguments-inpu
+    * t.fields.currency)
+    * field is required and should match the presentment currency from the order.
+    * After capturing a payment, you can:
+    * - View the transaction details including status, amount, and processing information.
+    * - Track the captured amount in both shop and presentment currencies.
+    * - Monitor the transaction's settlement status.
+    * Learn more about [order
+    * transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction).
     */
     public MutationQuery orderCapture(OrderCaptureInput input, OrderCapturePayloadQueryDefinition queryDef) {
         startField("orderCapture");
@@ -8312,7 +9531,8 @@ public class MutationQuery extends Query<MutationQuery> {
         }
 
         /**
-        * Service options for the mutation.
+        * The strategies for updating inventory and whether to send shipping and order confirmations to
+        * customers.
         */
         public OrderCreateArguments options(OrderCreateOptionsInput value) {
             if (value != null) {
@@ -8328,14 +9548,82 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Creates an order.
+    * Creates an order with attributes such as customer information, line items, and shipping and billing
+    * addresses.
+    * Use the `orderCreate` mutation to programmatically generate orders in scenarios where
+    * orders aren't created through the standard checkout process, such as when importing orders from an
+    * external
+    * system or creating orders for wholesale customers.
+    * The `orderCreate` mutation doesn't support applying multiple discounts, such as discounts on line
+    * items.
+    * Automatic discounts won't be applied unless you replicate the logic of those discounts in your
+    * custom
+    * implementation. You can [apply a discount
+    * code](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/OrderCreateDiscountCodeInput),
+    * but only one discount code can be set for each order.
+    * > Note:
+    * > If you're using the `orderCreate` mutation with a
+    * > [trial](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/free-trial) or
+    * > [development store](https://shopify.dev/docs/api/development-stores), then you can create a
+    * > maximum of five new orders per minute.
+    * After you create an order, you can make subsequent edits to the order using one of the following
+    * mutations:
+    * * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate):
+    * Used for simple updates to an order, such as changing the order's note, tags, or customer
+    * information.
+    * * [`orderEditBegin`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderEditBegin):
+    * Used when you need to make significant updates to an order, such as adding or removing line items,
+    * changing
+    * quantities, or modifying discounts. The `orderEditBegin` mutation initiates an order editing
+    * session,
+    * allowing you to make multiple changes before finalizing them. Learn more about using the
+    * `orderEditBegin`
+    * mutation to [edit existing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders).
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
     public MutationQuery orderCreate(OrderCreateOrderInput order, OrderCreatePayloadQueryDefinition queryDef) {
         return orderCreate(order, args -> {}, queryDef);
     }
 
     /**
-    * Creates an order.
+    * Creates an order with attributes such as customer information, line items, and shipping and billing
+    * addresses.
+    * Use the `orderCreate` mutation to programmatically generate orders in scenarios where
+    * orders aren't created through the standard checkout process, such as when importing orders from an
+    * external
+    * system or creating orders for wholesale customers.
+    * The `orderCreate` mutation doesn't support applying multiple discounts, such as discounts on line
+    * items.
+    * Automatic discounts won't be applied unless you replicate the logic of those discounts in your
+    * custom
+    * implementation. You can [apply a discount
+    * code](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/OrderCreateDiscountCodeInput),
+    * but only one discount code can be set for each order.
+    * > Note:
+    * > If you're using the `orderCreate` mutation with a
+    * > [trial](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/free-trial) or
+    * > [development store](https://shopify.dev/docs/api/development-stores), then you can create a
+    * > maximum of five new orders per minute.
+    * After you create an order, you can make subsequent edits to the order using one of the following
+    * mutations:
+    * * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate):
+    * Used for simple updates to an order, such as changing the order's note, tags, or customer
+    * information.
+    * * [`orderEditBegin`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderEditBegin):
+    * Used when you need to make significant updates to an order, such as adding or removing line items,
+    * changing
+    * quantities, or modifying discounts. The `orderEditBegin` mutation initiates an order editing
+    * session,
+    * allowing you to make multiple changes before finalizing them. Learn more about using the
+    * `orderEditBegin`
+    * mutation to [edit existing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders).
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
     public MutationQuery orderCreate(OrderCreateOrderInput order, OrderCreateArgumentsDefinition argsDef, OrderCreatePayloadQueryDefinition queryDef) {
         startField("orderCreate");
@@ -8426,6 +9714,122 @@ public class MutationQuery extends Query<MutationQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new OrderCreateMandatePaymentPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class OrderCreateManualPaymentArguments extends Arguments {
+        OrderCreateManualPaymentArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The manual payment amount to be created.
+        */
+        public OrderCreateManualPaymentArguments amount(MoneyInput value) {
+            if (value != null) {
+                startArgument("amount");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * The name of the payment method used for creating the payment. If none is provided, then the default
+        * manual payment method ('Other') will be used.
+        */
+        public OrderCreateManualPaymentArguments paymentMethodName(String value) {
+            if (value != null) {
+                startArgument("paymentMethodName");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The date and time ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format) when a manual payment
+        * was processed. If you're importing transactions from an app or another platform, then you can set
+        * processedAt to a date and time in the past to match when the original transaction was created.
+        */
+        public OrderCreateManualPaymentArguments processedAt(String value) {
+            if (value != null) {
+                startArgument("processedAt");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface OrderCreateManualPaymentArgumentsDefinition {
+        void define(OrderCreateManualPaymentArguments args);
+    }
+
+    /**
+    * Create a manual payment for an order. You can only create a manual payment for an order if it isn't
+    * already
+    * fully paid.
+    */
+    public MutationQuery orderCreateManualPayment(ID id, OrderCreateManualPaymentPayloadQueryDefinition queryDef) {
+        return orderCreateManualPayment(id, args -> {}, queryDef);
+    }
+
+    /**
+    * Create a manual payment for an order. You can only create a manual payment for an order if it isn't
+    * already
+    * fully paid.
+    */
+    public MutationQuery orderCreateManualPayment(ID id, OrderCreateManualPaymentArgumentsDefinition argsDef, OrderCreateManualPaymentPayloadQueryDefinition queryDef) {
+        startField("orderCreateManualPayment");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        argsDef.define(new OrderCreateManualPaymentArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new OrderCreateManualPaymentPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Removes customer from an order.
+    */
+    public MutationQuery orderCustomerRemove(ID orderId, OrderCustomerRemovePayloadQueryDefinition queryDef) {
+        startField("orderCustomerRemove");
+
+        _queryBuilder.append("(orderId:");
+        Query.appendQuotedString(_queryBuilder, orderId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new OrderCustomerRemovePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Sets a customer on an order.
+    */
+    public MutationQuery orderCustomerSet(ID orderId, ID customerId, OrderCustomerSetPayloadQueryDefinition queryDef) {
+        startField("orderCustomerSet");
+
+        _queryBuilder.append("(orderId:");
+        Query.appendQuotedString(_queryBuilder, orderId.toString());
+
+        _queryBuilder.append(",customerId:");
+        Query.appendQuotedString(_queryBuilder, customerId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new OrderCustomerSetPayloadQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -8949,7 +10353,27 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Marks an order as paid. You can only mark an order as paid if it isn't already fully paid.
+    * Marks an order as paid by recording a payment transaction for the outstanding amount.
+    * Use the `orderMarkAsPaid` mutation to record payments received outside the standard checkout
+    * process. The `orderMarkAsPaid` mutation is particularly useful in scenarios where:
+    * - Orders were created with manual payment methods (cash on delivery, bank deposit, money order)
+    * - Payments were received offline and need to be recorded in the system
+    * - Previously authorized payments need to be captured manually
+    * - Orders require manual payment reconciliation due to external payment processing
+    * The mutation validates that the order can be marked as paid before processing.
+    * An order can be marked as paid only if it has a positive outstanding balance and its
+    * [financial
+    * status](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.displayFi
+    * nancialStatus)
+    * isn't already `PAID`. The mutation will either create a new sale transaction for the full
+    * outstanding amount or capture an existing authorized transaction, depending on the order's current
+    * payment state.
+    * After successfully marking an order as paid, the order's financial status is updated to
+    * reflect the payment, and payment events are logged for tracking and analytics
+    * purposes.
+    * Learn more about [managing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+    * in apps.
     */
     public MutationQuery orderMarkAsPaid(OrderMarkAsPaidInput input, OrderMarkAsPaidPayloadQueryDefinition queryDef) {
         startField("orderMarkAsPaid");
@@ -9003,7 +10427,20 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Updates the fields of an order.
+    * Updates the attributes of an order, such as the customer's email, the shipping address for the
+    * order,
+    * tags, and [metafields](https://shopify.dev/docs/apps/build/custom-data) associated with the order.
+    * If you need to make significant updates to an order, such as adding or removing line items, changing
+    * quantities, or modifying discounts, then use
+    * the [`orderEditBegin`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderEditBegin)
+    * mutation instead. The `orderEditBegin` mutation initiates an order editing session,
+    * allowing you to make multiple changes before finalizing them. Learn more about using the
+    * `orderEditBegin`
+    * mutation to [edit existing
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders).
+    * Learn how to build apps that integrate with
+    * [order management and fulfillment
+    * processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
     public MutationQuery orderUpdate(OrderInput input, OrderUpdatePayloadQueryDefinition queryDef) {
         startField("orderUpdate");
@@ -9494,6 +10931,33 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
+    * Disable a shop's privacy features.
+    */
+    public MutationQuery privacyFeaturesDisable(List<PrivacyFeaturesEnum> featuresToDisable, PrivacyFeaturesDisablePayloadQueryDefinition queryDef) {
+        startField("privacyFeaturesDisable");
+
+        _queryBuilder.append("(featuresToDisable:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (PrivacyFeaturesEnum item1 : featuresToDisable) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                _queryBuilder.append(item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PrivacyFeaturesDisablePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Creates a new componentized product.
     */
     public MutationQuery productBundleCreate(ProductBundleCreateInput input, ProductBundleCreatePayloadQueryDefinition queryDef) {
@@ -9572,19 +11036,44 @@ public class MutationQuery extends Query<MutationQuery> {
 
     /**
     * Creates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
-    * with attributes such as title, description, and vendor.
-    * You can use the `productCreate` mutation to define
+    * with attributes such as title, description, vendor, and media.
+    * The `productCreate` mutation helps you create many products at once, avoiding the tedious or
+    * time-consuming
+    * process of adding them one by one in the Shopify admin. Common examples include creating products
+    * for a
+    * new collection, launching a new product line, or adding seasonal products.
+    * You can define product
     * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
-    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue)
-    * for products with
-    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant),
-    * such as different sizes or colors.
+    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue),
+    * allowing you to create products with different variations like sizes or colors. You can also
+    * associate media
+    * files to your products, including images and videos.
+    * The `productCreate` mutation only supports creating a product with its initial
+    * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
     * To create multiple product variants for a single product and manage prices, use the
     * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
     * iantsBulkCreate)
     * mutation.
-    * To create or update a product in a single request, use the
-    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation.
+    * > Note:
+    * > The `productCreate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be created per day.
+    * After you create a product, you can make subsequent edits to the product using one of the following
+    * mutations:
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers. The `productCreate` mutation creates
+    * products
+    * in an unpublished state by default, so you must perform a separate operation to publish the product.
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Used to update a single product, such as changing the product's title, description, vendor, or
+    * associated media.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
     * Learn more about the [product
     * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
     * and [adding product
@@ -9596,19 +11085,44 @@ public class MutationQuery extends Query<MutationQuery> {
 
     /**
     * Creates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
-    * with attributes such as title, description, and vendor.
-    * You can use the `productCreate` mutation to define
+    * with attributes such as title, description, vendor, and media.
+    * The `productCreate` mutation helps you create many products at once, avoiding the tedious or
+    * time-consuming
+    * process of adding them one by one in the Shopify admin. Common examples include creating products
+    * for a
+    * new collection, launching a new product line, or adding seasonal products.
+    * You can define product
     * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
-    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue)
-    * for products with
-    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant),
-    * such as different sizes or colors.
+    * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue),
+    * allowing you to create products with different variations like sizes or colors. You can also
+    * associate media
+    * files to your products, including images and videos.
+    * The `productCreate` mutation only supports creating a product with its initial
+    * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
     * To create multiple product variants for a single product and manage prices, use the
     * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
     * iantsBulkCreate)
     * mutation.
-    * To create or update a product in a single request, use the
-    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation.
+    * > Note:
+    * > The `productCreate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be created per day.
+    * After you create a product, you can make subsequent edits to the product using one of the following
+    * mutations:
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers. The `productCreate` mutation creates
+    * products
+    * in an unpublished state by default, so you must perform a separate operation to publish the product.
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Used to update a single product, such as changing the product's title, description, vendor, or
+    * associated media.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
     * Learn more about the [product
     * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
     * and [adding product
@@ -9650,30 +11164,112 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Deletes a product, including all associated variants and media.
-    * As of API version `2023-01`, if you need to delete a large product, such as one that has many
-    * [variants](https://shopify.dev/api/admin-graphql/latest/input-objects/ProductVariantInput)
+    * Permanently deletes a product and all its associated data, including variants, media, publications,
+    * and inventory items.
+    * Use the `productDelete` mutation to programmatically remove products from your store when they need
+    * to be
+    * permanently deleted from your catalog, such as when removing discontinued items, cleaning up test
+    * data, or
+    * synchronizing with external inventory management systems.
+    * The `productDelete` mutation removes the product from all associated collections,
+    * and removes all associated data for the product, including:
+    * - All product variants and their inventory items
+    * - Product media (images, videos) that are not referenced by other products
+    * - [Product options](https://shopify.dev/api/admin-graphql/latest/objects/ProductOption) and [option
+    * values](https://shopify.dev/api/admin-graphql/latest/objects/ProductOptionValue)
+    * - Product publications across all sales channels
+    * - Product tags and metadata associations
+    * The `productDelete` mutation also has the following effects on existing orders and transactions:
+    * - **Draft orders**: Existing draft orders that reference this product will retain the product
+    * information as stored data, but the product reference will be removed. Draft orders can still be
+    * completed with the stored product details.
+    * - **Completed orders and refunds**: Previously completed orders that included this product aren't
+    * affected. The product information in completed orders is preserved for record-keeping, and existing
+    * refunds for this product remain valid and processable.
+    * > Caution:
+    * > Product deletion is irreversible. After a product is deleted, it can't be recovered. Consider
+    * archiving
+    * > or unpublishing products instead if you might need to restore them later.
+    * If you need to delete a large product, such as one that has many
+    * [variants](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant)
     * that are active at several
-    * [locations](https://shopify.dev/api/admin-graphql/latest/input-objects/InventoryLevelInput),
-    * you may encounter timeout errors. To avoid these timeout errors, you can instead use the
-    * asynchronous
-    * [ProductDeleteAsync](https://shopify.dev/api/admin-graphql/latest/mutations/productDeleteAsync)
-    * mutation.
+    * [locations](https://shopify.dev/api/admin-graphql/latest/objects/Location),
+    * you might encounter timeout errors. To avoid these timeout errors, you can set the
+    * [`synchronous`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productDelete#arguments-
+    * synchronous)
+    * parameter to `false` to run the deletion asynchronously, which returns a
+    * [`ProductDeleteOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductDeleteOp
+    * eration)
+    * that you can monitor for completion status.
+    * If you need more granular control over product cleanup, consider using these alternative mutations:
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Update the product status to archived or unpublished instead of deleting.
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete):
+    * Delete specific variants while keeping the product.
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete):
+    * Delete the choices available for a product, such as size, color, or material.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model).
     */
     public MutationQuery productDelete(ProductDeleteInput input, ProductDeletePayloadQueryDefinition queryDef) {
         return productDelete(input, args -> {}, queryDef);
     }
 
     /**
-    * Deletes a product, including all associated variants and media.
-    * As of API version `2023-01`, if you need to delete a large product, such as one that has many
-    * [variants](https://shopify.dev/api/admin-graphql/latest/input-objects/ProductVariantInput)
+    * Permanently deletes a product and all its associated data, including variants, media, publications,
+    * and inventory items.
+    * Use the `productDelete` mutation to programmatically remove products from your store when they need
+    * to be
+    * permanently deleted from your catalog, such as when removing discontinued items, cleaning up test
+    * data, or
+    * synchronizing with external inventory management systems.
+    * The `productDelete` mutation removes the product from all associated collections,
+    * and removes all associated data for the product, including:
+    * - All product variants and their inventory items
+    * - Product media (images, videos) that are not referenced by other products
+    * - [Product options](https://shopify.dev/api/admin-graphql/latest/objects/ProductOption) and [option
+    * values](https://shopify.dev/api/admin-graphql/latest/objects/ProductOptionValue)
+    * - Product publications across all sales channels
+    * - Product tags and metadata associations
+    * The `productDelete` mutation also has the following effects on existing orders and transactions:
+    * - **Draft orders**: Existing draft orders that reference this product will retain the product
+    * information as stored data, but the product reference will be removed. Draft orders can still be
+    * completed with the stored product details.
+    * - **Completed orders and refunds**: Previously completed orders that included this product aren't
+    * affected. The product information in completed orders is preserved for record-keeping, and existing
+    * refunds for this product remain valid and processable.
+    * > Caution:
+    * > Product deletion is irreversible. After a product is deleted, it can't be recovered. Consider
+    * archiving
+    * > or unpublishing products instead if you might need to restore them later.
+    * If you need to delete a large product, such as one that has many
+    * [variants](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant)
     * that are active at several
-    * [locations](https://shopify.dev/api/admin-graphql/latest/input-objects/InventoryLevelInput),
-    * you may encounter timeout errors. To avoid these timeout errors, you can instead use the
-    * asynchronous
-    * [ProductDeleteAsync](https://shopify.dev/api/admin-graphql/latest/mutations/productDeleteAsync)
-    * mutation.
+    * [locations](https://shopify.dev/api/admin-graphql/latest/objects/Location),
+    * you might encounter timeout errors. To avoid these timeout errors, you can set the
+    * [`synchronous`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productDelete#arguments-
+    * synchronous)
+    * parameter to `false` to run the deletion asynchronously, which returns a
+    * [`ProductDeleteOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductDeleteOp
+    * eration)
+    * that you can monitor for completion status.
+    * If you need more granular control over product cleanup, consider using these alternative mutations:
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Update the product status to archived or unpublished instead of deleting.
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete):
+    * Delete specific variants while keeping the product.
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete):
+    * Delete the choices available for a product, such as size, color, or material.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model).
     */
     public MutationQuery productDelete(ProductDeleteInput input, ProductDeleteArgumentsDefinition argsDef, ProductDeletePayloadQueryDefinition queryDef) {
         startField("productDelete");
@@ -10067,14 +11663,104 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Updates a product option.
+    * Updates an [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionUpdate` mutation for the following use cases:
+    * - **Update product choices**: Modify an existing option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), so customers can select their preferred variant.
+    * - **Enable personalization features**: Update an option (for example, "Engraving text") to let
+    * customers customize their purchase.
+    * - **Offer seasonal or limited edition products**: Update a value
+    * (for example, "Holiday red") on an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to update
+    * options, like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionUpdate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * After you update a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionUpdate(OptionUpdateInput option, ID productId, ProductOptionUpdatePayloadQueryDefinition queryDef) {
         return productOptionUpdate(option, productId, args -> {}, queryDef);
     }
 
     /**
-    * Updates a product option.
+    * Updates an [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionUpdate` mutation for the following use cases:
+    * - **Update product choices**: Modify an existing option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), so customers can select their preferred variant.
+    * - **Enable personalization features**: Update an option (for example, "Engraving text") to let
+    * customers customize their purchase.
+    * - **Offer seasonal or limited edition products**: Update a value
+    * (for example, "Holiday red") on an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to update
+    * options, like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionUpdate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * After you update a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionUpdate(OptionUpdateInput option, ID productId, ProductOptionUpdateArgumentsDefinition argsDef, ProductOptionUpdatePayloadQueryDefinition queryDef) {
         startField("productOptionUpdate");
@@ -10119,14 +11805,120 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Creates options on a product.
+    * Creates one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionsCreate` mutation for the following use cases:
+    * - **Add product choices**: Add a new option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), to an existing product so customers can select their preferred variant.
+    * - **Enable personalization features**: Add options such as "Engraving text" to let customers
+    * customize their purchase.
+    * - **Offer seasonal or limited edition products**: Add a new value
+    * (for example, "Holiday red") to an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to add options,
+    * like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionsCreate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * If you use the [`CREATE` variant
+    * strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate#arguments
+    * -variantStrategy.enums.CREATE), consider the maximum allowed number of variants for each product
+    * (100 by default, and 2,048 if you've
+    * [enabled the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)).
+    * After you create product options, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionsCreate(ID productId, List<OptionCreateInput> options, ProductOptionsCreatePayloadQueryDefinition queryDef) {
         return productOptionsCreate(productId, options, args -> {}, queryDef);
     }
 
     /**
-    * Creates options on a product.
+    * Creates one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * such as size, color, or material. Each option includes a name, position, and a list of values. The
+    * combination
+    * of a product option and value creates a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * Use the `productOptionsCreate` mutation for the following use cases:
+    * - **Add product choices**: Add a new option, like "Size" (Small, Medium, Large) or
+    * "Color" (Red, Blue, Green), to an existing product so customers can select their preferred variant.
+    * - **Enable personalization features**: Add options such as "Engraving text" to let customers
+    * customize their purchase.
+    * - **Offer seasonal or limited edition products**: Add a new value
+    * (for example, "Holiday red") to an existing option to support limited-time or seasonal variants.
+    * - **Integrate with apps that manage product configuration**: Allow third-party apps to add options,
+    * like
+    * "Bundle size", when customers select or customize
+    * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+    * - **Link options to metafields**: Associate a product option with a custom
+    * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+    * richer integrations with other systems or apps.
+    * > Note:
+    * > The `productOptionsCreate` mutation enforces strict data integrity for product options and
+    * variants.
+    * All option positions must be sequential, and every option should be used by at least one variant.
+    * If you use the [`CREATE` variant
+    * strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate#arguments
+    * -variantStrategy.enums.CREATE), consider the maximum allowed number of variants for each product
+    * (100 by default, and 2,048 if you've
+    * [enabled the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)).
+    * After you create product options, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionsCreate(ID productId, List<OptionCreateInput> options, ProductOptionsCreateArgumentsDefinition argsDef, ProductOptionsCreatePayloadQueryDefinition queryDef) {
         startField("productOptionsCreate");
@@ -10180,14 +11972,108 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Deletes the specified options.
+    * Deletes one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * from a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product). Product options
+    * define the choices available for a product, such as size, color, or material.
+    * > Caution:
+    * > Removing an option can affect a product's
+    * > [variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) and their
+    * > configuration. Deleting an option might also delete associated option values and, depending on the
+    * chosen
+    * >
+    * [strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productoptionsdelete#argument
+    * s-strategy),
+    * > might affect variants.
+    * Use the `productOptionsDelete` mutation for the following use cases:
+    * - **Simplify product configuration**: Remove obsolete or unnecessary options
+    * (for example, discontinue "Material" if all variants are now the same material).
+    * - **Clean up after seasonal or limited-time offerings**: Delete options that are no longer
+    * relevant (for example, "Holiday edition").
+    * - **Automate catalog management**: Enable apps or integrations to programmatically remove options as
+    * product
+    * data changes.
+    * > Note:
+    * > The `productOptionsDelete` mutation enforces strict data integrity for product options and
+    * variants.
+    * > All option positions must remain sequential, and every remaining option must be used by at least
+    * one variant.
+    * After you delete a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionsDelete(ID productId, List<ID> options, ProductOptionsDeletePayloadQueryDefinition queryDef) {
         return productOptionsDelete(productId, options, args -> {}, queryDef);
     }
 
     /**
-    * Deletes the specified options.
+    * Deletes one or more
+    * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+    * from a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product). Product options
+    * define the choices available for a product, such as size, color, or material.
+    * > Caution:
+    * > Removing an option can affect a product's
+    * > [variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) and their
+    * > configuration. Deleting an option might also delete associated option values and, depending on the
+    * chosen
+    * >
+    * [strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productoptionsdelete#argument
+    * s-strategy),
+    * > might affect variants.
+    * Use the `productOptionsDelete` mutation for the following use cases:
+    * - **Simplify product configuration**: Remove obsolete or unnecessary options
+    * (for example, discontinue "Material" if all variants are now the same material).
+    * - **Clean up after seasonal or limited-time offerings**: Delete options that are no longer
+    * relevant (for example, "Holiday edition").
+    * - **Automate catalog management**: Enable apps or integrations to programmatically remove options as
+    * product
+    * data changes.
+    * > Note:
+    * > The `productOptionsDelete` mutation enforces strict data integrity for product options and
+    * variants.
+    * > All option positions must remain sequential, and every remaining option must be used by at least
+    * one variant.
+    * After you delete a product option, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
     */
     public MutationQuery productOptionsDelete(ID productId, List<ID> options, ProductOptionsDeleteArgumentsDefinition argsDef, ProductOptionsDeletePayloadQueryDefinition queryDef) {
         startField("productOptionsDelete");
@@ -10219,4020 +12105,4492 @@ public class MutationQuery extends Query<MutationQuery> {
     }
 
     /**
-    * Reorders options and option values on a product, causing product variants to alter their position.
-    * Options order take precedence over option values order. Depending on the existing product variants,
-    * some input orders might not be achieved.
-    * Example:
-    * Existing product variants:
-    * ["Red / Small", "Green / Medium", "Blue / Small"].
-    * New order:
-    * [
-    * {
-        * name: "Size", values: [{ name: "Small" }, { name: "Medium" }],
-        * name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }]
-        * }
-        * ].
-        * Description:
-        * Variants with "Green" value are expected to appear before variants with "Red" and "Blue" values.
-        * However, "Size" option appears before "Color".
-        * Therefore, output will be:
-        * ["Small / "Red", "Small / Blue", "Medium / Green"].
-        */
-        public MutationQuery productOptionsReorder(ID productId, List<OptionReorderInput> options, ProductOptionsReorderPayloadQueryDefinition queryDef) {
-            startField("productOptionsReorder");
-
-            _queryBuilder.append("(productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            _queryBuilder.append(",options:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (OptionReorderInput item1 : options) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductOptionsReorderPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Asynchronously reorders the media attached to a product.
-        */
-        public MutationQuery productReorderMedia(ID id, List<MoveInput> moves, ProductReorderMediaPayloadQueryDefinition queryDef) {
-            startField("productReorderMedia");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",moves:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (MoveInput item1 : moves) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductReorderMediaPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ProductSetArguments extends Arguments {
-            ProductSetArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * Whether the mutation should be run synchronously or asynchronously.
-            * If `true`, the mutation will return the updated `product`.
-            * If `false`, the mutation will return a `productSetOperation`.
-            * Defaults to `true`.
-            * Setting `synchronous: false` may be desirable depending on the input complexity/size, and should be
-            * used if you are experiencing timeouts.
-            * **Note**: When run in the context of a
-            * [bulk operation](https://shopify.dev/api/usage/bulk-operations/imports), the mutation will
-            * always run synchronously and this argument will be ignored.
-            */
-            public ProductSetArguments synchronous(Boolean value) {
-                if (value != null) {
-                    startArgument("synchronous");
-                    _queryBuilder.append(value);
-                }
-                return this;
-            }
-        }
-
-        public interface ProductSetArgumentsDefinition {
-            void define(ProductSetArguments args);
-        }
-
-        /**
-        * Creates or updates a product in a single request.
-        * Use this mutation when syncing information from an external data source into Shopify.
-        * When using this mutation to update a product, specify that product's `id` in the input.
-        * Any list field (e.g.
-        * [collections](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-prod
-        * uctsetinput-collections),
-        * [metafields](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-produ
-        * ctsetinput-metafields),
-        * [variants](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-product
-        * setinput-variants))
-        * will be updated so that all included entries are either created or updated, and all existing entries
-        * not
-        * included will be deleted.
-        * All other fields will be updated to the value passed. Omitted fields will not be updated.
-        * When run in synchronous mode, you will get the product back in the response.
-        * For versions `2024-04` and earlier, the synchronous mode has an input limit of 100 variants.
-        * This limit has been removed for versions `2024-07` and later.
-        * In asynchronous mode, you will instead get a
-        * [ProductSetOperation](https://shopify.dev/api/admin-graphql/current/objects/ProductSetOperation)
-        * object back. You can then use the
-        * [productOperation](https://shopify.dev/api/admin-graphql/current/queries/productOperation) query to
-        * retrieve the updated product data. This query uses the `ProductSetOperation` object to
-        * check the status of the operation and to retrieve the details of the updated product and its
-        * variants.
-        * If you need to update a subset of variants, use one of the bulk variant mutations:
-        * -
-        * [productVariantsBulkCreate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkCreate)
-        * -
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkUpdate)
-        * -
-        * [productVariantsBulkDelete](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkDelete)
-        * If you need to update options, use one of the product option mutations:
-        * -
-        * [productOptionsCreate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsCreate)
-        * - [productOptionUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionUpdate)
-        * -
-        * [productOptionsDelete](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsDelete)
-        * -
-        * [productOptionsReorder](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsReorde
-        * r)
-        * See our guide to
-        * [sync product data from an external
-        * source](https://shopify.dev/api/admin/migrate/new-product-model/sync-data)
-        * for more.
-        */
-        public MutationQuery productSet(ProductSetInput input, ProductSetPayloadQueryDefinition queryDef) {
-            return productSet(input, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates or updates a product in a single request.
-        * Use this mutation when syncing information from an external data source into Shopify.
-        * When using this mutation to update a product, specify that product's `id` in the input.
-        * Any list field (e.g.
-        * [collections](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-prod
-        * uctsetinput-collections),
-        * [metafields](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-produ
-        * ctsetinput-metafields),
-        * [variants](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-product
-        * setinput-variants))
-        * will be updated so that all included entries are either created or updated, and all existing entries
-        * not
-        * included will be deleted.
-        * All other fields will be updated to the value passed. Omitted fields will not be updated.
-        * When run in synchronous mode, you will get the product back in the response.
-        * For versions `2024-04` and earlier, the synchronous mode has an input limit of 100 variants.
-        * This limit has been removed for versions `2024-07` and later.
-        * In asynchronous mode, you will instead get a
-        * [ProductSetOperation](https://shopify.dev/api/admin-graphql/current/objects/ProductSetOperation)
-        * object back. You can then use the
-        * [productOperation](https://shopify.dev/api/admin-graphql/current/queries/productOperation) query to
-        * retrieve the updated product data. This query uses the `ProductSetOperation` object to
-        * check the status of the operation and to retrieve the details of the updated product and its
-        * variants.
-        * If you need to update a subset of variants, use one of the bulk variant mutations:
-        * -
-        * [productVariantsBulkCreate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkCreate)
-        * -
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkUpdate)
-        * -
-        * [productVariantsBulkDelete](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsB
-        * ulkDelete)
-        * If you need to update options, use one of the product option mutations:
-        * -
-        * [productOptionsCreate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsCreate)
-        * - [productOptionUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionUpdate)
-        * -
-        * [productOptionsDelete](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsDelete)
-        * -
-        * [productOptionsReorder](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsReorde
-        * r)
-        * See our guide to
-        * [sync product data from an external
-        * source](https://shopify.dev/api/admin/migrate/new-product-model/sync-data)
-        * for more.
-        */
-        public MutationQuery productSet(ProductSetInput input, ProductSetArgumentsDefinition argsDef, ProductSetPayloadQueryDefinition queryDef) {
-            startField("productSet");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            argsDef.define(new ProductSetArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductSetPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ProductUpdateArguments extends Arguments {
-            ProductUpdateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, true);
-            }
-
-            /**
-            * The updated properties for a product.
-            */
-            public ProductUpdateArguments product(ProductUpdateInput value) {
-                if (value != null) {
-                    startArgument("product");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * List of new media to be added to the product.
-            */
-            public ProductUpdateArguments media(List<CreateMediaInput> value) {
-                if (value != null) {
-                    startArgument("media");
-                    _queryBuilder.append('[');
-                    {
-                        String listSeperator1 = "";
-                        for (CreateMediaInput item1 : value) {
-                            _queryBuilder.append(listSeperator1);
-                            listSeperator1 = ",";
-                            item1.appendTo(_queryBuilder);
-                        }
-                    }
-                    _queryBuilder.append(']');
-                }
-                return this;
-            }
-        }
-
-        public interface ProductUpdateArgumentsDefinition {
-            void define(ProductUpdateArguments args);
-        }
-
-        /**
-        * Updates a product.
-        * For versions `2024-01` and older:
-        * If you update a product and only include some variants in the update,
-        * then any variants not included will be deleted.
-        * To safely manage variants without the risk of
-        * deleting excluded variants, use
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantsbu
-        * lkupdate).
-        * If you want to update a single variant, then use
-        * [productVariantUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantupdate).
-        */
-        public MutationQuery productUpdate(ProductUpdatePayloadQueryDefinition queryDef) {
-            return productUpdate(args -> {}, queryDef);
-        }
-
-        /**
-        * Updates a product.
-        * For versions `2024-01` and older:
-        * If you update a product and only include some variants in the update,
-        * then any variants not included will be deleted.
-        * To safely manage variants without the risk of
-        * deleting excluded variants, use
-        * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantsbu
-        * lkupdate).
-        * If you want to update a single variant, then use
-        * [productVariantUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantupdate).
-        */
-        public MutationQuery productUpdate(ProductUpdateArgumentsDefinition argsDef, ProductUpdatePayloadQueryDefinition queryDef) {
-            startField("productUpdate");
-
-            ProductUpdateArguments args = new ProductUpdateArguments(_queryBuilder);
-            argsDef.define(args);
-            ProductUpdateArguments.end(args);
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Appends media from a product to variants of the product.
-        */
-        public MutationQuery productVariantAppendMedia(ID productId, List<ProductVariantAppendMediaInput> variantMedia, ProductVariantAppendMediaPayloadQueryDefinition queryDef) {
-            startField("productVariantAppendMedia");
-
-            _queryBuilder.append("(productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            _queryBuilder.append(",variantMedia:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantAppendMediaInput item1 : variantMedia) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantAppendMediaPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Detaches media from product variants.
-        */
-        public MutationQuery productVariantDetachMedia(ID productId, List<ProductVariantDetachMediaInput> variantMedia, ProductVariantDetachMediaPayloadQueryDefinition queryDef) {
-            startField("productVariantDetachMedia");
-
-            _queryBuilder.append("(productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            _queryBuilder.append(",variantMedia:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantDetachMediaInput item1 : variantMedia) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantDetachMediaPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds multiple selling plan groups to a product variant.
-        */
-        public MutationQuery productVariantJoinSellingPlanGroups(ID id, List<ID> sellingPlanGroupIds, ProductVariantJoinSellingPlanGroupsPayloadQueryDefinition queryDef) {
-            startField("productVariantJoinSellingPlanGroups");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",sellingPlanGroupIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : sellingPlanGroupIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantJoinSellingPlanGroupsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Remove multiple groups from a product variant.
-        */
-        public MutationQuery productVariantLeaveSellingPlanGroups(ID id, List<ID> sellingPlanGroupIds, ProductVariantLeaveSellingPlanGroupsPayloadQueryDefinition queryDef) {
-            startField("productVariantLeaveSellingPlanGroups");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",sellingPlanGroupIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : sellingPlanGroupIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantLeaveSellingPlanGroupsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates new bundles, updates existing bundles, and removes bundle components for one or multiple
-        * bundles.
-        */
-        public MutationQuery productVariantRelationshipBulkUpdate(List<ProductVariantRelationshipUpdateInput> input, ProductVariantRelationshipBulkUpdatePayloadQueryDefinition queryDef) {
-            startField("productVariantRelationshipBulkUpdate");
-
-            _queryBuilder.append("(input:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantRelationshipUpdateInput item1 : input) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantRelationshipBulkUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ProductVariantsBulkCreateArguments extends Arguments {
-            ProductVariantsBulkCreateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * List of new media to be added to the product.
-            */
-            public ProductVariantsBulkCreateArguments media(List<CreateMediaInput> value) {
-                if (value != null) {
-                    startArgument("media");
-                    _queryBuilder.append('[');
-                    {
-                        String listSeperator1 = "";
-                        for (CreateMediaInput item1 : value) {
-                            _queryBuilder.append(listSeperator1);
-                            listSeperator1 = ",";
-                            item1.appendTo(_queryBuilder);
-                        }
-                    }
-                    _queryBuilder.append(']');
-                }
-                return this;
-            }
-
-            /**
-            * The strategy defines which behavior the mutation should observe, such as whether to keep or delete
-            * the standalone variant (when product has only a single or default variant) when creating new
-            * variants in bulk.
-            */
-            public ProductVariantsBulkCreateArguments strategy(ProductVariantsBulkCreateStrategy value) {
-                if (value != null) {
-                    startArgument("strategy");
-                    _queryBuilder.append(value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface ProductVariantsBulkCreateArgumentsDefinition {
-            void define(ProductVariantsBulkCreateArguments args);
-        }
-
-        /**
-        * Creates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkCreate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkCreatePayloadQueryDefinition queryDef) {
-            return productVariantsBulkCreate(variants, productId, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkCreate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkCreateArgumentsDefinition argsDef, ProductVariantsBulkCreatePayloadQueryDefinition queryDef) {
-            startField("productVariantsBulkCreate");
-
-            _queryBuilder.append("(variants:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantsBulkInput item1 : variants) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(",productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            argsDef.define(new ProductVariantsBulkCreateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantsBulkCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkDelete(List<ID> variantsIds, ID productId, ProductVariantsBulkDeletePayloadQueryDefinition queryDef) {
-            startField("productVariantsBulkDelete");
-
-            _queryBuilder.append("(variantsIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : variantsIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(",productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantsBulkDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Reorders multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkReorder(ID productId, List<ProductVariantPositionInput> positions, ProductVariantsBulkReorderPayloadQueryDefinition queryDef) {
-            startField("productVariantsBulkReorder");
-
-            _queryBuilder.append("(productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            _queryBuilder.append(",positions:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantPositionInput item1 : positions) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantsBulkReorderPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ProductVariantsBulkUpdateArguments extends Arguments {
-            ProductVariantsBulkUpdateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * List of new media to be added to the product.
-            */
-            public ProductVariantsBulkUpdateArguments media(List<CreateMediaInput> value) {
-                if (value != null) {
-                    startArgument("media");
-                    _queryBuilder.append('[');
-                    {
-                        String listSeperator1 = "";
-                        for (CreateMediaInput item1 : value) {
-                            _queryBuilder.append(listSeperator1);
-                            listSeperator1 = ",";
-                            item1.appendTo(_queryBuilder);
-                        }
-                    }
-                    _queryBuilder.append(']');
-                }
-                return this;
-            }
-
-            /**
-            * When partial updates are allowed, valid variant changes may be persisted even if some of
-            * the variants updated have invalid data and cannot be persisted.
-            * When partial updates are not allowed, any error will prevent all variants from updating.
-            */
-            public ProductVariantsBulkUpdateArguments allowPartialUpdates(Boolean value) {
-                if (value != null) {
-                    startArgument("allowPartialUpdates");
-                    _queryBuilder.append(value);
-                }
-                return this;
-            }
-        }
-
-        public interface ProductVariantsBulkUpdateArgumentsDefinition {
-            void define(ProductVariantsBulkUpdateArguments args);
-        }
-
-        /**
-        * Updates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkUpdate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkUpdatePayloadQueryDefinition queryDef) {
-            return productVariantsBulkUpdate(variants, productId, args -> {}, queryDef);
-        }
-
-        /**
-        * Updates multiple variants in a single product. This mutation can be called directly or via the
-        * bulkOperation.
-        */
-        public MutationQuery productVariantsBulkUpdate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkUpdateArgumentsDefinition argsDef, ProductVariantsBulkUpdatePayloadQueryDefinition queryDef) {
-            startField("productVariantsBulkUpdate");
-
-            _queryBuilder.append("(variants:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ProductVariantsBulkInput item1 : variants) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(",productId:");
-            Query.appendQuotedString(_queryBuilder, productId.toString());
-
-            argsDef.define(new ProductVariantsBulkUpdateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ProductVariantsBulkUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates the server pixel to connect to a Google PubSub endpoint.
-        * Running this mutation deletes any previous subscriptions for the server pixel.
-        */
-        public MutationQuery pubSubServerPixelUpdate(String pubSubProject, String pubSubTopic, PubSubServerPixelUpdatePayloadQueryDefinition queryDef) {
-            startField("pubSubServerPixelUpdate");
-
-            _queryBuilder.append("(pubSubProject:");
-            Query.appendQuotedString(_queryBuilder, pubSubProject.toString());
-
-            _queryBuilder.append(",pubSubTopic:");
-            Query.appendQuotedString(_queryBuilder, pubSubTopic.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PubSubServerPixelUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a new Google Cloud Pub/Sub webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery pubSubWebhookSubscriptionCreate(WebhookSubscriptionTopic topic, PubSubWebhookSubscriptionInput webhookSubscription, PubSubWebhookSubscriptionCreatePayloadQueryDefinition queryDef) {
-            startField("pubSubWebhookSubscriptionCreate");
-
-            _queryBuilder.append("(topic:");
-            _queryBuilder.append(topic.toString());
-
-            _queryBuilder.append(",webhookSubscription:");
-            webhookSubscription.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PubSubWebhookSubscriptionCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class PubSubWebhookSubscriptionUpdateArguments extends Arguments {
-            PubSubWebhookSubscriptionUpdateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * Specifies the input fields for a Google Cloud Pub/Sub webhook subscription.
-            */
-            public PubSubWebhookSubscriptionUpdateArguments webhookSubscription(PubSubWebhookSubscriptionInput value) {
-                if (value != null) {
-                    startArgument("webhookSubscription");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-        }
-
-        public interface PubSubWebhookSubscriptionUpdateArgumentsDefinition {
-            void define(PubSubWebhookSubscriptionUpdateArguments args);
-        }
-
-        /**
-        * Updates a Google Cloud Pub/Sub webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery pubSubWebhookSubscriptionUpdate(ID id, PubSubWebhookSubscriptionUpdatePayloadQueryDefinition queryDef) {
-            return pubSubWebhookSubscriptionUpdate(id, args -> {}, queryDef);
-        }
-
-        /**
-        * Updates a Google Cloud Pub/Sub webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery pubSubWebhookSubscriptionUpdate(ID id, PubSubWebhookSubscriptionUpdateArgumentsDefinition argsDef, PubSubWebhookSubscriptionUpdatePayloadQueryDefinition queryDef) {
-            startField("pubSubWebhookSubscriptionUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            argsDef.define(new PubSubWebhookSubscriptionUpdateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PubSubWebhookSubscriptionUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a publication.
-        */
-        public MutationQuery publicationCreate(PublicationCreateInput input, PublicationCreatePayloadQueryDefinition queryDef) {
-            startField("publicationCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublicationCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a publication.
-        */
-        public MutationQuery publicationDelete(ID id, PublicationDeletePayloadQueryDefinition queryDef) {
-            startField("publicationDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublicationDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a publication.
-        */
-        public MutationQuery publicationUpdate(ID id, PublicationUpdateInput input, PublicationUpdatePayloadQueryDefinition queryDef) {
-            startField("publicationUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublicationUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Publishes a resource to a channel. If the resource is a product, then it's visible in the channel
-        * only if the product status is `active`. Products that are sold exclusively on subscription
-        * (`requiresSellingPlan: true`) can be published only on online stores.
-        */
-        public MutationQuery publishablePublish(ID id, List<PublicationInput> input, PublishablePublishPayloadQueryDefinition queryDef) {
-            startField("publishablePublish");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (PublicationInput item1 : input) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublishablePublishPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Publishes a resource to current channel. If the resource is a product, then it's visible in the
-        * channel only if the product status is `active`. Products that are sold exclusively on subscription
-        * (`requiresSellingPlan: true`) can be published only on online stores.
-        */
-        public MutationQuery publishablePublishToCurrentChannel(ID id, PublishablePublishToCurrentChannelPayloadQueryDefinition queryDef) {
-            startField("publishablePublishToCurrentChannel");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublishablePublishToCurrentChannelPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Unpublishes a resource from a channel. If the resource is a product, then it's visible in the
-        * channel only if the product status is `active`.
-        */
-        public MutationQuery publishableUnpublish(ID id, List<PublicationInput> input, PublishableUnpublishPayloadQueryDefinition queryDef) {
-            startField("publishableUnpublish");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (PublicationInput item1 : input) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublishableUnpublishPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Unpublishes a resource from the current channel. If the resource is a product, then it's visible in
-        * the channel only if the product status is `active`.
-        */
-        public MutationQuery publishableUnpublishToCurrentChannel(ID id, PublishableUnpublishToCurrentChannelPayloadQueryDefinition queryDef) {
-            startField("publishableUnpublishToCurrentChannel");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new PublishableUnpublishToCurrentChannelPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates quantity pricing on a price list. You can use the `quantityPricingByVariantUpdate` mutation
-        * to set fixed prices, quantity rules, and quantity price breaks. This mutation does not allow partial
-        * successes. If any of the requested resources fail to update, none of the requested resources will be
-        * updated. Delete operations are executed before create operations.
-        */
-        public MutationQuery quantityPricingByVariantUpdate(ID priceListId, QuantityPricingByVariantUpdateInput input, QuantityPricingByVariantUpdatePayloadQueryDefinition queryDef) {
-            startField("quantityPricingByVariantUpdate");
-
-            _queryBuilder.append("(priceListId:");
-            Query.appendQuotedString(_queryBuilder, priceListId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new QuantityPricingByVariantUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates or updates existing quantity rules on a price list.
-        * You can use the `quantityRulesAdd` mutation to set order level minimums, maximumums and increments
-        * for specific product variants.
-        */
-        public MutationQuery quantityRulesAdd(ID priceListId, List<QuantityRuleInput> quantityRules, QuantityRulesAddPayloadQueryDefinition queryDef) {
-            startField("quantityRulesAdd");
-
-            _queryBuilder.append("(priceListId:");
-            Query.appendQuotedString(_queryBuilder, priceListId.toString());
-
-            _queryBuilder.append(",quantityRules:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (QuantityRuleInput item1 : quantityRules) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new QuantityRulesAddPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes specific quantity rules from a price list using a product variant ID.
-        * You can use the `quantityRulesDelete` mutation to delete a set of quantity rules from a price list.
-        */
-        public MutationQuery quantityRulesDelete(ID priceListId, List<ID> variantIds, QuantityRulesDeletePayloadQueryDefinition queryDef) {
-            startField("quantityRulesDelete");
-
-            _queryBuilder.append("(priceListId:");
-            Query.appendQuotedString(_queryBuilder, priceListId.toString());
-
-            _queryBuilder.append(",variantIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : variantIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new QuantityRulesDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a refund.
-        */
-        public MutationQuery refundCreate(RefundInput input, RefundCreatePayloadQueryDefinition queryDef) {
-            startField("refundCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new RefundCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Approves a customer's return request.
-        * If this mutation is successful, then the `Return.status` field of the
-        * approved return is set to `OPEN`.
-        */
-        public MutationQuery returnApproveRequest(ReturnApproveRequestInput input, ReturnApproveRequestPayloadQueryDefinition queryDef) {
-            startField("returnApproveRequest");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnApproveRequestPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Cancels a return and restores the items back to being fulfilled.
-        * Canceling a return is only available before any work has been done
-        * on the return (such as an inspection or refund).
-        */
-        public MutationQuery returnCancel(ID id, ReturnCancelPayloadQueryDefinition queryDef) {
-            startField("returnCancel");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnCancelPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Indicates a return is complete, either when a refund has been made and items restocked,
-        * or simply when it has been marked as returned in the system.
-        */
-        public MutationQuery returnClose(ID id, ReturnClosePayloadQueryDefinition queryDef) {
-            startField("returnClose");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnClosePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a return.
-        */
-        public MutationQuery returnCreate(ReturnInput returnInput, ReturnCreatePayloadQueryDefinition queryDef) {
-            startField("returnCreate");
-
-            _queryBuilder.append("(returnInput:");
-            returnInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Declines a return on an order.
-        * When a return is declined, each `ReturnLineItem.fulfillmentLineItem` can be associated to a new
-        * return.
-        * Use the `ReturnCreate` or `ReturnRequest` mutation to initiate a new return.
-        */
-        public MutationQuery returnDeclineRequest(ReturnDeclineRequestInput input, ReturnDeclineRequestPayloadQueryDefinition queryDef) {
-            startField("returnDeclineRequest");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnDeclineRequestPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Removes return lines from a return.
-        */
-        public MutationQuery returnLineItemRemoveFromReturn(ID returnId, List<ReturnLineItemRemoveFromReturnInput> returnLineItems, ReturnLineItemRemoveFromReturnPayloadQueryDefinition queryDef) {
-            startField("returnLineItemRemoveFromReturn");
-
-            _queryBuilder.append("(returnId:");
-            Query.appendQuotedString(_queryBuilder, returnId.toString());
-
-            _queryBuilder.append(",returnLineItems:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ReturnLineItemRemoveFromReturnInput item1 : returnLineItems) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnLineItemRemoveFromReturnPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Refunds a return when its status is `OPEN` or `CLOSED` and associates it with the related return
-        * request.
-        */
-        public MutationQuery returnRefund(ReturnRefundInput returnRefundInput, ReturnRefundPayloadQueryDefinition queryDef) {
-            startField("returnRefund");
-
-            _queryBuilder.append("(returnRefundInput:");
-            returnRefundInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnRefundPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Reopens a closed return.
-        */
-        public MutationQuery returnReopen(ID id, ReturnReopenPayloadQueryDefinition queryDef) {
-            startField("returnReopen");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnReopenPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * A customer's return request that hasn't been approved or declined.
-        * This mutation sets the value of the `Return.status` field to `REQUESTED`.
-        * To create a return that has the `Return.status` field set to `OPEN`, use the `returnCreate`
-        * mutation.
-        */
-        public MutationQuery returnRequest(ReturnRequestInput input, ReturnRequestPayloadQueryDefinition queryDef) {
-            startField("returnRequest");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReturnRequestPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ReverseDeliveryCreateWithShippingArguments extends Arguments {
-            ReverseDeliveryCreateWithShippingArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The tracking information for the reverse delivery.
-            */
-            public ReverseDeliveryCreateWithShippingArguments trackingInput(ReverseDeliveryTrackingInput value) {
-                if (value != null) {
-                    startArgument("trackingInput");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * The return label file information for the reverse delivery.
-            */
-            public ReverseDeliveryCreateWithShippingArguments labelInput(ReverseDeliveryLabelInput value) {
-                if (value != null) {
-                    startArgument("labelInput");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * When `true` the customer is notified with delivery instructions if the
-            * `ReverseFulfillmentOrder.order.email` is present.
-            */
-            public ReverseDeliveryCreateWithShippingArguments notifyCustomer(Boolean value) {
-                if (value != null) {
-                    startArgument("notifyCustomer");
-                    _queryBuilder.append(value);
-                }
-                return this;
-            }
-        }
-
-        public interface ReverseDeliveryCreateWithShippingArgumentsDefinition {
-            void define(ReverseDeliveryCreateWithShippingArguments args);
-        }
-
-        /**
-        * Creates a new reverse delivery with associated external shipping information.
-        */
-        public MutationQuery reverseDeliveryCreateWithShipping(ID reverseFulfillmentOrderId, List<ReverseDeliveryLineItemInput> reverseDeliveryLineItems, ReverseDeliveryCreateWithShippingPayloadQueryDefinition queryDef) {
-            return reverseDeliveryCreateWithShipping(reverseFulfillmentOrderId, reverseDeliveryLineItems, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates a new reverse delivery with associated external shipping information.
-        */
-        public MutationQuery reverseDeliveryCreateWithShipping(ID reverseFulfillmentOrderId, List<ReverseDeliveryLineItemInput> reverseDeliveryLineItems, ReverseDeliveryCreateWithShippingArgumentsDefinition argsDef, ReverseDeliveryCreateWithShippingPayloadQueryDefinition queryDef) {
-            startField("reverseDeliveryCreateWithShipping");
-
-            _queryBuilder.append("(reverseFulfillmentOrderId:");
-            Query.appendQuotedString(_queryBuilder, reverseFulfillmentOrderId.toString());
-
-            _queryBuilder.append(",reverseDeliveryLineItems:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ReverseDeliveryLineItemInput item1 : reverseDeliveryLineItems) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            argsDef.define(new ReverseDeliveryCreateWithShippingArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReverseDeliveryCreateWithShippingPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ReverseDeliveryShippingUpdateArguments extends Arguments {
-            ReverseDeliveryShippingUpdateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The tracking information for the reverse delivery.
-            */
-            public ReverseDeliveryShippingUpdateArguments trackingInput(ReverseDeliveryTrackingInput value) {
-                if (value != null) {
-                    startArgument("trackingInput");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * The return label file information for the reverse delivery.
-            */
-            public ReverseDeliveryShippingUpdateArguments labelInput(ReverseDeliveryLabelInput value) {
-                if (value != null) {
-                    startArgument("labelInput");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * If `true` and an email address exists on the `ReverseFulfillmentOrder.order`, then the customer is
-            * notified with the updated delivery instructions.
-            */
-            public ReverseDeliveryShippingUpdateArguments notifyCustomer(Boolean value) {
-                if (value != null) {
-                    startArgument("notifyCustomer");
-                    _queryBuilder.append(value);
-                }
-                return this;
-            }
-        }
-
-        public interface ReverseDeliveryShippingUpdateArgumentsDefinition {
-            void define(ReverseDeliveryShippingUpdateArguments args);
-        }
-
-        /**
-        * Updates a reverse delivery with associated external shipping information.
-        */
-        public MutationQuery reverseDeliveryShippingUpdate(ID reverseDeliveryId, ReverseDeliveryShippingUpdatePayloadQueryDefinition queryDef) {
-            return reverseDeliveryShippingUpdate(reverseDeliveryId, args -> {}, queryDef);
-        }
-
-        /**
-        * Updates a reverse delivery with associated external shipping information.
-        */
-        public MutationQuery reverseDeliveryShippingUpdate(ID reverseDeliveryId, ReverseDeliveryShippingUpdateArgumentsDefinition argsDef, ReverseDeliveryShippingUpdatePayloadQueryDefinition queryDef) {
-            startField("reverseDeliveryShippingUpdate");
-
-            _queryBuilder.append("(reverseDeliveryId:");
-            Query.appendQuotedString(_queryBuilder, reverseDeliveryId.toString());
-
-            argsDef.define(new ReverseDeliveryShippingUpdateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReverseDeliveryShippingUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Disposes reverse fulfillment order line items.
-        */
-        public MutationQuery reverseFulfillmentOrderDispose(List<ReverseFulfillmentOrderDisposeInput> dispositionInputs, ReverseFulfillmentOrderDisposePayloadQueryDefinition queryDef) {
-            startField("reverseFulfillmentOrderDispose");
-
-            _queryBuilder.append("(dispositionInputs:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ReverseFulfillmentOrderDisposeInput item1 : dispositionInputs) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ReverseFulfillmentOrderDisposePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a saved search.
-        */
-        public MutationQuery savedSearchCreate(SavedSearchCreateInput input, SavedSearchCreatePayloadQueryDefinition queryDef) {
-            startField("savedSearchCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SavedSearchCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Delete a saved search.
-        */
-        public MutationQuery savedSearchDelete(SavedSearchDeleteInput input, SavedSearchDeletePayloadQueryDefinition queryDef) {
-            startField("savedSearchDelete");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SavedSearchDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a saved search.
-        */
-        public MutationQuery savedSearchUpdate(SavedSearchUpdateInput input, SavedSearchUpdatePayloadQueryDefinition queryDef) {
-            startField("savedSearchUpdate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SavedSearchUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Creates a new script tag.
-        */
-        public MutationQuery scriptTagCreate(ScriptTagInput input, ScriptTagCreatePayloadQueryDefinition queryDef) {
-            startField("scriptTagCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ScriptTagCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Deletes a script tag.
-        */
-        public MutationQuery scriptTagDelete(ID id, ScriptTagDeletePayloadQueryDefinition queryDef) {
-            startField("scriptTagDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ScriptTagDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * <div class="note"><h4>Theme app extensions</h4>
-        * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-        * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-        * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
-        * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
-        * more</a>.</p></div>
-        * <div class="note"><h4>Script tag deprecation</h4>
-        * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
-        * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
-        * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
-        * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
-        * Updates a script tag.
-        */
-        public MutationQuery scriptTagUpdate(ID id, ScriptTagInput input, ScriptTagUpdatePayloadQueryDefinition queryDef) {
-            startField("scriptTagUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ScriptTagUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a segment.
-        */
-        public MutationQuery segmentCreate(String name, String query, SegmentCreatePayloadQueryDefinition queryDef) {
-            startField("segmentCreate");
-
-            _queryBuilder.append("(name:");
-            Query.appendQuotedString(_queryBuilder, name.toString());
-
-            _queryBuilder.append(",query:");
-            Query.appendQuotedString(_queryBuilder, query.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SegmentCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a segment.
-        */
-        public MutationQuery segmentDelete(ID id, SegmentDeletePayloadQueryDefinition queryDef) {
-            startField("segmentDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SegmentDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class SegmentUpdateArguments extends Arguments {
-            SegmentUpdateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The new name for the segment.
-            */
-            public SegmentUpdateArguments name(String value) {
-                if (value != null) {
-                    startArgument("name");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-
-            /**
-            * A precise definition of the segment. The definition is composed of a combination of conditions on
-            * facts about customers such as `email_subscription_status = 'SUBSCRIBED'` with [this
-            * syntax](https://shopify.dev/api/shopifyql/segment-query-language-reference).
-            */
-            public SegmentUpdateArguments query(String value) {
-                if (value != null) {
-                    startArgument("query");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface SegmentUpdateArgumentsDefinition {
-            void define(SegmentUpdateArguments args);
-        }
-
-        /**
-        * Updates a segment.
-        */
-        public MutationQuery segmentUpdate(ID id, SegmentUpdatePayloadQueryDefinition queryDef) {
-            return segmentUpdate(id, args -> {}, queryDef);
-        }
-
-        /**
-        * Updates a segment.
-        */
-        public MutationQuery segmentUpdate(ID id, SegmentUpdateArgumentsDefinition argsDef, SegmentUpdatePayloadQueryDefinition queryDef) {
-            startField("segmentUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            argsDef.define(new SegmentUpdateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SegmentUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds multiple product variants to a selling plan group.
-        */
-        public MutationQuery sellingPlanGroupAddProductVariants(ID id, List<ID> productVariantIds, SellingPlanGroupAddProductVariantsPayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupAddProductVariants");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",productVariantIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : productVariantIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupAddProductVariantsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds multiple products to a selling plan group.
-        */
-        public MutationQuery sellingPlanGroupAddProducts(ID id, List<ID> productIds, SellingPlanGroupAddProductsPayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupAddProducts");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",productIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : productIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupAddProductsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class SellingPlanGroupCreateArguments extends Arguments {
-            SellingPlanGroupCreateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The resources this Selling Plan Group should be applied to.
-            */
-            public SellingPlanGroupCreateArguments resources(SellingPlanGroupResourceInput value) {
-                if (value != null) {
-                    startArgument("resources");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-        }
-
-        public interface SellingPlanGroupCreateArgumentsDefinition {
-            void define(SellingPlanGroupCreateArguments args);
-        }
-
-        /**
-        * Creates a Selling Plan Group.
-        */
-        public MutationQuery sellingPlanGroupCreate(SellingPlanGroupInput input, SellingPlanGroupCreatePayloadQueryDefinition queryDef) {
-            return sellingPlanGroupCreate(input, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates a Selling Plan Group.
-        */
-        public MutationQuery sellingPlanGroupCreate(SellingPlanGroupInput input, SellingPlanGroupCreateArgumentsDefinition argsDef, SellingPlanGroupCreatePayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            argsDef.define(new SellingPlanGroupCreateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Delete a Selling Plan Group. This does not affect subscription contracts.
-        */
-        public MutationQuery sellingPlanGroupDelete(ID id, SellingPlanGroupDeletePayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Removes multiple product variants from a selling plan group.
-        */
-        public MutationQuery sellingPlanGroupRemoveProductVariants(ID id, List<ID> productVariantIds, SellingPlanGroupRemoveProductVariantsPayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupRemoveProductVariants");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",productVariantIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : productVariantIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupRemoveProductVariantsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Removes multiple products from a selling plan group.
-        */
-        public MutationQuery sellingPlanGroupRemoveProducts(ID id, List<ID> productIds, SellingPlanGroupRemoveProductsPayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupRemoveProducts");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",productIds:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : productIds) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupRemoveProductsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Update a Selling Plan Group.
-        */
-        public MutationQuery sellingPlanGroupUpdate(ID id, SellingPlanGroupInput input, SellingPlanGroupUpdatePayloadQueryDefinition queryDef) {
-            startField("sellingPlanGroupUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SellingPlanGroupUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a new unconfigured server pixel. A single server pixel can exist for an app and shop
-        * combination. If you call this mutation when a server pixel already exists, then an error will
-        * return.
-        */
-        public MutationQuery serverPixelCreate(ServerPixelCreatePayloadQueryDefinition queryDef) {
-            startField("serverPixelCreate");
-
-            _queryBuilder.append('{');
-            queryDef.define(new ServerPixelCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes the Server Pixel associated with the current app & shop.
-        */
-        public MutationQuery serverPixelDelete(ServerPixelDeletePayloadQueryDefinition queryDef) {
-            startField("serverPixelDelete");
-
-            _queryBuilder.append('{');
-            queryDef.define(new ServerPixelDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a shipping package.
-        */
-        public MutationQuery shippingPackageDelete(ID id, ShippingPackageDeletePayloadQueryDefinition queryDef) {
-            startField("shippingPackageDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShippingPackageDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Set a shipping package as the default.
-        * The default shipping package is the one used to calculate shipping costs on checkout.
-        */
-        public MutationQuery shippingPackageMakeDefault(ID id, ShippingPackageMakeDefaultPayloadQueryDefinition queryDef) {
-            startField("shippingPackageMakeDefault");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShippingPackageMakeDefaultPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a shipping package.
-        */
-        public MutationQuery shippingPackageUpdate(ID id, CustomShippingPackageInput shippingPackage, ShippingPackageUpdatePayloadQueryDefinition queryDef) {
-            startField("shippingPackageUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",shippingPackage:");
-            shippingPackage.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShippingPackageUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a locale for a shop. This also deletes all translations of this locale.
-        */
-        public MutationQuery shopLocaleDisable(String locale, ShopLocaleDisablePayloadQueryDefinition queryDef) {
-            startField("shopLocaleDisable");
-
-            _queryBuilder.append("(locale:");
-            Query.appendQuotedString(_queryBuilder, locale.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopLocaleDisablePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ShopLocaleEnableArguments extends Arguments {
-            ShopLocaleEnableArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The list of markets web presences to add the locale to.
-            */
-            public ShopLocaleEnableArguments marketWebPresenceIds(List<ID> value) {
-                if (value != null) {
-                    startArgument("marketWebPresenceIds");
-                    _queryBuilder.append('[');
-                    {
-                        String listSeperator1 = "";
-                        for (ID item1 : value) {
-                            _queryBuilder.append(listSeperator1);
-                            listSeperator1 = ",";
-                            Query.appendQuotedString(_queryBuilder, item1.toString());
-                        }
-                    }
-                    _queryBuilder.append(']');
-                }
-                return this;
-            }
-        }
-
-        public interface ShopLocaleEnableArgumentsDefinition {
-            void define(ShopLocaleEnableArguments args);
-        }
-
-        /**
-        * Adds a locale for a shop. The newly added locale is in the unpublished state.
-        */
-        public MutationQuery shopLocaleEnable(String locale, ShopLocaleEnablePayloadQueryDefinition queryDef) {
-            return shopLocaleEnable(locale, args -> {}, queryDef);
-        }
-
-        /**
-        * Adds a locale for a shop. The newly added locale is in the unpublished state.
-        */
-        public MutationQuery shopLocaleEnable(String locale, ShopLocaleEnableArgumentsDefinition argsDef, ShopLocaleEnablePayloadQueryDefinition queryDef) {
-            startField("shopLocaleEnable");
-
-            _queryBuilder.append("(locale:");
-            Query.appendQuotedString(_queryBuilder, locale.toString());
-
-            argsDef.define(new ShopLocaleEnableArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopLocaleEnablePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a locale for a shop.
-        */
-        public MutationQuery shopLocaleUpdate(String locale, ShopLocaleInput shopLocale, ShopLocaleUpdatePayloadQueryDefinition queryDef) {
-            startField("shopLocaleUpdate");
-
-            _queryBuilder.append("(locale:");
-            Query.appendQuotedString(_queryBuilder, locale.toString());
-
-            _queryBuilder.append(",shopLocale:");
-            shopLocale.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopLocaleUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a shop policy.
-        */
-        public MutationQuery shopPolicyUpdate(ShopPolicyInput shopPolicy, ShopPolicyUpdatePayloadQueryDefinition queryDef) {
-            startField("shopPolicyUpdate");
-
-            _queryBuilder.append("(shopPolicy:");
-            shopPolicy.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopPolicyUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * The `ResourceFeedback` object lets your app report the status of shops and their resources. For
-        * example, if
-        * your app is a marketplace channel, then you can use resource feedback to alert merchants that they
-        * need to connect their marketplace account by signing in.
-        * Resource feedback notifications are displayed to the merchant on the home screen of their Shopify
-        * admin, and in the product details view for any products that are published to your app.
-        * This resource should be used only in cases where you're describing steps that a merchant is required
-        * to complete. If your app offers optional or promotional set-up steps, or if it makes
-        * recommendations, then don't use resource feedback to let merchants know about them.
-        * ## Sending feedback on a shop
-        * You can send resource feedback on a shop to let the merchant know what steps they need to take to
-        * make sure that your app is set up correctly. Feedback can have one of two states: `requires_action`
-        * or `success`. You need to send a `requires_action` feedback request for each step that the merchant
-        * is required to complete.
-        * If there are multiple set-up steps that require merchant action, then send feedback with a state of
-        * `requires_action` as merchants complete prior steps. And to remove the feedback message from the
-        * Shopify admin, send a `success` feedback request.
-        * #### Important
-        * Sending feedback replaces previously sent feedback for the shop. Send a new
-        * `shopResourceFeedbackCreate` mutation to push the latest state of a shop or its resources to
-        * Shopify.
-        */
-        public MutationQuery shopResourceFeedbackCreate(ResourceFeedbackCreateInput input, ShopResourceFeedbackCreatePayloadQueryDefinition queryDef) {
-            startField("shopResourceFeedbackCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopResourceFeedbackCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ShopifyPaymentsPayoutAlternateCurrencyCreateArguments extends Arguments {
-            ShopifyPaymentsPayoutAlternateCurrencyCreateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The ID of the Shopify Payments account on which the mutation is being performed.
-            */
-            public ShopifyPaymentsPayoutAlternateCurrencyCreateArguments accountId(ID value) {
-                if (value != null) {
-                    startArgument("accountId");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface ShopifyPaymentsPayoutAlternateCurrencyCreateArgumentsDefinition {
-            void define(ShopifyPaymentsPayoutAlternateCurrencyCreateArguments args);
-        }
-
-        /**
-        * Creates an alternate currency payout for a Shopify Payments account.
-        */
-        public MutationQuery shopifyPaymentsPayoutAlternateCurrencyCreate(CurrencyCode currency, ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQueryDefinition queryDef) {
-            return shopifyPaymentsPayoutAlternateCurrencyCreate(currency, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates an alternate currency payout for a Shopify Payments account.
-        */
-        public MutationQuery shopifyPaymentsPayoutAlternateCurrencyCreate(CurrencyCode currency, ShopifyPaymentsPayoutAlternateCurrencyCreateArgumentsDefinition argsDef, ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQueryDefinition queryDef) {
-            startField("shopifyPaymentsPayoutAlternateCurrencyCreate");
-
-            _queryBuilder.append("(currency:");
-            _queryBuilder.append(currency.toString());
-
-            argsDef.define(new ShopifyPaymentsPayoutAlternateCurrencyCreateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates staged upload targets for each input. This is the first step in the upload process.
-        * The returned staged upload targets' URL and parameter fields can be used to send a request
-        * to upload the file described in the corresponding input.
-        * For more information on the upload process, refer to
-        * [Upload media to
-        * Shopify](https://shopify.dev/apps/online-store/media/products#step-1-upload-media-to-shopify).
-        */
-        public MutationQuery stagedUploadsCreate(List<StagedUploadInput> input, StagedUploadsCreatePayloadQueryDefinition queryDef) {
-            startField("stagedUploadsCreate");
-
-            _queryBuilder.append("(input:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (StagedUploadInput item1 : input) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StagedUploadsCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class StandardMetafieldDefinitionEnableArguments extends Arguments {
-            StandardMetafieldDefinitionEnableArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The ID of the standard metafield definition template to enable.
-            */
-            public StandardMetafieldDefinitionEnableArguments id(ID value) {
-                if (value != null) {
-                    startArgument("id");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-
-            /**
-            * The namespace of the standard metafield to enable. Used in combination with `key`.
-            */
-            public StandardMetafieldDefinitionEnableArguments namespace(String value) {
-                if (value != null) {
-                    startArgument("namespace");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-
-            /**
-            * The key of the standard metafield to enable. Used in combination with `namespace`.
-            */
-            public StandardMetafieldDefinitionEnableArguments key(String value) {
-                if (value != null) {
-                    startArgument("key");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-
-            /**
-            * Whether the metafield definition can be used as a collection condition.
-            */
-            public StandardMetafieldDefinitionEnableArguments useAsCollectionCondition(Boolean value) {
-                if (value != null) {
-                    startArgument("useAsCollectionCondition");
-                    _queryBuilder.append(value);
-                }
-                return this;
-            }
-
-            /**
-            * The capabilities of the metafield definition.
-            */
-            public StandardMetafieldDefinitionEnableArguments capabilities(MetafieldCapabilityCreateInput value) {
-                if (value != null) {
-                    startArgument("capabilities");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * The access settings that apply to each of the metafields that belong to the metafield definition.
-            */
-            public StandardMetafieldDefinitionEnableArguments access(StandardMetafieldDefinitionAccessInput value) {
-                if (value != null) {
-                    startArgument("access");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-        }
-
-        public interface StandardMetafieldDefinitionEnableArgumentsDefinition {
-            void define(StandardMetafieldDefinitionEnableArguments args);
-        }
-
-        /**
-        * Activates the specified standard metafield definition from its template.
-        * Refer to the [list of standard metafield definition
-        * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
-        */
-        public MutationQuery standardMetafieldDefinitionEnable(MetafieldOwnerType ownerType, boolean pin, StandardMetafieldDefinitionEnablePayloadQueryDefinition queryDef) {
-            return standardMetafieldDefinitionEnable(ownerType, pin, args -> {}, queryDef);
-        }
-
-        /**
-        * Activates the specified standard metafield definition from its template.
-        * Refer to the [list of standard metafield definition
-        * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
-        */
-        public MutationQuery standardMetafieldDefinitionEnable(MetafieldOwnerType ownerType, boolean pin, StandardMetafieldDefinitionEnableArgumentsDefinition argsDef, StandardMetafieldDefinitionEnablePayloadQueryDefinition queryDef) {
-            startField("standardMetafieldDefinitionEnable");
-
-            _queryBuilder.append("(ownerType:");
-            _queryBuilder.append(ownerType.toString());
-
-            _queryBuilder.append(",pin:");
-            _queryBuilder.append(pin);
-
-            argsDef.define(new StandardMetafieldDefinitionEnableArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StandardMetafieldDefinitionEnablePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Enables the specified standard metaobject definition from its template.
-        */
-        public MutationQuery standardMetaobjectDefinitionEnable(String type, StandardMetaobjectDefinitionEnablePayloadQueryDefinition queryDef) {
-            startField("standardMetaobjectDefinitionEnable");
-
-            _queryBuilder.append("(type:");
-            Query.appendQuotedString(_queryBuilder, type.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StandardMetaobjectDefinitionEnablePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a credit transaction that increases the store credit account balance by the given amount.
-        * This operation will create an account if one does not already exist.
-        * A store credit account owner can hold multiple accounts each with a different currency.
-        * Use the most appropriate currency for the given store credit account owner.
-        */
-        public MutationQuery storeCreditAccountCredit(ID id, StoreCreditAccountCreditInput creditInput, StoreCreditAccountCreditPayloadQueryDefinition queryDef) {
-            startField("storeCreditAccountCredit");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",creditInput:");
-            creditInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StoreCreditAccountCreditPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a debit transaction that decreases the store credit account balance by the given amount.
-        */
-        public MutationQuery storeCreditAccountDebit(ID id, StoreCreditAccountDebitInput debitInput, StoreCreditAccountDebitPayloadQueryDefinition queryDef) {
-            startField("storeCreditAccountDebit");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",debitInput:");
-            debitInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StoreCreditAccountDebitPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a storefront access token for use with the [Storefront
-        * API](https://shopify.dev/docs/api/storefront).
-        * An app can have a maximum of 100 active storefront access tokens for each shop.
-        * [Get started with the Storefront
-        * API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/getting-started)
-        * .
-        */
-        public MutationQuery storefrontAccessTokenCreate(StorefrontAccessTokenInput input, StorefrontAccessTokenCreatePayloadQueryDefinition queryDef) {
-            startField("storefrontAccessTokenCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StorefrontAccessTokenCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a storefront access token.
-        */
-        public MutationQuery storefrontAccessTokenDelete(StorefrontAccessTokenDeleteInput input, StorefrontAccessTokenDeletePayloadQueryDefinition queryDef) {
-            startField("storefrontAccessTokenDelete");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new StorefrontAccessTokenDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a new subscription billing attempt. For more information, refer to [Create a subscription
-        * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
-        * ate-a-billing-attempt).
-        */
-        public MutationQuery subscriptionBillingAttemptCreate(ID subscriptionContractId, SubscriptionBillingAttemptInput subscriptionBillingAttemptInput, SubscriptionBillingAttemptCreatePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingAttemptCreate");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(",subscriptionBillingAttemptInput:");
-            subscriptionBillingAttemptInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingAttemptCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class SubscriptionBillingCycleBulkChargeArguments extends Arguments {
-            SubscriptionBillingCycleBulkChargeArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * Criteria to filter the billing cycles on which the action is executed.
-            */
-            public SubscriptionBillingCycleBulkChargeArguments filters(SubscriptionBillingCycleBulkFilters value) {
-                if (value != null) {
-                    startArgument("filters");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-
-            /**
-            * The behaviour to use when updating inventory.
-            */
-            public SubscriptionBillingCycleBulkChargeArguments inventoryPolicy(SubscriptionBillingAttemptInventoryPolicy value) {
-                if (value != null) {
-                    startArgument("inventoryPolicy");
-                    _queryBuilder.append(value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface SubscriptionBillingCycleBulkChargeArgumentsDefinition {
-            void define(SubscriptionBillingCycleBulkChargeArguments args);
-        }
-
-        /**
-        * Asynchronously queries and charges all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-        public MutationQuery subscriptionBillingCycleBulkCharge(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkChargePayloadQueryDefinition queryDef) {
-            return subscriptionBillingCycleBulkCharge(billingAttemptExpectedDateRange, args -> {}, queryDef);
-        }
-
-        /**
-        * Asynchronously queries and charges all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-        public MutationQuery subscriptionBillingCycleBulkCharge(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkChargeArgumentsDefinition argsDef, SubscriptionBillingCycleBulkChargePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleBulkCharge");
-
-            _queryBuilder.append("(billingAttemptExpectedDateRange:");
-            billingAttemptExpectedDateRange.appendTo(_queryBuilder);
-
-            argsDef.define(new SubscriptionBillingCycleBulkChargeArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleBulkChargePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class SubscriptionBillingCycleBulkSearchArguments extends Arguments {
-            SubscriptionBillingCycleBulkSearchArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * Criteria to filter the billing cycles on which the action is executed.
-            */
-            public SubscriptionBillingCycleBulkSearchArguments filters(SubscriptionBillingCycleBulkFilters value) {
-                if (value != null) {
-                    startArgument("filters");
-                    value.appendTo(_queryBuilder);
-                }
-                return this;
-            }
-        }
-
-        public interface SubscriptionBillingCycleBulkSearchArgumentsDefinition {
-            void define(SubscriptionBillingCycleBulkSearchArguments args);
-        }
-
-        /**
-        * Asynchronously queries all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-        public MutationQuery subscriptionBillingCycleBulkSearch(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkSearchPayloadQueryDefinition queryDef) {
-            return subscriptionBillingCycleBulkSearch(billingAttemptExpectedDateRange, args -> {}, queryDef);
-        }
-
-        /**
-        * Asynchronously queries all subscription billing cycles whose
-        * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
-        * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
-        * additional filtering criteria. The results of this action can be retrieved using the
-        * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
-        * ionBillingCycleBulkResults) query.
-        */
-        public MutationQuery subscriptionBillingCycleBulkSearch(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkSearchArgumentsDefinition argsDef, SubscriptionBillingCycleBulkSearchPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleBulkSearch");
-
-            _queryBuilder.append("(billingAttemptExpectedDateRange:");
-            billingAttemptExpectedDateRange.appendTo(_queryBuilder);
-
-            argsDef.define(new SubscriptionBillingCycleBulkSearchArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleBulkSearchPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class SubscriptionBillingCycleChargeArguments extends Arguments {
-            SubscriptionBillingCycleChargeArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The behaviour to use when updating inventory.
-            */
-            public SubscriptionBillingCycleChargeArguments inventoryPolicy(SubscriptionBillingAttemptInventoryPolicy value) {
-                if (value != null) {
-                    startArgument("inventoryPolicy");
-                    _queryBuilder.append(value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface SubscriptionBillingCycleChargeArgumentsDefinition {
-            void define(SubscriptionBillingCycleChargeArguments args);
-        }
-
-        /**
-        * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
-        * mutation for
-        * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
-        * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
-        * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
-        * ate-a-billing-attempt).
-        */
-        public MutationQuery subscriptionBillingCycleCharge(ID subscriptionContractId, SubscriptionBillingCycleSelector billingCycleSelector, SubscriptionBillingCycleChargePayloadQueryDefinition queryDef) {
-            return subscriptionBillingCycleCharge(subscriptionContractId, billingCycleSelector, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
-        * mutation for
-        * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
-        * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
-        * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
-        * ate-a-billing-attempt).
-        */
-        public MutationQuery subscriptionBillingCycleCharge(ID subscriptionContractId, SubscriptionBillingCycleSelector billingCycleSelector, SubscriptionBillingCycleChargeArgumentsDefinition argsDef, SubscriptionBillingCycleChargePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleCharge");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(",billingCycleSelector:");
-            billingCycleSelector.appendTo(_queryBuilder);
-
-            argsDef.define(new SubscriptionBillingCycleChargeArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleChargePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Commits the updates of a Subscription Billing Cycle Contract draft.
-        */
-        public MutationQuery subscriptionBillingCycleContractDraftCommit(ID draftId, SubscriptionBillingCycleContractDraftCommitPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleContractDraftCommit");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleContractDraftCommitPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Concatenates a contract to a Subscription Draft.
-        */
-        public MutationQuery subscriptionBillingCycleContractDraftConcatenate(ID draftId, List<SubscriptionBillingCycleInput> concatenatedBillingCycleContracts, SubscriptionBillingCycleContractDraftConcatenatePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleContractDraftConcatenate");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",concatenatedBillingCycleContracts:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (SubscriptionBillingCycleInput item1 : concatenatedBillingCycleContracts) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleContractDraftConcatenatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Edit the contents of a subscription contract for the specified billing cycle.
-        */
-        public MutationQuery subscriptionBillingCycleContractEdit(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleContractEditPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleContractEdit");
-
-            _queryBuilder.append("(billingCycleInput:");
-            billingCycleInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleContractEditPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Delete the schedule and contract edits of the selected subscription billing cycle.
-        */
-        public MutationQuery subscriptionBillingCycleEditDelete(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleEditDeletePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleEditDelete");
-
-            _queryBuilder.append("(billingCycleInput:");
-            billingCycleInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleEditDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Delete the current and future schedule and contract edits of a list of subscription billing cycles.
-        */
-        public MutationQuery subscriptionBillingCycleEditsDelete(ID contractId, SubscriptionBillingCyclesTargetSelection targetSelection, SubscriptionBillingCycleEditsDeletePayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleEditsDelete");
-
-            _queryBuilder.append("(contractId:");
-            Query.appendQuotedString(_queryBuilder, contractId.toString());
-
-            _queryBuilder.append(",targetSelection:");
-            _queryBuilder.append(targetSelection.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleEditsDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Modify the schedule of a specific billing cycle.
-        */
-        public MutationQuery subscriptionBillingCycleScheduleEdit(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleScheduleEditInput input, SubscriptionBillingCycleScheduleEditPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleScheduleEdit");
-
-            _queryBuilder.append("(billingCycleInput:");
-            billingCycleInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleScheduleEditPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Skips a Subscription Billing Cycle.
-        */
-        public MutationQuery subscriptionBillingCycleSkip(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleSkipPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleSkip");
-
-            _queryBuilder.append("(billingCycleInput:");
-            billingCycleInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleSkipPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Unskips a Subscription Billing Cycle.
-        */
-        public MutationQuery subscriptionBillingCycleUnskip(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleUnskipPayloadQueryDefinition queryDef) {
-            startField("subscriptionBillingCycleUnskip");
-
-            _queryBuilder.append("(billingCycleInput:");
-            billingCycleInput.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionBillingCycleUnskipPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Activates a Subscription Contract. Contract status must be either active, paused, or failed.
-        */
-        public MutationQuery subscriptionContractActivate(ID subscriptionContractId, SubscriptionContractActivatePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractActivate");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractActivatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a Subscription Contract.
-        */
-        public MutationQuery subscriptionContractAtomicCreate(SubscriptionContractAtomicCreateInput input, SubscriptionContractAtomicCreatePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractAtomicCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractAtomicCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Cancels a Subscription Contract.
-        */
-        public MutationQuery subscriptionContractCancel(ID subscriptionContractId, SubscriptionContractCancelPayloadQueryDefinition queryDef) {
-            startField("subscriptionContractCancel");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractCancelPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a Subscription Contract Draft.
-        * You can submit all the desired information for the draft using [Subscription Draft Input
-        * object](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/SubscriptionDraftInput).
-        * You can also update the draft using the [Subscription Contract
-        * Update](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionContractUpdate)
-        * mutation.
-        * The draft is not saved until you call the [Subscription Draft
-        * Commit](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionDraftCommit)
-        * mutation.
-        */
-        public MutationQuery subscriptionContractCreate(SubscriptionContractCreateInput input, SubscriptionContractCreatePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractCreate");
-
-            _queryBuilder.append("(input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Expires a Subscription Contract.
-        */
-        public MutationQuery subscriptionContractExpire(ID subscriptionContractId, SubscriptionContractExpirePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractExpire");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractExpirePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Fails a Subscription Contract.
-        */
-        public MutationQuery subscriptionContractFail(ID subscriptionContractId, SubscriptionContractFailPayloadQueryDefinition queryDef) {
-            startField("subscriptionContractFail");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractFailPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Pauses a Subscription Contract.
-        */
-        public MutationQuery subscriptionContractPause(ID subscriptionContractId, SubscriptionContractPausePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractPause");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractPausePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Allows for the easy change of a Product in a Contract or a Product price change.
-        */
-        public MutationQuery subscriptionContractProductChange(ID subscriptionContractId, ID lineId, SubscriptionContractProductChangeInput input, SubscriptionContractProductChangePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractProductChange");
-
-            _queryBuilder.append("(subscriptionContractId:");
-            Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
-
-            _queryBuilder.append(",lineId:");
-            Query.appendQuotedString(_queryBuilder, lineId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractProductChangePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Sets the next billing date of a Subscription Contract. This field is managed by the apps.
-        * Alternatively you can utilize our
-        * [Billing Cycles
-        * APIs](https://shopify.dev/docs/apps/selling-strategies/subscriptions/billing-cycles),
-        * which provide auto-computed billing dates and additional functionalities.
-        */
-        public MutationQuery subscriptionContractSetNextBillingDate(ID contractId, String date, SubscriptionContractSetNextBillingDatePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractSetNextBillingDate");
-
-            _queryBuilder.append("(contractId:");
-            Query.appendQuotedString(_queryBuilder, contractId.toString());
-
-            _queryBuilder.append(",date:");
-            Query.appendQuotedString(_queryBuilder, date.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractSetNextBillingDatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * The subscriptionContractUpdate mutation allows you to create a draft of an existing subscription
-        * contract. This [draft](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionDraft) can
-        * be reviewed and modified as needed. Once the draft is committed with
-        * [subscriptionDraftCommit](https://shopify.dev/api/admin-graphql/latest/mutations/subscriptionDraftCo
-        * mmit), the changes are applied to the original subscription contract.
-        */
-        public MutationQuery subscriptionContractUpdate(ID contractId, SubscriptionContractUpdatePayloadQueryDefinition queryDef) {
-            startField("subscriptionContractUpdate");
-
-            _queryBuilder.append("(contractId:");
-            Query.appendQuotedString(_queryBuilder, contractId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionContractUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Commits the updates of a Subscription Contract draft.
-        */
-        public MutationQuery subscriptionDraftCommit(ID draftId, SubscriptionDraftCommitPayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftCommit");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftCommitPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds a subscription discount to a subscription draft.
-        */
-        public MutationQuery subscriptionDraftDiscountAdd(ID draftId, SubscriptionManualDiscountInput input, SubscriptionDraftDiscountAddPayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftDiscountAdd");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftDiscountAddPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Applies a code discount on the subscription draft.
-        */
-        public MutationQuery subscriptionDraftDiscountCodeApply(ID draftId, String redeemCode, SubscriptionDraftDiscountCodeApplyPayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftDiscountCodeApply");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",redeemCode:");
-            Query.appendQuotedString(_queryBuilder, redeemCode.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftDiscountCodeApplyPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Removes a subscription discount from a subscription draft.
-        */
-        public MutationQuery subscriptionDraftDiscountRemove(ID draftId, ID discountId, SubscriptionDraftDiscountRemovePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftDiscountRemove");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",discountId:");
-            Query.appendQuotedString(_queryBuilder, discountId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftDiscountRemovePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a subscription discount on a subscription draft.
-        */
-        public MutationQuery subscriptionDraftDiscountUpdate(ID draftId, ID discountId, SubscriptionManualDiscountInput input, SubscriptionDraftDiscountUpdatePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftDiscountUpdate");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",discountId:");
-            Query.appendQuotedString(_queryBuilder, discountId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftDiscountUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds a subscription free shipping discount to a subscription draft.
-        */
-        public MutationQuery subscriptionDraftFreeShippingDiscountAdd(ID draftId, SubscriptionFreeShippingDiscountInput input, SubscriptionDraftFreeShippingDiscountAddPayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftFreeShippingDiscountAdd");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftFreeShippingDiscountAddPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a subscription free shipping discount on a subscription draft.
-        */
-        public MutationQuery subscriptionDraftFreeShippingDiscountUpdate(ID draftId, ID discountId, SubscriptionFreeShippingDiscountInput input, SubscriptionDraftFreeShippingDiscountUpdatePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftFreeShippingDiscountUpdate");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",discountId:");
-            Query.appendQuotedString(_queryBuilder, discountId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftFreeShippingDiscountUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Adds a subscription line to a subscription draft.
-        */
-        public MutationQuery subscriptionDraftLineAdd(ID draftId, SubscriptionLineInput input, SubscriptionDraftLineAddPayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftLineAdd");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftLineAddPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Removes a subscription line from a subscription draft.
-        */
-        public MutationQuery subscriptionDraftLineRemove(ID draftId, ID lineId, SubscriptionDraftLineRemovePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftLineRemove");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",lineId:");
-            Query.appendQuotedString(_queryBuilder, lineId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftLineRemovePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a subscription line on a subscription draft.
-        */
-        public MutationQuery subscriptionDraftLineUpdate(ID draftId, ID lineId, SubscriptionLineUpdateInput input, SubscriptionDraftLineUpdatePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftLineUpdate");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",lineId:");
-            Query.appendQuotedString(_queryBuilder, lineId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftLineUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a Subscription Draft.
-        */
-        public MutationQuery subscriptionDraftUpdate(ID draftId, SubscriptionDraftInput input, SubscriptionDraftUpdatePayloadQueryDefinition queryDef) {
-            startField("subscriptionDraftUpdate");
-
-            _queryBuilder.append("(draftId:");
-            Query.appendQuotedString(_queryBuilder, draftId.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new SubscriptionDraftUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Add tags to an order, a draft order, a customer, a product, or an online store article.
-        */
-        public MutationQuery tagsAdd(ID id, List<String> tags, TagsAddPayloadQueryDefinition queryDef) {
-            startField("tagsAdd");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",tags:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (String item1 : tags) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TagsAddPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Remove tags from an order, a draft order, a customer, a product, or an online store article.
-        */
-        public MutationQuery tagsRemove(ID id, List<String> tags, TagsRemovePayloadQueryDefinition queryDef) {
-            startField("tagsRemove");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",tags:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (String item1 : tags) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TagsRemovePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Allows tax app configurations for tax partners.
-        */
-        public MutationQuery taxAppConfigure(boolean ready, TaxAppConfigurePayloadQueryDefinition queryDef) {
-            startField("taxAppConfigure");
-
-            _queryBuilder.append("(ready:");
-            _queryBuilder.append(ready);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TaxAppConfigurePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        public class ThemeCreateArguments extends Arguments {
-            ThemeCreateArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
-
-            /**
-            * The name of the theme to be created.
-            */
-            public ThemeCreateArguments name(String value) {
-                if (value != null) {
-                    startArgument("name");
-                    Query.appendQuotedString(_queryBuilder, value.toString());
-                }
-                return this;
-            }
-        }
-
-        public interface ThemeCreateArgumentsDefinition {
-            void define(ThemeCreateArguments args);
-        }
-
-        /**
-        * Creates a theme using an external URL or for files that were previously uploaded using the
-        * [stagedUploadsCreate
-        * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-        * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
-        */
-        public MutationQuery themeCreate(String source, ThemeCreatePayloadQueryDefinition queryDef) {
-            return themeCreate(source, args -> {}, queryDef);
-        }
-
-        /**
-        * Creates a theme using an external URL or for files that were previously uploaded using the
-        * [stagedUploadsCreate
-        * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-        * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
-        */
-        public MutationQuery themeCreate(String source, ThemeCreateArgumentsDefinition argsDef, ThemeCreatePayloadQueryDefinition queryDef) {
-            startField("themeCreate");
-
-            _queryBuilder.append("(source:");
-            Query.appendQuotedString(_queryBuilder, source.toString());
-
-            argsDef.define(new ThemeCreateArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a theme.
-        */
-        public MutationQuery themeDelete(ID id, ThemeDeletePayloadQueryDefinition queryDef) {
-            startField("themeDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Copy theme files. Copying to existing theme files will overwrite them.
-        */
-        public MutationQuery themeFilesCopy(ID themeId, List<ThemeFilesCopyFileInput> files, ThemeFilesCopyPayloadQueryDefinition queryDef) {
-            startField("themeFilesCopy");
-
-            _queryBuilder.append("(themeId:");
-            Query.appendQuotedString(_queryBuilder, themeId.toString());
-
-            _queryBuilder.append(",files:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ThemeFilesCopyFileInput item1 : files) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeFilesCopyPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a theme's files.
-        */
-        public MutationQuery themeFilesDelete(ID themeId, List<String> files, ThemeFilesDeletePayloadQueryDefinition queryDef) {
-            startField("themeFilesDelete");
-
-            _queryBuilder.append("(themeId:");
-            Query.appendQuotedString(_queryBuilder, themeId.toString());
-
-            _queryBuilder.append(",files:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (String item1 : files) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeFilesDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Create or update theme files.
-        */
-        public MutationQuery themeFilesUpsert(ID themeId, List<OnlineStoreThemeFilesUpsertFileInput> files, ThemeFilesUpsertPayloadQueryDefinition queryDef) {
-            startField("themeFilesUpsert");
-
-            _queryBuilder.append("(themeId:");
-            Query.appendQuotedString(_queryBuilder, themeId.toString());
-
-            _queryBuilder.append(",files:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (OnlineStoreThemeFilesUpsertFileInput item1 : files) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeFilesUpsertPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Publishes a theme.
-        */
-        public MutationQuery themePublish(ID id, ThemePublishPayloadQueryDefinition queryDef) {
-            startField("themePublish");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemePublishPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a theme.
-        */
-        public MutationQuery themeUpdate(ID id, OnlineStoreThemeInput input, ThemeUpdatePayloadQueryDefinition queryDef) {
-            startField("themeUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",input:");
-            input.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ThemeUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Trigger the voiding of an uncaptured authorization transaction.
-        */
-        public MutationQuery transactionVoid(ID parentTransactionId, TransactionVoidPayloadQueryDefinition queryDef) {
-            startField("transactionVoid");
-
-            _queryBuilder.append("(parentTransactionId:");
-            Query.appendQuotedString(_queryBuilder, parentTransactionId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TransactionVoidPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates or updates translations.
-        */
-        public MutationQuery translationsRegister(ID resourceId, List<TranslationInput> translations, TranslationsRegisterPayloadQueryDefinition queryDef) {
-            startField("translationsRegister");
-
-            _queryBuilder.append("(resourceId:");
-            Query.appendQuotedString(_queryBuilder, resourceId.toString());
-
-            _queryBuilder.append(",translations:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (TranslationInput item1 : translations) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    item1.appendTo(_queryBuilder);
-                }
+    * Reorders the [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
+    * [option values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue) on a
+    * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * updating the order in which [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * are presented to customers.
+    * The `productOptionsReorder` mutation accepts a list of product options, each identified by `id` or
+    * `name`, and an
+    * optional list of values (also by `id` or `name`) specifying the new order. The order of options in
+    * the
+    * mutation's input determines their new positions (for example, the first option becomes `option1`).
+    * The order of values within each option determines their new positions. The mutation recalculates the
+    * order of
+    * variants based on the new option and value order.
+    * Suppose a product has the following variants:
+    * 1. `"Red / Small"`
+    * 2. `"Green / Medium"`
+    * 3. `"Blue / Small"`
+    * You reorder options and values:
+    * ```
+    * options: [
+    * { name: "Size", values: [{ name: "Small" }, { name: "Medium" }] },
+    * { name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }] }
+    * ]
+    * ```
+    * The resulting variant order will be:
+    * 1. `"Small / Green"`
+    * 2. `"Small / Red"`
+    * 3. `"Small / Blue"`
+    * 4. `"Medium / Green"`
+    * Use the `productOptionsReorder` mutation for the following use cases:
+    * - **Change the order of product options**: For example, display "Color" before "Size" in a store.
+    * - **Reorder option values within an option**: For example, show "Red" before "Blue" in a color
+    * picker.
+    * - **Control the order of product variants**: The order of options and their values determines the
+    * sequence in which variants are listed and selected.
+    * - **Highlight best-selling options**: Present the most popular or relevant options and values first.
+    * - **Promote merchandising strategies**: Highlight seasonal colors, limited editions, or featured
+    * sizes.
+    * > Note:
+    * > The `productOptionsReorder` mutation enforces strict data integrity for product options and
+    * variants.
+    * > All option positions must be sequential, and every option should be used by at least one variant.
+    * After you reorder product options, you can further manage a product's configuration using related
+    * mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [managing product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productOptionsReorder(ID productId, List<OptionReorderInput> options, ProductOptionsReorderPayloadQueryDefinition queryDef) {
+        startField("productOptionsReorder");
+
+        _queryBuilder.append("(productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        _queryBuilder.append(",options:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (OptionReorderInput item1 : options) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductOptionsReorderPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Asynchronously reorders the media attached to a product.
+    */
+    public MutationQuery productReorderMedia(ID id, List<MoveInput> moves, ProductReorderMediaPayloadQueryDefinition queryDef) {
+        startField("productReorderMedia");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",moves:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (MoveInput item1 : moves) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
             }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TranslationsRegisterPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
         }
+        _queryBuilder.append(']');
 
-        public class TranslationsRemoveArguments extends Arguments {
-            TranslationsRemoveArguments(StringBuilder _queryBuilder) {
-                super(_queryBuilder, false);
-            }
+        _queryBuilder.append(')');
 
-            /**
-            * The list of market IDs.
-            */
-            public TranslationsRemoveArguments marketIds(List<ID> value) {
-                if (value != null) {
-                    startArgument("marketIds");
-                    _queryBuilder.append('[');
-                    {
-                        String listSeperator1 = "";
-                        for (ID item1 : value) {
-                            _queryBuilder.append(listSeperator1);
-                            listSeperator1 = ",";
-                            Query.appendQuotedString(_queryBuilder, item1.toString());
-                        }
-                    }
-                    _queryBuilder.append(']');
-                }
-                return this;
-            }
-        }
+        _queryBuilder.append('{');
+        queryDef.define(new ProductReorderMediaPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
 
-        public interface TranslationsRemoveArgumentsDefinition {
-            void define(TranslationsRemoveArguments args);
-        }
+        return this;
+    }
 
-        /**
-        * Deletes translations.
-        */
-        public MutationQuery translationsRemove(ID resourceId, List<String> translationKeys, List<String> locales, TranslationsRemovePayloadQueryDefinition queryDef) {
-            return translationsRemove(resourceId, translationKeys, locales, args -> {}, queryDef);
+    public class ProductSetArguments extends Arguments {
+        ProductSetArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
         }
 
         /**
-        * Deletes translations.
+        * Whether the mutation should be run synchronously or asynchronously.
+        * If `true`, the mutation will return the updated `product`.
+        * If `false`, the mutation will return a `productSetOperation`.
+        * Defaults to `true`.
+        * Setting `synchronous: false` may be desirable depending on the input complexity/size, and should be
+        * used if you are experiencing timeouts.
+        * **Note**: When run in the context of a
+        * [bulk operation](https://shopify.dev/api/usage/bulk-operations/imports), the mutation will
+        * always run synchronously and this argument will be ignored.
         */
-        public MutationQuery translationsRemove(ID resourceId, List<String> translationKeys, List<String> locales, TranslationsRemoveArgumentsDefinition argsDef, TranslationsRemovePayloadQueryDefinition queryDef) {
-            startField("translationsRemove");
-
-            _queryBuilder.append("(resourceId:");
-            Query.appendQuotedString(_queryBuilder, resourceId.toString());
-
-            _queryBuilder.append(",translationKeys:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (String item1 : translationKeys) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
-            }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(",locales:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (String item1 : locales) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
+        public ProductSetArguments synchronous(Boolean value) {
+            if (value != null) {
+                startArgument("synchronous");
+                _queryBuilder.append(value);
             }
-            _queryBuilder.append(']');
-
-            argsDef.define(new TranslationsRemoveArguments(_queryBuilder));
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new TranslationsRemovePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Asynchronously delete [URL
-        * redirects](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) in bulk.
-        */
-        public MutationQuery urlRedirectBulkDeleteAll(UrlRedirectBulkDeleteAllPayloadQueryDefinition queryDef) {
-            startField("urlRedirectBulkDeleteAll");
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectBulkDeleteAllPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
             return this;
         }
 
         /**
-        * Asynchronously delete
-        * [URLRedirect](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) 
-        * objects in bulk by IDs.
-        * Learn more about
-        * [URLRedirect](https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect) 
-        * objects.
+        * Specifies the identifier that will be used to lookup the resource.
         */
-        public MutationQuery urlRedirectBulkDeleteByIds(List<ID> ids, UrlRedirectBulkDeleteByIdsPayloadQueryDefinition queryDef) {
-            startField("urlRedirectBulkDeleteByIds");
-
-            _queryBuilder.append("(ids:");
-            _queryBuilder.append('[');
-            {
-                String listSeperator1 = "";
-                for (ID item1 : ids) {
-                    _queryBuilder.append(listSeperator1);
-                    listSeperator1 = ",";
-                    Query.appendQuotedString(_queryBuilder, item1.toString());
-                }
+        public ProductSetArguments identifier(ProductSetIdentifiers value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
             }
-            _queryBuilder.append(']');
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectBulkDeleteByIdsPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Asynchronously delete redirects in bulk.
-        */
-        public MutationQuery urlRedirectBulkDeleteBySavedSearch(ID savedSearchId, UrlRedirectBulkDeleteBySavedSearchPayloadQueryDefinition queryDef) {
-            startField("urlRedirectBulkDeleteBySavedSearch");
-
-            _queryBuilder.append("(savedSearchId:");
-            Query.appendQuotedString(_queryBuilder, savedSearchId.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectBulkDeleteBySavedSearchPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Asynchronously delete redirects in bulk.
-        */
-        public MutationQuery urlRedirectBulkDeleteBySearch(String search, UrlRedirectBulkDeleteBySearchPayloadQueryDefinition queryDef) {
-            startField("urlRedirectBulkDeleteBySearch");
-
-            _queryBuilder.append("(search:");
-            Query.appendQuotedString(_queryBuilder, search.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectBulkDeleteBySearchPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
-        */
-        public MutationQuery urlRedirectCreate(UrlRedirectInput urlRedirect, UrlRedirectCreatePayloadQueryDefinition queryDef) {
-            startField("urlRedirectCreate");
-
-            _queryBuilder.append("(urlRedirect:");
-            urlRedirect.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
-        */
-        public MutationQuery urlRedirectDelete(ID id, UrlRedirectDeletePayloadQueryDefinition queryDef) {
-            startField("urlRedirectDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a
-        * [`UrlRedirectImport`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirectImport)
-        * object.
-        * After creating the `UrlRedirectImport` object, the `UrlRedirectImport` request can be performed
-        * using the
-        * [`urlRedirectImportSubmit`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
-        * Submit) mutation.
-        */
-        public MutationQuery urlRedirectImportCreate(String url, UrlRedirectImportCreatePayloadQueryDefinition queryDef) {
-            startField("urlRedirectImportCreate");
-
-            _queryBuilder.append("(url:");
-            Query.appendQuotedString(_queryBuilder, url.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectImportCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Submits a `UrlRedirectImport` request to be processed.
-        * The `UrlRedirectImport` request is first created with the
-        * [`urlRedirectImportCreate`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
-        * Create) mutation.
-        */
-        public MutationQuery urlRedirectImportSubmit(ID id, UrlRedirectImportSubmitPayloadQueryDefinition queryDef) {
-            startField("urlRedirectImportSubmit");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectImportSubmitPayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a URL redirect.
-        */
-        public MutationQuery urlRedirectUpdate(ID id, UrlRedirectInput urlRedirect, UrlRedirectUpdatePayloadQueryDefinition queryDef) {
-            startField("urlRedirectUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",urlRedirect:");
-            urlRedirect.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new UrlRedirectUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a validation.
-        */
-        public MutationQuery validationCreate(ValidationCreateInput validation, ValidationCreatePayloadQueryDefinition queryDef) {
-            startField("validationCreate");
-
-            _queryBuilder.append("(validation:");
-            validation.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ValidationCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a validation.
-        */
-        public MutationQuery validationDelete(ID id, ValidationDeletePayloadQueryDefinition queryDef) {
-            startField("validationDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ValidationDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Update a validation.
-        */
-        public MutationQuery validationUpdate(ValidationUpdateInput validation, ID id, ValidationUpdatePayloadQueryDefinition queryDef) {
-            startField("validationUpdate");
-
-            _queryBuilder.append("(validation:");
-            validation.appendTo(_queryBuilder);
-
-            _queryBuilder.append(",id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new ValidationUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Activate a [web pixel
-        * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
-        * by creating a web pixel record on the store where you installed your app.
-        * When you run the `webPixelCreate` mutation, Shopify validates it
-        * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
-        * match
-        * the schema that you defined, then the mutation fails. Learn how to
-        * define [web pixel
-        * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
-        * r-web-pixel-settings).
-        */
-        public MutationQuery webPixelCreate(WebPixelInput webPixel, WebPixelCreatePayloadQueryDefinition queryDef) {
-            startField("webPixelCreate");
-
-            _queryBuilder.append("(webPixel:");
-            webPixel.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebPixelCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes the web pixel shop settings.
-        */
-        public MutationQuery webPixelDelete(ID id, WebPixelDeletePayloadQueryDefinition queryDef) {
-            startField("webPixelDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebPixelDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Activate a [web pixel
-        * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
-        * by updating a web pixel record on the store where you installed your app.
-        * When you run the `webPixelUpdate` mutation, Shopify validates it
-        * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
-        * match
-        * the schema that you defined, then the mutation fails. Learn how to
-        * define [web pixel
-        * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
-        * r-web-pixel-settings).
-        */
-        public MutationQuery webPixelUpdate(ID id, WebPixelInput webPixel, WebPixelUpdatePayloadQueryDefinition queryDef) {
-            startField("webPixelUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",webPixel:");
-            webPixel.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebPixelUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Creates a new webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery webhookSubscriptionCreate(WebhookSubscriptionTopic topic, WebhookSubscriptionInput webhookSubscription, WebhookSubscriptionCreatePayloadQueryDefinition queryDef) {
-            startField("webhookSubscriptionCreate");
-
-            _queryBuilder.append("(topic:");
-            _queryBuilder.append(topic.toString());
-
-            _queryBuilder.append(",webhookSubscription:");
-            webhookSubscription.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebhookSubscriptionCreatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Deletes a webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery webhookSubscriptionDelete(ID id, WebhookSubscriptionDeletePayloadQueryDefinition queryDef) {
-            startField("webhookSubscriptionDelete");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebhookSubscriptionDeletePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
-            return this;
-        }
-
-        /**
-        * Updates a webhook subscription.
-        * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
-        * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
-        * date by Shopify & require less maintenance. Please read [About managing webhook
-        * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
-        */
-        public MutationQuery webhookSubscriptionUpdate(ID id, WebhookSubscriptionInput webhookSubscription, WebhookSubscriptionUpdatePayloadQueryDefinition queryDef) {
-            startField("webhookSubscriptionUpdate");
-
-            _queryBuilder.append("(id:");
-            Query.appendQuotedString(_queryBuilder, id.toString());
-
-            _queryBuilder.append(",webhookSubscription:");
-            webhookSubscription.appendTo(_queryBuilder);
-
-            _queryBuilder.append(')');
-
-            _queryBuilder.append('{');
-            queryDef.define(new WebhookSubscriptionUpdatePayloadQuery(_queryBuilder));
-            _queryBuilder.append('}');
-
             return this;
-        }
-
-        public String toString() {
-            return _queryBuilder.toString();
         }
     }
+
+    public interface ProductSetArgumentsDefinition {
+        void define(ProductSetArguments args);
+    }
+
+    /**
+    * Performs multiple operations to create or update products in a single request.
+    * Use the `productSet` mutation to sync information from an external data source into Shopify, manage
+    * large
+    * product catalogs, and perform batch updates. The mutation is helpful for bulk product management,
+    * including price
+    * adjustments, inventory updates, and product lifecycle management.
+    * The behavior of `productSet` depends on the type of field it's modifying:
+    * - **For list fields**: Creates new entries, updates existing entries, and deletes existing entries
+    * that aren't included in the mutation's input. Common examples of list fields include
+    * [`collections`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inp
+    * ut.fields.collections),
+    * [`metafields`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inpu
+    * t.fields.metafields),
+    * and
+    * [`variants`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.
+    * fields.variants).
+    * - **For all other field types**: Updates only the included fields. Any omitted fields will remain
+    * unchanged.
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create or update a maximum of 2,048 product variants in a single operation.
+    * You can run `productSet` in one of the following modes:
+    * - **Synchronously**: Returns the updated product in the response.
+    * - **Asynchronously**: Returns a
+    * [`ProductSetOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductSetOperatio
+    * n) object.
+    * Use the [`productOperation`](https://shopify.dev/api/admin-graphql/latest/queries/productOperation)
+    * query to check the status of the operation and
+    * retrieve details of the updated product and its product variants.
+    * If you need to only manage product variants, then use one of the following mutations:
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete)
+    * If you need to only manage product options, then use one of the following mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about [syncing product data from an external
+    * source](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/sync-data).
+    */
+    public MutationQuery productSet(ProductSetInput input, ProductSetPayloadQueryDefinition queryDef) {
+        return productSet(input, args -> {}, queryDef);
+    }
+
+    /**
+    * Performs multiple operations to create or update products in a single request.
+    * Use the `productSet` mutation to sync information from an external data source into Shopify, manage
+    * large
+    * product catalogs, and perform batch updates. The mutation is helpful for bulk product management,
+    * including price
+    * adjustments, inventory updates, and product lifecycle management.
+    * The behavior of `productSet` depends on the type of field it's modifying:
+    * - **For list fields**: Creates new entries, updates existing entries, and deletes existing entries
+    * that aren't included in the mutation's input. Common examples of list fields include
+    * [`collections`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inp
+    * ut.fields.collections),
+    * [`metafields`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-inpu
+    * t.fields.metafields),
+    * and
+    * [`variants`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.
+    * fields.variants).
+    * - **For all other field types**: Updates only the included fields. Any omitted fields will remain
+    * unchanged.
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create or update a maximum of 2,048 product variants in a single operation.
+    * You can run `productSet` in one of the following modes:
+    * - **Synchronously**: Returns the updated product in the response.
+    * - **Asynchronously**: Returns a
+    * [`ProductSetOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductSetOperatio
+    * n) object.
+    * Use the [`productOperation`](https://shopify.dev/api/admin-graphql/latest/queries/productOperation)
+    * query to check the status of the operation and
+    * retrieve details of the updated product and its product variants.
+    * If you need to only manage product variants, then use one of the following mutations:
+    * -
+    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkCreate)
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * -
+    * [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkDelete)
+    * If you need to only manage product options, then use one of the following mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about [syncing product data from an external
+    * source](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/sync-data).
+    */
+    public MutationQuery productSet(ProductSetInput input, ProductSetArgumentsDefinition argsDef, ProductSetPayloadQueryDefinition queryDef) {
+        startField("productSet");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        argsDef.define(new ProductSetArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductSetPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ProductUpdateArguments extends Arguments {
+        ProductUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The updated properties for a product.
+        */
+        public ProductUpdateArguments product(ProductUpdateInput value) {
+            if (value != null) {
+                startArgument("product");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * List of new media to be added to the product.
+        */
+        public ProductUpdateArguments media(List<CreateMediaInput> value) {
+            if (value != null) {
+                startArgument("media");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (CreateMediaInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+    }
+
+    public interface ProductUpdateArgumentsDefinition {
+        void define(ProductUpdateArguments args);
+    }
+
+    /**
+    * Updates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * with attributes such as title, description, vendor, and media.
+    * The `productUpdate` mutation helps you modify many products at once, avoiding the tedious or
+    * time-consuming
+    * process of updating them one by one in the Shopify admin. Common examples including updating
+    * product details like status or tags.
+    * The `productUpdate` mutation doesn't support updating
+    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * To update multiple product variants for a single product and manage prices, use the
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * mutation.
+    * > Note:
+    * > The `productUpdate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be updated per day.
+    * After updating a product, you can make additional changes using one of the following mutations:
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers, if the product is currently
+    * unpublished.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productUpdate(ProductUpdatePayloadQueryDefinition queryDef) {
+        return productUpdate(args -> {}, queryDef);
+    }
+
+    /**
+    * Updates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * with attributes such as title, description, vendor, and media.
+    * The `productUpdate` mutation helps you modify many products at once, avoiding the tedious or
+    * time-consuming
+    * process of updating them one by one in the Shopify admin. Common examples including updating
+    * product details like status or tags.
+    * The `productUpdate` mutation doesn't support updating
+    * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+    * To update multiple product variants for a single product and manage prices, use the
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate)
+    * mutation.
+    * > Note:
+    * > The `productUpdate` mutation has a
+    * [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+    * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no
+    * more than
+    * > 1,000 new product variants can be updated per day.
+    * After updating a product, you can make additional changes using one of the following mutations:
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * -
+    * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublis
+    * h):
+    * Used to publish the product and make it available to customers, if the product is currently
+    * unpublished.
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productUpdate(ProductUpdateArgumentsDefinition argsDef, ProductUpdatePayloadQueryDefinition queryDef) {
+        startField("productUpdate");
+
+        ProductUpdateArguments args = new ProductUpdateArguments(_queryBuilder);
+        argsDef.define(args);
+        ProductUpdateArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Appends media from a product to variants of the product.
+    */
+    public MutationQuery productVariantAppendMedia(ID productId, List<ProductVariantAppendMediaInput> variantMedia, ProductVariantAppendMediaPayloadQueryDefinition queryDef) {
+        startField("productVariantAppendMedia");
+
+        _queryBuilder.append("(productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        _queryBuilder.append(",variantMedia:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantAppendMediaInput item1 : variantMedia) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantAppendMediaPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Detaches media from product variants.
+    */
+    public MutationQuery productVariantDetachMedia(ID productId, List<ProductVariantDetachMediaInput> variantMedia, ProductVariantDetachMediaPayloadQueryDefinition queryDef) {
+        startField("productVariantDetachMedia");
+
+        _queryBuilder.append("(productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        _queryBuilder.append(",variantMedia:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantDetachMediaInput item1 : variantMedia) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantDetachMediaPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds multiple selling plan groups to a product variant.
+    */
+    public MutationQuery productVariantJoinSellingPlanGroups(ID id, List<ID> sellingPlanGroupIds, ProductVariantJoinSellingPlanGroupsPayloadQueryDefinition queryDef) {
+        startField("productVariantJoinSellingPlanGroups");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",sellingPlanGroupIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : sellingPlanGroupIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantJoinSellingPlanGroupsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Remove multiple groups from a product variant.
+    */
+    public MutationQuery productVariantLeaveSellingPlanGroups(ID id, List<ID> sellingPlanGroupIds, ProductVariantLeaveSellingPlanGroupsPayloadQueryDefinition queryDef) {
+        startField("productVariantLeaveSellingPlanGroups");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",sellingPlanGroupIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : sellingPlanGroupIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantLeaveSellingPlanGroupsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates new bundles, updates existing bundles, and removes bundle components for one or multiple
+    * bundles.
+    */
+    public MutationQuery productVariantRelationshipBulkUpdate(List<ProductVariantRelationshipUpdateInput> input, ProductVariantRelationshipBulkUpdatePayloadQueryDefinition queryDef) {
+        startField("productVariantRelationshipBulkUpdate");
+
+        _queryBuilder.append("(input:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantRelationshipUpdateInput item1 : input) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantRelationshipBulkUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ProductVariantsBulkCreateArguments extends Arguments {
+        ProductVariantsBulkCreateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * List of new media to be added to the product.
+        */
+        public ProductVariantsBulkCreateArguments media(List<CreateMediaInput> value) {
+            if (value != null) {
+                startArgument("media");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (CreateMediaInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+
+        /**
+        * The strategy defines which behavior the mutation should observe, such as whether to keep or delete
+        * the standalone variant (when product has only a single or default variant) when creating new
+        * variants in bulk.
+        */
+        public ProductVariantsBulkCreateArguments strategy(ProductVariantsBulkCreateStrategy value) {
+            if (value != null) {
+                startArgument("strategy");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface ProductVariantsBulkCreateArgumentsDefinition {
+        void define(ProductVariantsBulkCreateArguments args);
+    }
+
+    /**
+    * Creates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkCreate` mutation to efficiently add new product variants—such as
+    * different sizes,
+    * colors, or materials—to an existing product. The mutation is helpful if you need to add product
+    * variants in bulk,
+    * such as importing from an external system.
+    * The mutation supports:
+    * - Creating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using one of the following mutations:
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate):
+    * Updates multiple product variants for a single product in one operation.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productVariantsBulkCreate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkCreatePayloadQueryDefinition queryDef) {
+        return productVariantsBulkCreate(variants, productId, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkCreate` mutation to efficiently add new product variants—such as
+    * different sizes,
+    * colors, or materials—to an existing product. The mutation is helpful if you need to add product
+    * variants in bulk,
+    * such as importing from an external system.
+    * The mutation supports:
+    * - Creating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to create a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using one of the following mutations:
+    * -
+    * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVar
+    * iantsBulkUpdate):
+    * Updates multiple product variants for a single product in one operation.
+    * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+    * Used to perform multiple operations on products, such as creating or modifying product options and
+    * variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productVariantsBulkCreate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkCreateArgumentsDefinition argsDef, ProductVariantsBulkCreatePayloadQueryDefinition queryDef) {
+        startField("productVariantsBulkCreate");
+
+        _queryBuilder.append("(variants:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantsBulkInput item1 : variants) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(",productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        argsDef.define(new ProductVariantsBulkCreateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantsBulkCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes multiple variants in a single product. This mutation can be called directly or via the
+    * bulkOperation.
+    */
+    public MutationQuery productVariantsBulkDelete(List<ID> variantsIds, ID productId, ProductVariantsBulkDeletePayloadQueryDefinition queryDef) {
+        startField("productVariantsBulkDelete");
+
+        _queryBuilder.append("(variantsIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : variantsIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(",productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantsBulkDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Reorders multiple variants in a single product. This mutation can be called directly or via the
+    * bulkOperation.
+    */
+    public MutationQuery productVariantsBulkReorder(ID productId, List<ProductVariantPositionInput> positions, ProductVariantsBulkReorderPayloadQueryDefinition queryDef) {
+        startField("productVariantsBulkReorder");
+
+        _queryBuilder.append("(productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        _queryBuilder.append(",positions:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantPositionInput item1 : positions) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantsBulkReorderPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ProductVariantsBulkUpdateArguments extends Arguments {
+        ProductVariantsBulkUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * List of new media to be added to the product.
+        */
+        public ProductVariantsBulkUpdateArguments media(List<CreateMediaInput> value) {
+            if (value != null) {
+                startArgument("media");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (CreateMediaInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+
+        /**
+        * When partial updates are allowed, valid variant changes may be persisted even if some of
+        * the variants updated have invalid data and cannot be persisted.
+        * When partial updates are not allowed, any error will prevent all variants from updating.
+        */
+        public ProductVariantsBulkUpdateArguments allowPartialUpdates(Boolean value) {
+            if (value != null) {
+                startArgument("allowPartialUpdates");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ProductVariantsBulkUpdateArgumentsDefinition {
+        void define(ProductVariantsBulkUpdateArguments args);
+    }
+
+    /**
+    * Updates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkUpdate` mutation to efficiently modify product variants—such as
+    * different sizes,
+    * colors, or materials—associated with an existing product. The mutation is helpful if you need to
+    * update a
+    * product's variants in bulk, such as importing from an external system.
+    * The mutation supports:
+    * - Updating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to update a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using the
+    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation,
+    * which is used to perform multiple operations on products, such as creating or modifying product
+    * options and variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productVariantsBulkUpdate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkUpdatePayloadQueryDefinition queryDef) {
+        return productVariantsBulkUpdate(variants, productId, args -> {}, queryDef);
+    }
+
+    /**
+    * Updates multiple [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one
+    * operation.
+    * You can run this mutation directly or as part of a [bulk
+    * operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+    * for large-scale catalog updates.
+    * Use the `productVariantsBulkUpdate` mutation to efficiently modify product variants—such as
+    * different sizes,
+    * colors, or materials—associated with an existing product. The mutation is helpful if you need to
+    * update a
+    * product's variants in bulk, such as importing from an external system.
+    * The mutation supports:
+    * - Updating variants with custom options and values
+    * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+    * - Handling complex product configurations
+    * > Note:
+    * > By default, stores have a limit of 100 product variants for each product. You can create a
+    * development store and
+    * > [enable the **Extended Variants** developer
+    * preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#crea
+    * te-a-development-store-that-allows-2-048-variants-per-product)
+    * > to update a maximum of 2,048 product variants in a single operation.
+    * After creating variants, you can make additional changes using the
+    * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation,
+    * which is used to perform multiple operations on products, such as creating or modifying product
+    * options and variants.
+    * You can also specifically manage product options through related mutations:
+    * -
+    * [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsC
+    * reate)
+    * -
+    * [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpd
+    * ate)
+    * -
+    * [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptions
+    * Reorder)
+    * -
+    * [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsD
+    * elete)
+    * Learn more about the [product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+    * and [adding product
+    * data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+    */
+    public MutationQuery productVariantsBulkUpdate(List<ProductVariantsBulkInput> variants, ID productId, ProductVariantsBulkUpdateArgumentsDefinition argsDef, ProductVariantsBulkUpdatePayloadQueryDefinition queryDef) {
+        startField("productVariantsBulkUpdate");
+
+        _queryBuilder.append("(variants:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ProductVariantsBulkInput item1 : variants) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(",productId:");
+        Query.appendQuotedString(_queryBuilder, productId.toString());
+
+        argsDef.define(new ProductVariantsBulkUpdateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantsBulkUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates the server pixel to connect to a Google PubSub endpoint.
+    * Running this mutation deletes any previous subscriptions for the server pixel.
+    */
+    public MutationQuery pubSubServerPixelUpdate(String pubSubProject, String pubSubTopic, PubSubServerPixelUpdatePayloadQueryDefinition queryDef) {
+        startField("pubSubServerPixelUpdate");
+
+        _queryBuilder.append("(pubSubProject:");
+        Query.appendQuotedString(_queryBuilder, pubSubProject.toString());
+
+        _queryBuilder.append(",pubSubTopic:");
+        Query.appendQuotedString(_queryBuilder, pubSubTopic.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PubSubServerPixelUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a new Google Cloud Pub/Sub webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+    public MutationQuery pubSubWebhookSubscriptionCreate(WebhookSubscriptionTopic topic, PubSubWebhookSubscriptionInput webhookSubscription, PubSubWebhookSubscriptionCreatePayloadQueryDefinition queryDef) {
+        startField("pubSubWebhookSubscriptionCreate");
+
+        _queryBuilder.append("(topic:");
+        _queryBuilder.append(topic.toString());
+
+        _queryBuilder.append(",webhookSubscription:");
+        webhookSubscription.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PubSubWebhookSubscriptionCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a Google Cloud Pub/Sub webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+    public MutationQuery pubSubWebhookSubscriptionUpdate(ID id, PubSubWebhookSubscriptionInput webhookSubscription, PubSubWebhookSubscriptionUpdatePayloadQueryDefinition queryDef) {
+        startField("pubSubWebhookSubscriptionUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",webhookSubscription:");
+        webhookSubscription.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PubSubWebhookSubscriptionUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a publication.
+    */
+    public MutationQuery publicationCreate(PublicationCreateInput input, PublicationCreatePayloadQueryDefinition queryDef) {
+        startField("publicationCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublicationCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a publication.
+    */
+    public MutationQuery publicationDelete(ID id, PublicationDeletePayloadQueryDefinition queryDef) {
+        startField("publicationDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublicationDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a publication.
+    */
+    public MutationQuery publicationUpdate(ID id, PublicationUpdateInput input, PublicationUpdatePayloadQueryDefinition queryDef) {
+        startField("publicationUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublicationUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Publishes a resource to a channel. If the resource is a product, then it's visible in the channel
+    * only if the product status is `active`. Products that are sold exclusively on subscription
+    * (`requiresSellingPlan: true`) can be published only on online stores.
+    */
+    public MutationQuery publishablePublish(ID id, List<PublicationInput> input, PublishablePublishPayloadQueryDefinition queryDef) {
+        startField("publishablePublish");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (PublicationInput item1 : input) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublishablePublishPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Publishes a resource to current channel. If the resource is a product, then it's visible in the
+    * channel only if the product status is `active`. Products that are sold exclusively on subscription
+    * (`requiresSellingPlan: true`) can be published only on online stores.
+    */
+    public MutationQuery publishablePublishToCurrentChannel(ID id, PublishablePublishToCurrentChannelPayloadQueryDefinition queryDef) {
+        startField("publishablePublishToCurrentChannel");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublishablePublishToCurrentChannelPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Unpublishes a resource from a channel. If the resource is a product, then it's visible in the
+    * channel only if the product status is `active`.
+    */
+    public MutationQuery publishableUnpublish(ID id, List<PublicationInput> input, PublishableUnpublishPayloadQueryDefinition queryDef) {
+        startField("publishableUnpublish");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (PublicationInput item1 : input) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublishableUnpublishPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Unpublishes a resource from the current channel. If the resource is a product, then it's visible in
+    * the channel only if the product status is `active`.
+    */
+    public MutationQuery publishableUnpublishToCurrentChannel(ID id, PublishableUnpublishToCurrentChannelPayloadQueryDefinition queryDef) {
+        startField("publishableUnpublishToCurrentChannel");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PublishableUnpublishToCurrentChannelPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates quantity pricing on a price list. You can use the `quantityPricingByVariantUpdate` mutation
+    * to set fixed prices, quantity rules, and quantity price breaks. This mutation does not allow partial
+    * successes. If any of the requested resources fail to update, none of the requested resources will be
+    * updated. Delete operations are executed before create operations.
+    */
+    public MutationQuery quantityPricingByVariantUpdate(ID priceListId, QuantityPricingByVariantUpdateInput input, QuantityPricingByVariantUpdatePayloadQueryDefinition queryDef) {
+        startField("quantityPricingByVariantUpdate");
+
+        _queryBuilder.append("(priceListId:");
+        Query.appendQuotedString(_queryBuilder, priceListId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new QuantityPricingByVariantUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates or updates existing quantity rules on a price list.
+    * You can use the `quantityRulesAdd` mutation to set order level minimums, maximumums and increments
+    * for specific product variants.
+    */
+    public MutationQuery quantityRulesAdd(ID priceListId, List<QuantityRuleInput> quantityRules, QuantityRulesAddPayloadQueryDefinition queryDef) {
+        startField("quantityRulesAdd");
+
+        _queryBuilder.append("(priceListId:");
+        Query.appendQuotedString(_queryBuilder, priceListId.toString());
+
+        _queryBuilder.append(",quantityRules:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (QuantityRuleInput item1 : quantityRules) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new QuantityRulesAddPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes specific quantity rules from a price list using a product variant ID.
+    * You can use the `quantityRulesDelete` mutation to delete a set of quantity rules from a price list.
+    */
+    public MutationQuery quantityRulesDelete(ID priceListId, List<ID> variantIds, QuantityRulesDeletePayloadQueryDefinition queryDef) {
+        startField("quantityRulesDelete");
+
+        _queryBuilder.append("(priceListId:");
+        Query.appendQuotedString(_queryBuilder, priceListId.toString());
+
+        _queryBuilder.append(",variantIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : variantIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new QuantityRulesDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a refund for an order, allowing you to process returns and issue payments back to customers.
+    * Use the `refundCreate` mutation to programmatically process refunds in scenarios where you need to
+    * return money to customers, such as when handling returns, processing chargebacks, or correcting
+    * order errors.
+    * The `refundCreate` mutation supports various refund scenarios:
+    * - Refunding line items with optional restocking
+    * - Refunding shipping costs
+    * - Refunding duties and import taxes
+    * - Refunding additional fees
+    * - Processing refunds through different payment methods
+    * - Issuing store credit refunds (when enabled)
+    * You can create both full and partial refunds, and optionally allow over-refunding in specific
+    * cases.
+    * After creating a refund, you can track its status and details through the order's
+    * [`refunds`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.refun
+    * ds)
+    * field. The refund is associated with the order and can be used for reporting and reconciliation
+    * purposes.
+    * Learn more about
+    * [managing
+    * returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management
+    * )
+    * and [refunding
+    * duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties).
+    * > Note:
+    * > The refunding behavior of the `refundCreate` mutation is similar to the
+    * [`refundReturn`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnRefund)
+    * mutation. The key difference is that the `refundCreate` mutation lets you to specify restocking
+    * behavior
+    * for line items, whereas the `returnRefund` mutation focuses solely on handling the financial refund
+    * without
+    * any restocking input.
+    */
+    public MutationQuery refundCreate(RefundInput input, RefundCreatePayloadQueryDefinition queryDef) {
+        startField("refundCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new RefundCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class RemoveFromReturnArguments extends Arguments {
+        RemoveFromReturnArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The return line items to remove from the return.
+        */
+        public RemoveFromReturnArguments returnLineItems(List<ReturnLineItemRemoveFromReturnInput> value) {
+            if (value != null) {
+                startArgument("returnLineItems");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (ReturnLineItemRemoveFromReturnInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+
+        /**
+        * The exchange line items to remove from the return.
+        */
+        public RemoveFromReturnArguments exchangeLineItems(List<ExchangeLineItemRemoveFromReturnInput> value) {
+            if (value != null) {
+                startArgument("exchangeLineItems");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (ExchangeLineItemRemoveFromReturnInput item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+    }
+
+    public interface RemoveFromReturnArgumentsDefinition {
+        void define(RemoveFromReturnArguments args);
+    }
+
+    /**
+    * Removes return and/or exchange lines from a return.
+    */
+    public MutationQuery removeFromReturn(ID returnId, RemoveFromReturnPayloadQueryDefinition queryDef) {
+        return removeFromReturn(returnId, args -> {}, queryDef);
+    }
+
+    /**
+    * Removes return and/or exchange lines from a return.
+    */
+    public MutationQuery removeFromReturn(ID returnId, RemoveFromReturnArgumentsDefinition argsDef, RemoveFromReturnPayloadQueryDefinition queryDef) {
+        startField("removeFromReturn");
+
+        _queryBuilder.append("(returnId:");
+        Query.appendQuotedString(_queryBuilder, returnId.toString());
+
+        argsDef.define(new RemoveFromReturnArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new RemoveFromReturnPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Approves a customer's return request.
+    * If this mutation is successful, then the `Return.status` field of the
+    * approved return is set to `OPEN`.
+    */
+    public MutationQuery returnApproveRequest(ReturnApproveRequestInput input, ReturnApproveRequestPayloadQueryDefinition queryDef) {
+        startField("returnApproveRequest");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnApproveRequestPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Cancels a return and restores the items back to being fulfilled.
+    * Canceling a return is only available before any work has been done
+    * on the return (such as an inspection or refund).
+    */
+    public MutationQuery returnCancel(ID id, ReturnCancelPayloadQueryDefinition queryDef) {
+        startField("returnCancel");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnCancelPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Indicates a return is complete, either when a refund has been made and items restocked,
+    * or simply when it has been marked as returned in the system.
+    */
+    public MutationQuery returnClose(ID id, ReturnClosePayloadQueryDefinition queryDef) {
+        startField("returnClose");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnClosePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a return from an existing order that has at least one fulfilled
+    * [line item](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem)
+    * that hasn't yet been refunded. If you create a return on an archived order, then the order is
+    * automatically
+    * unarchived.
+    * Use the `returnCreate` mutation when your workflow involves
+    * [approving](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnApproveRequest) or
+    * [declining](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnDeclineRequest)
+    * requested returns
+    * outside of the Shopify platform.
+    * The `returnCreate` mutation performs the following actions:
+    * - Creates a return in the `OPEN` state, and assumes that the return request from the customer has
+    * already been
+    * approved
+    * - Creates a [reverse fulfillment
+    * order](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillmen
+    * t-orders),
+    * and enables you to create a [reverse
+    * delivery](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliver
+    * ies)
+    * for the reverse fulfillment order
+    * - Creates a sales agreement with a `RETURN` reason, which links to all sales created for the return
+    * or exchange
+    * - Generates sales records that reverse the sales records for the items being returned
+    * - Generates sales records for any exchange line items
+    * After you've created a return, use the
+    * [`return`](https://shopify.dev/docs/api/admin-graphql/latest/queries/return) query to retrieve the
+    * return by its ID. Learn more about providing a
+    * [return management
+    * workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-managemen
+    * t)
+    * for merchants.
+    */
+    public MutationQuery returnCreate(ReturnInput returnInput, ReturnCreatePayloadQueryDefinition queryDef) {
+        startField("returnCreate");
+
+        _queryBuilder.append("(returnInput:");
+        returnInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Declines a return on an order.
+    * When a return is declined, each `ReturnLineItem.fulfillmentLineItem` can be associated to a new
+    * return.
+    * Use the `ReturnCreate` or `ReturnRequest` mutation to initiate a new return.
+    */
+    public MutationQuery returnDeclineRequest(ReturnDeclineRequestInput input, ReturnDeclineRequestPayloadQueryDefinition queryDef) {
+        startField("returnDeclineRequest");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnDeclineRequestPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Process a return.
+    */
+    public MutationQuery returnProcess(ReturnProcessInput input, ReturnProcessPayloadQueryDefinition queryDef) {
+        startField("returnProcess");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnProcessPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Reopens a closed return.
+    */
+    public MutationQuery returnReopen(ID id, ReturnReopenPayloadQueryDefinition queryDef) {
+        startField("returnReopen");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnReopenPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * A customer's return request that hasn't been approved or declined.
+    * This mutation sets the value of the `Return.status` field to `REQUESTED`.
+    * To create a return that has the `Return.status` field set to `OPEN`, use the `returnCreate`
+    * mutation.
+    */
+    public MutationQuery returnRequest(ReturnRequestInput input, ReturnRequestPayloadQueryDefinition queryDef) {
+        startField("returnRequest");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReturnRequestPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ReverseDeliveryCreateWithShippingArguments extends Arguments {
+        ReverseDeliveryCreateWithShippingArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The tracking information for the reverse delivery.
+        */
+        public ReverseDeliveryCreateWithShippingArguments trackingInput(ReverseDeliveryTrackingInput value) {
+            if (value != null) {
+                startArgument("trackingInput");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * The return label file information for the reverse delivery.
+        */
+        public ReverseDeliveryCreateWithShippingArguments labelInput(ReverseDeliveryLabelInput value) {
+            if (value != null) {
+                startArgument("labelInput");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * When `true` the customer is notified with delivery instructions if the
+        * `ReverseFulfillmentOrder.order.email` is present.
+        */
+        public ReverseDeliveryCreateWithShippingArguments notifyCustomer(Boolean value) {
+            if (value != null) {
+                startArgument("notifyCustomer");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ReverseDeliveryCreateWithShippingArgumentsDefinition {
+        void define(ReverseDeliveryCreateWithShippingArguments args);
+    }
+
+    /**
+    * Creates a new reverse delivery with associated external shipping information.
+    */
+    public MutationQuery reverseDeliveryCreateWithShipping(ID reverseFulfillmentOrderId, List<ReverseDeliveryLineItemInput> reverseDeliveryLineItems, ReverseDeliveryCreateWithShippingPayloadQueryDefinition queryDef) {
+        return reverseDeliveryCreateWithShipping(reverseFulfillmentOrderId, reverseDeliveryLineItems, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates a new reverse delivery with associated external shipping information.
+    */
+    public MutationQuery reverseDeliveryCreateWithShipping(ID reverseFulfillmentOrderId, List<ReverseDeliveryLineItemInput> reverseDeliveryLineItems, ReverseDeliveryCreateWithShippingArgumentsDefinition argsDef, ReverseDeliveryCreateWithShippingPayloadQueryDefinition queryDef) {
+        startField("reverseDeliveryCreateWithShipping");
+
+        _queryBuilder.append("(reverseFulfillmentOrderId:");
+        Query.appendQuotedString(_queryBuilder, reverseFulfillmentOrderId.toString());
+
+        _queryBuilder.append(",reverseDeliveryLineItems:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ReverseDeliveryLineItemInput item1 : reverseDeliveryLineItems) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        argsDef.define(new ReverseDeliveryCreateWithShippingArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReverseDeliveryCreateWithShippingPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ReverseDeliveryShippingUpdateArguments extends Arguments {
+        ReverseDeliveryShippingUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The tracking information for the reverse delivery.
+        */
+        public ReverseDeliveryShippingUpdateArguments trackingInput(ReverseDeliveryTrackingInput value) {
+            if (value != null) {
+                startArgument("trackingInput");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * The return label file information for the reverse delivery.
+        */
+        public ReverseDeliveryShippingUpdateArguments labelInput(ReverseDeliveryLabelInput value) {
+            if (value != null) {
+                startArgument("labelInput");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * If `true` and an email address exists on the `ReverseFulfillmentOrder.order`, then the customer is
+        * notified with the updated delivery instructions.
+        */
+        public ReverseDeliveryShippingUpdateArguments notifyCustomer(Boolean value) {
+            if (value != null) {
+                startArgument("notifyCustomer");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ReverseDeliveryShippingUpdateArgumentsDefinition {
+        void define(ReverseDeliveryShippingUpdateArguments args);
+    }
+
+    /**
+    * Updates a reverse delivery with associated external shipping information.
+    */
+    public MutationQuery reverseDeliveryShippingUpdate(ID reverseDeliveryId, ReverseDeliveryShippingUpdatePayloadQueryDefinition queryDef) {
+        return reverseDeliveryShippingUpdate(reverseDeliveryId, args -> {}, queryDef);
+    }
+
+    /**
+    * Updates a reverse delivery with associated external shipping information.
+    */
+    public MutationQuery reverseDeliveryShippingUpdate(ID reverseDeliveryId, ReverseDeliveryShippingUpdateArgumentsDefinition argsDef, ReverseDeliveryShippingUpdatePayloadQueryDefinition queryDef) {
+        startField("reverseDeliveryShippingUpdate");
+
+        _queryBuilder.append("(reverseDeliveryId:");
+        Query.appendQuotedString(_queryBuilder, reverseDeliveryId.toString());
+
+        argsDef.define(new ReverseDeliveryShippingUpdateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReverseDeliveryShippingUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Disposes reverse fulfillment order line items.
+    */
+    public MutationQuery reverseFulfillmentOrderDispose(List<ReverseFulfillmentOrderDisposeInput> dispositionInputs, ReverseFulfillmentOrderDisposePayloadQueryDefinition queryDef) {
+        startField("reverseFulfillmentOrderDispose");
+
+        _queryBuilder.append("(dispositionInputs:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ReverseFulfillmentOrderDisposeInput item1 : dispositionInputs) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ReverseFulfillmentOrderDisposePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a saved search.
+    */
+    public MutationQuery savedSearchCreate(SavedSearchCreateInput input, SavedSearchCreatePayloadQueryDefinition queryDef) {
+        startField("savedSearchCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SavedSearchCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Delete a saved search.
+    */
+    public MutationQuery savedSearchDelete(SavedSearchDeleteInput input, SavedSearchDeletePayloadQueryDefinition queryDef) {
+        startField("savedSearchDelete");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SavedSearchDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a saved search.
+    */
+    public MutationQuery savedSearchUpdate(SavedSearchUpdateInput input, SavedSearchUpdatePayloadQueryDefinition queryDef) {
+        startField("savedSearchUpdate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SavedSearchUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Creates a new script tag.
+    */
+    public MutationQuery scriptTagCreate(ScriptTagInput input, ScriptTagCreatePayloadQueryDefinition queryDef) {
+        startField("scriptTagCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ScriptTagCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Deletes a script tag.
+    */
+    public MutationQuery scriptTagDelete(ID id, ScriptTagDeletePayloadQueryDefinition queryDef) {
+        startField("scriptTagDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ScriptTagDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * <div class="note"><h4>Theme app extensions</h4>
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
+    * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
+    * more</a>.</p></div>
+    * <div class="note"><h4>Script tag deprecation</h4>
+    * <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a
+    * href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout
+    * Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a>
+    * will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
+    * Updates a script tag.
+    */
+    public MutationQuery scriptTagUpdate(ID id, ScriptTagInput input, ScriptTagUpdatePayloadQueryDefinition queryDef) {
+        startField("scriptTagUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ScriptTagUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a segment.
+    */
+    public MutationQuery segmentCreate(String name, String query, SegmentCreatePayloadQueryDefinition queryDef) {
+        startField("segmentCreate");
+
+        _queryBuilder.append("(name:");
+        Query.appendQuotedString(_queryBuilder, name.toString());
+
+        _queryBuilder.append(",query:");
+        Query.appendQuotedString(_queryBuilder, query.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SegmentCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a segment.
+    */
+    public MutationQuery segmentDelete(ID id, SegmentDeletePayloadQueryDefinition queryDef) {
+        startField("segmentDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SegmentDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class SegmentUpdateArguments extends Arguments {
+        SegmentUpdateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The new name for the segment.
+        */
+        public SegmentUpdateArguments name(String value) {
+            if (value != null) {
+                startArgument("name");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * A precise definition of the segment. The definition is composed of a combination of conditions on
+        * facts about customers such as `email_subscription_status = 'SUBSCRIBED'` with [this
+        * syntax](https://shopify.dev/api/shopifyql/segment-query-language-reference).
+        */
+        public SegmentUpdateArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface SegmentUpdateArgumentsDefinition {
+        void define(SegmentUpdateArguments args);
+    }
+
+    /**
+    * Updates a segment.
+    */
+    public MutationQuery segmentUpdate(ID id, SegmentUpdatePayloadQueryDefinition queryDef) {
+        return segmentUpdate(id, args -> {}, queryDef);
+    }
+
+    /**
+    * Updates a segment.
+    */
+    public MutationQuery segmentUpdate(ID id, SegmentUpdateArgumentsDefinition argsDef, SegmentUpdatePayloadQueryDefinition queryDef) {
+        startField("segmentUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        argsDef.define(new SegmentUpdateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SegmentUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds multiple product variants to a selling plan group.
+    */
+    public MutationQuery sellingPlanGroupAddProductVariants(ID id, List<ID> productVariantIds, SellingPlanGroupAddProductVariantsPayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupAddProductVariants");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",productVariantIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : productVariantIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupAddProductVariantsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds multiple products to a selling plan group.
+    */
+    public MutationQuery sellingPlanGroupAddProducts(ID id, List<ID> productIds, SellingPlanGroupAddProductsPayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupAddProducts");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",productIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : productIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupAddProductsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class SellingPlanGroupCreateArguments extends Arguments {
+        SellingPlanGroupCreateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The resources this Selling Plan Group should be applied to.
+        */
+        public SellingPlanGroupCreateArguments resources(SellingPlanGroupResourceInput value) {
+            if (value != null) {
+                startArgument("resources");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface SellingPlanGroupCreateArgumentsDefinition {
+        void define(SellingPlanGroupCreateArguments args);
+    }
+
+    /**
+    * Creates a Selling Plan Group.
+    */
+    public MutationQuery sellingPlanGroupCreate(SellingPlanGroupInput input, SellingPlanGroupCreatePayloadQueryDefinition queryDef) {
+        return sellingPlanGroupCreate(input, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates a Selling Plan Group.
+    */
+    public MutationQuery sellingPlanGroupCreate(SellingPlanGroupInput input, SellingPlanGroupCreateArgumentsDefinition argsDef, SellingPlanGroupCreatePayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        argsDef.define(new SellingPlanGroupCreateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Delete a Selling Plan Group. This does not affect subscription contracts.
+    */
+    public MutationQuery sellingPlanGroupDelete(ID id, SellingPlanGroupDeletePayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Removes multiple product variants from a selling plan group.
+    */
+    public MutationQuery sellingPlanGroupRemoveProductVariants(ID id, List<ID> productVariantIds, SellingPlanGroupRemoveProductVariantsPayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupRemoveProductVariants");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",productVariantIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : productVariantIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupRemoveProductVariantsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Removes multiple products from a selling plan group.
+    */
+    public MutationQuery sellingPlanGroupRemoveProducts(ID id, List<ID> productIds, SellingPlanGroupRemoveProductsPayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupRemoveProducts");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",productIds:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : productIds) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupRemoveProductsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Update a Selling Plan Group.
+    */
+    public MutationQuery sellingPlanGroupUpdate(ID id, SellingPlanGroupInput input, SellingPlanGroupUpdatePayloadQueryDefinition queryDef) {
+        startField("sellingPlanGroupUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SellingPlanGroupUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a new unconfigured server pixel. A single server pixel can exist for an app and shop
+    * combination. If you call this mutation when a server pixel already exists, then an error will
+    * return.
+    */
+    public MutationQuery serverPixelCreate(ServerPixelCreatePayloadQueryDefinition queryDef) {
+        startField("serverPixelCreate");
+
+        _queryBuilder.append('{');
+        queryDef.define(new ServerPixelCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes the Server Pixel associated with the current app & shop.
+    */
+    public MutationQuery serverPixelDelete(ServerPixelDeletePayloadQueryDefinition queryDef) {
+        startField("serverPixelDelete");
+
+        _queryBuilder.append('{');
+        queryDef.define(new ServerPixelDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a shipping package.
+    */
+    public MutationQuery shippingPackageDelete(ID id, ShippingPackageDeletePayloadQueryDefinition queryDef) {
+        startField("shippingPackageDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShippingPackageDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Set a shipping package as the default.
+    * The default shipping package is the one used to calculate shipping costs on checkout.
+    */
+    public MutationQuery shippingPackageMakeDefault(ID id, ShippingPackageMakeDefaultPayloadQueryDefinition queryDef) {
+        startField("shippingPackageMakeDefault");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShippingPackageMakeDefaultPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a shipping package.
+    */
+    public MutationQuery shippingPackageUpdate(ID id, CustomShippingPackageInput shippingPackage, ShippingPackageUpdatePayloadQueryDefinition queryDef) {
+        startField("shippingPackageUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",shippingPackage:");
+        shippingPackage.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShippingPackageUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a locale for a shop. This also deletes all translations of this locale.
+    */
+    public MutationQuery shopLocaleDisable(String locale, ShopLocaleDisablePayloadQueryDefinition queryDef) {
+        startField("shopLocaleDisable");
+
+        _queryBuilder.append("(locale:");
+        Query.appendQuotedString(_queryBuilder, locale.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopLocaleDisablePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ShopLocaleEnableArguments extends Arguments {
+        ShopLocaleEnableArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The list of markets web presences to add the locale to.
+        */
+        public ShopLocaleEnableArguments marketWebPresenceIds(List<ID> value) {
+            if (value != null) {
+                startArgument("marketWebPresenceIds");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (ID item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        Query.appendQuotedString(_queryBuilder, item1.toString());
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+    }
+
+    public interface ShopLocaleEnableArgumentsDefinition {
+        void define(ShopLocaleEnableArguments args);
+    }
+
+    /**
+    * Adds a locale for a shop. The newly added locale is in the unpublished state.
+    */
+    public MutationQuery shopLocaleEnable(String locale, ShopLocaleEnablePayloadQueryDefinition queryDef) {
+        return shopLocaleEnable(locale, args -> {}, queryDef);
+    }
+
+    /**
+    * Adds a locale for a shop. The newly added locale is in the unpublished state.
+    */
+    public MutationQuery shopLocaleEnable(String locale, ShopLocaleEnableArgumentsDefinition argsDef, ShopLocaleEnablePayloadQueryDefinition queryDef) {
+        startField("shopLocaleEnable");
+
+        _queryBuilder.append("(locale:");
+        Query.appendQuotedString(_queryBuilder, locale.toString());
+
+        argsDef.define(new ShopLocaleEnableArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopLocaleEnablePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a locale for a shop.
+    */
+    public MutationQuery shopLocaleUpdate(String locale, ShopLocaleInput shopLocale, ShopLocaleUpdatePayloadQueryDefinition queryDef) {
+        startField("shopLocaleUpdate");
+
+        _queryBuilder.append("(locale:");
+        Query.appendQuotedString(_queryBuilder, locale.toString());
+
+        _queryBuilder.append(",shopLocale:");
+        shopLocale.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopLocaleUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a shop policy.
+    */
+    public MutationQuery shopPolicyUpdate(ShopPolicyInput shopPolicy, ShopPolicyUpdatePayloadQueryDefinition queryDef) {
+        startField("shopPolicyUpdate");
+
+        _queryBuilder.append("(shopPolicy:");
+        shopPolicy.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopPolicyUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The `ResourceFeedback` object lets your app report the status of shops and their resources. For
+    * example, if
+    * your app is a marketplace channel, then you can use resource feedback to alert merchants that they
+    * need to connect their marketplace account by signing in.
+    * Resource feedback notifications are displayed to the merchant on the home screen of their Shopify
+    * admin, and in the product details view for any products that are published to your app.
+    * This resource should be used only in cases where you're describing steps that a merchant is required
+    * to complete. If your app offers optional or promotional set-up steps, or if it makes
+    * recommendations, then don't use resource feedback to let merchants know about them.
+    * ## Sending feedback on a shop
+    * You can send resource feedback on a shop to let the merchant know what steps they need to take to
+    * make sure that your app is set up correctly. Feedback can have one of two states: `requires_action`
+    * or `success`. You need to send a `requires_action` feedback request for each step that the merchant
+    * is required to complete.
+    * If there are multiple set-up steps that require merchant action, then send feedback with a state of
+    * `requires_action` as merchants complete prior steps. And to remove the feedback message from the
+    * Shopify admin, send a `success` feedback request.
+    * #### Important
+    * Sending feedback replaces previously sent feedback for the shop. Send a new
+    * `shopResourceFeedbackCreate` mutation to push the latest state of a shop or its resources to
+    * Shopify.
+    */
+    public MutationQuery shopResourceFeedbackCreate(ResourceFeedbackCreateInput input, ShopResourceFeedbackCreatePayloadQueryDefinition queryDef) {
+        startField("shopResourceFeedbackCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopResourceFeedbackCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ShopifyPaymentsPayoutAlternateCurrencyCreateArguments extends Arguments {
+        ShopifyPaymentsPayoutAlternateCurrencyCreateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The ID of the Shopify Payments account on which the mutation is being performed.
+        */
+        public ShopifyPaymentsPayoutAlternateCurrencyCreateArguments accountId(ID value) {
+            if (value != null) {
+                startArgument("accountId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface ShopifyPaymentsPayoutAlternateCurrencyCreateArgumentsDefinition {
+        void define(ShopifyPaymentsPayoutAlternateCurrencyCreateArguments args);
+    }
+
+    /**
+    * Creates an alternate currency payout for a Shopify Payments account.
+    */
+    public MutationQuery shopifyPaymentsPayoutAlternateCurrencyCreate(CurrencyCode currency, ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQueryDefinition queryDef) {
+        return shopifyPaymentsPayoutAlternateCurrencyCreate(currency, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates an alternate currency payout for a Shopify Payments account.
+    */
+    public MutationQuery shopifyPaymentsPayoutAlternateCurrencyCreate(CurrencyCode currency, ShopifyPaymentsPayoutAlternateCurrencyCreateArgumentsDefinition argsDef, ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQueryDefinition queryDef) {
+        startField("shopifyPaymentsPayoutAlternateCurrencyCreate");
+
+        _queryBuilder.append("(currency:");
+        _queryBuilder.append(currency.toString());
+
+        argsDef.define(new ShopifyPaymentsPayoutAlternateCurrencyCreateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates staged upload targets for file uploads such as images, videos, and 3D models.
+    * Use the `stagedUploadsCreate` mutation instead of direct file creation mutations when:
+    * - **Uploading large files**: Files over a few MB benefit from staged uploads for better reliability
+    * - **Uploading media files**: Videos, 3D models, and high-resolution images
+    * - **Bulk importing**: CSV files, product catalogs, or other bulk data
+    * - **Using external file sources**: When files are stored remotely and need to be transferred to
+    * Shopify
+    * For small files or simple use cases, you can use
+    * [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate)
+    * directly by providing the file content inline.
+    * The `stagedUploadsCreate` mutation is the first step in Shopify's secure two-step upload process:
+    * **Step 1: Create staged upload targets** (this mutation)
+    * - Generate secure, temporary upload URLs for your files.
+    * - Receive authentication parameters for the upload.
+    * **Step 2: Upload files and create assets**
+    * - Upload your files directly to the provided URLs using the authentication parameters.
+    * - Use the returned `resourceUrl` as the `originalSource` in subsequent mutations like `fileCreate`.
+    * This approach provides better performance for large files, handles network interruptions gracefully,
+    * and ensures secure file transfers to Shopify's storage infrastructure.
+    * > Note:
+    * > File size is required when uploading
+    * >
+    * [`VIDEO`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploadRe
+    * source#enums-VIDEO) or
+    * >
+    * [`MODEL_3D`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploa
+    * dResource#enums-MODEL_3D)
+    * > resources.
+    * After creating staged upload targets, complete the process by:
+    * 1. **Uploading files**: Send your files to the returned
+    * [`url`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#field-Stag
+    * edMediaUploadTarget.fields.url) using the provided
+    * [`parameters`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#fie
+    * ld-StagedMediaUploadTarget.fields.parameters)
+    * for authentication
+    * 2. **Creating file assets**: Use the
+    * [`resourceUrl`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#fi
+    * eld-StagedMediaUploadTarget.fields.resourceUrl)
+    * as the `originalSource` in mutations such as:
+    * - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+    * Creates file assets from staged uploads
+    * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+    * Updates products with new media from staged uploads
+    * Learn more about [uploading media to Shopify](https://shopify.dev/apps/online-store/media/products).
+    */
+    public MutationQuery stagedUploadsCreate(List<StagedUploadInput> input, StagedUploadsCreatePayloadQueryDefinition queryDef) {
+        startField("stagedUploadsCreate");
+
+        _queryBuilder.append("(input:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (StagedUploadInput item1 : input) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StagedUploadsCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class StandardMetafieldDefinitionEnableArguments extends Arguments {
+        StandardMetafieldDefinitionEnableArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The ID of the standard metafield definition template to enable.
+        */
+        public StandardMetafieldDefinitionEnableArguments id(ID value) {
+            if (value != null) {
+                startArgument("id");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The namespace of the standard metafield to enable. Used in combination with `key`.
+        */
+        public StandardMetafieldDefinitionEnableArguments namespace(String value) {
+            if (value != null) {
+                startArgument("namespace");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The key of the standard metafield to enable. Used in combination with `namespace`.
+        */
+        public StandardMetafieldDefinitionEnableArguments key(String value) {
+            if (value != null) {
+                startArgument("key");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Whether to pin the metafield definition.
+        */
+        public StandardMetafieldDefinitionEnableArguments pin(Boolean value) {
+            if (value != null) {
+                startArgument("pin");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The capabilities of the metafield definition.
+        */
+        public StandardMetafieldDefinitionEnableArguments capabilities(MetafieldCapabilityCreateInput value) {
+            if (value != null) {
+                startArgument("capabilities");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * The access settings that apply to each of the metafields that belong to the metafield definition.
+        */
+        public StandardMetafieldDefinitionEnableArguments access(StandardMetafieldDefinitionAccessInput value) {
+            if (value != null) {
+                startArgument("access");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface StandardMetafieldDefinitionEnableArgumentsDefinition {
+        void define(StandardMetafieldDefinitionEnableArguments args);
+    }
+
+    /**
+    * Activates the specified standard metafield definition from its template.
+    * Refer to the [list of standard metafield definition
+    * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
+    */
+    public MutationQuery standardMetafieldDefinitionEnable(MetafieldOwnerType ownerType, StandardMetafieldDefinitionEnablePayloadQueryDefinition queryDef) {
+        return standardMetafieldDefinitionEnable(ownerType, args -> {}, queryDef);
+    }
+
+    /**
+    * Activates the specified standard metafield definition from its template.
+    * Refer to the [list of standard metafield definition
+    * templates](https://shopify.dev/apps/metafields/definitions/standard-definitions).
+    */
+    public MutationQuery standardMetafieldDefinitionEnable(MetafieldOwnerType ownerType, StandardMetafieldDefinitionEnableArgumentsDefinition argsDef, StandardMetafieldDefinitionEnablePayloadQueryDefinition queryDef) {
+        startField("standardMetafieldDefinitionEnable");
+
+        _queryBuilder.append("(ownerType:");
+        _queryBuilder.append(ownerType.toString());
+
+        argsDef.define(new StandardMetafieldDefinitionEnableArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StandardMetafieldDefinitionEnablePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Enables the specified standard metaobject definition from its template.
+    */
+    public MutationQuery standardMetaobjectDefinitionEnable(String type, StandardMetaobjectDefinitionEnablePayloadQueryDefinition queryDef) {
+        startField("standardMetaobjectDefinitionEnable");
+
+        _queryBuilder.append("(type:");
+        Query.appendQuotedString(_queryBuilder, type.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StandardMetaobjectDefinitionEnablePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a credit transaction that increases the store credit account balance by the given amount.
+    * This operation will create an account if one does not already exist.
+    * A store credit account owner can hold multiple accounts each with a different currency.
+    * Use the most appropriate currency for the given store credit account owner.
+    */
+    public MutationQuery storeCreditAccountCredit(ID id, StoreCreditAccountCreditInput creditInput, StoreCreditAccountCreditPayloadQueryDefinition queryDef) {
+        startField("storeCreditAccountCredit");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",creditInput:");
+        creditInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StoreCreditAccountCreditPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a debit transaction that decreases the store credit account balance by the given amount.
+    */
+    public MutationQuery storeCreditAccountDebit(ID id, StoreCreditAccountDebitInput debitInput, StoreCreditAccountDebitPayloadQueryDefinition queryDef) {
+        startField("storeCreditAccountDebit");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",debitInput:");
+        debitInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StoreCreditAccountDebitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a storefront access token for use with the [Storefront
+    * API](https://shopify.dev/docs/api/storefront).
+    * An app can have a maximum of 100 active storefront access tokens for each shop.
+    * [Get started with the Storefront
+    * API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/getting-started)
+    * .
+    */
+    public MutationQuery storefrontAccessTokenCreate(StorefrontAccessTokenInput input, StorefrontAccessTokenCreatePayloadQueryDefinition queryDef) {
+        startField("storefrontAccessTokenCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StorefrontAccessTokenCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a storefront access token.
+    */
+    public MutationQuery storefrontAccessTokenDelete(StorefrontAccessTokenDeleteInput input, StorefrontAccessTokenDeletePayloadQueryDefinition queryDef) {
+        startField("storefrontAccessTokenDelete");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new StorefrontAccessTokenDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a new subscription billing attempt. For more information, refer to [Create a subscription
+    * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
+    * ate-a-billing-attempt).
+    */
+    public MutationQuery subscriptionBillingAttemptCreate(ID subscriptionContractId, SubscriptionBillingAttemptInput subscriptionBillingAttemptInput, SubscriptionBillingAttemptCreatePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingAttemptCreate");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(",subscriptionBillingAttemptInput:");
+        subscriptionBillingAttemptInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingAttemptCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class SubscriptionBillingCycleBulkChargeArguments extends Arguments {
+        SubscriptionBillingCycleBulkChargeArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * Criteria to filter the billing cycles on which the action is executed.
+        */
+        public SubscriptionBillingCycleBulkChargeArguments filters(SubscriptionBillingCycleBulkFilters value) {
+            if (value != null) {
+                startArgument("filters");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+
+        /**
+        * The behaviour to use when updating inventory.
+        */
+        public SubscriptionBillingCycleBulkChargeArguments inventoryPolicy(SubscriptionBillingAttemptInventoryPolicy value) {
+            if (value != null) {
+                startArgument("inventoryPolicy");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface SubscriptionBillingCycleBulkChargeArgumentsDefinition {
+        void define(SubscriptionBillingCycleBulkChargeArguments args);
+    }
+
+    /**
+    * Asynchronously queries and charges all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+    public MutationQuery subscriptionBillingCycleBulkCharge(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkChargePayloadQueryDefinition queryDef) {
+        return subscriptionBillingCycleBulkCharge(billingAttemptExpectedDateRange, args -> {}, queryDef);
+    }
+
+    /**
+    * Asynchronously queries and charges all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+    public MutationQuery subscriptionBillingCycleBulkCharge(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkChargeArgumentsDefinition argsDef, SubscriptionBillingCycleBulkChargePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleBulkCharge");
+
+        _queryBuilder.append("(billingAttemptExpectedDateRange:");
+        billingAttemptExpectedDateRange.appendTo(_queryBuilder);
+
+        argsDef.define(new SubscriptionBillingCycleBulkChargeArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleBulkChargePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class SubscriptionBillingCycleBulkSearchArguments extends Arguments {
+        SubscriptionBillingCycleBulkSearchArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * Criteria to filter the billing cycles on which the action is executed.
+        */
+        public SubscriptionBillingCycleBulkSearchArguments filters(SubscriptionBillingCycleBulkFilters value) {
+            if (value != null) {
+                startArgument("filters");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface SubscriptionBillingCycleBulkSearchArgumentsDefinition {
+        void define(SubscriptionBillingCycleBulkSearchArguments args);
+    }
+
+    /**
+    * Asynchronously queries all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+    public MutationQuery subscriptionBillingCycleBulkSearch(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkSearchPayloadQueryDefinition queryDef) {
+        return subscriptionBillingCycleBulkSearch(billingAttemptExpectedDateRange, args -> {}, queryDef);
+    }
+
+    /**
+    * Asynchronously queries all subscription billing cycles whose
+    * [billingAttemptExpectedDate](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionBillin
+    * gCycle#field-billingattemptexpecteddate) values fall within a specified date range and meet
+    * additional filtering criteria. The results of this action can be retrieved using the
+    * [subscriptionBillingCycleBulkResults](https://shopify.dev/api/admin-graphql/latest/queries/subscript
+    * ionBillingCycleBulkResults) query.
+    */
+    public MutationQuery subscriptionBillingCycleBulkSearch(SubscriptionBillingCyclesDateRangeSelector billingAttemptExpectedDateRange, SubscriptionBillingCycleBulkSearchArgumentsDefinition argsDef, SubscriptionBillingCycleBulkSearchPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleBulkSearch");
+
+        _queryBuilder.append("(billingAttemptExpectedDateRange:");
+        billingAttemptExpectedDateRange.appendTo(_queryBuilder);
+
+        argsDef.define(new SubscriptionBillingCycleBulkSearchArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleBulkSearchPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class SubscriptionBillingCycleChargeArguments extends Arguments {
+        SubscriptionBillingCycleChargeArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The behaviour to use when updating inventory.
+        */
+        public SubscriptionBillingCycleChargeArguments inventoryPolicy(SubscriptionBillingAttemptInventoryPolicy value) {
+            if (value != null) {
+                startArgument("inventoryPolicy");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface SubscriptionBillingCycleChargeArgumentsDefinition {
+        void define(SubscriptionBillingCycleChargeArguments args);
+    }
+
+    /**
+    * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
+    * mutation for
+    * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
+    * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
+    * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
+    * ate-a-billing-attempt).
+    */
+    public MutationQuery subscriptionBillingCycleCharge(ID subscriptionContractId, SubscriptionBillingCycleSelector billingCycleSelector, SubscriptionBillingCycleChargePayloadQueryDefinition queryDef) {
+        return subscriptionBillingCycleCharge(subscriptionContractId, billingCycleSelector, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates a new subscription billing attempt for a specified billing cycle. This is the alternative
+    * mutation for
+    * [subscriptionBillingAttemptCreate](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subsc
+    * riptionBillingAttemptCreate). For more information, refer to [Create a subscription
+    * contract](https://shopify.dev/docs/apps/selling-strategies/subscriptions/contracts/create#step-4-cre
+    * ate-a-billing-attempt).
+    */
+    public MutationQuery subscriptionBillingCycleCharge(ID subscriptionContractId, SubscriptionBillingCycleSelector billingCycleSelector, SubscriptionBillingCycleChargeArgumentsDefinition argsDef, SubscriptionBillingCycleChargePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleCharge");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(",billingCycleSelector:");
+        billingCycleSelector.appendTo(_queryBuilder);
+
+        argsDef.define(new SubscriptionBillingCycleChargeArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleChargePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Commits the updates of a Subscription Billing Cycle Contract draft.
+    */
+    public MutationQuery subscriptionBillingCycleContractDraftCommit(ID draftId, SubscriptionBillingCycleContractDraftCommitPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleContractDraftCommit");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleContractDraftCommitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Concatenates a contract to a Subscription Draft.
+    */
+    public MutationQuery subscriptionBillingCycleContractDraftConcatenate(ID draftId, List<SubscriptionBillingCycleInput> concatenatedBillingCycleContracts, SubscriptionBillingCycleContractDraftConcatenatePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleContractDraftConcatenate");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",concatenatedBillingCycleContracts:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (SubscriptionBillingCycleInput item1 : concatenatedBillingCycleContracts) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleContractDraftConcatenatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Edit the contents of a subscription contract for the specified billing cycle.
+    */
+    public MutationQuery subscriptionBillingCycleContractEdit(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleContractEditPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleContractEdit");
+
+        _queryBuilder.append("(billingCycleInput:");
+        billingCycleInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleContractEditPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Delete the schedule and contract edits of the selected subscription billing cycle.
+    */
+    public MutationQuery subscriptionBillingCycleEditDelete(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleEditDeletePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleEditDelete");
+
+        _queryBuilder.append("(billingCycleInput:");
+        billingCycleInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleEditDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Delete the current and future schedule and contract edits of a list of subscription billing cycles.
+    */
+    public MutationQuery subscriptionBillingCycleEditsDelete(ID contractId, SubscriptionBillingCyclesTargetSelection targetSelection, SubscriptionBillingCycleEditsDeletePayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleEditsDelete");
+
+        _queryBuilder.append("(contractId:");
+        Query.appendQuotedString(_queryBuilder, contractId.toString());
+
+        _queryBuilder.append(",targetSelection:");
+        _queryBuilder.append(targetSelection.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleEditsDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Modify the schedule of a specific billing cycle.
+    */
+    public MutationQuery subscriptionBillingCycleScheduleEdit(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleScheduleEditInput input, SubscriptionBillingCycleScheduleEditPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleScheduleEdit");
+
+        _queryBuilder.append("(billingCycleInput:");
+        billingCycleInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleScheduleEditPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Skips a Subscription Billing Cycle.
+    */
+    public MutationQuery subscriptionBillingCycleSkip(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleSkipPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleSkip");
+
+        _queryBuilder.append("(billingCycleInput:");
+        billingCycleInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleSkipPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Unskips a Subscription Billing Cycle.
+    */
+    public MutationQuery subscriptionBillingCycleUnskip(SubscriptionBillingCycleInput billingCycleInput, SubscriptionBillingCycleUnskipPayloadQueryDefinition queryDef) {
+        startField("subscriptionBillingCycleUnskip");
+
+        _queryBuilder.append("(billingCycleInput:");
+        billingCycleInput.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionBillingCycleUnskipPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Activates a Subscription Contract. Contract status must be either active, paused, or failed.
+    */
+    public MutationQuery subscriptionContractActivate(ID subscriptionContractId, SubscriptionContractActivatePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractActivate");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractActivatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a Subscription Contract.
+    */
+    public MutationQuery subscriptionContractAtomicCreate(SubscriptionContractAtomicCreateInput input, SubscriptionContractAtomicCreatePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractAtomicCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractAtomicCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Cancels a Subscription Contract.
+    */
+    public MutationQuery subscriptionContractCancel(ID subscriptionContractId, SubscriptionContractCancelPayloadQueryDefinition queryDef) {
+        startField("subscriptionContractCancel");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractCancelPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a Subscription Contract Draft.
+    * You can submit all the desired information for the draft using [Subscription Draft Input
+    * object](https://shopify.dev/docs/api/admin-graphql/latest/input-objects/SubscriptionDraftInput).
+    * You can also update the draft using the [Subscription Contract
+    * Update](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionContractUpdate)
+    * mutation.
+    * The draft is not saved until you call the [Subscription Draft
+    * Commit](https://shopify.dev/docs/api/admin-graphql/latest/mutations/subscriptionDraftCommit)
+    * mutation.
+    */
+    public MutationQuery subscriptionContractCreate(SubscriptionContractCreateInput input, SubscriptionContractCreatePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Expires a Subscription Contract.
+    */
+    public MutationQuery subscriptionContractExpire(ID subscriptionContractId, SubscriptionContractExpirePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractExpire");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractExpirePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Fails a Subscription Contract.
+    */
+    public MutationQuery subscriptionContractFail(ID subscriptionContractId, SubscriptionContractFailPayloadQueryDefinition queryDef) {
+        startField("subscriptionContractFail");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractFailPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Pauses a Subscription Contract.
+    */
+    public MutationQuery subscriptionContractPause(ID subscriptionContractId, SubscriptionContractPausePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractPause");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractPausePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Allows for the easy change of a Product in a Contract or a Product price change.
+    */
+    public MutationQuery subscriptionContractProductChange(ID subscriptionContractId, ID lineId, SubscriptionContractProductChangeInput input, SubscriptionContractProductChangePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractProductChange");
+
+        _queryBuilder.append("(subscriptionContractId:");
+        Query.appendQuotedString(_queryBuilder, subscriptionContractId.toString());
+
+        _queryBuilder.append(",lineId:");
+        Query.appendQuotedString(_queryBuilder, lineId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractProductChangePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Sets the next billing date of a Subscription Contract. This field is managed by the apps.
+    * Alternatively you can utilize our
+    * [Billing Cycles
+    * APIs](https://shopify.dev/docs/apps/selling-strategies/subscriptions/billing-cycles),
+    * which provide auto-computed billing dates and additional functionalities.
+    */
+    public MutationQuery subscriptionContractSetNextBillingDate(ID contractId, String date, SubscriptionContractSetNextBillingDatePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractSetNextBillingDate");
+
+        _queryBuilder.append("(contractId:");
+        Query.appendQuotedString(_queryBuilder, contractId.toString());
+
+        _queryBuilder.append(",date:");
+        Query.appendQuotedString(_queryBuilder, date.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractSetNextBillingDatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The subscriptionContractUpdate mutation allows you to create a draft of an existing subscription
+    * contract. This [draft](https://shopify.dev/api/admin-graphql/latest/objects/SubscriptionDraft) can
+    * be reviewed and modified as needed. Once the draft is committed with
+    * [subscriptionDraftCommit](https://shopify.dev/api/admin-graphql/latest/mutations/subscriptionDraftCo
+    * mmit), the changes are applied to the original subscription contract.
+    */
+    public MutationQuery subscriptionContractUpdate(ID contractId, SubscriptionContractUpdatePayloadQueryDefinition queryDef) {
+        startField("subscriptionContractUpdate");
+
+        _queryBuilder.append("(contractId:");
+        Query.appendQuotedString(_queryBuilder, contractId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionContractUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Commits the updates of a Subscription Contract draft.
+    */
+    public MutationQuery subscriptionDraftCommit(ID draftId, SubscriptionDraftCommitPayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftCommit");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftCommitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds a subscription discount to a subscription draft.
+    */
+    public MutationQuery subscriptionDraftDiscountAdd(ID draftId, SubscriptionManualDiscountInput input, SubscriptionDraftDiscountAddPayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftDiscountAdd");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftDiscountAddPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Applies a code discount on the subscription draft.
+    */
+    public MutationQuery subscriptionDraftDiscountCodeApply(ID draftId, String redeemCode, SubscriptionDraftDiscountCodeApplyPayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftDiscountCodeApply");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",redeemCode:");
+        Query.appendQuotedString(_queryBuilder, redeemCode.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftDiscountCodeApplyPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Removes a subscription discount from a subscription draft.
+    */
+    public MutationQuery subscriptionDraftDiscountRemove(ID draftId, ID discountId, SubscriptionDraftDiscountRemovePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftDiscountRemove");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",discountId:");
+        Query.appendQuotedString(_queryBuilder, discountId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftDiscountRemovePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a subscription discount on a subscription draft.
+    */
+    public MutationQuery subscriptionDraftDiscountUpdate(ID draftId, ID discountId, SubscriptionManualDiscountInput input, SubscriptionDraftDiscountUpdatePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftDiscountUpdate");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",discountId:");
+        Query.appendQuotedString(_queryBuilder, discountId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftDiscountUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds a subscription free shipping discount to a subscription draft.
+    */
+    public MutationQuery subscriptionDraftFreeShippingDiscountAdd(ID draftId, SubscriptionFreeShippingDiscountInput input, SubscriptionDraftFreeShippingDiscountAddPayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftFreeShippingDiscountAdd");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftFreeShippingDiscountAddPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a subscription free shipping discount on a subscription draft.
+    */
+    public MutationQuery subscriptionDraftFreeShippingDiscountUpdate(ID draftId, ID discountId, SubscriptionFreeShippingDiscountInput input, SubscriptionDraftFreeShippingDiscountUpdatePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftFreeShippingDiscountUpdate");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",discountId:");
+        Query.appendQuotedString(_queryBuilder, discountId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftFreeShippingDiscountUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Adds a subscription line to a subscription draft.
+    */
+    public MutationQuery subscriptionDraftLineAdd(ID draftId, SubscriptionLineInput input, SubscriptionDraftLineAddPayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftLineAdd");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftLineAddPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Removes a subscription line from a subscription draft.
+    */
+    public MutationQuery subscriptionDraftLineRemove(ID draftId, ID lineId, SubscriptionDraftLineRemovePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftLineRemove");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",lineId:");
+        Query.appendQuotedString(_queryBuilder, lineId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftLineRemovePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a subscription line on a subscription draft.
+    */
+    public MutationQuery subscriptionDraftLineUpdate(ID draftId, ID lineId, SubscriptionLineUpdateInput input, SubscriptionDraftLineUpdatePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftLineUpdate");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",lineId:");
+        Query.appendQuotedString(_queryBuilder, lineId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftLineUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a Subscription Draft.
+    */
+    public MutationQuery subscriptionDraftUpdate(ID draftId, SubscriptionDraftInput input, SubscriptionDraftUpdatePayloadQueryDefinition queryDef) {
+        startField("subscriptionDraftUpdate");
+
+        _queryBuilder.append("(draftId:");
+        Query.appendQuotedString(_queryBuilder, draftId.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new SubscriptionDraftUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Add tags to an order, a draft order, a customer, a product, or an online store article.
+    */
+    public MutationQuery tagsAdd(ID id, List<String> tags, TagsAddPayloadQueryDefinition queryDef) {
+        startField("tagsAdd");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",tags:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (String item1 : tags) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TagsAddPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Remove tags from an order, a draft order, a customer, a product, or an online store article.
+    */
+    public MutationQuery tagsRemove(ID id, List<String> tags, TagsRemovePayloadQueryDefinition queryDef) {
+        startField("tagsRemove");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",tags:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (String item1 : tags) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TagsRemovePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Allows tax app configurations for tax partners.
+    */
+    public MutationQuery taxAppConfigure(boolean ready, TaxAppConfigurePayloadQueryDefinition queryDef) {
+        startField("taxAppConfigure");
+
+        _queryBuilder.append("(ready:");
+        _queryBuilder.append(ready);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TaxAppConfigurePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ThemeCreateArguments extends Arguments {
+        ThemeCreateArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The name of the theme to be created.
+        */
+        public ThemeCreateArguments name(String value) {
+            if (value != null) {
+                startArgument("name");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The role of the theme to be created. Only UNPUBLISHED and DEVELOPMENT roles are permitted.
+        */
+        public ThemeCreateArguments role(ThemeRole value) {
+            if (value != null) {
+                startArgument("role");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface ThemeCreateArgumentsDefinition {
+        void define(ThemeCreateArguments args);
+    }
+
+    /**
+    * Creates a theme using an external URL or for files that were previously uploaded using the
+    * [stagedUploadsCreate
+    * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
+    * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
+    */
+    public MutationQuery themeCreate(String source, ThemeCreatePayloadQueryDefinition queryDef) {
+        return themeCreate(source, args -> {}, queryDef);
+    }
+
+    /**
+    * Creates a theme using an external URL or for files that were previously uploaded using the
+    * [stagedUploadsCreate
+    * mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
+    * These themes are added to the [Themes page](https://admin.shopify.com/themes) in Shopify admin.
+    */
+    public MutationQuery themeCreate(String source, ThemeCreateArgumentsDefinition argsDef, ThemeCreatePayloadQueryDefinition queryDef) {
+        startField("themeCreate");
+
+        _queryBuilder.append("(source:");
+        Query.appendQuotedString(_queryBuilder, source.toString());
+
+        argsDef.define(new ThemeCreateArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a theme.
+    */
+    public MutationQuery themeDelete(ID id, ThemeDeletePayloadQueryDefinition queryDef) {
+        startField("themeDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Copy theme files. Copying to existing theme files will overwrite them.
+    */
+    public MutationQuery themeFilesCopy(ID themeId, List<ThemeFilesCopyFileInput> files, ThemeFilesCopyPayloadQueryDefinition queryDef) {
+        startField("themeFilesCopy");
+
+        _queryBuilder.append("(themeId:");
+        Query.appendQuotedString(_queryBuilder, themeId.toString());
+
+        _queryBuilder.append(",files:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ThemeFilesCopyFileInput item1 : files) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeFilesCopyPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a theme's files.
+    */
+    public MutationQuery themeFilesDelete(ID themeId, List<String> files, ThemeFilesDeletePayloadQueryDefinition queryDef) {
+        startField("themeFilesDelete");
+
+        _queryBuilder.append("(themeId:");
+        Query.appendQuotedString(_queryBuilder, themeId.toString());
+
+        _queryBuilder.append(",files:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (String item1 : files) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeFilesDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Create or update theme files.
+    */
+    public MutationQuery themeFilesUpsert(ID themeId, List<OnlineStoreThemeFilesUpsertFileInput> files, ThemeFilesUpsertPayloadQueryDefinition queryDef) {
+        startField("themeFilesUpsert");
+
+        _queryBuilder.append("(themeId:");
+        Query.appendQuotedString(_queryBuilder, themeId.toString());
+
+        _queryBuilder.append(",files:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (OnlineStoreThemeFilesUpsertFileInput item1 : files) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeFilesUpsertPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Publishes a theme.
+    */
+    public MutationQuery themePublish(ID id, ThemePublishPayloadQueryDefinition queryDef) {
+        startField("themePublish");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemePublishPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a theme.
+    */
+    public MutationQuery themeUpdate(ID id, OnlineStoreThemeInput input, ThemeUpdatePayloadQueryDefinition queryDef) {
+        startField("themeUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ThemeUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Trigger the voiding of an uncaptured authorization transaction.
+    */
+    public MutationQuery transactionVoid(ID parentTransactionId, TransactionVoidPayloadQueryDefinition queryDef) {
+        startField("transactionVoid");
+
+        _queryBuilder.append("(parentTransactionId:");
+        Query.appendQuotedString(_queryBuilder, parentTransactionId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TransactionVoidPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates or updates translations.
+    */
+    public MutationQuery translationsRegister(ID resourceId, List<TranslationInput> translations, TranslationsRegisterPayloadQueryDefinition queryDef) {
+        startField("translationsRegister");
+
+        _queryBuilder.append("(resourceId:");
+        Query.appendQuotedString(_queryBuilder, resourceId.toString());
+
+        _queryBuilder.append(",translations:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (TranslationInput item1 : translations) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TranslationsRegisterPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class TranslationsRemoveArguments extends Arguments {
+        TranslationsRemoveArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The list of market IDs.
+        */
+        public TranslationsRemoveArguments marketIds(List<ID> value) {
+            if (value != null) {
+                startArgument("marketIds");
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (ID item1 : value) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        Query.appendQuotedString(_queryBuilder, item1.toString());
+                    }
+                }
+                _queryBuilder.append(']');
+            }
+            return this;
+        }
+    }
+
+    public interface TranslationsRemoveArgumentsDefinition {
+        void define(TranslationsRemoveArguments args);
+    }
+
+    /**
+    * Deletes translations.
+    */
+    public MutationQuery translationsRemove(ID resourceId, List<String> translationKeys, List<String> locales, TranslationsRemovePayloadQueryDefinition queryDef) {
+        return translationsRemove(resourceId, translationKeys, locales, args -> {}, queryDef);
+    }
+
+    /**
+    * Deletes translations.
+    */
+    public MutationQuery translationsRemove(ID resourceId, List<String> translationKeys, List<String> locales, TranslationsRemoveArgumentsDefinition argsDef, TranslationsRemovePayloadQueryDefinition queryDef) {
+        startField("translationsRemove");
+
+        _queryBuilder.append("(resourceId:");
+        Query.appendQuotedString(_queryBuilder, resourceId.toString());
+
+        _queryBuilder.append(",translationKeys:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (String item1 : translationKeys) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(",locales:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (String item1 : locales) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        argsDef.define(new TranslationsRemoveArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new TranslationsRemovePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Asynchronously delete [URL
+    * redirects](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) in bulk.
+    */
+    public MutationQuery urlRedirectBulkDeleteAll(UrlRedirectBulkDeleteAllPayloadQueryDefinition queryDef) {
+        startField("urlRedirectBulkDeleteAll");
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectBulkDeleteAllPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Asynchronously delete
+    * [URLRedirect](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) 
+    * objects in bulk by IDs.
+    * Learn more about
+    * [URLRedirect](https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect) 
+    * objects.
+    */
+    public MutationQuery urlRedirectBulkDeleteByIds(List<ID> ids, UrlRedirectBulkDeleteByIdsPayloadQueryDefinition queryDef) {
+        startField("urlRedirectBulkDeleteByIds");
+
+        _queryBuilder.append("(ids:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (ID item1 : ids) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                Query.appendQuotedString(_queryBuilder, item1.toString());
+            }
+        }
+        _queryBuilder.append(']');
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectBulkDeleteByIdsPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Asynchronously delete redirects in bulk.
+    */
+    public MutationQuery urlRedirectBulkDeleteBySavedSearch(ID savedSearchId, UrlRedirectBulkDeleteBySavedSearchPayloadQueryDefinition queryDef) {
+        startField("urlRedirectBulkDeleteBySavedSearch");
+
+        _queryBuilder.append("(savedSearchId:");
+        Query.appendQuotedString(_queryBuilder, savedSearchId.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectBulkDeleteBySavedSearchPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Asynchronously delete redirects in bulk.
+    */
+    public MutationQuery urlRedirectBulkDeleteBySearch(String search, UrlRedirectBulkDeleteBySearchPayloadQueryDefinition queryDef) {
+        startField("urlRedirectBulkDeleteBySearch");
+
+        _queryBuilder.append("(search:");
+        Query.appendQuotedString(_queryBuilder, search.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectBulkDeleteBySearchPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
+    */
+    public MutationQuery urlRedirectCreate(UrlRedirectInput urlRedirect, UrlRedirectCreatePayloadQueryDefinition queryDef) {
+        startField("urlRedirectCreate");
+
+        _queryBuilder.append("(urlRedirect:");
+        urlRedirect.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a [`UrlRedirect`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirect) object.
+    */
+    public MutationQuery urlRedirectDelete(ID id, UrlRedirectDeletePayloadQueryDefinition queryDef) {
+        startField("urlRedirectDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a
+    * [`UrlRedirectImport`](https://shopify.dev/api/admin-graphql/latest/objects/UrlRedirectImport)
+    * object.
+    * After creating the `UrlRedirectImport` object, the `UrlRedirectImport` request can be performed
+    * using the
+    * [`urlRedirectImportSubmit`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
+    * Submit) mutation.
+    */
+    public MutationQuery urlRedirectImportCreate(String url, UrlRedirectImportCreatePayloadQueryDefinition queryDef) {
+        startField("urlRedirectImportCreate");
+
+        _queryBuilder.append("(url:");
+        Query.appendQuotedString(_queryBuilder, url.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectImportCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Submits a `UrlRedirectImport` request to be processed.
+    * The `UrlRedirectImport` request is first created with the
+    * [`urlRedirectImportCreate`](https://shopify.dev/api/admin-graphql/latest/mutations/urlRedirectImport
+    * Create) mutation.
+    */
+    public MutationQuery urlRedirectImportSubmit(ID id, UrlRedirectImportSubmitPayloadQueryDefinition queryDef) {
+        startField("urlRedirectImportSubmit");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectImportSubmitPayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a URL redirect.
+    */
+    public MutationQuery urlRedirectUpdate(ID id, UrlRedirectInput urlRedirect, UrlRedirectUpdatePayloadQueryDefinition queryDef) {
+        startField("urlRedirectUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",urlRedirect:");
+        urlRedirect.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new UrlRedirectUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a validation.
+    */
+    public MutationQuery validationCreate(ValidationCreateInput validation, ValidationCreatePayloadQueryDefinition queryDef) {
+        startField("validationCreate");
+
+        _queryBuilder.append("(validation:");
+        validation.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ValidationCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a validation.
+    */
+    public MutationQuery validationDelete(ID id, ValidationDeletePayloadQueryDefinition queryDef) {
+        startField("validationDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ValidationDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Update a validation.
+    */
+    public MutationQuery validationUpdate(ValidationUpdateInput validation, ID id, ValidationUpdatePayloadQueryDefinition queryDef) {
+        startField("validationUpdate");
+
+        _queryBuilder.append("(validation:");
+        validation.appendTo(_queryBuilder);
+
+        _queryBuilder.append(",id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ValidationUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Activate a [web pixel
+    * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
+    * by creating a web pixel record on the store where you installed your app.
+    * When you run the `webPixelCreate` mutation, Shopify validates it
+    * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
+    * match
+    * the schema that you defined, then the mutation fails. Learn how to
+    * define [web pixel
+    * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
+    * r-web-pixel-settings).
+    */
+    public MutationQuery webPixelCreate(WebPixelInput webPixel, WebPixelCreatePayloadQueryDefinition queryDef) {
+        startField("webPixelCreate");
+
+        _queryBuilder.append("(webPixel:");
+        webPixel.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPixelCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes the web pixel shop settings.
+    */
+    public MutationQuery webPixelDelete(ID id, WebPixelDeletePayloadQueryDefinition queryDef) {
+        startField("webPixelDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPixelDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Activate a [web pixel
+    * extension](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels)
+    * by updating a web pixel record on the store where you installed your app.
+    * When you run the `webPixelUpdate` mutation, Shopify validates it
+    * against the settings definition in `shopify.extension.toml`. If the `settings` input field doesn't
+    * match
+    * the schema that you defined, then the mutation fails. Learn how to
+    * define [web pixel
+    * settings](https://shopify.dev/docs/apps/build/marketing-analytics/build-web-pixels#step-2-define-you
+    * r-web-pixel-settings).
+    */
+    public MutationQuery webPixelUpdate(ID id, WebPixelInput webPixel, WebPixelUpdatePayloadQueryDefinition queryDef) {
+        startField("webPixelUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",webPixel:");
+        webPixel.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPixelUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a web presence.
+    */
+    public MutationQuery webPresenceCreate(WebPresenceCreateInput input, WebPresenceCreatePayloadQueryDefinition queryDef) {
+        startField("webPresenceCreate");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPresenceCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a web presence.
+    */
+    public MutationQuery webPresenceDelete(ID id, WebPresenceDeletePayloadQueryDefinition queryDef) {
+        startField("webPresenceDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPresenceDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a web presence.
+    */
+    public MutationQuery webPresenceUpdate(ID id, WebPresenceUpdateInput input, WebPresenceUpdatePayloadQueryDefinition queryDef) {
+        startField("webPresenceUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",input:");
+        input.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebPresenceUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Creates a new webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+    public MutationQuery webhookSubscriptionCreate(WebhookSubscriptionTopic topic, WebhookSubscriptionInput webhookSubscription, WebhookSubscriptionCreatePayloadQueryDefinition queryDef) {
+        startField("webhookSubscriptionCreate");
+
+        _queryBuilder.append("(topic:");
+        _queryBuilder.append(topic.toString());
+
+        _queryBuilder.append(",webhookSubscription:");
+        webhookSubscription.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebhookSubscriptionCreatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Deletes a webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+    public MutationQuery webhookSubscriptionDelete(ID id, WebhookSubscriptionDeletePayloadQueryDefinition queryDef) {
+        startField("webhookSubscriptionDelete");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebhookSubscriptionDeletePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Updates a webhook subscription.
+    * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
+    * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
+    * date by Shopify & require less maintenance. Please read [About managing webhook
+    * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe).
+    */
+    public MutationQuery webhookSubscriptionUpdate(ID id, WebhookSubscriptionInput webhookSubscription, WebhookSubscriptionUpdatePayloadQueryDefinition queryDef) {
+        startField("webhookSubscriptionUpdate");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(",webhookSubscription:");
+        webhookSubscription.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new WebhookSubscriptionUpdatePayloadQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public String toString() {
+        return _queryBuilder.toString();
+    }
+}

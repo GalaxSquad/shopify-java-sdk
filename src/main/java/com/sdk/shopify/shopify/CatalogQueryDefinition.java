@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CatalogQueryDefinition {
     void define(CatalogQuery _queryBuilder);
 }

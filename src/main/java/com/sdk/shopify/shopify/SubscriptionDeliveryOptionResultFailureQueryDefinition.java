@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionDeliveryOptionResultFailureQueryDefinition {
     void define(SubscriptionDeliveryOptionResultFailureQuery _queryBuilder);
 }

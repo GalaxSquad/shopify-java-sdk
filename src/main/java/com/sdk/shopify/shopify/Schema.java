@@ -3,5 +3,5 @@
 package com.sdk.shopify.shopify;
 
 public class Schema {
-    public static String VERSION = "2025-01";
+    public static String VERSION = "2025-07";
 }

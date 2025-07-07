@@ -480,12 +480,12 @@ public class ChannelQuery extends Query<ChannelQuery> {
         * | product_configuration_owner | string | Filter by the app
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/App#field-id) field. | | | -
         * `product_configuration_owner:10001` |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | product_type | string | Filter by a comma-separated list of [product
         * types](https://help.shopify.com/manual/products/details/product-type). | | | -
         * `product_type:snowboard` |
@@ -497,8 +497,8 @@ public class ChannelQuery extends Query<ChannelQuery> {
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_at | time | Filter by the date and time when the product was published to the online
         * store and other sales channels. | | | - `published_at:>2020-10-21T23:39:20Z`<br/> -
         * `published_at:<now`<br/> - `published_at:<=2024` |
@@ -537,6 +537,17 @@ public class ChannelQuery extends Query<ChannelQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public ProductsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface ProductsCountArgumentsDefinition {
@@ -544,14 +555,14 @@ public class ChannelQuery extends Query<ChannelQuery> {
     }
 
     /**
-    * The count of products published to the channel. Limited to a maximum of 10000.
+    * The count of products published to the channel. Limited to a maximum of 10000 by default.
     */
     public ChannelQuery productsCount(CountQueryDefinition queryDef) {
         return productsCount(args -> {}, queryDef);
     }
 
     /**
-    * The count of products published to the channel. Limited to a maximum of 10000.
+    * The count of products published to the channel. Limited to a maximum of 10000 by default.
     */
     public ChannelQuery productsCount(ProductsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("productsCount");

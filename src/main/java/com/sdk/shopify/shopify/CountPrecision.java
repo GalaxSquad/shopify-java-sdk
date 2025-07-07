@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The precision of the value returned by a count field.
 */
@@ -12,7 +16,7 @@ public enum CountPrecision {
     AT_LEAST,
 
     /**
-    * The count is exactly the value.
+    * The count is exactly the value. A write may not be reflected instantaneously.
     */
     EXACT,
 

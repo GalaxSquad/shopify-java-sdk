@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionDiscountEntitledLinesQueryDefinition {
     void define(SubscriptionDiscountEntitledLinesQuery _queryBuilder);
 }

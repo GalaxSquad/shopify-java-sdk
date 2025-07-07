@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AbandonmentQueryDefinition {
     void define(AbandonmentQuery _queryBuilder);
 }

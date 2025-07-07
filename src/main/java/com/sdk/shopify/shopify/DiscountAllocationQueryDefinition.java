@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountAllocationQueryDefinition {
     void define(DiscountAllocationQuery _queryBuilder);
 }

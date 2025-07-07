@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ScriptTagEdgeQueryDefinition {
     void define(ScriptTagEdgeQuery _queryBuilder);
 }

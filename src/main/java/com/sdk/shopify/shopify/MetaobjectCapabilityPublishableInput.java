@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
 import java.io.Serializable;
 
 public class MetaobjectCapabilityPublishableInput implements Serializable {

@@ -29,6 +29,12 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
+                case "assignedCustomization": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
                 case "catalogs": {
                     responseData.put(key, new MarketCatalogConnection(jsonAsObject(field.getValue(), key)));
 
@@ -46,8 +52,24 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
                     break;
                 }
 
+                case "conditions": {
+                    MarketConditions optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MarketConditions(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "currencySettings": {
-                    responseData.put(key, new MarketCurrencySettings(jsonAsObject(field.getValue(), key)));
+                    MarketCurrencySettings optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MarketCurrencySettings(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -87,6 +109,29 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
                     break;
                 }
 
+                case "priceInclusions": {
+                    MarketPriceInclusions optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MarketPriceInclusions(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "status": {
+                    responseData.put(key, MarketStatus.fromGraphQl(jsonAsString(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "type": {
+                    responseData.put(key, MarketType.fromGraphQl(jsonAsString(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "webPresences": {
                     responseData.put(key, new MarketWebPresenceConnection(jsonAsObject(field.getValue(), key)));
 
@@ -114,6 +159,19 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
     }
 
     /**
+    * Whether the market has a customization with the given ID.
+    */
+
+    public Boolean getAssignedCustomization() {
+        return (Boolean) get("assignedCustomization");
+    }
+
+    public Market setAssignedCustomization(Boolean arg) {
+        optimisticData.put(getKey("assignedCustomization"), arg);
+        return this;
+    }
+
+    /**
     * The catalogs that belong to the market.
     */
 
@@ -136,6 +194,19 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
 
     public Market setCatalogsCount(Count arg) {
         optimisticData.put(getKey("catalogsCount"), arg);
+        return this;
+    }
+
+    /**
+    * The conditions under which a visitor is in the market.
+    */
+
+    public MarketConditions getConditions() {
+        return (MarketConditions) get("conditions");
+    }
+
+    public Market setConditions(MarketConditions arg) {
+        optimisticData.put(getKey("conditions"), arg);
         return this;
     }
 
@@ -216,6 +287,46 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
     }
 
     /**
+    * The inclusive pricing strategy for a market. This determines if prices include duties and / or
+    * taxes.
+    */
+
+    public MarketPriceInclusions getPriceInclusions() {
+        return (MarketPriceInclusions) get("priceInclusions");
+    }
+
+    public Market setPriceInclusions(MarketPriceInclusions arg) {
+        optimisticData.put(getKey("priceInclusions"), arg);
+        return this;
+    }
+
+    /**
+    * Status of the market. Replaces the enabled field.
+    */
+
+    public MarketStatus getStatus() {
+        return (MarketStatus) get("status");
+    }
+
+    public Market setStatus(MarketStatus arg) {
+        optimisticData.put(getKey("status"), arg);
+        return this;
+    }
+
+    /**
+    * The type of the market.
+    */
+
+    public MarketType getType() {
+        return (MarketType) get("type");
+    }
+
+    public Market setType(MarketType arg) {
+        optimisticData.put(getKey("type"), arg);
+        return this;
+    }
+
+    /**
     * The market’s web presences, which defines its SEO strategy. This can be a different domain,
     * subdomain, or subfolders of the primary domain. Each web presence comprises one or more
     * language variants. If a market doesn't have any web presences, then the market is accessible on the
@@ -235,9 +346,13 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
+            case "assignedCustomization": return false;
+
             case "catalogs": return true;
 
             case "catalogsCount": return true;
+
+            case "conditions": return true;
 
             case "currencySettings": return true;
 
@@ -250,6 +365,12 @@ public class Market extends AbstractResponse<Market> implements HasMetafieldDefi
             case "metafields": return true;
 
             case "name": return false;
+
+            case "priceInclusions": return true;
+
+            case "status": return false;
+
+            case "type": return false;
 
             case "webPresences": return true;
 

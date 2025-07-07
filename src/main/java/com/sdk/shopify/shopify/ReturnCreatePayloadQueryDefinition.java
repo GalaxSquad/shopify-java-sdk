@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnCreatePayloadQueryDefinition {
     void define(ReturnCreatePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductVariantQueryDefinition {
     void define(ProductVariantQuery _queryBuilder);
 }

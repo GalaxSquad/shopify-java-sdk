@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ManualDiscountApplicationQueryDefinition {
     void define(ManualDiscountApplicationQuery _queryBuilder);
 }

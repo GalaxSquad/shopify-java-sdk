@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingColorSchemeQueryDefinition {
     void define(CheckoutBrandingColorSchemeQuery _queryBuilder);
 }

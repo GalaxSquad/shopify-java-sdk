@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CountQueryDefinition {
     void define(CountQuery _queryBuilder);
 }

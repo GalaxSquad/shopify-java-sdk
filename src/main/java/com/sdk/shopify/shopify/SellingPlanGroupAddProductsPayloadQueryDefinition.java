@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanGroupAddProductsPayloadQueryDefinition {
     void define(SellingPlanGroupAddProductsPayloadQuery _queryBuilder);
 }

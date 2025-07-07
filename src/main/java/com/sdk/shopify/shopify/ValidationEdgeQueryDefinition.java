@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ValidationEdgeQueryDefinition {
     void define(ValidationEdgeQuery _queryBuilder);
 }

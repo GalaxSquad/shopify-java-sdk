@@ -154,6 +154,17 @@ public class BasicEvent extends AbstractResponse<BasicEvent> implements Event, N
                     break;
                 }
 
+                case "author": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "createdAt": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -330,6 +341,19 @@ public class BasicEvent extends AbstractResponse<BasicEvent> implements Event, N
     }
 
     /**
+    * The entity which performed the action that generated the event.
+    */
+
+    public String getAuthor() {
+        return (String) get("author");
+    }
+
+    public BasicEvent setAuthor(String arg) {
+        optimisticData.put(getKey("author"), arg);
+        return this;
+    }
+
+    /**
     * The date and time when the event was created.
     */
 
@@ -459,6 +483,8 @@ public class BasicEvent extends AbstractResponse<BasicEvent> implements Event, N
             case "attributeToApp": return false;
 
             case "attributeToUser": return false;
+
+            case "author": return false;
 
             case "createdAt": return false;
 

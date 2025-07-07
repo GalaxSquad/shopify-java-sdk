@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of lines (line_item or shipping_line) to which the price rule applies.
 */

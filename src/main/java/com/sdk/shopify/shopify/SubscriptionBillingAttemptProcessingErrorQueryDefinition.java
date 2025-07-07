@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionBillingAttemptProcessingErrorQueryDefinition {
     void define(SubscriptionBillingAttemptProcessingErrorQuery _queryBuilder);
 }

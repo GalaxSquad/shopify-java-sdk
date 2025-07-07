@@ -3,6 +3,7 @@
 package com.sdk.shopify.shopify;
 
 import com.shopify.graphql.support.ID;
+import com.shopify.graphql.support.Input;
 import com.shopify.graphql.support.Query;
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,8 @@ public class QuantityPricingByVariantUpdateInput implements Serializable {
     private List<PriceListPriceInput> pricesToAdd;
 
     private List<ID> pricesToDeleteByVariantId;
+
+    private Input<List<ID>> quantityPriceBreaksToDeleteByVariantId = Input.undefined();
 
     public QuantityPricingByVariantUpdateInput(List<QuantityPriceBreakInput> quantityPriceBreaksToAdd, List<ID> quantityPriceBreaksToDelete, List<QuantityRuleInput> quantityRulesToAdd, List<ID> quantityRulesToDeleteByVariantId, List<PriceListPriceInput> pricesToAdd, List<ID> pricesToDeleteByVariantId) {
         this.quantityPriceBreaksToAdd = quantityPriceBreaksToAdd;
@@ -85,6 +88,27 @@ public class QuantityPricingByVariantUpdateInput implements Serializable {
 
     public QuantityPricingByVariantUpdateInput setPricesToDeleteByVariantId(List<ID> pricesToDeleteByVariantId) {
         this.pricesToDeleteByVariantId = pricesToDeleteByVariantId;
+        return this;
+    }
+
+    public List<ID> getQuantityPriceBreaksToDeleteByVariantId() {
+        return quantityPriceBreaksToDeleteByVariantId.getValue();
+    }
+
+    public Input<List<ID>> getQuantityPriceBreaksToDeleteByVariantIdInput() {
+        return quantityPriceBreaksToDeleteByVariantId;
+    }
+
+    public QuantityPricingByVariantUpdateInput setQuantityPriceBreaksToDeleteByVariantId(List<ID> quantityPriceBreaksToDeleteByVariantId) {
+        this.quantityPriceBreaksToDeleteByVariantId = Input.optional(quantityPriceBreaksToDeleteByVariantId);
+        return this;
+    }
+
+    public QuantityPricingByVariantUpdateInput setQuantityPriceBreaksToDeleteByVariantIdInput(Input<List<ID>> quantityPriceBreaksToDeleteByVariantId) {
+        if (quantityPriceBreaksToDeleteByVariantId == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.quantityPriceBreaksToDeleteByVariantId = quantityPriceBreaksToDeleteByVariantId;
         return this;
     }
 
@@ -175,6 +199,26 @@ public class QuantityPricingByVariantUpdateInput implements Serializable {
             }
         }
         _queryBuilder.append(']');
+
+        if (this.quantityPriceBreaksToDeleteByVariantId.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("quantityPriceBreaksToDeleteByVariantId:");
+            if (quantityPriceBreaksToDeleteByVariantId.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (ID item1 : quantityPriceBreaksToDeleteByVariantId.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        Query.appendQuotedString(_queryBuilder, item1.toString());
+                    }
+                }
+                _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
 
         _queryBuilder.append('}');
     }

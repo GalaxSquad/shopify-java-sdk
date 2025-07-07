@@ -9,7 +9,15 @@ import com.shopify.graphql.support.SchemaViolationError;
 import java.util.Map;
 
 /**
-* Represents a generic custom attribute, such as whether an order is a customer's first.
+* A custom property. Attributes are used to store additional information about a Shopify resource,
+* such as
+* products, customers, or orders. Attributes are stored as key-value pairs.
+* For example, a list of attributes might include whether a customer is a first-time buyer
+* (`"customer_first_order": "true"`),
+* whether an order is gift-wrapped (`"gift_wrapped": "true"`), a preferred delivery date
+* (`"preferred_delivery_date": "2025-10-01"`), the discount applied (`"loyalty_discount_applied":
+* "10%"`), and any
+* notes provided by the customer (`"customer_notes": "Please leave at the front door"`).
 */
 public class Attribute extends AbstractResponse<Attribute> {
     public Attribute() {
@@ -53,7 +61,7 @@ public class Attribute extends AbstractResponse<Attribute> {
     }
 
     /**
-    * The key or name of the attribute. For example, `"customersFirstOrder"`.
+    * The key or name of the attribute. For example, `"customer_first_order"`.
     */
 
     public String getKey() {

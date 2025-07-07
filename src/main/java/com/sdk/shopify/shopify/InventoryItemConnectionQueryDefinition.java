@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface InventoryItemConnectionQueryDefinition {
     void define(InventoryItemConnectionQuery _queryBuilder);
 }

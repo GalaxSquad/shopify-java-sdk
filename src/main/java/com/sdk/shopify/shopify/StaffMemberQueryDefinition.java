@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface StaffMemberQueryDefinition {
     void define(StaffMemberQuery _queryBuilder);
 }

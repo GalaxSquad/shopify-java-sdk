@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShippingLineQueryDefinition {
     void define(ShippingLineQuery _queryBuilder);
 }

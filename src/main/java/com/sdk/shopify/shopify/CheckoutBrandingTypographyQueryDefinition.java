@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingTypographyQueryDefinition {
     void define(CheckoutBrandingTypographyQuery _queryBuilder);
 }

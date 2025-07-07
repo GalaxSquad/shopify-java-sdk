@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AppSubscriptionTrialExtendUserErrorQueryDefinition {
     void define(AppSubscriptionTrialExtendUserErrorQuery _queryBuilder);
 }

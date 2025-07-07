@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface StagedUploadsCreatePayloadQueryDefinition {
     void define(StagedUploadsCreatePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShippingRateQueryDefinition {
     void define(ShippingRateQuery _queryBuilder);
 }

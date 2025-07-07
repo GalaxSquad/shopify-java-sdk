@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentEdgeQueryDefinition {
     void define(CommentEdgeQuery _queryBuilder);
 }

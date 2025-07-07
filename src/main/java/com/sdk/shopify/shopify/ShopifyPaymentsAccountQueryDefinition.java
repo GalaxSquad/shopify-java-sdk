@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsAccountQueryDefinition {
     void define(ShopifyPaymentsAccountQuery _queryBuilder);
 }

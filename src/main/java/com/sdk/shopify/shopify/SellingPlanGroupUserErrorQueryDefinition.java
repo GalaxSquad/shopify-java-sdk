@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SellingPlanGroupUserErrorQueryDefinition {
     void define(SellingPlanGroupUserErrorQuery _queryBuilder);
 }

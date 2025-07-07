@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsDisputeEvidenceQueryDefinition {
     void define(ShopifyPaymentsDisputeEvidenceQuery _queryBuilder);
 }

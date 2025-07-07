@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of the discount value and how it will be applied. For example, it might be a percentage
 * discount on a fixed number of items. Alternatively, it might be a fixed amount evenly distributed

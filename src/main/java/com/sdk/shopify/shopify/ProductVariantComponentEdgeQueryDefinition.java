@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantComponentEdgeQueryDefinition {
     void define(ProductVariantComponentEdgeQuery _queryBuilder);
 }

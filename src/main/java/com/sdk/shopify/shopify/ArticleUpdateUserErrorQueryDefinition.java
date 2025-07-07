@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ArticleUpdateUserErrorQueryDefinition {
     void define(ArticleUpdateUserErrorQuery _queryBuilder);
 }

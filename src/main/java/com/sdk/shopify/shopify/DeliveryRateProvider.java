@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * A rate provided by a merchant-defined rate or a participant.
 */

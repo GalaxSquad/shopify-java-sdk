@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SavedSearchDeletePayloadQueryDefinition {
     void define(SavedSearchDeletePayloadQuery _queryBuilder);
 }

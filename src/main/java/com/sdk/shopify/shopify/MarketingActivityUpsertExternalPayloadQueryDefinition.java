@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketingActivityUpsertExternalPayloadQueryDefinition {
     void define(MarketingActivityUpsertExternalPayloadQuery _queryBuilder);
 }

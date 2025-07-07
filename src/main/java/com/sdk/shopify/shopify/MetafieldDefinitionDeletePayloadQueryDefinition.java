@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetafieldDefinitionDeletePayloadQueryDefinition {
     void define(MetafieldDefinitionDeletePayloadQuery _queryBuilder);
 }

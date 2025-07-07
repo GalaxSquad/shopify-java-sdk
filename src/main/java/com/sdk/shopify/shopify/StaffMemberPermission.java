@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Represents access permissions for a staff member.
 */
@@ -29,6 +31,11 @@ public enum StaffMemberPermission {
     CREATE_AND_EDIT_GIFT_CARDS,
 
     /**
+    * The staff member can create and edit markets.
+    */
+    CREATE_AND_EDIT_MARKETS,
+
+    /**
     * The staff member can view customers.
     */
     CUSTOMERS,
@@ -48,6 +55,11 @@ public enum StaffMemberPermission {
     * The staff member can delete customers.
     */
     DELETE_CUSTOMERS,
+
+    /**
+    * The staff member can delete markets.
+    */
+    DELETE_MARKETS,
 
     /**
     * The staff member can view, buy, and manage domains.
@@ -158,6 +170,11 @@ public enum StaffMemberPermission {
     */
     THEMES,
 
+    /**
+    * The staff member can view markets.
+    */
+    VIEW_MARKETS,
+
     UNKNOWN_VALUE;
 
     public static StaffMemberPermission fromGraphQl(String value) {
@@ -182,6 +199,10 @@ public enum StaffMemberPermission {
                 return CREATE_AND_EDIT_GIFT_CARDS;
             }
 
+            case "CREATE_AND_EDIT_MARKETS": {
+                return CREATE_AND_EDIT_MARKETS;
+            }
+
             case "CUSTOMERS": {
                 return CUSTOMERS;
             }
@@ -196,6 +217,10 @@ public enum StaffMemberPermission {
 
             case "DELETE_CUSTOMERS": {
                 return DELETE_CUSTOMERS;
+            }
+
+            case "DELETE_MARKETS": {
+                return DELETE_MARKETS;
             }
 
             case "DOMAINS": {
@@ -282,6 +307,10 @@ public enum StaffMemberPermission {
                 return THEMES;
             }
 
+            case "VIEW_MARKETS": {
+                return VIEW_MARKETS;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -305,6 +334,10 @@ public enum StaffMemberPermission {
                 return "CREATE_AND_EDIT_GIFT_CARDS";
             }
 
+            case CREATE_AND_EDIT_MARKETS: {
+                return "CREATE_AND_EDIT_MARKETS";
+            }
+
             case CUSTOMERS: {
                 return "CUSTOMERS";
             }
@@ -319,6 +352,10 @@ public enum StaffMemberPermission {
 
             case DELETE_CUSTOMERS: {
                 return "DELETE_CUSTOMERS";
+            }
+
+            case DELETE_MARKETS: {
+                return "DELETE_MARKETS";
             }
 
             case DOMAINS: {
@@ -403,6 +440,10 @@ public enum StaffMemberPermission {
 
             case THEMES: {
                 return "THEMES";
+            }
+
+            case VIEW_MARKETS: {
+                return "VIEW_MARKETS";
             }
 
             default: {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `ProductVariantsBulkDeleteUserError`.
 */
@@ -20,6 +24,11 @@ public enum ProductVariantsBulkDeleteUserErrorCode {
     * Product does not exist.
     */
     PRODUCT_DOES_NOT_EXIST,
+
+    /**
+    * Product is suspended.
+    */
+    PRODUCT_SUSPENDED,
 
     /**
     * Operation is not supported for a combined listing parent product.
@@ -46,6 +55,10 @@ public enum ProductVariantsBulkDeleteUserErrorCode {
                 return PRODUCT_DOES_NOT_EXIST;
             }
 
+            case "PRODUCT_SUSPENDED": {
+                return PRODUCT_SUSPENDED;
+            }
+
             case "UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION": {
                 return UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION;
             }
@@ -67,6 +80,10 @@ public enum ProductVariantsBulkDeleteUserErrorCode {
 
             case PRODUCT_DOES_NOT_EXIST: {
                 return "PRODUCT_DOES_NOT_EXIST";
+            }
+
+            case PRODUCT_SUSPENDED: {
+                return "PRODUCT_SUSPENDED";
             }
 
             case UNSUPPORTED_COMBINED_LISTING_PARENT_OPERATION: {

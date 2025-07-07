@@ -60,6 +60,13 @@ public class CommentEventSubjectQuery extends Query<CommentEventSubjectQuery> {
         return this;
     }
 
+    public CommentEventSubjectQuery onInventoryTransfer(InventoryTransferQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransfer");
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public CommentEventSubjectQuery onOrder(OrderQueryDefinition queryDef) {
         startInlineFragment("Order");
         queryDef.define(new OrderQuery(_queryBuilder));

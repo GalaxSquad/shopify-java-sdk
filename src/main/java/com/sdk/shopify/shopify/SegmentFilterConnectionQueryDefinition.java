@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SegmentFilterConnectionQueryDefinition {
     void define(SegmentFilterConnectionQuery _queryBuilder);
 }

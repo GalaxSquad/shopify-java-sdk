@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppFeedbackQueryDefinition {
     void define(AppFeedbackQuery _queryBuilder);
 }

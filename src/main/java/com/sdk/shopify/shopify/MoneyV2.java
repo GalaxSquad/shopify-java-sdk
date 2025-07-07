@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 /**
-* A monetary value with currency.
+* A precise monetary value and its associated currency. For example, 12.99 USD.
 */
 public class MoneyV2 extends AbstractResponse<MoneyV2> implements DeliveryConditionCriteria, PricingValue, SellingPlanCheckoutChargeValue, SellingPlanPricingPolicyAdjustmentValue {
     public MoneyV2() {
@@ -49,7 +49,8 @@ public class MoneyV2 extends AbstractResponse<MoneyV2> implements DeliveryCondit
     }
 
     /**
-    * Decimal money amount.
+    * A monetary value in decimal format, allowing for precise representation of cents or fractional
+    * currency. For example, 12.99.
     */
 
     public BigDecimal getAmount() {
@@ -62,7 +63,9 @@ public class MoneyV2 extends AbstractResponse<MoneyV2> implements DeliveryCondit
     }
 
     /**
-    * Currency of the money.
+    * The three-letter currency code that represents a world currency used in a store. Currency codes
+    * include standard [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes,
+    * and non-standard codes. For example, USD.
     */
 
     public CurrencyCode getCurrencyCode() {

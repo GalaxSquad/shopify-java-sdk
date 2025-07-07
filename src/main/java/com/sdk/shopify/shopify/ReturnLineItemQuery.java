@@ -37,6 +37,24 @@ public class ReturnLineItemQuery extends Query<ReturnLineItemQuery> {
     }
 
     /**
+    * The quantity that can be processed.
+    */
+    public ReturnLineItemQuery processableQuantity() {
+        startField("processableQuantity");
+
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+    public ReturnLineItemQuery processedQuantity() {
+        startField("processedQuantity");
+
+        return this;
+    }
+
+    /**
     * The quantity being returned.
     */
     public ReturnLineItemQuery quantity() {
@@ -103,6 +121,15 @@ public class ReturnLineItemQuery extends Query<ReturnLineItemQuery> {
         _queryBuilder.append('{');
         queryDef.define(new WeightQuery(_queryBuilder));
         _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The quantity that has't been processed.
+    */
+    public ReturnLineItemQuery unprocessedQuantity() {
+        startField("unprocessedQuantity");
 
         return this;
     }

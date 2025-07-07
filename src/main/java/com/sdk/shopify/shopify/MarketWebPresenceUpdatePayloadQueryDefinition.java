@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketWebPresenceUpdatePayloadQueryDefinition {
     void define(MarketWebPresenceUpdatePayloadQuery _queryBuilder);
 }

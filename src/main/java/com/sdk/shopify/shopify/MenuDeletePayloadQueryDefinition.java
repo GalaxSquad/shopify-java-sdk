@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MenuDeletePayloadQueryDefinition {
     void define(MenuDeletePayloadQuery _queryBuilder);
 }

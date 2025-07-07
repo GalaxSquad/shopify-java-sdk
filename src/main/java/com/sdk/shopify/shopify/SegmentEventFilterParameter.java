@@ -38,6 +38,28 @@ public class SegmentEventFilterParameter extends AbstractResponse<SegmentEventFi
                     break;
                 }
 
+                case "maxRange": {
+                    Double optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsDouble(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "minRange": {
+                    Double optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsDouble(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "optional": {
                     responseData.put(key, jsonAsBoolean(field.getValue(), key));
 
@@ -111,6 +133,32 @@ public class SegmentEventFilterParameter extends AbstractResponse<SegmentEventFi
     }
 
     /**
+    * The parameter maximum value range.
+    */
+
+    public Double getMaxRange() {
+        return (Double) get("maxRange");
+    }
+
+    public SegmentEventFilterParameter setMaxRange(Double arg) {
+        optimisticData.put(getKey("maxRange"), arg);
+        return this;
+    }
+
+    /**
+    * The parameter minimum value range.
+    */
+
+    public Double getMinRange() {
+        return (Double) get("minRange");
+    }
+
+    public SegmentEventFilterParameter setMinRange(Double arg) {
+        optimisticData.put(getKey("minRange"), arg);
+        return this;
+    }
+
+    /**
     * Whether the parameter is optional.
     */
 
@@ -156,6 +204,10 @@ public class SegmentEventFilterParameter extends AbstractResponse<SegmentEventFi
             case "localizedDescription": return false;
 
             case "localizedName": return false;
+
+            case "maxRange": return false;
+
+            case "minRange": return false;
 
             case "optional": return false;
 

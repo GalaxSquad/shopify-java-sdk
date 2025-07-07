@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryCustomizationConnectionQueryDefinition {
     void define(DeliveryCustomizationConnectionQuery _queryBuilder);
 }

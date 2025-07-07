@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PaymentTermsCreatePayloadQueryDefinition {
     void define(PaymentTermsCreatePayloadQuery _queryBuilder);
 }

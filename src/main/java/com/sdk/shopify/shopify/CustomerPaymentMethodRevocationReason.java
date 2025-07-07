@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The revocation reason types for a customer payment method.
 */
@@ -36,6 +40,16 @@ public enum CustomerPaymentMethodRevocationReason {
     * Braintree returned no payment methods. Make sure the correct Braintree account is linked.
     */
     BRAINTREE_RETURNED_NO_PAYMENT_METHOD,
+
+    /**
+    * The customer redacted their payment method.
+    */
+    CUSTOMER_REDACTED,
+
+    /**
+    * CVV attempts limit exceeded.
+    */
+    CVV_ATTEMPTS_LIMIT_EXCEEDED,
 
     /**
     * The billing address failed to retrieve.
@@ -93,6 +107,11 @@ public enum CustomerPaymentMethodRevocationReason {
     */
     THREE_D_SECURE_FLOW_IN_VERIFICATION_NOT_IMPLEMENTED,
 
+    /**
+    * Too many consecutive failed attempts.
+    */
+    TOO_MANY_CONSECUTIVE_FAILURES,
+
     UNKNOWN_VALUE;
 
     public static CustomerPaymentMethodRevocationReason fromGraphQl(String value) {
@@ -123,6 +142,14 @@ public enum CustomerPaymentMethodRevocationReason {
 
             case "BRAINTREE_RETURNED_NO_PAYMENT_METHOD": {
                 return BRAINTREE_RETURNED_NO_PAYMENT_METHOD;
+            }
+
+            case "CUSTOMER_REDACTED": {
+                return CUSTOMER_REDACTED;
+            }
+
+            case "CVV_ATTEMPTS_LIMIT_EXCEEDED": {
+                return CVV_ATTEMPTS_LIMIT_EXCEEDED;
             }
 
             case "FAILED_TO_RETRIEVE_BILLING_ADDRESS": {
@@ -169,6 +196,10 @@ public enum CustomerPaymentMethodRevocationReason {
                 return THREE_D_SECURE_FLOW_IN_VERIFICATION_NOT_IMPLEMENTED;
             }
 
+            case "TOO_MANY_CONSECUTIVE_FAILURES": {
+                return TOO_MANY_CONSECUTIVE_FAILURES;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -198,6 +229,14 @@ public enum CustomerPaymentMethodRevocationReason {
 
             case BRAINTREE_RETURNED_NO_PAYMENT_METHOD: {
                 return "BRAINTREE_RETURNED_NO_PAYMENT_METHOD";
+            }
+
+            case CUSTOMER_REDACTED: {
+                return "CUSTOMER_REDACTED";
+            }
+
+            case CVV_ATTEMPTS_LIMIT_EXCEEDED: {
+                return "CVV_ATTEMPTS_LIMIT_EXCEEDED";
             }
 
             case FAILED_TO_RETRIEVE_BILLING_ADDRESS: {
@@ -242,6 +281,10 @@ public enum CustomerPaymentMethodRevocationReason {
 
             case THREE_D_SECURE_FLOW_IN_VERIFICATION_NOT_IMPLEMENTED: {
                 return "THREE_D_SECURE_FLOW_IN_VERIFICATION_NOT_IMPLEMENTED";
+            }
+
+            case TOO_MANY_CONSECUTIVE_FAILURES: {
+                return "TOO_MANY_CONSECUTIVE_FAILURES";
             }
 
             default: {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketingEventQueryDefinition {
     void define(MarketingEventQuery _queryBuilder);
 }

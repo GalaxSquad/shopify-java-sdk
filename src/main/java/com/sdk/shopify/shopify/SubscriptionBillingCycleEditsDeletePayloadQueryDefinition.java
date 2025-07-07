@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionBillingCycleEditsDeletePayloadQueryDefinition {
     void define(SubscriptionBillingCycleEditsDeletePayloadQuery _queryBuilder);
 }

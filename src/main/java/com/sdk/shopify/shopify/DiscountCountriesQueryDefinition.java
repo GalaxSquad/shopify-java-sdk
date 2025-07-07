@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountCountriesQueryDefinition {
     void define(DiscountCountriesQuery _queryBuilder);
 }

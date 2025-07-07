@@ -218,6 +218,19 @@ public class MetaobjectDefinitionQuery extends Query<MetaobjectDefinitionQuery> 
     }
 
     /**
+    * The standard metaobject template associated with the definition.
+    */
+    public MetaobjectDefinitionQuery standardTemplate(StandardMetaobjectDefinitionTemplateQueryDefinition queryDef) {
+        startField("standardTemplate");
+
+        _queryBuilder.append('{');
+        queryDef.define(new StandardMetaobjectDefinitionTemplateQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * The type of the object definition. Defines the namespace of associated metafields.
     */
     public MetaobjectDefinitionQuery type() {

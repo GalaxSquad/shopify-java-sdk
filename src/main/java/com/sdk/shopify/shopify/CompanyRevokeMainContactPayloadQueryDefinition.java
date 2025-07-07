@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyRevokeMainContactPayloadQueryDefinition {
     void define(CompanyRevokeMainContactPayloadQuery _queryBuilder);
 }

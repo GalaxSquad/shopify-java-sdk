@@ -39,7 +39,7 @@ public class CalculatedDraftOrderLineItem extends AbstractResponse<CalculatedDra
                     break;
                 }
 
-                case "bundleComponents": {
+                case "components": {
                     List<CalculatedDraftOrderLineItem> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
                         list1.add(new CalculatedDraftOrderLineItem(jsonAsObject(element1, key)));
@@ -322,15 +322,15 @@ public class CalculatedDraftOrderLineItem extends AbstractResponse<CalculatedDra
     }
 
     /**
-    * The bundle components of the draft order line item.
+    * The components of the draft order line item.
     */
 
-    public List<CalculatedDraftOrderLineItem> getBundleComponents() {
-        return (List<CalculatedDraftOrderLineItem>) get("bundleComponents");
+    public List<CalculatedDraftOrderLineItem> getComponents() {
+        return (List<CalculatedDraftOrderLineItem>) get("components");
     }
 
-    public CalculatedDraftOrderLineItem setBundleComponents(List<CalculatedDraftOrderLineItem> arg) {
-        optimisticData.put(getKey("bundleComponents"), arg);
+    public CalculatedDraftOrderLineItem setComponents(List<CalculatedDraftOrderLineItem> arg) {
+        optimisticData.put(getKey("components"), arg);
         return this;
     }
 
@@ -709,7 +709,7 @@ public class CalculatedDraftOrderLineItem extends AbstractResponse<CalculatedDra
 
             case "approximateDiscountedUnitPriceSet": return true;
 
-            case "bundleComponents": return true;
+            case "components": return true;
 
             case "custom": return false;
 

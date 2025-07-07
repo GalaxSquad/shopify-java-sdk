@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductBundleMutationUserErrorQueryDefinition {
     void define(ProductBundleMutationUserErrorQuery _queryBuilder);
 }

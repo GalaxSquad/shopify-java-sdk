@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MobilePlatformApplicationUserErrorQueryDefinition {
     void define(MobilePlatformApplicationUserErrorQuery _queryBuilder);
 }

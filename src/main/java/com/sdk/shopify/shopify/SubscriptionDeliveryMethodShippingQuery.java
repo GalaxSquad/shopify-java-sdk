@@ -15,11 +15,11 @@ public class SubscriptionDeliveryMethodShippingQuery extends Query<SubscriptionD
     /**
     * The address to ship to.
     */
-    public SubscriptionDeliveryMethodShippingQuery address(SubscriptionMailingAddressQueryDefinition queryDef) {
+    public SubscriptionDeliveryMethodShippingQuery address(MailingAddressQueryDefinition queryDef) {
         startField("address");
 
         _queryBuilder.append('{');
-        queryDef.define(new SubscriptionMailingAddressQuery(_queryBuilder));
+        queryDef.define(new MailingAddressQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;

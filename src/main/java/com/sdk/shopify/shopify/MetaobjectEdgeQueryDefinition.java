@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetaobjectEdgeQueryDefinition {
     void define(MetaobjectEdgeQuery _queryBuilder);
 }

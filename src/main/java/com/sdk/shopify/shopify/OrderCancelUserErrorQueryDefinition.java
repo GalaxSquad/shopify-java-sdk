@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderCancelUserErrorQueryDefinition {
     void define(OrderCancelUserErrorQuery _queryBuilder);
 }

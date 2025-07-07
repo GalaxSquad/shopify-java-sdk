@@ -1,21 +1,19 @@
 package com.sdk.shopify.helper;
 
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.time.Duration;
-import java.util.function.Supplier;
-
 import com.sdk.shopify.ShopifySdk;
 import com.sdk.shopify.ShopifySdkException;
 import com.sdk.shopify.shopify.Response;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.Query;
-
 import io.github.resilience4j.retry.Retry;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
+import java.util.function.Supplier;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

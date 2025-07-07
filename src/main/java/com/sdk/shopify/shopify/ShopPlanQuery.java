@@ -13,19 +13,21 @@ public class ShopPlanQuery extends Query<ShopPlanQuery> {
     }
 
     /**
-    * The name of the shop's billing plan.
+    * Whether the shop is a partner development shop for testing purposes.
     */
-    public ShopPlanQuery displayName() {
-        startField("displayName");
+    public ShopPlanQuery partnerDevelopment() {
+        startField("partnerDevelopment");
 
         return this;
     }
 
     /**
-    * Whether the shop is a partner development shop for testing purposes.
+    * The public display name of the shop's billing plan. Possible values are: Advanced, Basic,
+    * Development, Grow, Inactive, Lite, Other, Paused, Plus, Plus Trial, Retail, Shop Component, Staff
+    * Business, Starter, and Trial.
     */
-    public ShopPlanQuery partnerDevelopment() {
-        startField("partnerDevelopment");
+    public ShopPlanQuery publicDisplayName() {
+        startField("publicDisplayName");
 
         return this;
     }

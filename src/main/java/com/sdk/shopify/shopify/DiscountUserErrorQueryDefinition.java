@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountUserErrorQueryDefinition {
     void define(DiscountUserErrorQuery _queryBuilder);
 }

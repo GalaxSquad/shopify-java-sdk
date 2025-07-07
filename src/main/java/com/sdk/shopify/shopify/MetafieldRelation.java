@@ -46,12 +46,6 @@ public class MetafieldRelation extends AbstractResponse<MetafieldRelation> {
                     break;
                 }
 
-                case "target": {
-                    responseData.put(key, UnknownMetafieldReference.create(jsonAsObject(field.getValue(), key)));
-
-                    break;
-                }
-
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -119,19 +113,6 @@ public class MetafieldRelation extends AbstractResponse<MetafieldRelation> {
         return this;
     }
 
-    /**
-    * The referenced resource.
-    */
-
-    public MetafieldReference getTarget() {
-        return (MetafieldReference) get("target");
-    }
-
-    public MetafieldRelation setTarget(MetafieldReference arg) {
-        optimisticData.put(getKey("target"), arg);
-        return this;
-    }
-
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "key": return false;
@@ -141,8 +122,6 @@ public class MetafieldRelation extends AbstractResponse<MetafieldRelation> {
             case "namespace": return false;
 
             case "referencer": return false;
-
-            case "target": return false;
 
             default: return false;
         }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SegmentBooleanFilterQueryDefinition {
     void define(SegmentBooleanFilterQuery _queryBuilder);
 }

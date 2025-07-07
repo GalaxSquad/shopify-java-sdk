@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingCornerRadiusVariablesQueryDefinition {
     void define(CheckoutBrandingCornerRadiusVariablesQuery _queryBuilder);
 }

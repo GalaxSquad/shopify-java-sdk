@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderPlatformDiscountQueryDefinition {
     void define(DraftOrderPlatformDiscountQuery _queryBuilder);
 }

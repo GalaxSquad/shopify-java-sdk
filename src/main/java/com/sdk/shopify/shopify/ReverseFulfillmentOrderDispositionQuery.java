@@ -15,6 +15,15 @@ public class ReverseFulfillmentOrderDispositionQuery extends Query<ReverseFulfil
     }
 
     /**
+    * The date and time when the disposition was created.
+    */
+    public ReverseFulfillmentOrderDispositionQuery createdAt() {
+        startField("createdAt");
+
+        return this;
+    }
+
+    /**
     * The location where the disposition occurred.
     */
     public ReverseFulfillmentOrderDispositionQuery location(LocationQueryDefinition queryDef) {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CartTransformDeleteUserErrorQueryDefinition {
     void define(CartTransformDeleteUserErrorQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MarketLocalizationQueryDefinition {
     void define(MarketLocalizationQuery _queryBuilder);
 }

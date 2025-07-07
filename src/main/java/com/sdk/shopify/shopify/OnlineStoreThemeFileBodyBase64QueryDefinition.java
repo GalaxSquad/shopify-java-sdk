@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OnlineStoreThemeFileBodyBase64QueryDefinition {
     void define(OnlineStoreThemeFileBodyBase64Query _queryBuilder);
 }

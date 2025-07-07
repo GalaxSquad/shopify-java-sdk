@@ -1,11 +1,10 @@
 package com.sdk.shopify.helper;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.sdk.shopify.ShopifySdk;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for GraphQLAdminHelper covering toJsonPayload logic.

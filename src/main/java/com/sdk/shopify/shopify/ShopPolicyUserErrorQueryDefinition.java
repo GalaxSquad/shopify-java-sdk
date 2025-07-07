@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopPolicyUserErrorQueryDefinition {
     void define(ShopPolicyUserErrorQuery _queryBuilder);
 }

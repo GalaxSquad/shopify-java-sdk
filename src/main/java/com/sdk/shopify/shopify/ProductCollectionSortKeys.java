@@ -3,48 +3,49 @@
 package com.sdk.shopify.shopify;
 
 
+import com.shopify.graphql.support.ID;
+
 /**
-* The set of valid sort keys for the ProductCollection query.
+* The set of valid sort keys for products belonging to a collection.
 */
 public enum ProductCollectionSortKeys {
     /**
-    * Sort by the `best-selling` value.
+    * Sort by best selling.
     */
     BEST_SELLING,
 
     /**
-    * Sort by the `collection-default` value.
+    * Sort by collection default order.
     */
     COLLECTION_DEFAULT,
 
     /**
-    * Sort by the `created` value.
+    * Sort by creation time.
     */
     CREATED,
 
     /**
-    * Sort by the `id` value.
+    * Sort by id.
     */
     ID,
 
     /**
-    * Sort by the `manual` value.
+    * Sort by manual order.
     */
     MANUAL,
 
     /**
-    * Sort by the `price` value.
+    * Sort by price.
     */
     PRICE,
 
     /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
+    * Sort by relevance.
     */
     RELEVANCE,
 
     /**
-    * Sort by the `title` value.
+    * Sort by title.
     */
     TITLE,
 

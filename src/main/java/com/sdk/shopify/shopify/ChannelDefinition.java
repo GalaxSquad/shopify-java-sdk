@@ -53,17 +53,6 @@ public class ChannelDefinition extends AbstractResponse<ChannelDefinition> imple
                     break;
                 }
 
-                case "svgIcon": {
-                    String optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = jsonAsString(field.getValue(), key);
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -144,19 +133,6 @@ public class ChannelDefinition extends AbstractResponse<ChannelDefinition> imple
         return this;
     }
 
-    /**
-    * Icon displayed when showing the channel in admin.
-    */
-
-    public String getSvgIcon() {
-        return (String) get("svgIcon");
-    }
-
-    public ChannelDefinition setSvgIcon(String arg) {
-        optimisticData.put(getKey("svgIcon"), arg);
-        return this;
-    }
-
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "channelName": return false;
@@ -168,8 +144,6 @@ public class ChannelDefinition extends AbstractResponse<ChannelDefinition> imple
             case "isMarketplace": return false;
 
             case "subChannelName": return false;
-
-            case "svgIcon": return false;
 
             default: return false;
         }

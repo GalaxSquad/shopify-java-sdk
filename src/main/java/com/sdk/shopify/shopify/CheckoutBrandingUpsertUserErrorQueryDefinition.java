@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CheckoutBrandingUpsertUserErrorQueryDefinition {
     void define(CheckoutBrandingUpsertUserErrorQuery _queryBuilder);
 }

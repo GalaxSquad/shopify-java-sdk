@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface WebhookHttpEndpointQueryDefinition {
     void define(WebhookHttpEndpointQuery _queryBuilder);
 }

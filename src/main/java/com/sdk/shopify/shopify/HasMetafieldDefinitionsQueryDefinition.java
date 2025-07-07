@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface HasMetafieldDefinitionsQueryDefinition {
     void define(HasMetafieldDefinitionsQuery _queryBuilder);
 }

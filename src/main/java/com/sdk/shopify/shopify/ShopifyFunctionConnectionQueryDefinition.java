@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyFunctionConnectionQueryDefinition {
     void define(ShopifyFunctionConnectionQuery _queryBuilder);
 }

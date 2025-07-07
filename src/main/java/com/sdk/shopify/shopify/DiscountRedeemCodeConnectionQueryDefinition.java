@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountRedeemCodeConnectionQueryDefinition {
     void define(DiscountRedeemCodeConnectionQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BasicEventQueryDefinition {
     void define(BasicEventQuery _queryBuilder);
 }

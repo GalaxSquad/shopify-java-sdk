@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `CombinedListingUpdateUserError`.
 */
@@ -97,6 +101,11 @@ public enum CombinedListingUpdateUserErrorCode {
     OPTION_NAME_CANNOT_BE_BLANK,
 
     /**
+    * Option name contains invalid characters.
+    */
+    OPTION_NAME_CONTAINS_INVALID_CHARACTERS,
+
+    /**
     * Option does not exist.
     */
     OPTION_NOT_FOUND,
@@ -112,9 +121,19 @@ public enum CombinedListingUpdateUserErrorCode {
     OPTION_VALUES_CANNOT_BE_EMPTY,
 
     /**
+    * Parent product cannot be a combined listing child.
+    */
+    PARENT_PRODUCT_CANNOT_BE_COMBINED_LISTING_CHILD,
+
+    /**
     * Unable to update components for a product that isn't a combined listing.
     */
     PARENT_PRODUCT_MUST_BE_A_COMBINED_LISTING,
+
+    /**
+    * Parent product not found.
+    */
+    PARENT_PRODUCT_NOT_FOUND,
 
     /**
     * Unable to add a product that is already a child.
@@ -232,6 +251,10 @@ public enum CombinedListingUpdateUserErrorCode {
                 return OPTION_NAME_CANNOT_BE_BLANK;
             }
 
+            case "OPTION_NAME_CONTAINS_INVALID_CHARACTERS": {
+                return OPTION_NAME_CONTAINS_INVALID_CHARACTERS;
+            }
+
             case "OPTION_NOT_FOUND": {
                 return OPTION_NOT_FOUND;
             }
@@ -244,8 +267,16 @@ public enum CombinedListingUpdateUserErrorCode {
                 return OPTION_VALUES_CANNOT_BE_EMPTY;
             }
 
+            case "PARENT_PRODUCT_CANNOT_BE_COMBINED_LISTING_CHILD": {
+                return PARENT_PRODUCT_CANNOT_BE_COMBINED_LISTING_CHILD;
+            }
+
             case "PARENT_PRODUCT_MUST_BE_A_COMBINED_LISTING": {
                 return PARENT_PRODUCT_MUST_BE_A_COMBINED_LISTING;
+            }
+
+            case "PARENT_PRODUCT_NOT_FOUND": {
+                return PARENT_PRODUCT_NOT_FOUND;
             }
 
             case "PRODUCT_IS_ALREADY_A_CHILD": {
@@ -355,6 +386,10 @@ public enum CombinedListingUpdateUserErrorCode {
                 return "OPTION_NAME_CANNOT_BE_BLANK";
             }
 
+            case OPTION_NAME_CONTAINS_INVALID_CHARACTERS: {
+                return "OPTION_NAME_CONTAINS_INVALID_CHARACTERS";
+            }
+
             case OPTION_NOT_FOUND: {
                 return "OPTION_NOT_FOUND";
             }
@@ -367,8 +402,16 @@ public enum CombinedListingUpdateUserErrorCode {
                 return "OPTION_VALUES_CANNOT_BE_EMPTY";
             }
 
+            case PARENT_PRODUCT_CANNOT_BE_COMBINED_LISTING_CHILD: {
+                return "PARENT_PRODUCT_CANNOT_BE_COMBINED_LISTING_CHILD";
+            }
+
             case PARENT_PRODUCT_MUST_BE_A_COMBINED_LISTING: {
                 return "PARENT_PRODUCT_MUST_BE_A_COMBINED_LISTING";
+            }
+
+            case PARENT_PRODUCT_NOT_FOUND: {
+                return "PARENT_PRODUCT_NOT_FOUND";
             }
 
             case PRODUCT_IS_ALREADY_A_CHILD: {

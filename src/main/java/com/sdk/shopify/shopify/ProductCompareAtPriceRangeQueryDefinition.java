@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductCompareAtPriceRangeQueryDefinition {
     void define(ProductCompareAtPriceRangeQuery _queryBuilder);
 }

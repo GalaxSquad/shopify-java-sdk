@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible branding of a shop.
 * Branding can be used to define the look of a shop including its styling and logo in the Shopify

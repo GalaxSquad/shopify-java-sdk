@@ -42,6 +42,10 @@ public class UnknownPaymentDetails extends AbstractResponse<UnknownPaymentDetail
                 return new LocalPaymentMethodsPaymentDetails(fields);
             }
 
+            case "PaypalWalletPaymentDetails": {
+                return new PaypalWalletPaymentDetails(fields);
+            }
+
             case "ShopPayInstallmentsPaymentDetails": {
                 return new ShopPayInstallmentsPaymentDetails(fields);
             }

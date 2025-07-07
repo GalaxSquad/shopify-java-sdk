@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LocationDeletePayloadQueryDefinition {
     void define(LocationDeletePayloadQuery _queryBuilder);
 }

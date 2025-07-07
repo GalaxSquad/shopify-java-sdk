@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketRegionCountryQueryDefinition {
     void define(MarketRegionCountryQuery _queryBuilder);
 }

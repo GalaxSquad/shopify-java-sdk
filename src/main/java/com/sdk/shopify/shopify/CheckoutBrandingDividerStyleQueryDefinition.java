@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CheckoutBrandingDividerStyleQueryDefinition {
     void define(CheckoutBrandingDividerStyleQuery _queryBuilder);
 }

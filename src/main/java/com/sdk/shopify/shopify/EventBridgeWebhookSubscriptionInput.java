@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class EventBridgeWebhookSubscriptionInput implements Serializable {
-    private Input<String> arn = Input.undefined();
-
     private Input<WebhookSubscriptionFormat> format = Input.undefined();
 
     private Input<List<String>> includeFields = Input.undefined();
@@ -18,26 +16,9 @@ public class EventBridgeWebhookSubscriptionInput implements Serializable {
 
     private Input<List<String>> metafieldNamespaces = Input.undefined();
 
-    public String getArn() {
-        return arn.getValue();
-    }
+    private Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields = Input.undefined();
 
-    public Input<String> getArnInput() {
-        return arn;
-    }
-
-    public EventBridgeWebhookSubscriptionInput setArn(String arn) {
-        this.arn = Input.optional(arn);
-        return this;
-    }
-
-    public EventBridgeWebhookSubscriptionInput setArnInput(Input<String> arn) {
-        if (arn == null) {
-            throw new IllegalArgumentException("Input can not be null");
-        }
-        this.arn = arn;
-        return this;
-    }
+    private Input<String> arn = Input.undefined();
 
     public WebhookSubscriptionFormat getFormat() {
         return format.getValue();
@@ -123,20 +104,51 @@ public class EventBridgeWebhookSubscriptionInput implements Serializable {
         return this;
     }
 
+    public List<HasMetafieldsMetafieldIdentifierInput> getMetafields() {
+        return metafields.getValue();
+    }
+
+    public Input<List<HasMetafieldsMetafieldIdentifierInput>> getMetafieldsInput() {
+        return metafields;
+    }
+
+    public EventBridgeWebhookSubscriptionInput setMetafields(List<HasMetafieldsMetafieldIdentifierInput> metafields) {
+        this.metafields = Input.optional(metafields);
+        return this;
+    }
+
+    public EventBridgeWebhookSubscriptionInput setMetafieldsInput(Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields) {
+        if (metafields == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.metafields = metafields;
+        return this;
+    }
+
+    public String getArn() {
+        return arn.getValue();
+    }
+
+    public Input<String> getArnInput() {
+        return arn;
+    }
+
+    public EventBridgeWebhookSubscriptionInput setArn(String arn) {
+        this.arn = Input.optional(arn);
+        return this;
+    }
+
+    public EventBridgeWebhookSubscriptionInput setArnInput(Input<String> arn) {
+        if (arn == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.arn = arn;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
-
-        if (this.arn.isDefined()) {
-            _queryBuilder.append(separator);
-            separator = ",";
-            _queryBuilder.append("arn:");
-            if (arn.getValue() != null) {
-                Query.appendQuotedString(_queryBuilder, arn.getValue().toString());
-            } else {
-                _queryBuilder.append("null");
-            }
-        }
 
         if (this.format.isDefined()) {
             _queryBuilder.append(separator);
@@ -195,6 +207,37 @@ public class EventBridgeWebhookSubscriptionInput implements Serializable {
                     }
                 }
                 _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.metafields.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("metafields:");
+            if (metafields.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (HasMetafieldsMetafieldIdentifierInput item1 : metafields.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.arn.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("arn:");
+            if (arn.getValue() != null) {
+                Query.appendQuotedString(_queryBuilder, arn.getValue().toString());
             } else {
                 _queryBuilder.append("null");
             }

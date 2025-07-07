@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TaxonomyCategoryConnectionQueryDefinition {
     void define(TaxonomyCategoryConnectionQuery _queryBuilder);
 }

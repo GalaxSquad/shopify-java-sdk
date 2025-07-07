@@ -63,6 +63,12 @@ public class ExchangeV2 extends AbstractResponse<ExchangeV2> implements Node {
                     break;
                 }
 
+                case "mirrored": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
                 case "note": {
                     String optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -206,6 +212,19 @@ public class ExchangeV2 extends AbstractResponse<ExchangeV2> implements Node {
     }
 
     /**
+    * Mirrored from Admin Exchanges.
+    */
+
+    public Boolean getMirrored() {
+        return (Boolean) get("mirrored");
+    }
+
+    public ExchangeV2 setMirrored(Boolean arg) {
+        optimisticData.put(getKey("mirrored"), arg);
+        return this;
+    }
+
+    /**
     * The text of an optional note that a shop owner can attach to the exchange.
     */
 
@@ -307,6 +326,8 @@ public class ExchangeV2 extends AbstractResponse<ExchangeV2> implements Node {
             case "id": return false;
 
             case "location": return true;
+
+            case "mirrored": return false;
 
             case "note": return false;
 

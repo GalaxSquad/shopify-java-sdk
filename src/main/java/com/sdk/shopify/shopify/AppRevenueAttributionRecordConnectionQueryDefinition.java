@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppRevenueAttributionRecordConnectionQueryDefinition {
     void define(AppRevenueAttributionRecordConnectionQuery _queryBuilder);
 }

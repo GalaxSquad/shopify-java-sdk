@@ -60,6 +60,13 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
         return this;
     }
 
+    public DisplayableErrorQuery onAppUninstallAppUninstallError(AppUninstallAppUninstallErrorQueryDefinition queryDef) {
+        startInlineFragment("AppUninstallAppUninstallError");
+        queryDef.define(new AppUninstallAppUninstallErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public DisplayableErrorQuery onArticleCreateUserError(ArticleCreateUserErrorQueryDefinition queryDef) {
         startInlineFragment("ArticleCreateUserError");
         queryDef.define(new ArticleCreateUserErrorQuery(_queryBuilder));
@@ -228,6 +235,13 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
         return this;
     }
 
+    public DisplayableErrorQuery onConsentPolicyError(ConsentPolicyErrorQueryDefinition queryDef) {
+        startInlineFragment("ConsentPolicyError");
+        queryDef.define(new ConsentPolicyErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public DisplayableErrorQuery onCustomerCancelDataErasureUserError(CustomerCancelDataErasureUserErrorQueryDefinition queryDef) {
         startInlineFragment("CustomerCancelDataErasureUserError");
         queryDef.define(new CustomerCancelDataErasureUserErrorQuery(_queryBuilder));
@@ -301,6 +315,13 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
     public DisplayableErrorQuery onCustomerSendAccountInviteEmailUserError(CustomerSendAccountInviteEmailUserErrorQueryDefinition queryDef) {
         startInlineFragment("CustomerSendAccountInviteEmailUserError");
         queryDef.define(new CustomerSendAccountInviteEmailUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onCustomerSetUserError(CustomerSetUserErrorQueryDefinition queryDef) {
+        startInlineFragment("CustomerSetUserError");
+        queryDef.define(new CustomerSetUserErrorQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }
@@ -536,6 +557,132 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
         return this;
     }
 
+    public DisplayableErrorQuery onInventoryShipmentAddItemsUserError(InventoryShipmentAddItemsUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentAddItemsUserError");
+        queryDef.define(new InventoryShipmentAddItemsUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentCreateInTransitUserError(InventoryShipmentCreateInTransitUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentCreateInTransitUserError");
+        queryDef.define(new InventoryShipmentCreateInTransitUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentCreateUserError(InventoryShipmentCreateUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentCreateUserError");
+        queryDef.define(new InventoryShipmentCreateUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentDeleteUserError(InventoryShipmentDeleteUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentDeleteUserError");
+        queryDef.define(new InventoryShipmentDeleteUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentMarkInTransitUserError(InventoryShipmentMarkInTransitUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentMarkInTransitUserError");
+        queryDef.define(new InventoryShipmentMarkInTransitUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentReceiveUserError(InventoryShipmentReceiveUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentReceiveUserError");
+        queryDef.define(new InventoryShipmentReceiveUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentRemoveItemsUserError(InventoryShipmentRemoveItemsUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentRemoveItemsUserError");
+        queryDef.define(new InventoryShipmentRemoveItemsUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentSetTrackingUserError(InventoryShipmentSetTrackingUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentSetTrackingUserError");
+        queryDef.define(new InventoryShipmentSetTrackingUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryShipmentUpdateItemQuantitiesUserError(InventoryShipmentUpdateItemQuantitiesUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentUpdateItemQuantitiesUserError");
+        queryDef.define(new InventoryShipmentUpdateItemQuantitiesUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferCancelUserError(InventoryTransferCancelUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferCancelUserError");
+        queryDef.define(new InventoryTransferCancelUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferCreateAsReadyToShipUserError(InventoryTransferCreateAsReadyToShipUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferCreateAsReadyToShipUserError");
+        queryDef.define(new InventoryTransferCreateAsReadyToShipUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferCreateUserError(InventoryTransferCreateUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferCreateUserError");
+        queryDef.define(new InventoryTransferCreateUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferDeleteUserError(InventoryTransferDeleteUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferDeleteUserError");
+        queryDef.define(new InventoryTransferDeleteUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferDuplicateUserError(InventoryTransferDuplicateUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferDuplicateUserError");
+        queryDef.define(new InventoryTransferDuplicateUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferEditUserError(InventoryTransferEditUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferEditUserError");
+        queryDef.define(new InventoryTransferEditUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferMarkAsReadyToShipUserError(InventoryTransferMarkAsReadyToShipUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferMarkAsReadyToShipUserError");
+        queryDef.define(new InventoryTransferMarkAsReadyToShipUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferRemoveItemsUserError(InventoryTransferRemoveItemsUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferRemoveItemsUserError");
+        queryDef.define(new InventoryTransferRemoveItemsUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onInventoryTransferSetItemsUserError(InventoryTransferSetItemsUserErrorQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferSetItemsUserError");
+        queryDef.define(new InventoryTransferSetItemsUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public DisplayableErrorQuery onLocationActivateUserError(LocationActivateUserErrorQueryDefinition queryDef) {
         startInlineFragment("LocationActivateUserError");
         queryDef.define(new LocationActivateUserErrorQuery(_queryBuilder));
@@ -697,9 +844,30 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
         return this;
     }
 
+    public DisplayableErrorQuery onOrderCreateManualPaymentOrderCreateManualPaymentError(OrderCreateManualPaymentOrderCreateManualPaymentErrorQueryDefinition queryDef) {
+        startInlineFragment("OrderCreateManualPaymentOrderCreateManualPaymentError");
+        queryDef.define(new OrderCreateManualPaymentOrderCreateManualPaymentErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public DisplayableErrorQuery onOrderCreateUserError(OrderCreateUserErrorQueryDefinition queryDef) {
         startInlineFragment("OrderCreateUserError");
         queryDef.define(new OrderCreateUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onOrderCustomerRemoveUserError(OrderCustomerRemoveUserErrorQueryDefinition queryDef) {
+        startInlineFragment("OrderCustomerRemoveUserError");
+        queryDef.define(new OrderCustomerRemoveUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onOrderCustomerSetUserError(OrderCustomerSetUserErrorQueryDefinition queryDef) {
+        startInlineFragment("OrderCustomerSetUserError");
+        queryDef.define(new OrderCustomerSetUserErrorQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }
@@ -833,6 +1001,13 @@ public class DisplayableErrorQuery extends Query<DisplayableErrorQuery> {
     public DisplayableErrorQuery onPriceListUserError(PriceListUserErrorQueryDefinition queryDef) {
         startInlineFragment("PriceListUserError");
         queryDef.define(new PriceListUserErrorQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public DisplayableErrorQuery onPrivacyFeaturesDisableUserError(PrivacyFeaturesDisableUserErrorQueryDefinition queryDef) {
+        startInlineFragment("PrivacyFeaturesDisableUserError");
+        queryDef.define(new PrivacyFeaturesDisableUserErrorQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }

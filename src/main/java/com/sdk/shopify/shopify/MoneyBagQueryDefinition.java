@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MoneyBagQueryDefinition {
     void define(MoneyBagQuery _queryBuilder);
 }

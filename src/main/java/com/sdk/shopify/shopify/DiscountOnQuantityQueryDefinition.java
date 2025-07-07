@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountOnQuantityQueryDefinition {
     void define(DiscountOnQuantityQuery _queryBuilder);
 }

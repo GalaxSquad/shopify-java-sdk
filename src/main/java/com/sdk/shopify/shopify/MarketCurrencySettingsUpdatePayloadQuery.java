@@ -13,19 +13,6 @@ public class MarketCurrencySettingsUpdatePayloadQuery extends Query<MarketCurren
     }
 
     /**
-    * The market object.
-    */
-    public MarketCurrencySettingsUpdatePayloadQuery market(MarketQueryDefinition queryDef) {
-        startField("market");
-
-        _queryBuilder.append('{');
-        queryDef.define(new MarketQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
-    }
-
-    /**
     * The list of errors that occurred from executing the mutation.
     */
     public MarketCurrencySettingsUpdatePayloadQuery userErrors(MarketCurrencySettingsUserErrorQueryDefinition queryDef) {

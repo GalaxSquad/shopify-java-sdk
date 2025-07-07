@@ -3,6 +3,8 @@
 package com.sdk.shopify.shopify;
 
 
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the MethodDefinition query.
 */
@@ -16,12 +18,6 @@ public enum MethodDefinitionSortKeys {
     * Sort by the `rate_provider_type` value.
     */
     RATE_PROVIDER_TYPE,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     UNKNOWN_VALUE;
 
@@ -39,10 +35,6 @@ public enum MethodDefinitionSortKeys {
                 return RATE_PROVIDER_TYPE;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -56,10 +48,6 @@ public enum MethodDefinitionSortKeys {
 
             case RATE_PROVIDER_TYPE: {
                 return "RATE_PROVIDER_TYPE";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             default: {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AppInstallationConnectionQueryDefinition {
     void define(AppInstallationConnectionQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SellingPlanFixedBillingPolicyQueryDefinition {
     void define(SellingPlanFixedBillingPolicyQuery _queryBuilder);
 }

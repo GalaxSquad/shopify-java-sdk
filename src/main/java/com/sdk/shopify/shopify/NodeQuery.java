@@ -292,6 +292,20 @@ public class NodeQuery extends Query<NodeQuery> {
         return this;
     }
 
+    public NodeQuery onConsentPolicy(ConsentPolicyQueryDefinition queryDef) {
+        startInlineFragment("ConsentPolicy");
+        queryDef.define(new ConsentPolicyQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onCurrencyExchangeAdjustment(CurrencyExchangeAdjustmentQueryDefinition queryDef) {
+        startInlineFragment("CurrencyExchangeAdjustment");
+        queryDef.define(new CurrencyExchangeAdjustmentQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public NodeQuery onCustomer(CustomerQueryDefinition queryDef) {
         startInlineFragment("Customer");
         queryDef.define(new CustomerQuery(_queryBuilder));
@@ -302,6 +316,13 @@ public class NodeQuery extends Query<NodeQuery> {
     public NodeQuery onCustomerAccountAppExtensionPage(CustomerAccountAppExtensionPageQueryDefinition queryDef) {
         startInlineFragment("CustomerAccountAppExtensionPage");
         queryDef.define(new CustomerAccountAppExtensionPageQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onCustomerAccountNativePage(CustomerAccountNativePageQueryDefinition queryDef) {
+        startInlineFragment("CustomerAccountNativePage");
+        queryDef.define(new CustomerAccountNativePageQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }
@@ -649,6 +670,34 @@ public class NodeQuery extends Query<NodeQuery> {
         return this;
     }
 
+    public NodeQuery onInventoryShipment(InventoryShipmentQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipment");
+        queryDef.define(new InventoryShipmentQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onInventoryShipmentLineItem(InventoryShipmentLineItemQueryDefinition queryDef) {
+        startInlineFragment("InventoryShipmentLineItem");
+        queryDef.define(new InventoryShipmentLineItemQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onInventoryTransfer(InventoryTransferQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransfer");
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onInventoryTransferLineItem(InventoryTransferLineItemQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransferLineItem");
+        queryDef.define(new InventoryTransferLineItemQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public NodeQuery onLineItem(LineItemQueryDefinition queryDef) {
         startInlineFragment("LineItem");
         queryDef.define(new LineItemQuery(_queryBuilder));
@@ -841,6 +890,13 @@ public class NodeQuery extends Query<NodeQuery> {
     public NodeQuery onPaymentTermsTemplate(PaymentTermsTemplateQueryDefinition queryDef) {
         startInlineFragment("PaymentTermsTemplate");
         queryDef.define(new PaymentTermsTemplateQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onPointOfSaleDevice(PointOfSaleDeviceQueryDefinition queryDef) {
+        startInlineFragment("PointOfSaleDevice");
+        queryDef.define(new PointOfSaleDeviceQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }
@@ -1324,6 +1380,13 @@ public class NodeQuery extends Query<NodeQuery> {
     public NodeQuery onWebPixel(WebPixelQueryDefinition queryDef) {
         startInlineFragment("WebPixel");
         queryDef.define(new WebPixelQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public NodeQuery onWebPresence(WebPresenceQueryDefinition queryDef) {
+        startInlineFragment("WebPresence");
+        queryDef.define(new WebPresenceQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }

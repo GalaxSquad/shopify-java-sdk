@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerPhoneNumberQueryDefinition {
     void define(CustomerPhoneNumberQuery _queryBuilder);
 }

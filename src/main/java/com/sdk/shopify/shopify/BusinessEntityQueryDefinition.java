@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BusinessEntityQueryDefinition {
     void define(BusinessEntityQuery _queryBuilder);
 }

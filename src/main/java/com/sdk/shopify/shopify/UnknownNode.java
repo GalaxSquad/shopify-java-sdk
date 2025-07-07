@@ -196,6 +196,14 @@ public class UnknownNode extends AbstractResponse<UnknownNode> implements Node {
                 return new CompanyLocationStaffMemberAssignment(fields);
             }
 
+            case "ConsentPolicy": {
+                return new ConsentPolicy(fields);
+            }
+
+            case "CurrencyExchangeAdjustment": {
+                return new CurrencyExchangeAdjustment(fields);
+            }
+
             case "Customer": {
                 return new Customer(fields);
             }
@@ -404,6 +412,22 @@ public class UnknownNode extends AbstractResponse<UnknownNode> implements Node {
                 return new InventoryQuantity(fields);
             }
 
+            case "InventoryShipment": {
+                return new InventoryShipment(fields);
+            }
+
+            case "InventoryShipmentLineItem": {
+                return new InventoryShipmentLineItem(fields);
+            }
+
+            case "InventoryTransfer": {
+                return new InventoryTransfer(fields);
+            }
+
+            case "InventoryTransferLineItem": {
+                return new InventoryTransferLineItem(fields);
+            }
+
             case "LineItem": {
                 return new LineItem(fields);
             }
@@ -514,6 +538,10 @@ public class UnknownNode extends AbstractResponse<UnknownNode> implements Node {
 
             case "PaymentTermsTemplate": {
                 return new PaymentTermsTemplate(fields);
+            }
+
+            case "PointOfSaleDevice": {
+                return new PointOfSaleDevice(fields);
             }
 
             case "PriceList": {
@@ -790,6 +818,10 @@ public class UnknownNode extends AbstractResponse<UnknownNode> implements Node {
 
             case "WebPixel": {
                 return new WebPixel(fields);
+            }
+
+            case "WebPresence": {
+                return new WebPresence(fields);
             }
 
             case "WebhookSubscription": {

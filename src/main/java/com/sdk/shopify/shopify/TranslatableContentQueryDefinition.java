@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TranslatableContentQueryDefinition {
     void define(TranslatableContentQuery _queryBuilder);
 }

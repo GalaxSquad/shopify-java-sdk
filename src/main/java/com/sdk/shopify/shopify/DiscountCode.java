@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of discount associated with the discount code. For example, the discount code might offer a
 * basic discount of a fixed percentage, or a fixed amount, on specific products or the order.

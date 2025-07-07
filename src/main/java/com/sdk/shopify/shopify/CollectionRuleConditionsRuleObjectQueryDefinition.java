@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CollectionRuleConditionsRuleObjectQueryDefinition {
     void define(CollectionRuleConditionsRuleObjectQuery _queryBuilder);
 }

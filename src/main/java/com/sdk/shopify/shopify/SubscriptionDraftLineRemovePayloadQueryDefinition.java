@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionDraftLineRemovePayloadQueryDefinition {
     void define(SubscriptionDraftLineRemovePayloadQuery _queryBuilder);
 }

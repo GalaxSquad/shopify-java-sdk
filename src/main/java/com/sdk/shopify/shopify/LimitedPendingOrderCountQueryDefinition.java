@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LimitedPendingOrderCountQueryDefinition {
     void define(LimitedPendingOrderCountQuery _queryBuilder);
 }

@@ -2,37 +2,28 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `PriceListUserError`.
 */
 public enum PriceListUserErrorCode {
-    /**
-    * An app catalog cannot be assigned to a price list.
-    */
-    APP_CATALOG_PRICE_LIST_ASSIGNMENT,
-
     /**
     * The input value is blank.
     */
     BLANK,
 
     /**
-    * Cannot assign a catalog to a price list that also has context rules.
-    */
-    CATALOG_ASSIGNMENT_NOT_ALLOWED,
-
-    /**
-    * The context type of a catalog cannot be changed.
-    */
-    CATALOG_CANNOT_CHANGE_CONTEXT_TYPE,
-
-    /**
-    * Quantity price breaks can be associated only with company location catalogs.
+    * Quantity price breaks can be associated only with company location catalogs or catalogs associated
+    * with compatible markets.
     */
     CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_PRICE_BREAKS,
 
     /**
-    * Quantity rules can be associated only with company location catalogs.
+    * Quantity rules can be associated only with company location catalogs or catalogs associated with
+    * compatible markets.
     */
     CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_RULES,
 
@@ -130,20 +121,8 @@ public enum PriceListUserErrorCode {
         }
 
         switch (value) {
-            case "APP_CATALOG_PRICE_LIST_ASSIGNMENT": {
-                return APP_CATALOG_PRICE_LIST_ASSIGNMENT;
-            }
-
             case "BLANK": {
                 return BLANK;
-            }
-
-            case "CATALOG_ASSIGNMENT_NOT_ALLOWED": {
-                return CATALOG_ASSIGNMENT_NOT_ALLOWED;
-            }
-
-            case "CATALOG_CANNOT_CHANGE_CONTEXT_TYPE": {
-                return CATALOG_CANNOT_CHANGE_CONTEXT_TYPE;
             }
 
             case "CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_PRICE_BREAKS": {
@@ -229,20 +208,8 @@ public enum PriceListUserErrorCode {
     }
     public String toString() {
         switch (this) {
-            case APP_CATALOG_PRICE_LIST_ASSIGNMENT: {
-                return "APP_CATALOG_PRICE_LIST_ASSIGNMENT";
-            }
-
             case BLANK: {
                 return "BLANK";
-            }
-
-            case CATALOG_ASSIGNMENT_NOT_ALLOWED: {
-                return "CATALOG_ASSIGNMENT_NOT_ALLOWED";
-            }
-
-            case CATALOG_CANNOT_CHANGE_CONTEXT_TYPE: {
-                return "CATALOG_CANNOT_CHANGE_CONTEXT_TYPE";
             }
 
             case CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_PRICE_BREAKS: {

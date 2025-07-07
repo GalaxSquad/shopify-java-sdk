@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.SchemaViolationError;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -77,8 +79,13 @@ public class DiscountAutomaticFreeShipping extends AbstractResponse<DiscountAuto
                     break;
                 }
 
-                case "discountClass": {
-                    responseData.put(key, ShippingDiscountClass.fromGraphQl(jsonAsString(field.getValue(), key)));
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -291,17 +298,15 @@ public class DiscountAutomaticFreeShipping extends AbstractResponse<DiscountAuto
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
 
-    public ShippingDiscountClass getDiscountClass() {
-        return (ShippingDiscountClass) get("discountClass");
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
     }
 
-    public DiscountAutomaticFreeShipping setDiscountClass(ShippingDiscountClass arg) {
-        optimisticData.put(getKey("discountClass"), arg);
+    public DiscountAutomaticFreeShipping setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
         return this;
     }
 
@@ -489,7 +494,7 @@ public class DiscountAutomaticFreeShipping extends AbstractResponse<DiscountAuto
 
             case "destinationSelection": return false;
 
-            case "discountClass": return false;
+            case "discountClasses": return false;
 
             case "endsAt": return false;
 

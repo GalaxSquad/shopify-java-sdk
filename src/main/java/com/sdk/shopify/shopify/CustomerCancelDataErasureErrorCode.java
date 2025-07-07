@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `CustomerCancelDataErasureUserError`.
 */
@@ -22,6 +24,11 @@ public enum CustomerCancelDataErasureErrorCode {
     * Customer's data is not scheduled for erasure.
     */
     NOT_BEING_ERASED,
+
+    /**
+    * Only the original requester can cancel this data erasure.
+    */
+    UNAUTHORIZED_CANCELLATION,
 
     UNKNOWN_VALUE;
 
@@ -43,6 +50,10 @@ public enum CustomerCancelDataErasureErrorCode {
                 return NOT_BEING_ERASED;
             }
 
+            case "UNAUTHORIZED_CANCELLATION": {
+                return UNAUTHORIZED_CANCELLATION;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -60,6 +71,10 @@ public enum CustomerCancelDataErasureErrorCode {
 
             case NOT_BEING_ERASED: {
                 return "NOT_BEING_ERASED";
+            }
+
+            case UNAUTHORIZED_CANCELLATION: {
+                return "UNAUTHORIZED_CANCELLATION";
             }
 
             default: {

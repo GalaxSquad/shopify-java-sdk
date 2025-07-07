@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CatalogEdgeQueryDefinition {
     void define(CatalogEdgeQuery _queryBuilder);
 }

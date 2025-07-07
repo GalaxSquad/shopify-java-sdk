@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentLineItemEdgeQueryDefinition {
     void define(FulfillmentLineItemEdgeQuery _queryBuilder);
 }

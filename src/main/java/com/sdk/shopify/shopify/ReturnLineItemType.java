@@ -2,6 +2,7 @@
 
 package com.sdk.shopify.shopify;
 
+
 import com.shopify.graphql.support.ID;
 
 /**
@@ -15,6 +16,10 @@ public interface ReturnLineItemType {
 
     ID getId();
 
+    Integer getProcessableQuantity();
+
+    Integer getProcessedQuantity();
+
     Integer getQuantity();
 
     Integer getRefundableQuantity();
@@ -24,5 +29,7 @@ public interface ReturnLineItemType {
     ReturnReason getReturnReason();
 
     String getReturnReasonNote();
+
+    Integer getUnprocessedQuantity();
 }
 

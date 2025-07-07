@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyContactRoleQueryDefinition {
     void define(CompanyContactRoleQuery _queryBuilder);
 }

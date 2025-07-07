@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderBulkDeletePayloadQueryDefinition {
     void define(DraftOrderBulkDeletePayloadQuery _queryBuilder);
 }

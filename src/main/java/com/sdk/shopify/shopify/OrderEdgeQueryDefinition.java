@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderEdgeQueryDefinition {
     void define(OrderEdgeQuery _queryBuilder);
 }

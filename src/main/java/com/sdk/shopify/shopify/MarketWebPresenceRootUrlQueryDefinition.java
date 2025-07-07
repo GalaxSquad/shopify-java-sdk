@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketWebPresenceRootUrlQueryDefinition {
     void define(MarketWebPresenceRootUrlQuery _queryBuilder);
 }

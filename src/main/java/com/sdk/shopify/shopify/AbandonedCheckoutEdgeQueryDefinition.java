@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AbandonedCheckoutEdgeQueryDefinition {
     void define(AbandonedCheckoutEdgeQuery _queryBuilder);
 }

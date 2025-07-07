@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TranslatableResourceConnectionQueryDefinition {
     void define(TranslatableResourceConnectionQuery _queryBuilder);
 }

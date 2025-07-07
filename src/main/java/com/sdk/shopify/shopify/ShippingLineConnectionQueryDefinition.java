@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShippingLineConnectionQueryDefinition {
     void define(ShippingLineConnectionQuery _queryBuilder);
 }

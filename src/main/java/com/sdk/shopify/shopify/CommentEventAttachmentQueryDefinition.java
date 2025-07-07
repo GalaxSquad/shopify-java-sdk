@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CommentEventAttachmentQueryDefinition {
     void define(CommentEventAttachmentQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionBillingCycleContractDraftConcatenatePayloadQueryDefinition {
     void define(SubscriptionBillingCycleContractDraftConcatenatePayloadQuery _queryBuilder);
 }

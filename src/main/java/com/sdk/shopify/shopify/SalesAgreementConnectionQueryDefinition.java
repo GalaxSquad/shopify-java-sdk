@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SalesAgreementConnectionQueryDefinition {
     void define(SalesAgreementConnectionQuery _queryBuilder);
 }

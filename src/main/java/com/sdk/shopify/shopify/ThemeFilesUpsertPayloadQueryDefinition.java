@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ThemeFilesUpsertPayloadQueryDefinition {
     void define(ThemeFilesUpsertPayloadQuery _queryBuilder);
 }

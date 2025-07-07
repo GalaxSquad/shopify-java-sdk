@@ -13,6 +13,19 @@ public class MetafieldDefinitionDeletePayloadQuery extends Query<MetafieldDefini
     }
 
     /**
+    * The metafield definition that was deleted.
+    */
+    public MetafieldDefinitionDeletePayloadQuery deletedDefinition(MetafieldDefinitionIdentifierQueryDefinition queryDef) {
+        startField("deletedDefinition");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MetafieldDefinitionIdentifierQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * The ID of the deleted metafield definition.
     */
     public MetafieldDefinitionDeletePayloadQuery deletedDefinitionId() {

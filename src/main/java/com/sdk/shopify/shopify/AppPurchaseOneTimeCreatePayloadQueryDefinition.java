@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AppPurchaseOneTimeCreatePayloadQueryDefinition {
     void define(AppPurchaseOneTimeCreatePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `LocationDeactivateUserError`.
 */
@@ -22,6 +24,11 @@ public enum LocationDeactivateUserErrorCode {
     * Destination location is not found or inactive.
     */
     DESTINATION_LOCATION_NOT_FOUND_OR_INACTIVE,
+
+    /**
+    * Destination location is not Shopify managed.
+    */
+    DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED,
 
     /**
     * Failed to relocate active inventories to the destination location.
@@ -99,6 +106,10 @@ public enum LocationDeactivateUserErrorCode {
                 return DESTINATION_LOCATION_NOT_FOUND_OR_INACTIVE;
             }
 
+            case "DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED": {
+                return DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED;
+            }
+
             case "FAILED_TO_RELOCATE_ACTIVE_INVENTORIES": {
                 return FAILED_TO_RELOCATE_ACTIVE_INVENTORIES;
             }
@@ -160,6 +171,10 @@ public enum LocationDeactivateUserErrorCode {
 
             case DESTINATION_LOCATION_NOT_FOUND_OR_INACTIVE: {
                 return "DESTINATION_LOCATION_NOT_FOUND_OR_INACTIVE";
+            }
+
+            case DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED: {
+                return "DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED";
             }
 
             case FAILED_TO_RELOCATE_ACTIVE_INVENTORIES: {

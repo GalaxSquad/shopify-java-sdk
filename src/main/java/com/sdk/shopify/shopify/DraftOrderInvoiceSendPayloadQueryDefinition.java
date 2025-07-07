@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DraftOrderInvoiceSendPayloadQueryDefinition {
     void define(DraftOrderInvoiceSendPayloadQuery _queryBuilder);
 }

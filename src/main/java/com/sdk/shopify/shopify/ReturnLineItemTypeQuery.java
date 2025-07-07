@@ -33,6 +33,24 @@ public class ReturnLineItemTypeQuery extends Query<ReturnLineItemTypeQuery> {
     }
 
     /**
+    * The quantity that can be processed.
+    */
+    public ReturnLineItemTypeQuery processableQuantity() {
+        startField("processableQuantity");
+
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+    public ReturnLineItemTypeQuery processedQuantity() {
+        startField("processedQuantity");
+
+        return this;
+    }
+
+    /**
     * The quantity being returned.
     */
     public ReturnLineItemTypeQuery quantity() {
@@ -73,6 +91,15 @@ public class ReturnLineItemTypeQuery extends Query<ReturnLineItemTypeQuery> {
     */
     public ReturnLineItemTypeQuery returnReasonNote() {
         startField("returnReasonNote");
+
+        return this;
+    }
+
+    /**
+    * The quantity that has't been processed.
+    */
+    public ReturnLineItemTypeQuery unprocessedQuantity() {
+        startField("unprocessedQuantity");
 
         return this;
     }

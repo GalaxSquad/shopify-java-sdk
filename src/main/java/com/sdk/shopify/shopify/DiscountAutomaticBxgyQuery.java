@@ -104,12 +104,10 @@ public class DiscountAutomaticBxgyQuery extends Query<DiscountAutomaticBxgyQuery
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
-    public DiscountAutomaticBxgyQuery discountClass() {
-        startField("discountClass");
+    public DiscountAutomaticBxgyQuery discountClasses() {
+        startField("discountClasses");
 
         return this;
     }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ResourcePublicationV2ConnectionQueryDefinition {
     void define(ResourcePublicationV2ConnectionQuery _queryBuilder);
 }

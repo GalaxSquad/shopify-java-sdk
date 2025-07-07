@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CalculatedManualDiscountApplicationQueryDefinition {
     void define(CalculatedManualDiscountApplicationQuery _queryBuilder);
 }

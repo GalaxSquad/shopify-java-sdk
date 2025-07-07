@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ServerPixelQueryDefinition {
     void define(ServerPixelQuery _queryBuilder);
 }

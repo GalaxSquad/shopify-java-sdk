@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryProvinceQueryDefinition {
     void define(DeliveryProvinceQuery _queryBuilder);
 }

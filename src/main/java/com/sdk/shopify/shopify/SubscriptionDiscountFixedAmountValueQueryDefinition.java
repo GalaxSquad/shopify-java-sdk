@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionDiscountFixedAmountValueQueryDefinition {
     void define(SubscriptionDiscountFixedAmountValueQuery _queryBuilder);
 }

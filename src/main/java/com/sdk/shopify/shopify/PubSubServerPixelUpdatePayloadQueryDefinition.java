@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PubSubServerPixelUpdatePayloadQueryDefinition {
     void define(PubSubServerPixelUpdatePayloadQuery _queryBuilder);
 }

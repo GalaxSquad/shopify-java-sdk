@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantContextualPricingQueryDefinition {
     void define(ProductVariantContextualPricingQuery _queryBuilder);
 }

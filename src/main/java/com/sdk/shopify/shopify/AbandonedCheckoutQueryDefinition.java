@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AbandonedCheckoutQueryDefinition {
     void define(AbandonedCheckoutQuery _queryBuilder);
 }

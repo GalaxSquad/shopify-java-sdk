@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryProductVariantsCountQueryDefinition {
     void define(DeliveryProductVariantsCountQuery _queryBuilder);
 }

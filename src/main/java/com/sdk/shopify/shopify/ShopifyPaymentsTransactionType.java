@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The possible types of transactions.
 */
@@ -190,6 +194,11 @@ public enum ShopifyPaymentsTransactionType {
     * The import_tax_adjustment transaction type.
     */
     IMPORT_TAX_ADJUSTMENT,
+
+    /**
+    * The tax refund transaction type.
+    */
+    IMPORT_TAX_REFUND,
 
     /**
     * The marketplace_fee_credit transaction type.
@@ -627,6 +636,10 @@ public enum ShopifyPaymentsTransactionType {
                 return IMPORT_TAX_ADJUSTMENT;
             }
 
+            case "IMPORT_TAX_REFUND": {
+                return IMPORT_TAX_REFUND;
+            }
+
             case "MARKETPLACE_FEE_CREDIT": {
                 return MARKETPLACE_FEE_CREDIT;
             }
@@ -1004,6 +1017,10 @@ public enum ShopifyPaymentsTransactionType {
 
             case IMPORT_TAX_ADJUSTMENT: {
                 return "IMPORT_TAX_ADJUSTMENT";
+            }
+
+            case IMPORT_TAX_REFUND: {
+                return "IMPORT_TAX_REFUND";
             }
 
             case MARKETPLACE_FEE_CREDIT: {

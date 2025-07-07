@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AbandonmentUpdateActivitiesDeliveryStatusesUserErrorQueryDefinition {
     void define(AbandonmentUpdateActivitiesDeliveryStatusesUserErrorQuery _queryBuilder);
 }

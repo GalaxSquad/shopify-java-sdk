@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderDestinationQueryDefinition {
     void define(FulfillmentOrderDestinationQuery _queryBuilder);
 }

@@ -5,7 +5,9 @@ package com.sdk.shopify.shopify;
 import com.shopify.graphql.support.Query;
 
 /**
-* A product variant component associated with a product variant.
+* A product variant component that is included within a bundle.
+* These are the individual product variants that make up a bundle product,
+* where each component has a specific required quantity.
 */
 public class ProductVariantComponentQuery extends Query<ProductVariantComponentQuery> {
     ProductVariantComponentQuery(StringBuilder _queryBuilder) {

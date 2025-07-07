@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerMomentEdgeQueryDefinition {
     void define(CustomerMomentEdgeQuery _queryBuilder);
 }

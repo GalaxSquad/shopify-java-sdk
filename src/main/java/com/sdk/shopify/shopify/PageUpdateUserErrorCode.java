@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `PageUpdateUserError`.
 */
@@ -17,6 +21,16 @@ public enum PageUpdateUserErrorCode {
     INVALID_PUBLISH_DATE,
 
     /**
+    * The metafield type is invalid.
+    */
+    INVALID_TYPE,
+
+    /**
+    * The value is invalid for the metafield type or for the definition options.
+    */
+    INVALID_VALUE,
+
+    /**
     * The record with the ID used as the input value couldn't be found.
     */
     NOT_FOUND,
@@ -25,6 +39,11 @@ public enum PageUpdateUserErrorCode {
     * The input value is already taken.
     */
     TAKEN,
+
+    /**
+    * The input value is too big.
+    */
+    TOO_BIG,
 
     /**
     * The input value is too long.
@@ -47,12 +66,24 @@ public enum PageUpdateUserErrorCode {
                 return INVALID_PUBLISH_DATE;
             }
 
+            case "INVALID_TYPE": {
+                return INVALID_TYPE;
+            }
+
+            case "INVALID_VALUE": {
+                return INVALID_VALUE;
+            }
+
             case "NOT_FOUND": {
                 return NOT_FOUND;
             }
 
             case "TAKEN": {
                 return TAKEN;
+            }
+
+            case "TOO_BIG": {
+                return TOO_BIG;
             }
 
             case "TOO_LONG": {
@@ -74,12 +105,24 @@ public enum PageUpdateUserErrorCode {
                 return "INVALID_PUBLISH_DATE";
             }
 
+            case INVALID_TYPE: {
+                return "INVALID_TYPE";
+            }
+
+            case INVALID_VALUE: {
+                return "INVALID_VALUE";
+            }
+
             case NOT_FOUND: {
                 return "NOT_FOUND";
             }
 
             case TAKEN: {
                 return "TAKEN";
+            }
+
+            case TOO_BIG: {
+                return "TOO_BIG";
             }
 
             case TOO_LONG: {

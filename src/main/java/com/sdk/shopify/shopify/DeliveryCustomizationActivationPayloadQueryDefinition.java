@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryCustomizationActivationPayloadQueryDefinition {
     void define(DeliveryCustomizationActivationPayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UnitPriceMeasurementQueryDefinition {
     void define(UnitPriceMeasurementQuery _queryBuilder);
 }

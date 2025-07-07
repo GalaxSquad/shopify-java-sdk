@@ -21,7 +21,7 @@ public class SubscriptionDeliveryMethodShipping extends AbstractResponse<Subscri
             String fieldName = getFieldName(key);
             switch (fieldName) {
                 case "address": {
-                    responseData.put(key, new SubscriptionMailingAddress(jsonAsObject(field.getValue(), key)));
+                    responseData.put(key, new MailingAddress(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -51,11 +51,11 @@ public class SubscriptionDeliveryMethodShipping extends AbstractResponse<Subscri
     * The address to ship to.
     */
 
-    public SubscriptionMailingAddress getAddress() {
-        return (SubscriptionMailingAddress) get("address");
+    public MailingAddress getAddress() {
+        return (MailingAddress) get("address");
     }
 
-    public SubscriptionDeliveryMethodShipping setAddress(SubscriptionMailingAddress arg) {
+    public SubscriptionDeliveryMethodShipping setAddress(MailingAddress arg) {
         optimisticData.put(getKey("address"), arg);
         return this;
     }

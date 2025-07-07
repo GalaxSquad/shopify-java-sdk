@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppCreditConnectionQueryDefinition {
     void define(AppCreditConnectionQuery _queryBuilder);
 }

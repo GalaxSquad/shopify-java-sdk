@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FileEdgeQueryDefinition {
     void define(FileEdgeQuery _queryBuilder);
 }

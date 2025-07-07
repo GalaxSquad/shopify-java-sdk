@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SellingPlanPricingPolicyQueryDefinition {
     void define(SellingPlanPricingPolicyQuery _queryBuilder);
 }

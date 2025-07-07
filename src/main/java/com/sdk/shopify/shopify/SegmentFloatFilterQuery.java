@@ -22,6 +22,24 @@ public class SegmentFloatFilterQuery extends Query<SegmentFloatFilterQuery> {
     }
 
     /**
+    * The maximum range a filter can have.
+    */
+    public SegmentFloatFilterQuery maxRange() {
+        startField("maxRange");
+
+        return this;
+    }
+
+    /**
+    * The minimum range a filter can have.
+    */
+    public SegmentFloatFilterQuery minRange() {
+        startField("minRange");
+
+        return this;
+    }
+
+    /**
     * Whether a file can have multiple values for a single customer.
     */
     public SegmentFloatFilterQuery multiValue() {

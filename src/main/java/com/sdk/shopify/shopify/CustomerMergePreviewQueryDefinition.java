@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerMergePreviewQueryDefinition {
     void define(CustomerMergePreviewQuery _queryBuilder);
 }

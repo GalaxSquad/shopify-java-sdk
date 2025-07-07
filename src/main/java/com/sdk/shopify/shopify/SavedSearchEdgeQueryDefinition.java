@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SavedSearchEdgeQueryDefinition {
     void define(SavedSearchEdgeQuery _queryBuilder);
 }

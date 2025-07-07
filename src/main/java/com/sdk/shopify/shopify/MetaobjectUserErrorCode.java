@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `MetaobjectUserError`.
 */
@@ -12,6 +14,11 @@ public enum MetaobjectUserErrorCode {
     * Admin access can only be specified on metaobject definitions that have an app-reserved type.
     */
     ADMIN_ACCESS_INPUT_NOT_ALLOWED,
+
+    /**
+    * Definition is managed by app configuration and cannot be modified through the API.
+    */
+    APP_CONFIG_MANAGED,
 
     /**
     * The input value is blank.
@@ -47,6 +54,11 @@ public enum MetaobjectUserErrorCode {
     * The input value isn't included in the list.
     */
     INCLUSION,
+
+    /**
+    * The maximum number of input metaobjects has been exceeded.
+    */
+    INPUT_LIMIT_EXCEEDED,
 
     /**
     * An unexpected error occurred.
@@ -114,6 +126,11 @@ public enum MetaobjectUserErrorCode {
     RECORD_NOT_FOUND,
 
     /**
+    * The action cannot be completed because associated metaobjects are referenced by another resource.
+    */
+    REFERENCE_EXISTS_ERROR,
+
+    /**
     * The provided name is reserved for system use.
     */
     RESERVED_NAME,
@@ -170,6 +187,10 @@ public enum MetaobjectUserErrorCode {
                 return ADMIN_ACCESS_INPUT_NOT_ALLOWED;
             }
 
+            case "APP_CONFIG_MANAGED": {
+                return APP_CONFIG_MANAGED;
+            }
+
             case "BLANK": {
                 return BLANK;
             }
@@ -196,6 +217,10 @@ public enum MetaobjectUserErrorCode {
 
             case "INCLUSION": {
                 return INCLUSION;
+            }
+
+            case "INPUT_LIMIT_EXCEEDED": {
+                return INPUT_LIMIT_EXCEEDED;
             }
 
             case "INTERNAL_ERROR": {
@@ -250,6 +275,10 @@ public enum MetaobjectUserErrorCode {
                 return RECORD_NOT_FOUND;
             }
 
+            case "REFERENCE_EXISTS_ERROR": {
+                return REFERENCE_EXISTS_ERROR;
+            }
+
             case "RESERVED_NAME": {
                 return RESERVED_NAME;
             }
@@ -297,6 +326,10 @@ public enum MetaobjectUserErrorCode {
                 return "ADMIN_ACCESS_INPUT_NOT_ALLOWED";
             }
 
+            case APP_CONFIG_MANAGED: {
+                return "APP_CONFIG_MANAGED";
+            }
+
             case BLANK: {
                 return "BLANK";
             }
@@ -323,6 +356,10 @@ public enum MetaobjectUserErrorCode {
 
             case INCLUSION: {
                 return "INCLUSION";
+            }
+
+            case INPUT_LIMIT_EXCEEDED: {
+                return "INPUT_LIMIT_EXCEEDED";
             }
 
             case INTERNAL_ERROR: {
@@ -375,6 +412,10 @@ public enum MetaobjectUserErrorCode {
 
             case RECORD_NOT_FOUND: {
                 return "RECORD_NOT_FOUND";
+            }
+
+            case REFERENCE_EXISTS_ERROR: {
+                return "REFERENCE_EXISTS_ERROR";
             }
 
             case RESERVED_NAME: {

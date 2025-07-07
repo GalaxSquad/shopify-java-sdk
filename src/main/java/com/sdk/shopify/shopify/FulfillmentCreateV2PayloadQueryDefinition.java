@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentCreateV2PayloadQueryDefinition {
     void define(FulfillmentCreateV2PayloadQuery _queryBuilder);
 }

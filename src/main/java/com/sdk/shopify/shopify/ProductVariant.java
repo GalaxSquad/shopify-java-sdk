@@ -12,7 +12,37 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* Represents a product variant.
+* The `ProductVariant` object represents a version of a
+* [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+* that comes in more than one
+* [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+* such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+* then a small,
+* blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+* Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's
+* variants. Common
+* use cases for using the `ProductVariant` object include:
+* - Tracking inventory for each variant
+* - Setting unique prices for each variant
+* - Assigning barcodes and SKUs to connect variants to fulfillment services
+* - Attaching variant-specific images and media
+* - Setting delivery and tax requirements
+* - Supporting product bundles, subscriptions, and selling plans
+* A `ProductVariant` is associated with a parent
+* [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+* `ProductVariant` serves as the central link between a product's merchandising configuration,
+* inventory,
+* pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+* can reference other GraphQL types such as:
+* - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used
+* for inventory tracking
+* - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for
+* variant-specific images
+* - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup):
+* Used for subscriptions and selling plans
+* Learn more about [Shopify's product
+* model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+* s).
 */
 public class ProductVariant extends AbstractResponse<ProductVariant> implements CommentEventEmbed, DeliveryPromiseParticipantOwner, HasEvents, HasMetafieldDefinitions, HasMetafields, HasPublishedTranslations, LegacyInteroperability, MetafieldReference, MetafieldReferencer, Navigable, Node {
     public ProductVariant() {
@@ -179,6 +209,12 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
                     break;
                 }
 
+                case "productParents": {
+                    responseData.put(key, new ProductConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "productVariantComponents": {
                     responseData.put(key, new ProductVariantComponentConnection(jsonAsObject(field.getValue(), key)));
 
@@ -225,6 +261,12 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
                     break;
                 }
 
+                case "showUnitPrice": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
                 case "sku": {
                     String optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -266,6 +308,17 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
                     }
 
                     responseData.put(key, list1);
+
+                    break;
+                }
+
+                case "unitPrice": {
+                    MoneyV2 optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MoneyV2(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -583,6 +636,19 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
     }
 
     /**
+    * A list of products that have product variants that contain this variant as a product component.
+    */
+
+    public ProductConnection getProductParents() {
+        return (ProductConnection) get("productParents");
+    }
+
+    public ProductVariant setProductParents(ProductConnection arg) {
+        optimisticData.put(getKey("productParents"), arg);
+        return this;
+    }
+
+    /**
     * A list of the product variant components.
     */
 
@@ -667,6 +733,19 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
     }
 
     /**
+    * Whether to show the unit price for this product variant.
+    */
+
+    public Boolean getShowUnitPrice() {
+        return (Boolean) get("showUnitPrice");
+    }
+
+    public ProductVariant setShowUnitPrice(Boolean arg) {
+        optimisticData.put(getKey("showUnitPrice"), arg);
+        return this;
+    }
+
+    /**
     * A case-sensitive identifier for the product variant in the shop.
     * Required in order to connect to a fulfillment service.
     */
@@ -729,6 +808,19 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
 
     public ProductVariant setTranslations(List<Translation> arg) {
         optimisticData.put(getKey("translations"), arg);
+        return this;
+    }
+
+    /**
+    * The unit price value for the variant based on the variant measurement.
+    */
+
+    public MoneyV2 getUnitPrice() {
+        return (MoneyV2) get("unitPrice");
+    }
+
+    public ProductVariant setUnitPrice(MoneyV2 arg) {
+        optimisticData.put(getKey("unitPrice"), arg);
         return this;
     }
 
@@ -802,6 +894,8 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
 
             case "product": return true;
 
+            case "productParents": return true;
+
             case "productVariantComponents": return true;
 
             case "requiresComponents": return false;
@@ -814,6 +908,8 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
 
             case "sellingPlanGroupsCount": return true;
 
+            case "showUnitPrice": return false;
+
             case "sku": return false;
 
             case "taxCode": return false;
@@ -823,6 +919,8 @@ public class ProductVariant extends AbstractResponse<ProductVariant> implements 
             case "title": return false;
 
             case "translations": return true;
+
+            case "unitPrice": return true;
 
             case "unitPriceMeasurement": return true;
 

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PaymentScheduleQueryDefinition {
     void define(PaymentScheduleQuery _queryBuilder);
 }

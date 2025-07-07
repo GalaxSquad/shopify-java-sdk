@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LegacyInteroperabilityQueryDefinition {
     void define(LegacyInteroperabilityQuery _queryBuilder);
 }

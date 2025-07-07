@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocationAddPayloadQueryDefinition {
     void define(LocationAddPayloadQuery _queryBuilder);
 }

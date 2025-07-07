@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface QuantityPriceBreakQueryDefinition {
     void define(QuantityPriceBreakQuery _queryBuilder);
 }

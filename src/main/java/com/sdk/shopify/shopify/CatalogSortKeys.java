@@ -3,6 +3,8 @@
 package com.sdk.shopify.shopify;
 
 
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the Catalog query.
 */
@@ -22,6 +24,11 @@ public enum CatalogSortKeys {
     * Sort by the `title` value.
     */
     TITLE,
+
+    /**
+    * Sort by the `type` value.
+    */
+    TYPE,
 
     UNKNOWN_VALUE;
 
@@ -43,6 +50,10 @@ public enum CatalogSortKeys {
                 return TITLE;
             }
 
+            case "TYPE": {
+                return TYPE;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -60,6 +71,10 @@ public enum CatalogSortKeys {
 
             case TITLE: {
                 return "TITLE";
+            }
+
+            case TYPE: {
+                return "TYPE";
             }
 
             default: {

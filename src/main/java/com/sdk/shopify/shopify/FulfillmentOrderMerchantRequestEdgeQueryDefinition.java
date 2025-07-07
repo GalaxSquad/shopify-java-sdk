@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderMerchantRequestEdgeQueryDefinition {
     void define(FulfillmentOrderMerchantRequestEdgeQuery _queryBuilder);
 }

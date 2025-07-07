@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetaobjectCapabilitiesQueryDefinition {
     void define(MetaobjectCapabilitiesQuery _queryBuilder);
 }

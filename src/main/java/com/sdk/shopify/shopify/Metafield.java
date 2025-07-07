@@ -52,17 +52,6 @@ public class Metafield extends AbstractResponse<Metafield> implements HasCompare
                     break;
                 }
 
-                case "description": {
-                    String optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = jsonAsString(field.getValue(), key);
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
                 case "id": {
                     responseData.put(key, new ID(jsonAsString(field.getValue(), key)));
 
@@ -201,19 +190,6 @@ public class Metafield extends AbstractResponse<Metafield> implements HasCompare
 
     public Metafield setDefinition(MetafieldDefinition arg) {
         optimisticData.put(getKey("definition"), arg);
-        return this;
-    }
-
-    /**
-    * The description of the metafield.
-    */
-
-    public String getDescription() {
-        return (String) get("description");
-    }
-
-    public Metafield setDescription(String arg) {
-        optimisticData.put(getKey("description"), arg);
         return this;
     }
 
@@ -376,8 +352,6 @@ public class Metafield extends AbstractResponse<Metafield> implements HasCompare
             case "createdAt": return false;
 
             case "definition": return true;
-
-            case "description": return false;
 
             case "id": return false;
 

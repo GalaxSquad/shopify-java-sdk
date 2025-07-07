@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderCancelPayloadQueryDefinition {
     void define(FulfillmentOrderCancelPayloadQuery _queryBuilder);
 }

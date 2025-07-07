@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CurrencySettingConnectionQueryDefinition {
     void define(CurrencySettingConnectionQuery _queryBuilder);
 }

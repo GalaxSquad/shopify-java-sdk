@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderConnectionQueryDefinition {
     void define(DraftOrderConnectionQuery _queryBuilder);
 }

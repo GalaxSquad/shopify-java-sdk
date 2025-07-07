@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UrlRedirectBulkDeleteBySearchUserErrorQueryDefinition {
     void define(UrlRedirectBulkDeleteBySearchUserErrorQuery _queryBuilder);
 }

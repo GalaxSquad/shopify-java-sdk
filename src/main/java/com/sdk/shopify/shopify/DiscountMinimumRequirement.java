@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of minimum requirement that must be met for the discount to be applied. For example, a
 * customer must spend a minimum subtotal to be eligible for the discount. Alternatively, a customer

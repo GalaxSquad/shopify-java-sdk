@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceListUserErrorQueryDefinition {
     void define(PriceListUserErrorQuery _queryBuilder);
 }

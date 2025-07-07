@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyLocationAssignTaxExemptionsPayloadQueryDefinition {
     void define(CompanyLocationAssignTaxExemptionsPayloadQuery _queryBuilder);
 }

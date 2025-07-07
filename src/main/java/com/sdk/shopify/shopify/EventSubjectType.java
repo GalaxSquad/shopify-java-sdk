@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of the resource that generated the event.
 */
@@ -65,6 +69,11 @@ public enum EventSubjectType {
     * A DraftOrder resource generated the event.
     */
     DRAFT_ORDER,
+
+    /**
+    * A InventoryTransfer resource generated the event.
+    */
+    INVENTORY_TRANSFER,
 
     /**
     * A Order resource generated the event.
@@ -153,6 +162,10 @@ public enum EventSubjectType {
                 return DRAFT_ORDER;
             }
 
+            case "INVENTORY_TRANSFER": {
+                return INVENTORY_TRANSFER;
+            }
+
             case "ORDER": {
                 return ORDER;
             }
@@ -230,6 +243,10 @@ public enum EventSubjectType {
 
             case DRAFT_ORDER: {
                 return "DRAFT_ORDER";
+            }
+
+            case INVENTORY_TRANSFER: {
+                return "INVENTORY_TRANSFER";
             }
 
             case ORDER: {

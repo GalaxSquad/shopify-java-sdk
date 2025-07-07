@@ -22,7 +22,7 @@ public class SubscriptionDeliveryMethodLocalDelivery extends AbstractResponse<Su
             String fieldName = getFieldName(key);
             switch (fieldName) {
                 case "address": {
-                    responseData.put(key, new SubscriptionMailingAddress(jsonAsObject(field.getValue(), key)));
+                    responseData.put(key, new MailingAddress(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -52,11 +52,11 @@ public class SubscriptionDeliveryMethodLocalDelivery extends AbstractResponse<Su
     * The address to deliver to.
     */
 
-    public SubscriptionMailingAddress getAddress() {
-        return (SubscriptionMailingAddress) get("address");
+    public MailingAddress getAddress() {
+        return (MailingAddress) get("address");
     }
 
-    public SubscriptionDeliveryMethodLocalDelivery setAddress(SubscriptionMailingAddress arg) {
+    public SubscriptionDeliveryMethodLocalDelivery setAddress(MailingAddress arg) {
         optimisticData.put(getKey("address"), arg);
         return this;
     }

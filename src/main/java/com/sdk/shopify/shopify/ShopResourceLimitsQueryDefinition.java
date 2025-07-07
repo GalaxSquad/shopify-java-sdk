@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopResourceLimitsQueryDefinition {
     void define(ShopResourceLimitsQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ThemePublishUserErrorQueryDefinition {
     void define(ThemePublishUserErrorQuery _queryBuilder);
 }

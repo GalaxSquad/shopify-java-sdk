@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AppSubscriptionDiscountValueQueryDefinition {
     void define(AppSubscriptionDiscountValueQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductPriceRangeV2QueryDefinition {
     void define(ProductPriceRangeV2Query _queryBuilder);
 }

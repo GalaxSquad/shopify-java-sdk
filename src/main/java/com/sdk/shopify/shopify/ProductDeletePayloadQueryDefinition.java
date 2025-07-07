@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductDeletePayloadQueryDefinition {
     void define(ProductDeletePayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The frequency at which the shop is billed for an app subscription.
 */

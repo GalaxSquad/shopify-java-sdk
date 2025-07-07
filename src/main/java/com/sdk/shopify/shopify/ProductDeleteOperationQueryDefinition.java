@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductDeleteOperationQueryDefinition {
     void define(ProductDeleteOperationQuery _queryBuilder);
 }

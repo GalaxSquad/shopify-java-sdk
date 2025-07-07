@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerAccountsV2QueryDefinition {
     void define(CustomerAccountsV2Query _queryBuilder);
 }

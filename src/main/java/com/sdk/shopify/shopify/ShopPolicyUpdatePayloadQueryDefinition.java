@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopPolicyUpdatePayloadQueryDefinition {
     void define(ShopPolicyUpdatePayloadQuery _queryBuilder);
 }

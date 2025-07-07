@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryPromiseProviderQueryDefinition {
     void define(DeliveryPromiseProviderQuery _queryBuilder);
 }

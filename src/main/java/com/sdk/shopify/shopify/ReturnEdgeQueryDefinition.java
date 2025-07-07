@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ReturnEdgeQueryDefinition {
     void define(ReturnEdgeQuery _queryBuilder);
 }
