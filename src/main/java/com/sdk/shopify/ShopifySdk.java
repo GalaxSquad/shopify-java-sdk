@@ -80,7 +80,7 @@ public class ShopifySdk {
 
   private final String storeName;
   private final String apiKey;
-  private String apiVersion = "2025-01";
+  private String apiVersion = "2025-07";
   private static final int BATCH_SIZE = 100;
   private static final int MAX_PAGES = 100; // Safety limit for pagination
 
@@ -878,6 +878,8 @@ public class ShopifySdk {
         .taxExempt()
         .taxExemptions()
         .updatedAt()
-        .verifiedEmail();
+        .verifiedEmail()
+        .defaultPhoneNumber(phone -> phone.phoneNumber())
+        .defaultEmailAddress(email -> email.validFormat().emailAddress());
   }
 }
