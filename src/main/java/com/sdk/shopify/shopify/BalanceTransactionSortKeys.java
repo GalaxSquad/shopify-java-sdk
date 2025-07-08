@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the BalanceTransaction query.
 */
@@ -52,12 +55,6 @@ public enum BalanceTransactionSortKeys {
     PROCESSED_AT,
 
     /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
-
-    /**
     * Sort by the `transaction_type` value.
     */
     TRANSACTION_TYPE,
@@ -106,10 +103,6 @@ public enum BalanceTransactionSortKeys {
                 return PROCESSED_AT;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "TRANSACTION_TYPE": {
                 return TRANSACTION_TYPE;
             }
@@ -155,10 +148,6 @@ public enum BalanceTransactionSortKeys {
 
             case PROCESSED_AT: {
                 return "PROCESSED_AT";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case TRANSACTION_TYPE: {

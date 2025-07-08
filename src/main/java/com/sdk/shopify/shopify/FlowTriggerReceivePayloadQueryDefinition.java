@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FlowTriggerReceivePayloadQueryDefinition {
     void define(FlowTriggerReceivePayloadQuery _queryBuilder);
 }

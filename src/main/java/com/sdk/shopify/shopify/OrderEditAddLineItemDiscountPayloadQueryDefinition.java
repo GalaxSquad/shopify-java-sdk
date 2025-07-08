@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderEditAddLineItemDiscountPayloadQueryDefinition {
     void define(OrderEditAddLineItemDiscountPayloadQuery _queryBuilder);
 }

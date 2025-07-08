@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GiftCardTransactionEdgeQueryDefinition {
     void define(GiftCardTransactionEdgeQuery _queryBuilder);
 }

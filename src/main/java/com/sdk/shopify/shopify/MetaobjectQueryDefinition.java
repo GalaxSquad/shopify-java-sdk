@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetaobjectQueryDefinition {
     void define(MetaobjectQuery _queryBuilder);
 }

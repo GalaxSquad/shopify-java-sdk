@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the CompanyContactRoleAssignment query.
 */
@@ -20,12 +23,6 @@ public enum CompanyContactRoleAssignmentSortKeys {
     * Sort by the `location_name` value.
     */
     LOCATION_NAME,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     /**
     * Sort by the `updated_at` value.
@@ -52,10 +49,6 @@ public enum CompanyContactRoleAssignmentSortKeys {
                 return LOCATION_NAME;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "UPDATED_AT": {
                 return UPDATED_AT;
             }
@@ -77,10 +70,6 @@ public enum CompanyContactRoleAssignmentSortKeys {
 
             case LOCATION_NAME: {
                 return "LOCATION_NAME";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case UPDATED_AT: {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BulkOperationQueryDefinition {
     void define(BulkOperationQuery _queryBuilder);
 }

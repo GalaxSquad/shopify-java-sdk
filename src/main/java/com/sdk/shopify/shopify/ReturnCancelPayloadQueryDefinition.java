@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnCancelPayloadQueryDefinition {
     void define(ReturnCancelPayloadQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryPromiseSettingQueryDefinition {
     void define(DeliveryPromiseSettingQuery _queryBuilder);
 }

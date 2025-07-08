@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PriceListParentQueryDefinition {
     void define(PriceListParentQuery _queryBuilder);
 }

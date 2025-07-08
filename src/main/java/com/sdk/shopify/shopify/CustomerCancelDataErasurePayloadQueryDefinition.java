@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerCancelDataErasurePayloadQueryDefinition {
     void define(CustomerCancelDataErasurePayloadQuery _queryBuilder);
 }

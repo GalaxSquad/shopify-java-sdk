@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The possible status values of the last payment on a subscription contract.
 */

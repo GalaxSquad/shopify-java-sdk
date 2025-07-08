@@ -98,6 +98,17 @@ public class WebhookSubscription extends AbstractResponse<WebhookSubscription> i
                     break;
                 }
 
+                case "metafields": {
+                    List<WebhookSubscriptionMetafieldIdentifier> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(new WebhookSubscriptionMetafieldIdentifier(jsonAsObject(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
+
+                    break;
+                }
+
                 case "topic": {
                     responseData.put(key, WebhookSubscriptionTopic.fromGraphQl(jsonAsString(field.getValue(), key)));
 
@@ -207,8 +218,10 @@ public class WebhookSubscription extends AbstractResponse<WebhookSubscription> i
     }
 
     /**
-    * An optional array of top-level resource fields that should be serialized and sent in the webhook
-    * message. If null, then all fields will be sent.
+    * The list of fields to be included in the webhook subscription. Only the fields specified will be
+    * included in the webhook payload. If null, then all fields will be included. Learn more about
+    * [modifying webhook
+    * payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads).
     */
 
     public List<String> getIncludeFields() {
@@ -243,6 +256,19 @@ public class WebhookSubscription extends AbstractResponse<WebhookSubscription> i
 
     public WebhookSubscription setMetafieldNamespaces(List<String> arg) {
         optimisticData.put(getKey("metafieldNamespaces"), arg);
+        return this;
+    }
+
+    /**
+    * The list of identifiers specifying metafields to include in the webhook subscription.
+    */
+
+    public List<WebhookSubscriptionMetafieldIdentifier> getMetafields() {
+        return (List<WebhookSubscriptionMetafieldIdentifier>) get("metafields");
+    }
+
+    public WebhookSubscription setMetafields(List<WebhookSubscriptionMetafieldIdentifier> arg) {
+        optimisticData.put(getKey("metafields"), arg);
         return this;
     }
 
@@ -292,6 +318,8 @@ public class WebhookSubscription extends AbstractResponse<WebhookSubscription> i
             case "legacyResourceId": return false;
 
             case "metafieldNamespaces": return false;
+
+            case "metafields": return true;
 
             case "topic": return false;
 

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountAutomaticEdgeQueryDefinition {
     void define(DiscountAutomaticEdgeQuery _queryBuilder);
 }

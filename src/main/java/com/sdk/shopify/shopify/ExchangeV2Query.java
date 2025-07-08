@@ -59,6 +59,15 @@ public class ExchangeV2Query extends Query<ExchangeV2Query> {
     }
 
     /**
+    * Mirrored from Admin Exchanges.
+    */
+    public ExchangeV2Query mirrored() {
+        startField("mirrored");
+
+        return this;
+    }
+
+    /**
     * The text of an optional note that a shop owner can attach to the exchange.
     */
     public ExchangeV2Query note() {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The field type that the condition will be applied to.
 */

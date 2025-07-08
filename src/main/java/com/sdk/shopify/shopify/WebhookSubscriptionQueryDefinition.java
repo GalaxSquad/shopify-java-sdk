@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface WebhookSubscriptionQueryDefinition {
     void define(WebhookSubscriptionQuery _queryBuilder);
 }

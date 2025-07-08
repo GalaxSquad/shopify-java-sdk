@@ -10,6 +10,8 @@ import java.util.List;
 public class DiscountCodeAppInput implements Serializable {
     private Input<DiscountCombinesWithInput> combinesWith = Input.undefined();
 
+    private Input<List<DiscountClass>> discountClasses = Input.undefined();
+
     private Input<String> title = Input.undefined();
 
     private Input<String> startsAt = Input.undefined();
@@ -52,6 +54,27 @@ public class DiscountCodeAppInput implements Serializable {
             throw new IllegalArgumentException("Input can not be null");
         }
         this.combinesWith = combinesWith;
+        return this;
+    }
+
+    public List<DiscountClass> getDiscountClasses() {
+        return discountClasses.getValue();
+    }
+
+    public Input<List<DiscountClass>> getDiscountClassesInput() {
+        return discountClasses;
+    }
+
+    public DiscountCodeAppInput setDiscountClasses(List<DiscountClass> discountClasses) {
+        this.discountClasses = Input.optional(discountClasses);
+        return this;
+    }
+
+    public DiscountCodeAppInput setDiscountClassesInput(Input<List<DiscountClass>> discountClasses) {
+        if (discountClasses == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.discountClasses = discountClasses;
         return this;
     }
 
@@ -317,6 +340,26 @@ public class DiscountCodeAppInput implements Serializable {
             _queryBuilder.append("combinesWith:");
             if (combinesWith.getValue() != null) {
                 combinesWith.getValue().appendTo(_queryBuilder);
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.discountClasses.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("discountClasses:");
+            if (discountClasses.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (DiscountClass item1 : discountClasses.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        _queryBuilder.append(item1.toString());
+                    }
+                }
+                _queryBuilder.append(']');
             } else {
                 _queryBuilder.append("null");
             }

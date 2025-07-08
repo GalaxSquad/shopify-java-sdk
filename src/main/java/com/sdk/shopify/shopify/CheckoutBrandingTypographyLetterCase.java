@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible values for the typography letter case.
 */

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface HasStoreCreditAccountsQueryDefinition {
     void define(HasStoreCreditAccountsQuery _queryBuilder);
 }

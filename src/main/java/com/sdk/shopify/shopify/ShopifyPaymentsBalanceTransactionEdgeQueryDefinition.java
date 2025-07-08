@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsBalanceTransactionEdgeQueryDefinition {
     void define(ShopifyPaymentsBalanceTransactionEdgeQuery _queryBuilder);
 }

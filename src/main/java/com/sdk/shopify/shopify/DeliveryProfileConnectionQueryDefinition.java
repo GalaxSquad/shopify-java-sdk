@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryProfileConnectionQueryDefinition {
     void define(DeliveryProfileConnectionQuery _queryBuilder);
 }

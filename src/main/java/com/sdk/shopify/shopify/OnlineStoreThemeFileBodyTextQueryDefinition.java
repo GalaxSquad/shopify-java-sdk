@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OnlineStoreThemeFileBodyTextQueryDefinition {
     void define(OnlineStoreThemeFileBodyTextQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductVariantsBulkReorderUserErrorQueryDefinition {
     void define(ProductVariantsBulkReorderUserErrorQuery _queryBuilder);
 }

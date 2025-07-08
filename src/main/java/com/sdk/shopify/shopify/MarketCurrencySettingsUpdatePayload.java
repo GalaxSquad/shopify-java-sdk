@@ -22,17 +22,6 @@ public class MarketCurrencySettingsUpdatePayload extends AbstractResponse<Market
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
-                case "market": {
-                    Market optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = new Market(jsonAsObject(field.getValue(), key));
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
                 case "userErrors": {
                     List<MarketCurrencySettingsUserError> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -60,19 +49,6 @@ public class MarketCurrencySettingsUpdatePayload extends AbstractResponse<Market
     }
 
     /**
-    * The market object.
-    */
-
-    public Market getMarket() {
-        return (Market) get("market");
-    }
-
-    public MarketCurrencySettingsUpdatePayload setMarket(Market arg) {
-        optimisticData.put(getKey("market"), arg);
-        return this;
-    }
-
-    /**
     * The list of errors that occurred from executing the mutation.
     */
 
@@ -87,8 +63,6 @@ public class MarketCurrencySettingsUpdatePayload extends AbstractResponse<Market
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
-            case "market": return true;
-
             case "userErrors": return true;
 
             default: return false;

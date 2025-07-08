@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `CatalogUserError`.
 */
@@ -52,12 +56,14 @@ public enum CatalogUserErrorCode {
     CANNOT_MODIFY_MARKET_CATALOG,
 
     /**
-    * Quantity price breaks can be associated only with company location catalogs.
+    * Quantity price breaks can be associated only with company location catalogs or catalogs associated
+    * with compatible markets.
     */
     CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_PRICE_BREAKS,
 
     /**
-    * Quantity rules can be associated only with company location catalogs.
+    * Quantity rules can be associated only with company location catalogs or catalogs associated with
+    * compatible markets.
     */
     CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_RULES,
 
@@ -97,6 +103,11 @@ public enum CatalogUserErrorCode {
     CONTEXT_DRIVER_MISMATCH,
 
     /**
+    * A country catalog cannot be assigned to a price list.
+    */
+    COUNTRY_CATALOG_PRICE_LIST_ASSIGNMENT,
+
+    /**
     * A country price list cannot be assigned to a catalog.
     */
     COUNTRY_PRICE_LIST_ASSIGNMENT,
@@ -110,6 +121,16 @@ public enum CatalogUserErrorCode {
     * The catalog context type is invalid.
     */
     INVALID_CATALOG_CONTEXT_TYPE,
+
+    /**
+    * Cannot change context to specified type.
+    */
+    INVALID_CONTEXT_CHANGE,
+
+    /**
+    * The managed country belongs to another catalog.
+    */
+    MANAGED_COUNTRY_BELONGS_TO_ANOTHER_CATALOG,
 
     /**
     * The catalog's market and price list currencies do not match.
@@ -180,6 +201,11 @@ public enum CatalogUserErrorCode {
     * The input value is too short.
     */
     TOO_SHORT,
+
+    /**
+    * Managing this catalog is not supported by your plan.
+    */
+    UNPERMITTED_ENTITLEMENTS_MARKET_CATALOGS,
 
     /**
     * Can't perform this action on a catalog of this type.
@@ -266,6 +292,10 @@ public enum CatalogUserErrorCode {
                 return CONTEXT_DRIVER_MISMATCH;
             }
 
+            case "COUNTRY_CATALOG_PRICE_LIST_ASSIGNMENT": {
+                return COUNTRY_CATALOG_PRICE_LIST_ASSIGNMENT;
+            }
+
             case "COUNTRY_PRICE_LIST_ASSIGNMENT": {
                 return COUNTRY_PRICE_LIST_ASSIGNMENT;
             }
@@ -276,6 +306,14 @@ public enum CatalogUserErrorCode {
 
             case "INVALID_CATALOG_CONTEXT_TYPE": {
                 return INVALID_CATALOG_CONTEXT_TYPE;
+            }
+
+            case "INVALID_CONTEXT_CHANGE": {
+                return INVALID_CONTEXT_CHANGE;
+            }
+
+            case "MANAGED_COUNTRY_BELONGS_TO_ANOTHER_CATALOG": {
+                return MANAGED_COUNTRY_BELONGS_TO_ANOTHER_CATALOG;
             }
 
             case "MARKET_AND_PRICE_LIST_CURRENCY_MISMATCH": {
@@ -332,6 +370,10 @@ public enum CatalogUserErrorCode {
 
             case "TOO_SHORT": {
                 return TOO_SHORT;
+            }
+
+            case "UNPERMITTED_ENTITLEMENTS_MARKET_CATALOGS": {
+                return UNPERMITTED_ENTITLEMENTS_MARKET_CATALOGS;
             }
 
             case "UNSUPPORTED_CATALOG_ACTION": {
@@ -417,6 +459,10 @@ public enum CatalogUserErrorCode {
                 return "CONTEXT_DRIVER_MISMATCH";
             }
 
+            case COUNTRY_CATALOG_PRICE_LIST_ASSIGNMENT: {
+                return "COUNTRY_CATALOG_PRICE_LIST_ASSIGNMENT";
+            }
+
             case COUNTRY_PRICE_LIST_ASSIGNMENT: {
                 return "COUNTRY_PRICE_LIST_ASSIGNMENT";
             }
@@ -427,6 +473,14 @@ public enum CatalogUserErrorCode {
 
             case INVALID_CATALOG_CONTEXT_TYPE: {
                 return "INVALID_CATALOG_CONTEXT_TYPE";
+            }
+
+            case INVALID_CONTEXT_CHANGE: {
+                return "INVALID_CONTEXT_CHANGE";
+            }
+
+            case MANAGED_COUNTRY_BELONGS_TO_ANOTHER_CATALOG: {
+                return "MANAGED_COUNTRY_BELONGS_TO_ANOTHER_CATALOG";
             }
 
             case MARKET_AND_PRICE_LIST_CURRENCY_MISMATCH: {
@@ -483,6 +537,10 @@ public enum CatalogUserErrorCode {
 
             case TOO_SHORT: {
                 return "TOO_SHORT";
+            }
+
+            case UNPERMITTED_ENTITLEMENTS_MARKET_CATALOGS: {
+                return "UNPERMITTED_ENTITLEMENTS_MARKET_CATALOGS";
             }
 
             case UNSUPPORTED_CATALOG_ACTION: {

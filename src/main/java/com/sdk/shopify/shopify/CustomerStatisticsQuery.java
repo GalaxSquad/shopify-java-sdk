@@ -20,4 +20,13 @@ public class CustomerStatisticsQuery extends Query<CustomerStatisticsQuery> {
 
         return this;
     }
+
+    /**
+    * The RFM (Recency, Frequency, Monetary) group of the customer.
+    */
+    public CustomerStatisticsQuery rfmGroup() {
+        startField("rfmGroup");
+
+        return this;
+    }
 }

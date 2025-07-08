@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The category of the selling plan. For the `OTHER` category,
 * you must fill out our [request

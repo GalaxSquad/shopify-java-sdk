@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CalculatedDiscountApplicationConnectionQueryDefinition {
     void define(CalculatedDiscountApplicationConnectionQuery _queryBuilder);
 }

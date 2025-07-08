@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DisputeEvidenceUpdateUserErrorQueryDefinition {
     void define(DisputeEvidenceUpdateUserErrorQuery _queryBuilder);
 }

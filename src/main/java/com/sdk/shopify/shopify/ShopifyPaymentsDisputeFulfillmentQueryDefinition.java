@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsDisputeFulfillmentQueryDefinition {
     void define(ShopifyPaymentsDisputeFulfillmentQuery _queryBuilder);
 }

@@ -414,6 +414,19 @@ public class ShopQuery extends Query<ShopQuery> {
     }
 
     /**
+    * The entitlements for a shop.
+    */
+    public ShopQuery entitlements(EntitlementsTypeQueryDefinition queryDef) {
+        startField("entitlements");
+
+        _queryBuilder.append('{');
+        queryDef.define(new EntitlementsTypeQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * The set of features enabled for the shop.
     */
     public ShopQuery features(ShopFeaturesQueryDefinition queryDef) {

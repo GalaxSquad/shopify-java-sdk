@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Available customer tax exemptions.
 */
@@ -122,7 +124,7 @@ public enum TaxExemption {
 
     /**
     * This customer is exempt from VAT for purchases within the EU that is shipping from outside of
-    * customer's country.
+    * customer's country, as well as purchases from the EU to the UK.
     */
     EU_REVERSE_CHARGE_EXEMPTION_RULE,
 

@@ -12,7 +12,32 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* Represents a return.
+* The `Return` object represents the intent of a buyer to ship one or more items from an order back to
+* a merchant
+* or a third-party fulfillment location. A return is associated with an
+* [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+* and can include multiple return [line
+* items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+* Each return has a
+* [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+* which indicates the state of the return.
+* Use the `Return` object to capture the financial, logistical,
+* and business intent of a return. For example, you can identify eligible items for a return and issue
+* customers
+* a refund for returned items on behalf of the merchant.
+* Learn more about providing a
+* [return management
+* workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-managemen
+* t)
+* for merchants. You can also manage
+* [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+* [reverse fulfillment
+* orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillme
+* nt-orders),
+* and [reverse
+* deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliv
+* eries)
+* on behalf of merchants.
 */
 public class Return extends AbstractResponse<Return> implements Node {
     public Return() {
@@ -23,6 +48,23 @@ public class Return extends AbstractResponse<Return> implements Node {
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
+                case "closedAt": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "createdAt": {
+                    responseData.put(key, jsonAsString(field.getValue(), key));
+
+                    break;
+                }
+
                 case "decline": {
                     ReturnDecline optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -64,6 +106,17 @@ public class Return extends AbstractResponse<Return> implements Node {
                     break;
                 }
 
+                case "requestApprovedAt": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "returnLineItems": {
                     responseData.put(key, new ReturnLineItemTypeConnection(jsonAsObject(field.getValue(), key)));
 
@@ -93,10 +146,10 @@ public class Return extends AbstractResponse<Return> implements Node {
                     break;
                 }
 
-                case "suggestedRefund": {
-                    SuggestedReturnRefund optional1 = null;
+                case "suggestedFinancialOutcome": {
+                    SuggestedReturnFinancialOutcome optional1 = null;
                     if (!field.getValue().isJsonNull()) {
-                        optional1 = new SuggestedReturnRefund(jsonAsObject(field.getValue(), key));
+                        optional1 = new SuggestedReturnFinancialOutcome(jsonAsObject(field.getValue(), key));
                     }
 
                     responseData.put(key, optional1);
@@ -128,6 +181,32 @@ public class Return extends AbstractResponse<Return> implements Node {
 
     public String getGraphQlTypeName() {
         return "Return";
+    }
+
+    /**
+    * The date and time when the return was closed.
+    */
+
+    public String getClosedAt() {
+        return (String) get("closedAt");
+    }
+
+    public Return setClosedAt(String arg) {
+        optimisticData.put(getKey("closedAt"), arg);
+        return this;
+    }
+
+    /**
+    * The date and time when the return was created.
+    */
+
+    public String getCreatedAt() {
+        return (String) get("createdAt");
+    }
+
+    public Return setCreatedAt(String arg) {
+        optimisticData.put(getKey("createdAt"), arg);
+        return this;
     }
 
     /**
@@ -204,6 +283,19 @@ public class Return extends AbstractResponse<Return> implements Node {
     }
 
     /**
+    * The date and time when the return was approved.
+    */
+
+    public String getRequestApprovedAt() {
+        return (String) get("requestApprovedAt");
+    }
+
+    public Return setRequestApprovedAt(String arg) {
+        optimisticData.put(getKey("requestApprovedAt"), arg);
+        return this;
+    }
+
+    /**
     * The return line items attached to the return.
     */
 
@@ -256,15 +348,15 @@ public class Return extends AbstractResponse<Return> implements Node {
     }
 
     /**
-    * A suggested refund for the return.
+    * A suggested financial outcome for the return.
     */
 
-    public SuggestedReturnRefund getSuggestedRefund() {
-        return (SuggestedReturnRefund) get("suggestedRefund");
+    public SuggestedReturnFinancialOutcome getSuggestedFinancialOutcome() {
+        return (SuggestedReturnFinancialOutcome) get("suggestedFinancialOutcome");
     }
 
-    public Return setSuggestedRefund(SuggestedReturnRefund arg) {
-        optimisticData.put(getKey("suggestedRefund"), arg);
+    public Return setSuggestedFinancialOutcome(SuggestedReturnFinancialOutcome arg) {
+        optimisticData.put(getKey("suggestedFinancialOutcome"), arg);
         return this;
     }
 
@@ -283,6 +375,10 @@ public class Return extends AbstractResponse<Return> implements Node {
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
+            case "closedAt": return false;
+
+            case "createdAt": return false;
+
             case "decline": return true;
 
             case "exchangeLineItems": return true;
@@ -295,6 +391,8 @@ public class Return extends AbstractResponse<Return> implements Node {
 
             case "refunds": return true;
 
+            case "requestApprovedAt": return false;
+
             case "returnLineItems": return true;
 
             case "returnShippingFees": return true;
@@ -303,7 +401,7 @@ public class Return extends AbstractResponse<Return> implements Node {
 
             case "status": return false;
 
-            case "suggestedRefund": return true;
+            case "suggestedFinancialOutcome": return true;
 
             case "totalQuantity": return false;
 

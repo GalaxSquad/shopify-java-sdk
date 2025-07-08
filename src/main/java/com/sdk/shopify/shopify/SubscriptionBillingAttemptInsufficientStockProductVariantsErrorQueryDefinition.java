@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionBillingAttemptInsufficientStockProductVariantsErrorQueryDefinition {
     void define(SubscriptionBillingAttemptInsufficientStockProductVariantsErrorQuery _queryBuilder);
 }

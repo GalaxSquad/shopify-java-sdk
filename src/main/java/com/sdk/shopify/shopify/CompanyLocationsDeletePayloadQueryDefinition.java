@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyLocationsDeletePayloadQueryDefinition {
     void define(CompanyLocationsDeletePayloadQuery _queryBuilder);
 }

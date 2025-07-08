@@ -74,6 +74,10 @@ public class UnknownHasMetafieldDefinitions extends AbstractResponse<UnknownHasM
                 return new DiscountNode(fields);
             }
 
+            case "InventoryTransfer": {
+                return new InventoryTransfer(fields);
+            }
+
             case "Location": {
                 return new Location(fields);
             }
@@ -104,6 +108,10 @@ public class UnknownHasMetafieldDefinitions extends AbstractResponse<UnknownHasM
 
             case "SellingPlan": {
                 return new SellingPlan(fields);
+            }
+
+            case "Shop": {
+                return new Shop(fields);
             }
 
             case "Validation": {

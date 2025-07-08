@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocationQueryDefinition {
     void define(LocationQuery _queryBuilder);
 }

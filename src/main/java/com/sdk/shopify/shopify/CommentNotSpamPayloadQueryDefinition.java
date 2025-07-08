@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentNotSpamPayloadQueryDefinition {
     void define(CommentNotSpamPayloadQuery _queryBuilder);
 }

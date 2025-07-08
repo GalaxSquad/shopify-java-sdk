@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentDateFilterQueryDefinition {
     void define(SegmentDateFilterQuery _queryBuilder);
 }

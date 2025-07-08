@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DraftOrderDuplicatePayloadQueryDefinition {
     void define(DraftOrderDuplicatePayloadQuery _queryBuilder);
 }

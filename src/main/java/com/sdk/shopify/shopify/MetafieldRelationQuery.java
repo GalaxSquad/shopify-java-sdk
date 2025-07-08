@@ -53,17 +53,4 @@ public class MetafieldRelationQuery extends Query<MetafieldRelationQuery> {
 
         return this;
     }
-
-    /**
-    * The referenced resource.
-    */
-    public MetafieldRelationQuery target(MetafieldReferenceQueryDefinition queryDef) {
-        startField("target");
-
-        _queryBuilder.append('{');
-        queryDef.define(new MetafieldReferenceQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
-    }
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductVariantRelationshipBulkUpdateUserErrorQueryDefinition {
     void define(ProductVariantRelationshipBulkUpdateUserErrorQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Represents information about the store credit accounts associated to the specified owner.
 */

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantsBulkCreateUserErrorQueryDefinition {
     void define(ProductVariantsBulkCreateUserErrorQuery _queryBuilder);
 }

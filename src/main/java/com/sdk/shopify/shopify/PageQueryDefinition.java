@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PageQueryDefinition {
     void define(PageQuery _queryBuilder);
 }

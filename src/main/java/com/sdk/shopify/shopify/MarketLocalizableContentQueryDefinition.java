@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketLocalizableContentQueryDefinition {
     void define(MarketLocalizableContentQuery _queryBuilder);
 }

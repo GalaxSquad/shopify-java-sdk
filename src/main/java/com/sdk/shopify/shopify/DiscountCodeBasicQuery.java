@@ -262,12 +262,10 @@ public class DiscountCodeBasicQuery extends Query<DiscountCodeBasicQuery> {
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
-    public DiscountCodeBasicQuery discountClass() {
-        startField("discountClass");
+    public DiscountCodeBasicQuery discountClasses() {
+        startField("discountClasses");
 
         return this;
     }

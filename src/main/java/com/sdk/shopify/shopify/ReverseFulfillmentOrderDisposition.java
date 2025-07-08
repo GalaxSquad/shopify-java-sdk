@@ -21,6 +21,12 @@ public class ReverseFulfillmentOrderDisposition extends AbstractResponse<Reverse
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
+                case "createdAt": {
+                    responseData.put(key, jsonAsString(field.getValue(), key));
+
+                    break;
+                }
+
                 case "id": {
                     responseData.put(key, new ID(jsonAsString(field.getValue(), key)));
 
@@ -68,6 +74,19 @@ public class ReverseFulfillmentOrderDisposition extends AbstractResponse<Reverse
 
     public String getGraphQlTypeName() {
         return "ReverseFulfillmentOrderDisposition";
+    }
+
+    /**
+    * The date and time when the disposition was created.
+    */
+
+    public String getCreatedAt() {
+        return (String) get("createdAt");
+    }
+
+    public ReverseFulfillmentOrderDisposition setCreatedAt(String arg) {
+        optimisticData.put(getKey("createdAt"), arg);
+        return this;
     }
 
     /**
@@ -119,6 +138,8 @@ public class ReverseFulfillmentOrderDisposition extends AbstractResponse<Reverse
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
+            case "createdAt": return false;
+
             case "id": return false;
 
             case "location": return true;

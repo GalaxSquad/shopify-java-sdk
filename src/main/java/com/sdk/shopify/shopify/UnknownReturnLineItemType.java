@@ -38,6 +38,18 @@ public class UnknownReturnLineItemType extends AbstractResponse<UnknownReturnLin
                     break;
                 }
 
+                case "processableQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
+                case "processedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
+
+                    break;
+                }
+
                 case "quantity": {
                     responseData.put(key, jsonAsInteger(field.getValue(), key));
 
@@ -64,6 +76,12 @@ public class UnknownReturnLineItemType extends AbstractResponse<UnknownReturnLin
 
                 case "returnReasonNote": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
+
+                    break;
+                }
+
+                case "unprocessedQuantity": {
+                    responseData.put(key, jsonAsInteger(field.getValue(), key));
 
                     break;
                 }
@@ -123,6 +141,32 @@ public class UnknownReturnLineItemType extends AbstractResponse<UnknownReturnLin
 
     public UnknownReturnLineItemType setId(ID arg) {
         optimisticData.put(getKey("id"), arg);
+        return this;
+    }
+
+    /**
+    * The quantity that can be processed.
+    */
+
+    public Integer getProcessableQuantity() {
+        return (Integer) get("processableQuantity");
+    }
+
+    public UnknownReturnLineItemType setProcessableQuantity(Integer arg) {
+        optimisticData.put(getKey("processableQuantity"), arg);
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+
+    public Integer getProcessedQuantity() {
+        return (Integer) get("processedQuantity");
+    }
+
+    public UnknownReturnLineItemType setProcessedQuantity(Integer arg) {
+        optimisticData.put(getKey("processedQuantity"), arg);
         return this;
     }
 
@@ -191,11 +235,28 @@ public class UnknownReturnLineItemType extends AbstractResponse<UnknownReturnLin
         return this;
     }
 
+    /**
+    * The quantity that has't been processed.
+    */
+
+    public Integer getUnprocessedQuantity() {
+        return (Integer) get("unprocessedQuantity");
+    }
+
+    public UnknownReturnLineItemType setUnprocessedQuantity(Integer arg) {
+        optimisticData.put(getKey("unprocessedQuantity"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "customerNote": return false;
 
             case "id": return false;
+
+            case "processableQuantity": return false;
+
+            case "processedQuantity": return false;
 
             case "quantity": return false;
 
@@ -206,6 +267,8 @@ public class UnknownReturnLineItemType extends AbstractResponse<UnknownReturnLin
             case "returnReason": return false;
 
             case "returnReasonNote": return false;
+
+            case "unprocessedQuantity": return false;
 
             default: return false;
         }

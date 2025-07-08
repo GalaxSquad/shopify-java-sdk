@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StandardMetafieldDefinitionTemplateQueryDefinition {
     void define(StandardMetafieldDefinitionTemplateQuery _queryBuilder);
 }

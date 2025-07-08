@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The valid units of measurement for a unit price measurement.
 */
@@ -17,9 +21,39 @@ public enum UnitPriceMeasurementMeasuredUnit {
     CM,
 
     /**
+    * Imperial system unit of volume (U.S. customary unit).
+    */
+    FLOZ,
+
+    /**
+    * 1 foot equals 12 inches.
+    */
+    FT,
+
+    /**
+    * Imperial system unit of area.
+    */
+    FT2,
+
+    /**
     * Metric system unit of weight.
     */
     G,
+
+    /**
+    * 1 gallon equals 128 fluid ounces (U.S. customary unit).
+    */
+    GAL,
+
+    /**
+    * Imperial system unit of length.
+    */
+    IN,
+
+    /**
+    * 1 item, a unit of count.
+    */
+    ITEM,
 
     /**
     * 1 kilogram equals 1000 grams.
@@ -30,6 +64,11 @@ public enum UnitPriceMeasurementMeasuredUnit {
     * Metric system unit of volume.
     */
     L,
+
+    /**
+    * Imperial system unit of weight.
+    */
+    LB,
 
     /**
     * Metric system unit of length.
@@ -61,6 +100,31 @@ public enum UnitPriceMeasurementMeasuredUnit {
     */
     MM,
 
+    /**
+    * 16 ounces equals 1 pound.
+    */
+    OZ,
+
+    /**
+    * 1 pint equals 16 fluid ounces (U.S. customary unit).
+    */
+    PT,
+
+    /**
+    * 1 quart equals 32 fluid ounces (U.S. customary unit).
+    */
+    QT,
+
+    /**
+    * The unit of measurement is unknown. Upgrade to the latest version of the API to resolve this unit.
+    */
+    UNKNOWN,
+
+    /**
+    * 1 yard equals 36 inches.
+    */
+    YD,
+
     UNKNOWN_VALUE;
 
     public static UnitPriceMeasurementMeasuredUnit fromGraphQl(String value) {
@@ -77,8 +141,32 @@ public enum UnitPriceMeasurementMeasuredUnit {
                 return CM;
             }
 
+            case "FLOZ": {
+                return FLOZ;
+            }
+
+            case "FT": {
+                return FT;
+            }
+
+            case "FT2": {
+                return FT2;
+            }
+
             case "G": {
                 return G;
+            }
+
+            case "GAL": {
+                return GAL;
+            }
+
+            case "IN": {
+                return IN;
+            }
+
+            case "ITEM": {
+                return ITEM;
             }
 
             case "KG": {
@@ -87,6 +175,10 @@ public enum UnitPriceMeasurementMeasuredUnit {
 
             case "L": {
                 return L;
+            }
+
+            case "LB": {
+                return LB;
             }
 
             case "M": {
@@ -113,6 +205,26 @@ public enum UnitPriceMeasurementMeasuredUnit {
                 return MM;
             }
 
+            case "OZ": {
+                return OZ;
+            }
+
+            case "PT": {
+                return PT;
+            }
+
+            case "QT": {
+                return QT;
+            }
+
+            case "UNKNOWN": {
+                return UNKNOWN;
+            }
+
+            case "YD": {
+                return YD;
+            }
+
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -128,8 +240,32 @@ public enum UnitPriceMeasurementMeasuredUnit {
                 return "CM";
             }
 
+            case FLOZ: {
+                return "FLOZ";
+            }
+
+            case FT: {
+                return "FT";
+            }
+
+            case FT2: {
+                return "FT2";
+            }
+
             case G: {
                 return "G";
+            }
+
+            case GAL: {
+                return "GAL";
+            }
+
+            case IN: {
+                return "IN";
+            }
+
+            case ITEM: {
+                return "ITEM";
             }
 
             case KG: {
@@ -138,6 +274,10 @@ public enum UnitPriceMeasurementMeasuredUnit {
 
             case L: {
                 return "L";
+            }
+
+            case LB: {
+                return "LB";
             }
 
             case M: {
@@ -162,6 +302,26 @@ public enum UnitPriceMeasurementMeasuredUnit {
 
             case MM: {
                 return "MM";
+            }
+
+            case OZ: {
+                return "OZ";
+            }
+
+            case PT: {
+                return "PT";
+            }
+
+            case QT: {
+                return "QT";
+            }
+
+            case UNKNOWN: {
+                return "UNKNOWN";
+            }
+
+            case YD: {
+                return "YD";
             }
 
             default: {

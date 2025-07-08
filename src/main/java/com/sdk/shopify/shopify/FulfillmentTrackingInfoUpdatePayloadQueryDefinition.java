@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentTrackingInfoUpdatePayloadQueryDefinition {
     void define(FulfillmentTrackingInfoUpdatePayloadQuery _queryBuilder);
 }

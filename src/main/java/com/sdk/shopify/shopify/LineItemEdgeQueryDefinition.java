@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LineItemEdgeQueryDefinition {
     void define(LineItemEdgeQuery _queryBuilder);
 }

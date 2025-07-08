@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface JobResultQueryDefinition {
     void define(JobResultQuery _queryBuilder);
 }

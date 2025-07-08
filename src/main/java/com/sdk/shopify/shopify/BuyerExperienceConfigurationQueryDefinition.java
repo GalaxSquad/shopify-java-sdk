@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BuyerExperienceConfigurationQueryDefinition {
     void define(BuyerExperienceConfigurationQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LinkedMetafieldQueryDefinition {
     void define(LinkedMetafieldQuery _queryBuilder);
 }

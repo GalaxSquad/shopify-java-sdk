@@ -62,6 +62,12 @@ public class Publication extends AbstractResponse<Publication> implements Node {
                     break;
                 }
 
+                case "includedProducts": {
+                    responseData.put(key, new ProductConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "operation": {
                     PublicationOperation optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -185,6 +191,19 @@ public class Publication extends AbstractResponse<Publication> implements Node {
     }
 
     /**
+    * The list of products included, but not necessarily published, in the publication.
+    */
+
+    public ProductConnection getIncludedProducts() {
+        return (ProductConnection) get("includedProducts");
+    }
+
+    public Publication setIncludedProducts(ProductConnection arg) {
+        optimisticData.put(getKey("includedProducts"), arg);
+        return this;
+    }
+
+    /**
     * A background operation associated with this publication.
     */
 
@@ -249,6 +268,8 @@ public class Publication extends AbstractResponse<Publication> implements Node {
             case "hasCollection": return false;
 
             case "id": return false;
+
+            case "includedProducts": return true;
 
             case "operation": return false;
 

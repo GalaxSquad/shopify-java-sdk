@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnClosePayloadQueryDefinition {
     void define(ReturnClosePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionBillingCycleUnskipPayloadQueryDefinition {
     void define(SubscriptionBillingCycleUnskipPayloadQuery _queryBuilder);
 }

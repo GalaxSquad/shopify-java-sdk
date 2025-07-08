@@ -40,6 +40,24 @@ public class SegmentEventFilterParameterQuery extends Query<SegmentEventFilterPa
     }
 
     /**
+    * The parameter maximum value range.
+    */
+    public SegmentEventFilterParameterQuery maxRange() {
+        startField("maxRange");
+
+        return this;
+    }
+
+    /**
+    * The parameter minimum value range.
+    */
+    public SegmentEventFilterParameterQuery minRange() {
+        startField("minRange");
+
+        return this;
+    }
+
+    /**
     * Whether the parameter is optional.
     */
     public SegmentEventFilterParameterQuery optional() {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductChangeStatusPayloadQueryDefinition {
     void define(ProductChangeStatusPayloadQuery _queryBuilder);
 }

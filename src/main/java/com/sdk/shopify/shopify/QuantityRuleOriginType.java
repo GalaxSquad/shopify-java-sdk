@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The origin of quantity rule on a price list.
 */

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TenderTransactionQueryDefinition {
     void define(TenderTransactionQuery _queryBuilder);
 }

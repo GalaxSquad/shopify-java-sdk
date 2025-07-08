@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductVariantsBulkCreatePayloadQueryDefinition {
     void define(ProductVariantsBulkCreatePayloadQuery _queryBuilder);
 }

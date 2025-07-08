@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The operator to use to determine if the condition passes.
 */

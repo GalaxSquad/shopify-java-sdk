@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The request status of a fulfillment order.
 */

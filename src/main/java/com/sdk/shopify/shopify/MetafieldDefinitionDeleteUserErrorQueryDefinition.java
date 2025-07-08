@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldDefinitionDeleteUserErrorQueryDefinition {
     void define(MetafieldDefinitionDeleteUserErrorQuery _queryBuilder);
 }

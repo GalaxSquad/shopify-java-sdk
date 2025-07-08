@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GiftCardRecipientQueryDefinition {
     void define(GiftCardRecipientQuery _queryBuilder);
 }

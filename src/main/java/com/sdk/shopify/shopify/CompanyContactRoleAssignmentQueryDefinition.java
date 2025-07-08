@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyContactRoleAssignmentQueryDefinition {
     void define(CompanyContactRoleAssignmentQuery _queryBuilder);
 }

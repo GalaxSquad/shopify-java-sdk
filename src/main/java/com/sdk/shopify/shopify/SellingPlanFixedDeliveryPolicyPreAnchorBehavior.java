@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The fulfillment or delivery behavior of the first fulfillment when the orderis placed before the
 * anchor.

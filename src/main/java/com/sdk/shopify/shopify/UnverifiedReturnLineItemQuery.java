@@ -24,6 +24,24 @@ public class UnverifiedReturnLineItemQuery extends Query<UnverifiedReturnLineIte
     }
 
     /**
+    * The quantity that can be processed.
+    */
+    public UnverifiedReturnLineItemQuery processableQuantity() {
+        startField("processableQuantity");
+
+        return this;
+    }
+
+    /**
+    * The quantity that has been processed.
+    */
+    public UnverifiedReturnLineItemQuery processedQuantity() {
+        startField("processedQuantity");
+
+        return this;
+    }
+
+    /**
     * The quantity being returned.
     */
     public UnverifiedReturnLineItemQuery quantity() {
@@ -77,6 +95,15 @@ public class UnverifiedReturnLineItemQuery extends Query<UnverifiedReturnLineIte
         _queryBuilder.append('{');
         queryDef.define(new MoneyV2Query(_queryBuilder));
         _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The quantity that has't been processed.
+    */
+    public UnverifiedReturnLineItemQuery unprocessedQuantity() {
+        startField("unprocessedQuantity");
 
         return this;
     }

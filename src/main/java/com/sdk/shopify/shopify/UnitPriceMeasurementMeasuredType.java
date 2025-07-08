@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The accepted types of unit of measurement.
 */
@@ -14,9 +16,19 @@ public enum UnitPriceMeasurementMeasuredType {
     AREA,
 
     /**
+    * Unit of measurements representing counts.
+    */
+    COUNT,
+
+    /**
     * Unit of measurements representing lengths.
     */
     LENGTH,
+
+    /**
+    * The type of measurement is unknown. Upgrade to the latest version of the API to resolve this type.
+    */
+    UNKNOWN,
 
     /**
     * Unit of measurements representing volumes.
@@ -40,8 +52,16 @@ public enum UnitPriceMeasurementMeasuredType {
                 return AREA;
             }
 
+            case "COUNT": {
+                return COUNT;
+            }
+
             case "LENGTH": {
                 return LENGTH;
+            }
+
+            case "UNKNOWN": {
+                return UNKNOWN;
             }
 
             case "VOLUME": {
@@ -63,8 +83,16 @@ public enum UnitPriceMeasurementMeasuredType {
                 return "AREA";
             }
 
+            case COUNT: {
+                return "COUNT";
+            }
+
             case LENGTH: {
                 return "LENGTH";
+            }
+
+            case UNKNOWN: {
+                return "UNKNOWN";
             }
 
             case VOLUME: {

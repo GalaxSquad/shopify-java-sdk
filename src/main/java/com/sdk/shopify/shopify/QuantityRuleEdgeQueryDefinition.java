@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface QuantityRuleEdgeQueryDefinition {
     void define(QuantityRuleEdgeQuery _queryBuilder);
 }

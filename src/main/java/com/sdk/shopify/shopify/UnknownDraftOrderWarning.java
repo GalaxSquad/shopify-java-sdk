@@ -60,6 +60,10 @@ public class UnknownDraftOrderWarning extends AbstractResponse<UnknownDraftOrder
                 return new DraftOrderDiscountNotAppliedWarning(fields);
             }
 
+            case "DraftOrderMarketRegionCountryCodeNotSupportedWarning": {
+                return new DraftOrderMarketRegionCountryCodeNotSupportedWarning(fields);
+            }
+
             default: {
                 return new UnknownDraftOrderWarning(fields);
             }

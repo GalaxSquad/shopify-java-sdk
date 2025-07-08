@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TranslationQueryDefinition {
     void define(TranslationQuery _queryBuilder);
 }

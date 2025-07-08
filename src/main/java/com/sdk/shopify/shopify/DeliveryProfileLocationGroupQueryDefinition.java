@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryProfileLocationGroupQueryDefinition {
     void define(DeliveryProfileLocationGroupQuery _queryBuilder);
 }

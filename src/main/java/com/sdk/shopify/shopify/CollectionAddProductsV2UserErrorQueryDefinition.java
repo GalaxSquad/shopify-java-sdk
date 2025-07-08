@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CollectionAddProductsV2UserErrorQueryDefinition {
     void define(CollectionAddProductsV2UserErrorQuery _queryBuilder);
 }

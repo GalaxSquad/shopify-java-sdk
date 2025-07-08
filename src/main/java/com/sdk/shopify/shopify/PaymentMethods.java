@@ -4,15 +4,27 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Some of the payment methods used in Shopify.
 */
 public enum PaymentMethods {
     AMERICAN_EXPRESS,
 
+    /**
+    * The payment method for Bancontact payment.
+    */
+    BANCONTACT,
+
     BITCOIN,
 
     BOGUS,
+
+    /**
+    * The payment method for Cartes Bancaires payment.
+    */
+    CARTES_BANCAIRES,
 
     DANKORT,
 
@@ -68,12 +80,20 @@ public enum PaymentMethods {
                 return AMERICAN_EXPRESS;
             }
 
+            case "BANCONTACT": {
+                return BANCONTACT;
+            }
+
             case "BITCOIN": {
                 return BITCOIN;
             }
 
             case "BOGUS": {
                 return BOGUS;
+            }
+
+            case "CARTES_BANCAIRES": {
+                return CARTES_BANCAIRES;
             }
 
             case "DANKORT": {
@@ -147,12 +167,20 @@ public enum PaymentMethods {
                 return "AMERICAN_EXPRESS";
             }
 
+            case BANCONTACT: {
+                return "BANCONTACT";
+            }
+
             case BITCOIN: {
                 return "BITCOIN";
             }
 
             case BOGUS: {
                 return "BOGUS";
+            }
+
+            case CARTES_BANCAIRES: {
+                return "CARTES_BANCAIRES";
             }
 
             case DANKORT: {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CollectionPublicationQueryDefinition {
     void define(CollectionPublicationQuery _queryBuilder);
 }

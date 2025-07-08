@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderCancellationQueryDefinition {
     void define(OrderCancellationQuery _queryBuilder);
 }

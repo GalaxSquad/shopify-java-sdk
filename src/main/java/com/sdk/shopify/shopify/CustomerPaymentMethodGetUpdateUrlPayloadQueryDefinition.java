@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodGetUpdateUrlPayloadQueryDefinition {
     void define(CustomerPaymentMethodGetUpdateUrlPayloadQuery _queryBuilder);
 }

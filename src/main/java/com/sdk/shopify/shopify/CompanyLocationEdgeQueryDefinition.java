@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyLocationEdgeQueryDefinition {
     void define(CompanyLocationEdgeQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SegmentUpdatePayloadQueryDefinition {
     void define(SegmentUpdatePayloadQuery _queryBuilder);
 }

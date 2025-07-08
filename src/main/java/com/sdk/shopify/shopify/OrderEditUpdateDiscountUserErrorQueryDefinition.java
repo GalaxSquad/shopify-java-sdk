@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderEditUpdateDiscountUserErrorQueryDefinition {
     void define(OrderEditUpdateDiscountUserErrorQuery _queryBuilder);
 }

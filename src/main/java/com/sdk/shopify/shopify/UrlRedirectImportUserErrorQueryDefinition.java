@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UrlRedirectImportUserErrorQueryDefinition {
     void define(UrlRedirectImportUserErrorQuery _queryBuilder);
 }

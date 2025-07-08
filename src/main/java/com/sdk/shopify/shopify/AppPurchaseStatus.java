@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The approval status of the app purchase.
 * The merchant is charged for the purchase immediately after approval, and the status changes to

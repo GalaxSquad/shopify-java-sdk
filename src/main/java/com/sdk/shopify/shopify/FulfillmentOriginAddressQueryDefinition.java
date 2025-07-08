@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOriginAddressQueryDefinition {
     void define(FulfillmentOriginAddressQuery _queryBuilder);
 }

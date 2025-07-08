@@ -2,10 +2,19 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `MetafieldDefinitionUnpinUserError`.
 */
 public enum MetafieldDefinitionUnpinUserErrorCode {
+    /**
+    * Definition is managed by app configuration and cannot be modified through the API.
+    */
+    APP_CONFIG_MANAGED,
+
     /**
     * Owner type can't be used in this mutation.
     */
@@ -34,6 +43,10 @@ public enum MetafieldDefinitionUnpinUserErrorCode {
         }
 
         switch (value) {
+            case "APP_CONFIG_MANAGED": {
+                return APP_CONFIG_MANAGED;
+            }
+
             case "DISALLOWED_OWNER_TYPE": {
                 return DISALLOWED_OWNER_TYPE;
             }
@@ -57,6 +70,10 @@ public enum MetafieldDefinitionUnpinUserErrorCode {
     }
     public String toString() {
         switch (this) {
+            case APP_CONFIG_MANAGED: {
+                return "APP_CONFIG_MANAGED";
+            }
+
             case DISALLOWED_OWNER_TYPE: {
                 return "DISALLOWED_OWNER_TYPE";
             }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CollectionRuleMetafieldConditionQueryDefinition {
     void define(CollectionRuleMetafieldConditionQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LocationDeactivateUserErrorQueryDefinition {
     void define(LocationDeactivateUserErrorQuery _queryBuilder);
 }

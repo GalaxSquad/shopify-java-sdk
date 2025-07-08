@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CollectionRemoveProductsPayloadQueryDefinition {
     void define(CollectionRemoveProductsPayloadQuery _queryBuilder);
 }

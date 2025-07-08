@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface InventorySetScheduledChangesUserErrorQueryDefinition {
     void define(InventorySetScheduledChangesUserErrorQuery _queryBuilder);
 }

@@ -50,6 +50,17 @@ public class ProductVariantContextualPricing extends AbstractResponse<ProductVar
                     break;
                 }
 
+                case "unitPrice": {
+                    MoneyV2 optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MoneyV2(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -117,6 +128,19 @@ public class ProductVariantContextualPricing extends AbstractResponse<ProductVar
         return this;
     }
 
+    /**
+    * The unit price value for the given context based on the variant measurement.
+    */
+
+    public MoneyV2 getUnitPrice() {
+        return (MoneyV2) get("unitPrice");
+    }
+
+    public ProductVariantContextualPricing setUnitPrice(MoneyV2 arg) {
+        optimisticData.put(getKey("unitPrice"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "compareAtPrice": return true;
@@ -126,6 +150,8 @@ public class ProductVariantContextualPricing extends AbstractResponse<ProductVar
             case "quantityPriceBreaks": return true;
 
             case "quantityRule": return true;
+
+            case "unitPrice": return true;
 
             default: return false;
         }

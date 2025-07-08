@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface InventoryQuantityNameQueryDefinition {
     void define(InventoryQuantityNameQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceListUpdatePayloadQueryDefinition {
     void define(PriceListUpdatePayloadQuery _queryBuilder);
 }

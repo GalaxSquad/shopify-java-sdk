@@ -12,6 +12,8 @@ public class ContextualPublicationContext implements Serializable {
 
     private Input<ID> companyLocationId = Input.undefined();
 
+    private Input<ID> locationId = Input.undefined();
+
     public CountryCode getCountry() {
         return country.getValue();
     }
@@ -54,6 +56,27 @@ public class ContextualPublicationContext implements Serializable {
         return this;
     }
 
+    public ID getLocationId() {
+        return locationId.getValue();
+    }
+
+    public Input<ID> getLocationIdInput() {
+        return locationId;
+    }
+
+    public ContextualPublicationContext setLocationId(ID locationId) {
+        this.locationId = Input.optional(locationId);
+        return this;
+    }
+
+    public ContextualPublicationContext setLocationIdInput(Input<ID> locationId) {
+        if (locationId == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.locationId = locationId;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
@@ -75,6 +98,17 @@ public class ContextualPublicationContext implements Serializable {
             _queryBuilder.append("companyLocationId:");
             if (companyLocationId.getValue() != null) {
                 Query.appendQuotedString(_queryBuilder, companyLocationId.getValue().toString());
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.locationId.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("locationId:");
+            if (locationId.getValue() != null) {
+                Query.appendQuotedString(_queryBuilder, locationId.getValue().toString());
             } else {
                 _queryBuilder.append("null");
             }

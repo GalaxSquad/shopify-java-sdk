@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CarrierServiceDeleteUserErrorQueryDefinition {
     void define(CarrierServiceDeleteUserErrorQuery _queryBuilder);
 }

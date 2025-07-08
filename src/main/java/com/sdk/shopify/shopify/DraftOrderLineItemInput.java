@@ -31,7 +31,7 @@ public class DraftOrderLineItemInput implements Serializable {
 
     private Input<String> uuid = Input.undefined();
 
-    private Input<List<BundlesDraftOrderBundleLineItemComponentInput>> bundleComponents = Input.undefined();
+    private Input<List<DraftOrderLineItemComponentInput>> components = Input.undefined();
 
     private Input<Boolean> generatePriceOverride = Input.undefined();
 
@@ -260,24 +260,24 @@ public class DraftOrderLineItemInput implements Serializable {
         return this;
     }
 
-    public List<BundlesDraftOrderBundleLineItemComponentInput> getBundleComponents() {
-        return bundleComponents.getValue();
+    public List<DraftOrderLineItemComponentInput> getComponents() {
+        return components.getValue();
     }
 
-    public Input<List<BundlesDraftOrderBundleLineItemComponentInput>> getBundleComponentsInput() {
-        return bundleComponents;
+    public Input<List<DraftOrderLineItemComponentInput>> getComponentsInput() {
+        return components;
     }
 
-    public DraftOrderLineItemInput setBundleComponents(List<BundlesDraftOrderBundleLineItemComponentInput> bundleComponents) {
-        this.bundleComponents = Input.optional(bundleComponents);
+    public DraftOrderLineItemInput setComponents(List<DraftOrderLineItemComponentInput> components) {
+        this.components = Input.optional(components);
         return this;
     }
 
-    public DraftOrderLineItemInput setBundleComponentsInput(Input<List<BundlesDraftOrderBundleLineItemComponentInput>> bundleComponents) {
-        if (bundleComponents == null) {
+    public DraftOrderLineItemInput setComponentsInput(Input<List<DraftOrderLineItemComponentInput>> components) {
+        if (components == null) {
             throw new IllegalArgumentException("Input can not be null");
         }
-        this.bundleComponents = bundleComponents;
+        this.components = components;
         return this;
     }
 
@@ -451,15 +451,15 @@ public class DraftOrderLineItemInput implements Serializable {
             }
         }
 
-        if (this.bundleComponents.isDefined()) {
+        if (this.components.isDefined()) {
             _queryBuilder.append(separator);
             separator = ",";
-            _queryBuilder.append("bundleComponents:");
-            if (bundleComponents.getValue() != null) {
+            _queryBuilder.append("components:");
+            if (components.getValue() != null) {
                 _queryBuilder.append('[');
                 {
                     String listSeperator1 = "";
-                    for (BundlesDraftOrderBundleLineItemComponentInput item1 : bundleComponents.getValue()) {
+                    for (DraftOrderLineItemComponentInput item1 : components.getValue()) {
                         _queryBuilder.append(listSeperator1);
                         listSeperator1 = ",";
                         item1.appendTo(_queryBuilder);

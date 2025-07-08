@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderRiskAssessmentCreateUserErrorQueryDefinition {
     void define(OrderRiskAssessmentCreateUserErrorQuery _queryBuilder);
 }

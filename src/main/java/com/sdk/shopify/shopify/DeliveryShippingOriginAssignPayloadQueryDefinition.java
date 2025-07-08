@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryShippingOriginAssignPayloadQueryDefinition {
     void define(DeliveryShippingOriginAssignPayloadQuery _queryBuilder);
 }

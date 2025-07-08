@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderLineItemsPreparedForPickupUserErrorQueryDefinition {
     void define(FulfillmentOrderLineItemsPreparedForPickupUserErrorQuery _queryBuilder);
 }

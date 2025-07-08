@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentValueEdgeQueryDefinition {
     void define(SegmentValueEdgeQuery _queryBuilder);
 }

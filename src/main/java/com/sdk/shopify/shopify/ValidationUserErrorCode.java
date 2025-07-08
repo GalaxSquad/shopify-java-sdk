@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `ValidationUserError`.
 */
@@ -69,7 +71,7 @@ public enum ValidationUserErrorCode {
     INVALID_VALUE,
 
     /**
-    * Cannot have more than 5 active validation functions.
+    * Cannot have more than 25 active validation functions.
     */
     MAX_VALIDATIONS_ACTIVATED,
 

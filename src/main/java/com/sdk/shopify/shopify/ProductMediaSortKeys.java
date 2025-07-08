@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the ProductMedia query.
 */
@@ -15,12 +18,6 @@ public enum ProductMediaSortKeys {
     * Sort by the `position` value.
     */
     POSITION,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     UNKNOWN_VALUE;
 
@@ -38,10 +35,6 @@ public enum ProductMediaSortKeys {
                 return POSITION;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             default: {
                 return UNKNOWN_VALUE;
             }
@@ -55,10 +48,6 @@ public enum ProductMediaSortKeys {
 
             case POSITION: {
                 return "POSITION";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             default: {

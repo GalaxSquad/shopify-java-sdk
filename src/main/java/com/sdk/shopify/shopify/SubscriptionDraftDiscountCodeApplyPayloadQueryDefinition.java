@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionDraftDiscountCodeApplyPayloadQueryDefinition {
     void define(SubscriptionDraftDiscountCodeApplyPayloadQuery _queryBuilder);
 }

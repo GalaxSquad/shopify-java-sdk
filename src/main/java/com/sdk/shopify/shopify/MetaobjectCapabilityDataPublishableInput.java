@@ -4,6 +4,7 @@ package com.sdk.shopify.shopify;
 
 
 
+
 import java.io.Serializable;
 
 public class MetaobjectCapabilityDataPublishableInput implements Serializable {

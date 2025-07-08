@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryPromiseParticipantOwnerQueryDefinition {
     void define(DeliveryPromiseParticipantOwnerQuery _queryBuilder);
 }

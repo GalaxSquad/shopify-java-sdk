@@ -22,6 +22,24 @@ public class SegmentIntegerFilterQuery extends Query<SegmentIntegerFilterQuery> 
     }
 
     /**
+    * The maximum range a filter can have.
+    */
+    public SegmentIntegerFilterQuery maxRange() {
+        startField("maxRange");
+
+        return this;
+    }
+
+    /**
+    * The minimum range a filter can have.
+    */
+    public SegmentIntegerFilterQuery minRange() {
+        startField("minRange");
+
+        return this;
+    }
+
+    /**
     * Whether a file can have multiple values for a single customer.
     */
     public SegmentIntegerFilterQuery multiValue() {

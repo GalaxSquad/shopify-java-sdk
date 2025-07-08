@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentSpamUserErrorQueryDefinition {
     void define(CommentSpamUserErrorQuery _queryBuilder);
 }

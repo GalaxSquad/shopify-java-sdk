@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ResourcePublicationEdgeQueryDefinition {
     void define(ResourcePublicationEdgeQuery _queryBuilder);
 }

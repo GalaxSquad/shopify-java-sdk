@@ -134,6 +134,12 @@ public class FulfillmentService extends AbstractResponse<FulfillmentService> {
                     break;
                 }
 
+                case "requiresShippingMethod": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
                 case "serviceName": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -255,6 +261,19 @@ public class FulfillmentService extends AbstractResponse<FulfillmentService> {
     }
 
     /**
+    * Whether the fulfillment service requires products to be physically shipped.
+    */
+
+    public Boolean getRequiresShippingMethod() {
+        return (Boolean) get("requiresShippingMethod");
+    }
+
+    public FulfillmentService setRequiresShippingMethod(Boolean arg) {
+        optimisticData.put(getKey("requiresShippingMethod"), arg);
+        return this;
+    }
+
+    /**
     * The name of the fulfillment service as seen by merchants.
     */
 
@@ -306,6 +325,8 @@ public class FulfillmentService extends AbstractResponse<FulfillmentService> {
             case "location": return true;
 
             case "permitsSkuSharing": return false;
+
+            case "requiresShippingMethod": return false;
 
             case "serviceName": return false;
 

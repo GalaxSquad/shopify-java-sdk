@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantsBulkDeleteUserErrorQueryDefinition {
     void define(ProductVariantsBulkDeleteUserErrorQuery _queryBuilder);
 }

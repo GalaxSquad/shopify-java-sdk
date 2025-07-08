@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppSubscriptionLineItemQueryDefinition {
     void define(AppSubscriptionLineItemQuery _queryBuilder);
 }

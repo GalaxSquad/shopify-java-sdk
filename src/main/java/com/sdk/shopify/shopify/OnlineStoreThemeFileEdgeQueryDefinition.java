@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OnlineStoreThemeFileEdgeQueryDefinition {
     void define(OnlineStoreThemeFileEdgeQuery _queryBuilder);
 }

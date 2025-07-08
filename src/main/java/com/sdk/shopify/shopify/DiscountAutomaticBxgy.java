@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.ID;
 import com.shopify.graphql.support.SchemaViolationError;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,8 +73,13 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
                     break;
                 }
 
-                case "discountClass": {
-                    responseData.put(key, MerchandiseDiscountClass.fromGraphQl(jsonAsString(field.getValue(), key)));
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -155,6 +162,10 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
         return "DiscountAutomaticBxgy";
     }
 
+    public ID getId() {
+        return (ID) get("id");
+    }
+
     /**
     * The number of times that the discount has been used.
     * For example, if a "Buy 3, Get 1 Free" t-shirt discount
@@ -232,17 +243,15 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
     }
 
     /**
-    * The [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
 
-    public MerchandiseDiscountClass getDiscountClass() {
-        return (MerchandiseDiscountClass) get("discountClass");
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
     }
 
-    public DiscountAutomaticBxgy setDiscountClass(MerchandiseDiscountClass arg) {
-        optimisticData.put(getKey("discountClass"), arg);
+    public DiscountAutomaticBxgy setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
         return this;
     }
 
@@ -315,11 +324,6 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
         return this;
     }
 
-    @Override
-    public ID getId() {
-        return (ID) get("id");
-    }
-
     /**
     * The discount's name that displays to merchants in the Shopify admin and to customers.
     */
@@ -371,7 +375,7 @@ public class DiscountAutomaticBxgy extends AbstractResponse<DiscountAutomaticBxg
 
             case "customerGets": return true;
 
-            case "discountClass": return false;
+            case "discountClasses": return false;
 
             case "endsAt": return false;
 

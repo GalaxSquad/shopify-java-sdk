@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface QuantityRuleUserErrorQueryDefinition {
     void define(QuantityRuleUserErrorQuery _queryBuilder);
 }

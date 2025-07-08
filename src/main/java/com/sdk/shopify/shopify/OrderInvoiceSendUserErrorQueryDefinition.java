@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderInvoiceSendUserErrorQueryDefinition {
     void define(OrderInvoiceSendUserErrorQuery _queryBuilder);
 }

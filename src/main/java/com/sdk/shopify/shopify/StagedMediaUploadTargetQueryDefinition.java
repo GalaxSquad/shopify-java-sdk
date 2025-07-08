@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface StagedMediaUploadTargetQueryDefinition {
     void define(StagedMediaUploadTargetQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentConnectionQueryDefinition {
     void define(CommentConnectionQuery _queryBuilder);
 }

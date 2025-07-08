@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The possible line types for a sale record. One of the possible order line types for a sale is an
 * adjustment. Sales adjustments occur when a refund is issued for a line item that is either more or

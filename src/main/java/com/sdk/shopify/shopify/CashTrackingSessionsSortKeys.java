@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the CashTrackingSessions query.
 */
@@ -30,12 +33,6 @@ public enum CashTrackingSessionsSortKeys {
     * Sort by the `opening_time_desc` value.
     */
     OPENING_TIME_DESC,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     /**
     * Sort by the `total_discrepancy_asc` value.
@@ -75,10 +72,6 @@ public enum CashTrackingSessionsSortKeys {
                 return OPENING_TIME_DESC;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "TOTAL_DISCREPANCY_ASC": {
                 return TOTAL_DISCREPANCY_ASC;
             }
@@ -112,10 +105,6 @@ public enum CashTrackingSessionsSortKeys {
 
             case OPENING_TIME_DESC: {
                 return "OPENING_TIME_DESC";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case TOTAL_DISCREPANCY_ASC: {

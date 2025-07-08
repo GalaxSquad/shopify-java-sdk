@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentCustomizationErrorQueryDefinition {
     void define(PaymentCustomizationErrorQuery _queryBuilder);
 }

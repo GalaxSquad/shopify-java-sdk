@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AbandonmentUpdateActivitiesDeliveryStatusesPayloadQueryDefinition {
     void define(AbandonmentUpdateActivitiesDeliveryStatusesPayloadQuery _queryBuilder);
 }

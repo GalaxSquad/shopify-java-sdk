@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppSubscriptionTrialExtendPayloadQueryDefinition {
     void define(AppSubscriptionTrialExtendPayloadQuery _queryBuilder);
 }

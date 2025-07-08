@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface AbandonedCheckoutLineItemComponentQueryDefinition {
     void define(AbandonedCheckoutLineItemComponentQuery _queryBuilder);
 }

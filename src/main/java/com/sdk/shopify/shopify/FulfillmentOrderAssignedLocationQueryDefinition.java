@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderAssignedLocationQueryDefinition {
     void define(FulfillmentOrderAssignedLocationQuery _queryBuilder);
 }

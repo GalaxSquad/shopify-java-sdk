@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StoreCreditAccountTransactionEdgeQueryDefinition {
     void define(StoreCreditAccountTransactionEdgeQuery _queryBuilder);
 }

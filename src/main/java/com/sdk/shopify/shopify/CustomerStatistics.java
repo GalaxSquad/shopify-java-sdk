@@ -31,6 +31,17 @@ public class CustomerStatistics extends AbstractResponse<CustomerStatistics> {
                     break;
                 }
 
+                case "rfmGroup": {
+                    CustomerRfmGroup optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = CustomerRfmGroup.fromGraphQl(jsonAsString(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -59,9 +70,24 @@ public class CustomerStatistics extends AbstractResponse<CustomerStatistics> {
         return this;
     }
 
+    /**
+    * The RFM (Recency, Frequency, Monetary) group of the customer.
+    */
+
+    public CustomerRfmGroup getRfmGroup() {
+        return (CustomerRfmGroup) get("rfmGroup");
+    }
+
+    public CustomerStatistics setRfmGroup(CustomerRfmGroup arg) {
+        optimisticData.put(getKey("rfmGroup"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "predictedSpendTier": return false;
+
+            case "rfmGroup": return false;
 
             default: return false;
         }

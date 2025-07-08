@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface InventoryItemEdgeQueryDefinition {
     void define(InventoryItemEdgeQuery _queryBuilder);
 }

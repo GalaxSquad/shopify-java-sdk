@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketingActivityQueryDefinition {
     void define(MarketingActivityQuery _queryBuilder);
 }

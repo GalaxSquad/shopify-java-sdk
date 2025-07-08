@@ -110,11 +110,43 @@ public class BlogQuery extends Query<BlogQuery> {
         return this;
     }
 
+    public class ArticlesCountArguments extends Arguments {
+        ArticlesCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public ArticlesCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ArticlesCountArgumentsDefinition {
+        void define(ArticlesCountArguments args);
+    }
+
     /**
-    * Count of articles.
+    * Count of articles. Limited to a maximum of 10000 by default.
     */
     public BlogQuery articlesCount(CountQueryDefinition queryDef) {
+        return articlesCount(args -> {}, queryDef);
+    }
+
+    /**
+    * Count of articles. Limited to a maximum of 10000 by default.
+    */
+    public BlogQuery articlesCount(ArticlesCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("articlesCount");
+
+        ArticlesCountArguments args = new ArticlesCountArguments(_queryBuilder);
+        argsDef.define(args);
+        ArticlesCountArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));

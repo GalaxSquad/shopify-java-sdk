@@ -117,6 +117,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "appDiscountTypesNodes": {
+                    responseData.put(key, new AppDiscountTypeConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "appInstallation": {
                     AppInstallation optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -141,6 +147,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     }
 
                     responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "articleAuthors": {
+                    responseData.put(key, new ArticleAuthorConnection(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -191,6 +203,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "availableBackupRegions": {
+                    List<MarketRegion> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(UnknownMarketRegion.create(jsonAsObject(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
+
+                    break;
+                }
+
                 case "availableCarrierServices": {
                     List<DeliveryCarrierServiceAndLocations> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -209,6 +232,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     }
 
                     responseData.put(key, list1);
+
+                    break;
+                }
+
+                case "backupRegion": {
+                    responseData.put(key, UnknownMarketRegion.create(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -415,6 +444,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "collectionByIdentifier": {
+                    Collection optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Collection(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "collectionRulesConditions": {
                     List<CollectionRuleConditions> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -529,6 +569,28 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
                 case "companyLocations": {
                     responseData.put(key, new CompanyLocationConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "consentPolicy": {
+                    List<ConsentPolicy> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(new ConsentPolicy(jsonAsObject(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
+
+                    break;
+                }
+
+                case "consentPolicyRegions": {
+                    List<ConsentPolicyRegion> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(new ConsentPolicyRegion(jsonAsObject(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -858,6 +920,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "draftOrderAvailableDeliveryOptions": {
+                    responseData.put(key, new DraftOrderAvailableDeliveryOptions(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "draftOrderSavedSearches": {
                     responseData.put(key, new SavedSearchConnection(jsonAsObject(field.getValue(), key)));
 
@@ -877,6 +945,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
                 case "draftOrders": {
                     responseData.put(key, new DraftOrderConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "draftOrdersCount": {
+                    Count optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Count(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -922,6 +1001,23 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
                 case "files": {
                     responseData.put(key, new FileConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "financeAppAccessPolicy": {
+                    responseData.put(key, new FinanceAppAccessPolicy(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "financeKycInformation": {
+                    FinanceKycInformation optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new FinanceKycInformation(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -987,6 +1083,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "giftCardConfiguration": {
+                    responseData.put(key, new GiftCardConfiguration(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "giftCards": {
                     responseData.put(key, new GiftCardConnection(jsonAsObject(field.getValue(), key)));
 
@@ -1038,6 +1140,34 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "inventoryShipment": {
+                    InventoryShipment optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryShipment(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransfer": {
+                    InventoryTransfer optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new InventoryTransfer(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "inventoryTransfers": {
+                    responseData.put(key, new InventoryTransferConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "job": {
                     Job optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -1050,6 +1180,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                 }
 
                 case "location": {
+                    Location optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Location(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "locationByIdentifier": {
                     Location optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new Location(jsonAsObject(field.getValue(), key));
@@ -1090,17 +1231,6 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                 }
 
                 case "market": {
-                    Market optional1 = null;
-                    if (!field.getValue().isJsonNull()) {
-                        optional1 = new Market(jsonAsObject(field.getValue(), key));
-                    }
-
-                    responseData.put(key, optional1);
-
-                    break;
-                }
-
-                case "marketByGeography": {
                     Market optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new Market(jsonAsObject(field.getValue(), key));
@@ -1170,6 +1300,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
                 case "markets": {
                     responseData.put(key, new MarketConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "marketsResolvedValues": {
+                    responseData.put(key, new MarketsResolvedValues(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -1336,6 +1472,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "orderByIdentifier": {
+                    Order optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Order(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "orderPaymentStatus": {
                     OrderPaymentStatus optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -1437,6 +1584,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "pointOfSaleDevice": {
+                    PointOfSaleDevice optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new PointOfSaleDevice(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "priceList": {
                     PriceList optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -1450,6 +1608,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
                 case "priceLists": {
                     responseData.put(key, new PriceListConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "privacySettings": {
+                    responseData.put(key, new PrivacySettings(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -1550,6 +1714,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                 }
 
                 case "productVariant": {
+                    ProductVariant optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ProductVariant(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "productVariantByIdentifier": {
                     ProductVariant optional1 = null;
                     if (!field.getValue().isJsonNull()) {
                         optional1 = new ProductVariant(jsonAsObject(field.getValue(), key));
@@ -1847,6 +2022,28 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "shopPayPaymentRequestReceipt": {
+                    ShopPayPaymentRequestReceipt optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ShopPayPaymentRequestReceipt(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "shopPayPaymentRequestReceipts": {
+                    ShopPayPaymentRequestReceiptConnection optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new ShopPayPaymentRequestReceiptConnection(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "shopifyFunction": {
                     ShopifyFunction optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -2117,6 +2314,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
                     break;
                 }
 
+                case "webPresences": {
+                    MarketWebPresenceConnection optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MarketWebPresenceConnection(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "webhookSubscription": {
                     WebhookSubscription optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -2174,7 +2382,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000.
+    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000 by
+    * default.
     */
 
     public Count getAbandonedCheckoutsCount() {
@@ -2280,6 +2489,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * A list of app discount types installed by apps.
+    */
+
+    public AppDiscountTypeConnection getAppDiscountTypesNodes() {
+        return (AppDiscountTypeConnection) get("appDiscountTypesNodes");
+    }
+
+    public QueryRoot setAppDiscountTypesNodes(AppDiscountTypeConnection arg) {
+        optimisticData.put(getKey("appDiscountTypesNodes"), arg);
+        return this;
+    }
+
+    /**
     * Lookup an AppInstallation by ID or return the AppInstallation for the currently authenticated App.
     */
 
@@ -2317,6 +2539,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setArticle(Article arg) {
         optimisticData.put(getKey("article"), arg);
+        return this;
+    }
+
+    /**
+    * List of article authors for the shop.
+    */
+
+    public ArticleAuthorConnection getArticleAuthors() {
+        return (ArticleAuthorConnection) get("articleAuthors");
+    }
+
+    public QueryRoot setArticleAuthors(ArticleAuthorConnection arg) {
+        optimisticData.put(getKey("articleAuthors"), arg);
         return this;
     }
 
@@ -2416,6 +2651,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * The regions that can be used as the backup region of the shop.
+    */
+
+    public List<MarketRegion> getAvailableBackupRegions() {
+        return (List<MarketRegion>) get("availableBackupRegions");
+    }
+
+    public QueryRoot setAvailableBackupRegions(List<MarketRegion> arg) {
+        optimisticData.put(getKey("availableBackupRegions"), arg);
+        return this;
+    }
+
+    /**
     * Returns a list of activated carrier services and associated shop locations that support them.
     */
 
@@ -2438,6 +2686,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setAvailableLocales(List<Locale> arg) {
         optimisticData.put(getKey("availableLocales"), arg);
+        return this;
+    }
+
+    /**
+    * The backup region of the shop.
+    */
+
+    public MarketRegion getBackupRegion() {
+        return (MarketRegion) get("backupRegion");
+    }
+
+    public QueryRoot setBackupRegion(MarketRegion arg) {
+        optimisticData.put(getKey("backupRegion"), arg);
         return this;
     }
 
@@ -2468,7 +2729,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of blogs.
+    * Count of blogs. Limited to a maximum of 10000 by default.
     */
 
     public Count getBlogsCount() {
@@ -2574,7 +2835,23 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Catalog resource by ID.
+    * Retrieves a [catalog](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Catalog) by its
+    * ID.
+    * A catalog represents a list of products with publishing and pricing information,
+    * and can be associated with a context, such as a market, company location, or app.
+    * Use the `catalog` query to retrieve information associated with the following workflows:
+    * - Managing product publications across different contexts
+    * - Setting up contextual pricing with price lists
+    * - Managing market-specific product availability
+    * - Configuring B2B customer catalogs
+    * There are several types of catalogs:
+    * - [`MarketCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/MarketCatalog)
+    * - [`AppCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/AppCatalog)
+    * -
+    * [`CompanyLocationCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/CompanyLocation
+    * Catalog)
+    * Learn more about [catalogs for different
+    * markets](https://shopify.dev/docs/apps/build/markets/catalogs-different-markets).
     */
 
     public Catalog getCatalog() {
@@ -2613,7 +2890,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The count of catalogs belonging to the shop. Limited to a maximum of 10000.
+    * The count of catalogs belonging to the shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getCatalogsCount() {
@@ -2723,7 +3000,25 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Collection resource by ID.
+    * Retrieves a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection) by
+    * its ID.
+    * A collection represents a grouping of
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * that merchants can display and sell as a group in their [online
+    * store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * Use the `collection` query when you need to:
+    * - Manage collection publishing across sales channels
+    * - Access collection metadata and SEO information
+    * - Work with collection rules and product relationships
+    * A collection can be either a custom
+    * ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+    * collection where products are manually added, or a smart
+    * ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+    * collection where products are automatically included based on defined rules. Each collection has
+    * associated metadata including
+    * title, description, handle, image, and
+    * [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields).
     */
 
     public Collection getCollection() {
@@ -2732,6 +3027,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setCollection(Collection arg) {
         optimisticData.put(getKey("collection"), arg);
+        return this;
+    }
+
+    /**
+    * Return a collection by an identifier.
+    */
+
+    public Collection getCollectionByIdentifier() {
+        return (Collection) get("collectionByIdentifier");
+    }
+
+    public QueryRoot setCollectionByIdentifier(Collection arg) {
+        optimisticData.put(getKey("collectionByIdentifier"), arg);
         return this;
     }
 
@@ -2762,7 +3070,38 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a list of collections.
+    * Retrieves a list of
+    * [collections](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+    * in a store. Collections are groups of
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * that merchants can organize for display in their [online
+    * store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * For example, an athletics store might create different collections for running attire, shoes, and
+    * accessories.
+    * Use the `collections` query when you need to:
+    * - Build a browsing interface for a store's product groupings.
+    * - Create collection searching, sorting, and filtering experiences (for example, by title, type, or
+    * published status).
+    * - Sync collection data with external systems.
+    * - Manage both custom
+    * ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+    * and smart ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+    * collections.
+    * The `collections` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * for large catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/collections#arguments-savedSearc
+    * hId)
+    * for frequently used collection queries.
+    * The `collections` query returns collections with their associated metadata, including:
+    * - Basic collection information (title, description, handle, and type)
+    * - Collection image and SEO metadata
+    * - Product count and product relationships
+    * - Collection rules (for smart collections)
+    * - Publishing status and publication details
+    * - Metafields and custom attributes
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
 
     public CollectionConnection getCollections() {
@@ -2775,7 +3114,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of collections. Limited to a maximum of 10000.
+    * Count of collections. Limited to a maximum of 10000 by default.
     */
 
     public Count getCollectionsCount() {
@@ -2827,7 +3166,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The number of companies for a shop.
+    * The number of companies for a shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getCompaniesCount() {
@@ -2905,6 +3244,32 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * Returns the customer privacy consent policies of a shop.
+    */
+
+    public List<ConsentPolicy> getConsentPolicy() {
+        return (List<ConsentPolicy>) get("consentPolicy");
+    }
+
+    public QueryRoot setConsentPolicy(List<ConsentPolicy> arg) {
+        optimisticData.put(getKey("consentPolicy"), arg);
+        return this;
+    }
+
+    /**
+    * List of countries and regions for which consent policies can be created or updated.
+    */
+
+    public List<ConsentPolicyRegion> getConsentPolicyRegions() {
+        return (List<ConsentPolicyRegion>) get("consentPolicyRegions");
+    }
+
+    public QueryRoot setConsentPolicyRegions(List<ConsentPolicyRegion> arg) {
+        optimisticData.put(getKey("consentPolicyRegions"), arg);
+        return this;
+    }
+
+    /**
     * Return the AppInstallation for the currently authenticated App.
     */
 
@@ -2945,7 +3310,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Customer resource by ID.
+    * Returns a `Customer` resource by ID.
     */
 
     public Customer getCustomer() {
@@ -3089,7 +3454,12 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a list of customers.
+    * Returns a list of [customers](https://shopify.dev/api/admin-graphql/latest/objects/Customer) in your
+    * Shopify store, including key information such as name, email, location, and purchase history.
+    * Use this query to segment your audience, personalize marketing campaigns, or analyze customer
+    * behavior by applying filters based on location, order history, marketing preferences and tags.
+    * The `customers` query supports [pagination](https://shopify.dev/api/usage/pagination-graphql) and
+    * [sorting](https://shopify.dev/api/admin-graphql/latest/enums/CustomerSortKeys).
     */
 
     public CustomerConnection getCustomers() {
@@ -3102,7 +3472,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The number of customers.
+    * The number of customers. Limited to a maximum of 10000 by default.
     */
 
     public Count getCustomersCount() {
@@ -3219,7 +3589,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The total number of discount codes for the shop.
+    * The total number of discount codes for the shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getDiscountCodesCount() {
@@ -3258,7 +3628,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The total number of discounts for the shop. Limited to a maximum of 10000.
+    * The total number of discounts for the shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getDiscountNodesCount() {
@@ -3349,7 +3719,27 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a DraftOrder resource by ID.
+    * Retrieves a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) by
+    * its ID.
+    * A draft order is an order created by a merchant on behalf of their
+    * customers. Draft orders contain all necessary order details (products, pricing, customer
+    * information)
+    * but require payment to be accepted before they can be converted into
+    * [completed orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete).
+    * Use the `draftOrder` query to retrieve information associated with the following workflows:
+    * - Creating orders for phone, in-person, or chat sales
+    * - Sending invoices to customers with secure checkout links
+    * - Managing custom items and additional costs
+    * - Selling products at discount or wholesale rates
+    * - Processing pre-orders and saving drafts for later completion
+    * A draft order is associated with a
+    * [customer](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer)
+    * and contains multiple [line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrderLineItem).
+    * Each draft order has a
+    * [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder#field-DraftOrder.field
+    * s.status),
+    * which indicates its progress through the sales workflow.
     */
 
     public DraftOrder getDraftOrder() {
@@ -3358,6 +3748,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setDraftOrder(DraftOrder arg) {
         optimisticData.put(getKey("draftOrder"), arg);
+        return this;
+    }
+
+    /**
+    * Returns a list of available delivery options for a draft order.
+    */
+
+    public DraftOrderAvailableDeliveryOptions getDraftOrderAvailableDeliveryOptions() {
+        return (DraftOrderAvailableDeliveryOptions) get("draftOrderAvailableDeliveryOptions");
+    }
+
+    public QueryRoot setDraftOrderAvailableDeliveryOptions(DraftOrderAvailableDeliveryOptions arg) {
+        optimisticData.put(getKey("draftOrderAvailableDeliveryOptions"), arg);
         return this;
     }
 
@@ -3397,6 +3800,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setDraftOrders(DraftOrderConnection arg) {
         optimisticData.put(getKey("draftOrders"), arg);
+        return this;
+    }
+
+    /**
+    * Returns the number of draft orders that match the query. Limited to a maximum of 10000 by default.
+    */
+
+    public Count getDraftOrdersCount() {
+        return (Count) get("draftOrdersCount");
+    }
+
+    public QueryRoot setDraftOrdersCount(Count arg) {
+        optimisticData.put(getKey("draftOrdersCount"), arg);
         return this;
     }
 
@@ -3453,7 +3869,28 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a paginated list of files that have been uploaded to Shopify.
+    * Retrieves a paginated list of files that have been uploaded to a Shopify store. Files represent
+    * digital assets
+    * that merchants can upload to their store for various purposes including product images, marketing
+    * materials,
+    * documents, and brand assets.
+    * Use the `files` query to retrieve information associated with the following workflows:
+    * - [Managing product media and
+    * images](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * - [Theme development and asset
+    * management](https://shopify.dev/docs/storefronts/themes/store/success/brand-assets)
+    * - Brand asset management and [checkout
+    * branding](https://shopify.dev/docs/apps/build/checkout/styling/add-favicon)
+    * Files can include multiple [content
+    * types](https://shopify.dev/docs/api/admin-graphql/latest/enums/FileContentType),
+    * such as images, videos, 3D models, and generic files. Each file has
+    * properties like dimensions, file size, alt text for accessibility, and upload status. Files can be
+    * filtered
+    * by [media type](https://shopify.dev/docs/api/admin-graphql/latest/enums/MediaContentType) and can be
+    * associated with
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * [themes](https://shopify.dev/docs/api/admin-graphql/latest/objects/OnlineStoreTheme),
+    * and other store resources.
     */
 
     public FileConnection getFiles() {
@@ -3462,6 +3899,32 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setFiles(FileConnection arg) {
         optimisticData.put(getKey("files"), arg);
+        return this;
+    }
+
+    /**
+    * Returns the access policy for a finance app .
+    */
+
+    public FinanceAppAccessPolicy getFinanceAppAccessPolicy() {
+        return (FinanceAppAccessPolicy) get("financeAppAccessPolicy");
+    }
+
+    public QueryRoot setFinanceAppAccessPolicy(FinanceAppAccessPolicy arg) {
+        optimisticData.put(getKey("financeAppAccessPolicy"), arg);
+        return this;
+    }
+
+    /**
+    * Returns the KYC information for the shop's Shopify Payments account, used in embedded finance apps.
+    */
+
+    public FinanceKycInformation getFinanceKycInformation() {
+        return (FinanceKycInformation) get("financeKycInformation");
+    }
+
+    public QueryRoot setFinanceKycInformation(FinanceKycInformation arg) {
+        optimisticData.put(getKey("financeKycInformation"), arg);
         return this;
     }
 
@@ -3554,6 +4017,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * The configuration for the shop's gift cards.
+    */
+
+    public GiftCardConfiguration getGiftCardConfiguration() {
+        return (GiftCardConfiguration) get("giftCardConfiguration");
+    }
+
+    public QueryRoot setGiftCardConfiguration(GiftCardConfiguration arg) {
+        optimisticData.put(getKey("giftCardConfiguration"), arg);
+        return this;
+    }
+
+    /**
     * Returns a list of gift cards.
     */
 
@@ -3567,7 +4043,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The total number of gift cards issued for the shop. Limited to a maximum of 10000.
+    * The total number of gift cards issued for the shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getGiftCardsCount() {
@@ -3636,6 +4112,45 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * Returns an inventory shipment by ID.
+    */
+
+    public InventoryShipment getInventoryShipment() {
+        return (InventoryShipment) get("inventoryShipment");
+    }
+
+    public QueryRoot setInventoryShipment(InventoryShipment arg) {
+        optimisticData.put(getKey("inventoryShipment"), arg);
+        return this;
+    }
+
+    /**
+    * Returns an inventory transfer by ID.
+    */
+
+    public InventoryTransfer getInventoryTransfer() {
+        return (InventoryTransfer) get("inventoryTransfer");
+    }
+
+    public QueryRoot setInventoryTransfer(InventoryTransfer arg) {
+        optimisticData.put(getKey("inventoryTransfer"), arg);
+        return this;
+    }
+
+    /**
+    * Returns a paginated list of transfers.
+    */
+
+    public InventoryTransferConnection getInventoryTransfers() {
+        return (InventoryTransferConnection) get("inventoryTransfers");
+    }
+
+    public QueryRoot setInventoryTransfers(InventoryTransferConnection arg) {
+        optimisticData.put(getKey("inventoryTransfers"), arg);
+        return this;
+    }
+
+    /**
     * Returns a Job resource by ID. Used to check the status of internal jobs and any applicable changes.
     */
 
@@ -3658,6 +4173,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setLocation(Location arg) {
         optimisticData.put(getKey("location"), arg);
+        return this;
+    }
+
+    /**
+    * Return a location by an identifier.
+    */
+
+    public Location getLocationByIdentifier() {
+        return (Location) get("locationByIdentifier");
+    }
+
+    public QueryRoot setLocationByIdentifier(Location arg) {
+        optimisticData.put(getKey("locationByIdentifier"), arg);
         return this;
     }
 
@@ -3688,7 +4216,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns the count of locations for the given shop. Limited to a maximum of 10000.
+    * Returns the count of locations for the given shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getLocationsCount() {
@@ -3723,19 +4251,6 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setMarket(Market arg) {
         optimisticData.put(getKey("market"), arg);
-        return this;
-    }
-
-    /**
-    * Returns the applicable market for a customer based on where they are in the world.
-    */
-
-    public Market getMarketByGeography() {
-        return (Market) get("marketByGeography");
-    }
-
-    public QueryRoot setMarketByGeography(Market arg) {
-        optimisticData.put(getKey("marketByGeography"), arg);
         return this;
     }
 
@@ -3805,7 +4320,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a MarketingEvent resource by ID.
+    * Returns a `MarketingEvent` resource by ID.
     */
 
     public MarketingEvent getMarketingEvent() {
@@ -3840,6 +4355,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setMarkets(MarketConnection arg) {
         optimisticData.put(getKey("markets"), arg);
+        return this;
+    }
+
+    /**
+    * The resolved values for a buyer signal.
+    */
+
+    public MarketsResolvedValues getMarketsResolvedValues() {
+        return (MarketsResolvedValues) get("marketsResolvedValues");
+    }
+
+    public QueryRoot setMarketsResolvedValues(MarketsResolvedValues arg) {
+        optimisticData.put(getKey("marketsResolvedValues"), arg);
         return this;
     }
 
@@ -4063,7 +4591,31 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns an Order resource by ID.
+    * The `order` query retrieves an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/order) by its ID. This query
+    * provides access to comprehensive order information such as customer details, line items, financial
+    * data, and fulfillment status.
+    * Use the `order` query to retrieve information associated with the following processes:
+    * - [Order management and
+    * fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+    * - [Financial reporting](https://help.shopify.com/manual/finance)
+    * - [Customer purchase
+    * history](https://help.shopify.com/manual/reports-and-analytics/shopify-reports/report-types/default-
+    * reports/customers-reports) and [transaction
+    * analysis](https://shopify.dev/docs/apps/launch/billing/view-charges-earnings#transaction-data-throug
+    * h-the-graphql-admin-api)
+    * - [Shipping](https://shopify.dev/docs/apps/build/checkout/delivery-shipping) and [inventory
+    * management](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps)
+    * You can only retrieve the last 60 days worth of orders from a store by default. If you want to
+    * access older orders, then you need to [request access to all
+    * orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions).
+    * For large order datasets, consider using [bulk
+    * operations](https://shopify.dev/docs/api/usage/bulk-operations/queries).
+    * Bulk operations handle pagination automatically and allow you to retrieve data asynchronously
+    * without being constrained by API rate limits.
+    * Learn more about [creating
+    * orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/ordercreate) and [building order
+    * management apps](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
 
     public Order getOrder() {
@@ -4072,6 +4624,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setOrder(Order arg) {
         optimisticData.put(getKey("order"), arg);
+        return this;
+    }
+
+    /**
+    * Return an order by an identifier.
+    */
+
+    public Order getOrderByIdentifier() {
+        return (Order) get("orderByIdentifier");
+    }
+
+    public QueryRoot setOrderByIdentifier(Order arg) {
+        optimisticData.put(getKey("orderByIdentifier"), arg);
         return this;
     }
 
@@ -4102,7 +4667,13 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a list of orders placed in the store.
+    * Returns a list of [orders](https://shopify.dev/api/admin-graphql/latest/objects/Order) placed in the
+    * store, including data such as order status, customer, and line item details.
+    * Use the `orders` query to build reports, analyze sales performance, or automate fulfillment
+    * workflows. The `orders` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-sortkey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-query).
     */
 
     public OrderConnection getOrders() {
@@ -4115,7 +4686,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns the count of orders for the given shop. Limited to a maximum of 10000.
+    * Returns the count of orders for the given shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getOrdersCount() {
@@ -4154,7 +4725,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of pages.
+    * Count of pages. Limited to a maximum of 10000 by default.
     */
 
     public Count getPagesCount() {
@@ -4219,6 +4790,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * Lookup a point of sale device by ID.
+    */
+
+    public PointOfSaleDevice getPointOfSaleDevice() {
+        return (PointOfSaleDevice) get("pointOfSaleDevice");
+    }
+
+    public QueryRoot setPointOfSaleDevice(PointOfSaleDevice arg) {
+        optimisticData.put(getKey("pointOfSaleDevice"), arg);
+        return this;
+    }
+
+    /**
     * Returns a price list resource by ID.
     */
 
@@ -4245,7 +4829,30 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Product resource by ID.
+    * Privacy related settings for a shop.
+    */
+
+    public PrivacySettings getPrivacySettings() {
+        return (PrivacySettings) get("privacySettings");
+    }
+
+    public QueryRoot setPrivacySettings(PrivacySettings arg) {
+        optimisticData.put(getKey("privacySettings"), arg);
+        return this;
+    }
+
+    /**
+    * Retrieves a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) by its ID.
+    * A product is an item that a merchant can sell in their store.
+    * Use the `product` query when you need to:
+    * - Access essential product data (for example, title, description, price, images, SEO metadata, and
+    * metafields).
+    * - Build product detail pages and manage inventory.
+    * - Handle international sales with localized pricing and content.
+    * - Manage product variants and product options.
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
 
     public Product getProduct() {
@@ -4392,7 +4999,21 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a ProductVariant resource by ID.
+    * Retrieves a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) by its ID.
+    * A product variant is a specific version of a
+    * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) that comes in more than
+    * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+    * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+    * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+    * Use the `productVariant` query when you need to:
+    * - Access essential product variant data (for example, title, price, image, and metafields).
+    * - Build product detail pages and manage inventory.
+    * - Handle international sales with localized pricing and content.
+    * - Manage product variants that are part of a bundle or selling plan.
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
 
     public ProductVariant getProductVariant() {
@@ -4405,7 +5026,46 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a list of product variants.
+    * Return a product variant by an identifier.
+    */
+
+    public ProductVariant getProductVariantByIdentifier() {
+        return (ProductVariant) get("productVariantByIdentifier");
+    }
+
+    public QueryRoot setProductVariantByIdentifier(ProductVariant arg) {
+        optimisticData.put(getKey("productVariantByIdentifier"), arg);
+        return this;
+    }
+
+    /**
+    * Retrieves a list of [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * associated with a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product).
+    * A product variant is a specific version of a product that comes in more than
+    * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+    * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+    * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+    * Use the `productVariants` query when you need to:
+    * - Search for product variants by attributes such as SKU, barcode, or inventory quantity.
+    * - Filter product variants by attributes, such as whether they're gift cards or have custom
+    * metafields.
+    * - Fetch product variants for bulk operations, such as updating prices or inventory.
+    * - Preload data for product variants, such as inventory items, selected options, or associated
+    * products.
+    * The `productVariants` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/productVariants#arguments-savedS
+    * earchId)
+    * for frequently used product variant queries.
+    * The `productVariants` query returns product variants with their associated metadata, including:
+    * - Basic product variant information (for example, title, SKU, barcode, price, and inventory)
+    * - Media attachments (for example, images and videos)
+    * - Associated products, selling plans, bundles, and metafields
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
 
     public ProductVariantConnection getProductVariants() {
@@ -4418,7 +5078,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of product variants.
+    * Count of product variants. Limited to a maximum of 10000 by default.
     */
 
     public Count getProductVariantsCount() {
@@ -4445,7 +5105,31 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a list of products.
+    * Retrieves a list of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * in a store. Products are the items that merchants can sell in their store.
+    * Use the `products` query when you need to:
+    * - Build a browsing interface for a product catalog.
+    * - Create product [searching](https://shopify.dev/docs/api/usage/search-syntax),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-sortKey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-query)
+    * experiences.
+    * - Implement product recommendations.
+    * - Sync product data with external systems.
+    * The `products` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-savedSearchId
+    * )
+    * for frequently used product queries.
+    * The `products` query returns products with their associated metadata, including:
+    * - Basic product information (for example, title, description, vendor, and type)
+    * - Product options and product variants, with their prices and inventory
+    * - Media attachments (for example, images and videos)
+    * - SEO metadata
+    * - Product categories and tags
+    * - Product availability and publishing statuses
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
 
     public ProductConnection getProducts() {
@@ -4458,7 +5142,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of products.
+    * Count of products. Limited to a maximum of 10000 by default.
     */
 
     public Count getProductsCount() {
@@ -4511,7 +5195,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of publications.
+    * Count of publications. Limited to a maximum of 10000 by default.
     */
 
     public Count getPublicationsCount() {
@@ -4524,7 +5208,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a count of published products by publication ID.
+    * Returns a count of published products by publication ID. Limited to a maximum of 10000 by default.
     */
 
     public Count getPublishedProductsCount() {
@@ -4537,7 +5221,23 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Refund resource by ID.
+    * Retrieves a [refund](https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund) by its ID.
+    * A refund represents a financial record of money returned to a customer from an order.
+    * It provides a comprehensive view of all refunded amounts, transactions, and restocking
+    * instructions associated with returning products or correcting order issues.
+    * Use the `refund` query to retrieve information associated with the following workflows:
+    * - Displaying refund details in order management interfaces
+    * - Building customer service tools for reviewing refund history
+    * - Creating reports on refunded amounts and reasons
+    * - Auditing refund transactions and payment gateway records
+    * - Tracking inventory impacts from refunded items
+    * A refund is associated with an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+    * and includes [refund line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/RefundLineItem)
+    * that specify which items were refunded. Each refund processes through
+    * [order transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+    * that handle the actual money transfer back to the customer.
     */
 
     public Refund getRefund() {
@@ -4550,7 +5250,25 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Returns a Return resource by ID.
+    * Retrieves a return by its ID. A return represents the intent of a buyer to ship one or more items
+    * from an
+    * order back to a merchant or a third-party fulfillment location.
+    * Use the `return` query to retrieve information associated with the following workflows:
+    * - [Managing
+    * returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management
+    * )
+    * - [Processing
+    * exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges)
+    * - [Tracking reverse fulfillment
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillme
+    * nt-orders)
+    * A return is associated with an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+    * and can include multiple return [line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+    * Each return has a
+    * [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+    * which indicates the state of the return.
     */
 
     public Return getReturn() {
@@ -4629,9 +5347,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     /**
     * <div class="note"><h4>Theme app extensions</h4>
-    * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-    * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-    * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
     * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
     * more</a>.</p></div>
     * <div class="note"><h4>Script tag deprecation</h4>
@@ -4653,9 +5370,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     /**
     * <div class="note"><h4>Theme app extensions</h4>
-    * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-    * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-    * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
     * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
     * more</a>.</p></div>
     * <div class="note"><h4>Script tag deprecation</h4>
@@ -4756,7 +5472,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * The number of segments for a shop.
+    * The number of segments for a shop. Limited to a maximum of 10000 by default.
     */
 
     public Count getSegmentsCount() {
@@ -4845,6 +5561,32 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
     public QueryRoot setShopLocales(List<ShopLocale> arg) {
         optimisticData.put(getKey("shopLocales"), arg);
+        return this;
+    }
+
+    /**
+    * Returns a Shop Pay payment request receipt.
+    */
+
+    public ShopPayPaymentRequestReceipt getShopPayPaymentRequestReceipt() {
+        return (ShopPayPaymentRequestReceipt) get("shopPayPaymentRequestReceipt");
+    }
+
+    public QueryRoot setShopPayPaymentRequestReceipt(ShopPayPaymentRequestReceipt arg) {
+        optimisticData.put(getKey("shopPayPaymentRequestReceipt"), arg);
+        return this;
+    }
+
+    /**
+    * Returns a list of Shop Pay payment request receipts.
+    */
+
+    public ShopPayPaymentRequestReceiptConnection getShopPayPaymentRequestReceipts() {
+        return (ShopPayPaymentRequestReceiptConnection) get("shopPayPaymentRequestReceipts");
+    }
+
+    public QueryRoot setShopPayPaymentRequestReceipts(ShopPayPaymentRequestReceiptConnection arg) {
+        optimisticData.put(getKey("shopPayPaymentRequestReceipts"), arg);
         return this;
     }
 
@@ -5197,7 +5939,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
-    * Count of redirects. Limited to a maximum of 10000.
+    * Count of redirects. Limited to a maximum of 10000 by default.
     */
 
     public Count getUrlRedirectsCount() {
@@ -5251,6 +5993,19 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     }
 
     /**
+    * The web presences for the shop.
+    */
+
+    public MarketWebPresenceConnection getWebPresences() {
+        return (MarketWebPresenceConnection) get("webPresences");
+    }
+
+    public QueryRoot setWebPresences(MarketWebPresenceConnection arg) {
+        optimisticData.put(getKey("webPresences"), arg);
+        return this;
+    }
+
+    /**
     * Returns a webhook subscription by ID.
     * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook
     * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
@@ -5290,7 +6045,7 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
     * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
     * date by Shopify & require less maintenance. Please read [About managing webhook
     * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe). Limited to a maximum of
-    * 10000.
+    * 10000 by default.
     */
 
     public Count getWebhookSubscriptionsCount() {
@@ -5322,11 +6077,15 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "appDiscountTypes": return true;
 
+            case "appDiscountTypesNodes": return true;
+
             case "appInstallation": return true;
 
             case "appInstallations": return true;
 
             case "article": return true;
+
+            case "articleAuthors": return true;
 
             case "articleTags": return false;
 
@@ -5340,9 +6099,13 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "automaticDiscountSavedSearches": return true;
 
+            case "availableBackupRegions": return false;
+
             case "availableCarrierServices": return true;
 
             case "availableLocales": return true;
+
+            case "backupRegion": return false;
 
             case "blog": return true;
 
@@ -5388,6 +6151,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "collection": return true;
 
+            case "collectionByIdentifier": return true;
+
             case "collectionRulesConditions": return true;
 
             case "collectionSavedSearches": return true;
@@ -5413,6 +6178,10 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "companyLocation": return true;
 
             case "companyLocations": return true;
+
+            case "consentPolicy": return true;
+
+            case "consentPolicyRegions": return true;
 
             case "currentAppInstallation": return true;
 
@@ -5484,11 +6253,15 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "draftOrder": return true;
 
+            case "draftOrderAvailableDeliveryOptions": return true;
+
             case "draftOrderSavedSearches": return true;
 
             case "draftOrderTag": return true;
 
             case "draftOrders": return true;
+
+            case "draftOrdersCount": return true;
 
             case "event": return false;
 
@@ -5499,6 +6272,10 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "fileSavedSearches": return true;
 
             case "files": return true;
+
+            case "financeAppAccessPolicy": return true;
+
+            case "financeKycInformation": return true;
 
             case "fulfillment": return true;
 
@@ -5512,6 +6289,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "giftCard": return true;
 
+            case "giftCardConfiguration": return true;
+
             case "giftCards": return true;
 
             case "giftCardsCount": return true;
@@ -5524,9 +6303,17 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "inventoryProperties": return true;
 
+            case "inventoryShipment": return true;
+
+            case "inventoryTransfer": return true;
+
+            case "inventoryTransfers": return true;
+
             case "job": return true;
 
             case "location": return true;
+
+            case "locationByIdentifier": return true;
 
             case "locations": return true;
 
@@ -5537,8 +6324,6 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "manualHoldsFulfillmentOrders": return true;
 
             case "market": return true;
-
-            case "marketByGeography": return true;
 
             case "marketLocalizableResource": return true;
 
@@ -5555,6 +6340,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "marketingEvents": return true;
 
             case "markets": return true;
+
+            case "marketsResolvedValues": return true;
 
             case "menu": return true;
 
@@ -5590,6 +6377,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "order": return true;
 
+            case "orderByIdentifier": return true;
+
             case "orderPaymentStatus": return true;
 
             case "orderSavedSearches": return true;
@@ -5612,9 +6401,13 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "pendingOrdersCount": return true;
 
+            case "pointOfSaleDevice": return true;
+
             case "priceList": return true;
 
             case "priceLists": return true;
+
+            case "privacySettings": return true;
 
             case "product": return true;
 
@@ -5637,6 +6430,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "productTypes": return true;
 
             case "productVariant": return true;
+
+            case "productVariantByIdentifier": return true;
 
             case "productVariants": return true;
 
@@ -5702,6 +6497,10 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
 
             case "shopLocales": return true;
 
+            case "shopPayPaymentRequestReceipt": return true;
+
+            case "shopPayPaymentRequestReceipts": return true;
+
             case "shopifyFunction": return true;
 
             case "shopifyFunctions": return true;
@@ -5761,6 +6560,8 @@ public class QueryRoot extends AbstractResponse<QueryRoot> {
             case "validations": return true;
 
             case "webPixel": return true;
+
+            case "webPresences": return true;
 
             case "webhookSubscription": return true;
 

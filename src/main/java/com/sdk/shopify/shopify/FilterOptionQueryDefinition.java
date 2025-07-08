@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FilterOptionQueryDefinition {
     void define(FilterOptionQuery _queryBuilder);
 }

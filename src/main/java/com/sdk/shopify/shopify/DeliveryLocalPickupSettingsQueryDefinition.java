@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryLocalPickupSettingsQueryDefinition {
     void define(DeliveryLocalPickupSettingsQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CommentEventEmbedQueryDefinition {
     void define(CommentEventEmbedQuery _queryBuilder);
 }

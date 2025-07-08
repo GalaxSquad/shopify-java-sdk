@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Represents the billing frequency associated to the selling plan (for example, bill every week, or
 * bill every

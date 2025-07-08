@@ -60,7 +60,9 @@ public class CustomerPaymentMethodRemoteCreatePayload extends AbstractResponse<C
     }
 
     /**
-    * The customer payment method.
+    * The customer payment method. Note that the returned payment method may initially be in an incomplete
+    * state. Developers should poll this payment method using the customerPaymentMethod query until all
+    * required payment details have been processed.
     */
 
     public CustomerPaymentMethod getCustomerPaymentMethod() {

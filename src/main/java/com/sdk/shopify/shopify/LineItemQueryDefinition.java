@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LineItemQueryDefinition {
     void define(LineItemQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnableFulfillmentConnectionQueryDefinition {
     void define(ReturnableFulfillmentConnectionQuery _queryBuilder);
 }

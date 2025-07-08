@@ -5,7 +5,30 @@ package com.sdk.shopify.shopify;
 import com.shopify.graphql.support.Query;
 
 /**
-* A payment transaction in the context of an order.
+* The `OrderTransaction` object represents a payment transaction that's associated with an order. An
+* order
+* transaction is a specific action or event that happens within the context of an order, such as a
+* customer paying
+* for a purchase or receiving a refund, or other payment-related activity.
+* Use the `OrderTransaction` object to capture the complete lifecycle of a payment, from initial
+* authorization to final settlement, including refunds and currency exchanges. Common use cases for
+* using the
+* `OrderTransaction` object include:
+* - Processing new payments for orders
+* - Managing payment authorizations and captures
+* - Processing refunds for returned items
+* - Tracking payment status and errors
+* - Managing multi-currency transactions
+* - Handling payment gateway integrations
+* Each `OrderTransaction` object has a
+* [`kind`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionKind)
+* that defines the type of transaction and a
+* [`status`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionStatus)
+* that indicates the current state of the transaction. The object stores detailed information about
+* payment
+* methods, gateway processing, and settlement details.
+* Learn more about [payment processing](https://help.shopify.com/manual/payments)
+* and [payment gateway integrations](https://www.shopify.com/ca/payment-gateways).
 */
 public class OrderTransactionQuery extends Query<OrderTransactionQuery> {
     OrderTransactionQuery(StringBuilder _queryBuilder) {
@@ -78,6 +101,33 @@ public class OrderTransactionQuery extends Query<OrderTransactionQuery> {
     }
 
     /**
+    * An adjustment on the transaction showing the amount lost or gained  due to fluctuations in the
+    * currency exchange rate.
+    */
+    public OrderTransactionQuery currencyExchangeAdjustment(CurrencyExchangeAdjustmentQueryDefinition queryDef) {
+        startField("currencyExchangeAdjustment");
+
+        _queryBuilder.append('{');
+        queryDef.define(new CurrencyExchangeAdjustmentQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The Shopify Point of Sale device used to process the transaction.
+    */
+    public OrderTransactionQuery device(PointOfSaleDeviceQueryDefinition queryDef) {
+        startField("device");
+
+        _queryBuilder.append('{');
+        queryDef.define(new PointOfSaleDeviceQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * A standardized error code, independent of the payment provider.
     */
     public OrderTransactionQuery errorCode() {
@@ -123,6 +173,19 @@ public class OrderTransactionQuery extends Query<OrderTransactionQuery> {
     */
     public OrderTransactionQuery kind() {
         startField("kind");
+
+        return this;
+    }
+
+    /**
+    * The physical location where the transaction was processed.
+    */
+    public OrderTransactionQuery location(LocationQueryDefinition queryDef) {
+        startField("location");
+
+        _queryBuilder.append('{');
+        queryDef.define(new LocationQuery(_queryBuilder));
+        _queryBuilder.append('}');
 
         return this;
     }

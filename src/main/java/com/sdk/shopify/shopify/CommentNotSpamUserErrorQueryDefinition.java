@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CommentNotSpamUserErrorQueryDefinition {
     void define(CommentNotSpamUserErrorQuery _queryBuilder);
 }

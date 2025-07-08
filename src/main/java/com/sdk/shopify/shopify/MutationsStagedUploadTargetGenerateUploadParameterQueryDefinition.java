@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MutationsStagedUploadTargetGenerateUploadParameterQueryDefinition {
     void define(MutationsStagedUploadTargetGenerateUploadParameterQuery _queryBuilder);
 }

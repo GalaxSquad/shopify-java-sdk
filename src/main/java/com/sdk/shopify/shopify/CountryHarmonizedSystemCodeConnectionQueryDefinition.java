@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CountryHarmonizedSystemCodeConnectionQueryDefinition {
     void define(CountryHarmonizedSystemCodeConnectionQuery _queryBuilder);
 }

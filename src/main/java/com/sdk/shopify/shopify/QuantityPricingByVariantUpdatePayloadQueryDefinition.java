@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface QuantityPricingByVariantUpdatePayloadQueryDefinition {
     void define(QuantityPricingByVariantUpdatePayloadQuery _queryBuilder);
 }

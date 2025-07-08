@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyLocationConnectionQueryDefinition {
     void define(CompanyLocationConnectionQuery _queryBuilder);
 }

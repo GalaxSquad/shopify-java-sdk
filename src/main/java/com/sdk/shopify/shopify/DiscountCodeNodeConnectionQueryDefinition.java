@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountCodeNodeConnectionQueryDefinition {
     void define(DiscountCodeNodeConnectionQuery _queryBuilder);
 }

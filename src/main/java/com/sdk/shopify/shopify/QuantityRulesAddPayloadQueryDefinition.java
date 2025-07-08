@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface QuantityRulesAddPayloadQueryDefinition {
     void define(QuantityRulesAddPayloadQuery _queryBuilder);
 }

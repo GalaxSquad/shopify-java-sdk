@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MenuItemQueryDefinition {
     void define(MenuItemQuery _queryBuilder);
 }

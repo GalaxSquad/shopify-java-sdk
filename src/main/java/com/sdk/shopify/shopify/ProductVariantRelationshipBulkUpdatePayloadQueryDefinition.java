@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantRelationshipBulkUpdatePayloadQueryDefinition {
     void define(ProductVariantRelationshipBulkUpdatePayloadQuery _queryBuilder);
 }

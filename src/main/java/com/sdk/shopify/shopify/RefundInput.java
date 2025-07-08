@@ -25,7 +25,11 @@ public class RefundInput implements Serializable {
 
     private Input<List<OrderTransactionInput>> transactions = Input.undefined();
 
+    private Input<List<RefundMethodInput>> refundMethods = Input.undefined();
+
     private Input<OrderAdjustmentInputDiscrepancyReason> discrepancyReason = Input.undefined();
+
+    private Input<Boolean> allowOverRefunding = Input.undefined();
 
     public RefundInput(ID orderId) {
         this.orderId = orderId;
@@ -187,6 +191,27 @@ public class RefundInput implements Serializable {
         return this;
     }
 
+    public List<RefundMethodInput> getRefundMethods() {
+        return refundMethods.getValue();
+    }
+
+    public Input<List<RefundMethodInput>> getRefundMethodsInput() {
+        return refundMethods;
+    }
+
+    public RefundInput setRefundMethods(List<RefundMethodInput> refundMethods) {
+        this.refundMethods = Input.optional(refundMethods);
+        return this;
+    }
+
+    public RefundInput setRefundMethodsInput(Input<List<RefundMethodInput>> refundMethods) {
+        if (refundMethods == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.refundMethods = refundMethods;
+        return this;
+    }
+
     public OrderAdjustmentInputDiscrepancyReason getDiscrepancyReason() {
         return discrepancyReason.getValue();
     }
@@ -205,6 +230,27 @@ public class RefundInput implements Serializable {
             throw new IllegalArgumentException("Input can not be null");
         }
         this.discrepancyReason = discrepancyReason;
+        return this;
+    }
+
+    public Boolean getAllowOverRefunding() {
+        return allowOverRefunding.getValue();
+    }
+
+    public Input<Boolean> getAllowOverRefundingInput() {
+        return allowOverRefunding;
+    }
+
+    public RefundInput setAllowOverRefunding(Boolean allowOverRefunding) {
+        this.allowOverRefunding = Input.optional(allowOverRefunding);
+        return this;
+    }
+
+    public RefundInput setAllowOverRefundingInput(Input<Boolean> allowOverRefunding) {
+        if (allowOverRefunding == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.allowOverRefunding = allowOverRefunding;
         return this;
     }
 
@@ -321,12 +367,43 @@ public class RefundInput implements Serializable {
             }
         }
 
+        if (this.refundMethods.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("refundMethods:");
+            if (refundMethods.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (RefundMethodInput item1 : refundMethods.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
+                    }
+                }
+                _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
         if (this.discrepancyReason.isDefined()) {
             _queryBuilder.append(separator);
             separator = ",";
             _queryBuilder.append("discrepancyReason:");
             if (discrepancyReason.getValue() != null) {
                 _queryBuilder.append(discrepancyReason.getValue().toString());
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.allowOverRefunding.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("allowOverRefunding:");
+            if (allowOverRefunding.getValue() != null) {
+                _queryBuilder.append(allowOverRefunding.getValue());
             } else {
                 _queryBuilder.append("null");
             }

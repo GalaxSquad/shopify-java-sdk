@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `ProductSetUserError`.
 */
@@ -15,6 +19,11 @@ public enum ProductSetUserErrorCode {
     * The metafield violates a capability restriction.
     */
     CAPABILITY_VIOLATION,
+
+    /**
+    * Duplicated metafield value for linked option.
+    */
+    DUPLICATED_METAFIELD_VALUE,
 
     /**
     * Duplicated option name.
@@ -57,6 +66,16 @@ public enum ProductSetUserErrorCode {
     HANDLE_NOT_UNIQUE,
 
     /**
+    * The id field is not allowed if identifier is provided.
+    */
+    ID_NOT_ALLOWED,
+
+    /**
+    * The identifier value does not match the value of the corresponding field in the input.
+    */
+    INPUT_MISMATCH,
+
+    /**
     * Input is not valid.
     */
     INVALID_INPUT,
@@ -97,6 +116,21 @@ public enum ProductSetUserErrorCode {
     LINKED_OPTIONS_NOT_SUPPORTED_FOR_SHOP,
 
     /**
+    * The input argument `metafields` (if present) must contain the `customId` value.
+    */
+    METAFIELD_MISMATCH,
+
+    /**
+    * The input field corresponding to the identifier is required.
+    */
+    MISSING_FIELD_REQUIRED,
+
+    /**
+    * Resource matching the identifier was not found.
+    */
+    NOT_FOUND,
+
+    /**
     * Options over limit.
     */
     OPTIONS_OVER_LIMIT,
@@ -132,6 +166,11 @@ public enum ProductSetUserErrorCode {
     PRODUCT_OPTIONS_INPUT_MISSING,
 
     /**
+    * Product is suspended.
+    */
+    PRODUCT_SUSPENDED,
+
+    /**
     * Product variant does not exist.
     */
     PRODUCT_VARIANT_DOES_NOT_EXIST,
@@ -160,6 +199,10 @@ public enum ProductSetUserErrorCode {
 
             case "CAPABILITY_VIOLATION": {
                 return CAPABILITY_VIOLATION;
+            }
+
+            case "DUPLICATED_METAFIELD_VALUE": {
+                return DUPLICATED_METAFIELD_VALUE;
             }
 
             case "DUPLICATED_OPTION_NAME": {
@@ -194,6 +237,14 @@ public enum ProductSetUserErrorCode {
                 return HANDLE_NOT_UNIQUE;
             }
 
+            case "ID_NOT_ALLOWED": {
+                return ID_NOT_ALLOWED;
+            }
+
+            case "INPUT_MISMATCH": {
+                return INPUT_MISMATCH;
+            }
+
             case "INVALID_INPUT": {
                 return INVALID_INPUT;
             }
@@ -226,6 +277,18 @@ public enum ProductSetUserErrorCode {
                 return LINKED_OPTIONS_NOT_SUPPORTED_FOR_SHOP;
             }
 
+            case "METAFIELD_MISMATCH": {
+                return METAFIELD_MISMATCH;
+            }
+
+            case "MISSING_FIELD_REQUIRED": {
+                return MISSING_FIELD_REQUIRED;
+            }
+
+            case "NOT_FOUND": {
+                return NOT_FOUND;
+            }
+
             case "OPTIONS_OVER_LIMIT": {
                 return OPTIONS_OVER_LIMIT;
             }
@@ -254,6 +317,10 @@ public enum ProductSetUserErrorCode {
                 return PRODUCT_OPTIONS_INPUT_MISSING;
             }
 
+            case "PRODUCT_SUSPENDED": {
+                return PRODUCT_SUSPENDED;
+            }
+
             case "PRODUCT_VARIANT_DOES_NOT_EXIST": {
                 return PRODUCT_VARIANT_DOES_NOT_EXIST;
             }
@@ -279,6 +346,10 @@ public enum ProductSetUserErrorCode {
 
             case CAPABILITY_VIOLATION: {
                 return "CAPABILITY_VIOLATION";
+            }
+
+            case DUPLICATED_METAFIELD_VALUE: {
+                return "DUPLICATED_METAFIELD_VALUE";
             }
 
             case DUPLICATED_OPTION_NAME: {
@@ -313,6 +384,14 @@ public enum ProductSetUserErrorCode {
                 return "HANDLE_NOT_UNIQUE";
             }
 
+            case ID_NOT_ALLOWED: {
+                return "ID_NOT_ALLOWED";
+            }
+
+            case INPUT_MISMATCH: {
+                return "INPUT_MISMATCH";
+            }
+
             case INVALID_INPUT: {
                 return "INVALID_INPUT";
             }
@@ -345,6 +424,18 @@ public enum ProductSetUserErrorCode {
                 return "LINKED_OPTIONS_NOT_SUPPORTED_FOR_SHOP";
             }
 
+            case METAFIELD_MISMATCH: {
+                return "METAFIELD_MISMATCH";
+            }
+
+            case MISSING_FIELD_REQUIRED: {
+                return "MISSING_FIELD_REQUIRED";
+            }
+
+            case NOT_FOUND: {
+                return "NOT_FOUND";
+            }
+
             case OPTIONS_OVER_LIMIT: {
                 return "OPTIONS_OVER_LIMIT";
             }
@@ -371,6 +462,10 @@ public enum ProductSetUserErrorCode {
 
             case PRODUCT_OPTIONS_INPUT_MISSING: {
                 return "PRODUCT_OPTIONS_INPUT_MISSING";
+            }
+
+            case PRODUCT_SUSPENDED: {
+                return "PRODUCT_SUSPENDED";
             }
 
             case PRODUCT_VARIANT_DOES_NOT_EXIST: {

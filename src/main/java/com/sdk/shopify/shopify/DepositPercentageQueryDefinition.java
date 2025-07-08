@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DepositPercentageQueryDefinition {
     void define(DepositPercentageQuery _queryBuilder);
 }

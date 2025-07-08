@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The possible values for the marketing subscription opt-in level enabled at the time the customer
 * consented to receive marketing information.

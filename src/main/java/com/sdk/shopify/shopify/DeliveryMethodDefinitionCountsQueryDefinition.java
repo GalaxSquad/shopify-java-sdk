@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryMethodDefinitionCountsQueryDefinition {
     void define(DeliveryMethodDefinitionCountsQuery _queryBuilder);
 }

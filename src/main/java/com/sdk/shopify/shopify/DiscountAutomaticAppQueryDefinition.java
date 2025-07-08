@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountAutomaticAppQueryDefinition {
     void define(DiscountAutomaticAppQuery _queryBuilder);
 }

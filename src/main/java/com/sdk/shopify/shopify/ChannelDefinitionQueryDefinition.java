@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ChannelDefinitionQueryDefinition {
     void define(ChannelDefinitionQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SellingPlanRecurringBillingPolicyQueryDefinition {
     void define(SellingPlanRecurringBillingPolicyQuery _queryBuilder);
 }

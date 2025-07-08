@@ -37,6 +37,8 @@ public class OrderCreateLineItemInput implements Serializable {
 
     private Input<String> vendor = Input.undefined();
 
+    private Input<WeightInput> weight = Input.undefined();
+
     public OrderCreateLineItemInput(int quantity) {
         this.quantity = quantity;
     }
@@ -323,6 +325,27 @@ public class OrderCreateLineItemInput implements Serializable {
         return this;
     }
 
+    public WeightInput getWeight() {
+        return weight.getValue();
+    }
+
+    public Input<WeightInput> getWeightInput() {
+        return weight;
+    }
+
+    public OrderCreateLineItemInput setWeight(WeightInput weight) {
+        this.weight = Input.optional(weight);
+        return this;
+    }
+
+    public OrderCreateLineItemInput setWeightInput(Input<WeightInput> weight) {
+        if (weight == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.weight = weight;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
@@ -488,6 +511,17 @@ public class OrderCreateLineItemInput implements Serializable {
             _queryBuilder.append("vendor:");
             if (vendor.getValue() != null) {
                 Query.appendQuotedString(_queryBuilder, vendor.getValue().toString());
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.weight.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("weight:");
+            if (weight.getValue() != null) {
+                weight.getValue().appendTo(_queryBuilder);
             } else {
                 _queryBuilder.append("null");
             }

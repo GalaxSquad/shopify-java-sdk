@@ -32,6 +32,12 @@ public class MarketCurrencySettings extends AbstractResponse<MarketCurrencySetti
                     break;
                 }
 
+                case "roundingEnabled": {
+                    responseData.put(key, jsonAsBoolean(field.getValue(), key));
+
+                    break;
+                }
+
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -48,8 +54,7 @@ public class MarketCurrencySettings extends AbstractResponse<MarketCurrencySetti
     }
 
     /**
-    * The currency which this market's prices are defined in, and the
-    * currency which its customers must use if local currencies are disabled.
+    * The currency which this market's customers must use if local currencies are disabled.
     */
 
     public CurrencySetting getBaseCurrency() {
@@ -65,8 +70,7 @@ public class MarketCurrencySettings extends AbstractResponse<MarketCurrencySetti
     * Whether or not local currencies are enabled. If enabled, then prices will
     * be converted to give each customer the best experience based on their
     * region. If disabled, then all customers in this market will see prices
-    * in the market's base currency. For single country markets this will be true when
-    * the market's base currency is the same as the default currency for the region.
+    * in the market's base currency.
     */
 
     public Boolean getLocalCurrencies() {
@@ -78,11 +82,26 @@ public class MarketCurrencySettings extends AbstractResponse<MarketCurrencySetti
         return this;
     }
 
+    /**
+    * Whether or not rounding is enabled on multi-currency prices.
+    */
+
+    public Boolean getRoundingEnabled() {
+        return (Boolean) get("roundingEnabled");
+    }
+
+    public MarketCurrencySettings setRoundingEnabled(Boolean arg) {
+        optimisticData.put(getKey("roundingEnabled"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "baseCurrency": return true;
 
             case "localCurrencies": return false;
+
+            case "roundingEnabled": return false;
 
             default: return false;
         }

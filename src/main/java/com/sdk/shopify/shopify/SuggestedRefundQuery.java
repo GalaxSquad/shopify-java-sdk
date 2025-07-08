@@ -105,6 +105,19 @@ public class SuggestedRefundQuery extends Query<SuggestedRefundQuery> {
     }
 
     /**
+    * A list of suggested refund methods.
+    */
+    public SuggestedRefundQuery suggestedRefundMethods(SuggestedRefundMethodQueryDefinition queryDef) {
+        startField("suggestedRefundMethods");
+
+        _queryBuilder.append('{');
+        queryDef.define(new SuggestedRefundMethodQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * A list of suggested order transactions.
     */
     public SuggestedRefundQuery suggestedTransactions(SuggestedOrderTransactionQueryDefinition queryDef) {

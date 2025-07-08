@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductOptionValueQueryDefinition {
     void define(ProductOptionValueQuery _queryBuilder);
 }

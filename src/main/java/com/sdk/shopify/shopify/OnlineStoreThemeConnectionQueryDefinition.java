@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OnlineStoreThemeConnectionQueryDefinition {
     void define(OnlineStoreThemeConnectionQuery _queryBuilder);
 }

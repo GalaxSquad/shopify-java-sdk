@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyLocationAssignRolesPayloadQueryDefinition {
     void define(CompanyLocationAssignRolesPayloadQuery _queryBuilder);
 }

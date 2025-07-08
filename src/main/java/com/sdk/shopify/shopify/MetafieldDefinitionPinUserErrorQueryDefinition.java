@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetafieldDefinitionPinUserErrorQueryDefinition {
     void define(MetafieldDefinitionPinUserErrorQuery _queryBuilder);
 }

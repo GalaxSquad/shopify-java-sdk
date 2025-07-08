@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PublishableUnpublishToCurrentChannelPayloadQueryDefinition {
     void define(PublishableUnpublishToCurrentChannelPayloadQuery _queryBuilder);
 }

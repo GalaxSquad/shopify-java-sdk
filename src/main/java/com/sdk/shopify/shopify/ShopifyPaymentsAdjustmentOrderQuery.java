@@ -26,6 +26,19 @@ public class ShopifyPaymentsAdjustmentOrderQuery extends Query<ShopifyPaymentsAd
     }
 
     /**
+    * The fee of the adjustment order.
+    */
+    public ShopifyPaymentsAdjustmentOrderQuery fees(MoneyV2QueryDefinition queryDef) {
+        startField("fees");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MoneyV2Query(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * The link to the adjustment order.
     */
     public ShopifyPaymentsAdjustmentOrderQuery link() {
@@ -39,6 +52,19 @@ public class ShopifyPaymentsAdjustmentOrderQuery extends Query<ShopifyPaymentsAd
     */
     public ShopifyPaymentsAdjustmentOrderQuery name() {
         startField("name");
+
+        return this;
+    }
+
+    /**
+    * The net of the adjustment order.
+    */
+    public ShopifyPaymentsAdjustmentOrderQuery net(MoneyV2QueryDefinition queryDef) {
+        startField("net");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MoneyV2Query(_queryBuilder));
+        _queryBuilder.append('}');
 
         return this;
     }

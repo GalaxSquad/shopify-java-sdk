@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SearchResultConnectionQueryDefinition {
     void define(SearchResultConnectionQuery _queryBuilder);
 }

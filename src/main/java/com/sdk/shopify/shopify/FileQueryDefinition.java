@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FileQueryDefinition {
     void define(FileQuery _queryBuilder);
 }

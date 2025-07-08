@@ -55,6 +55,17 @@ public class CustomerSmsMarketingConsentState extends AbstractResponse<CustomerS
                     break;
                 }
 
+                case "sourceLocation": {
+                    Location optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Location(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "__typename": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
                     break;
@@ -124,6 +135,19 @@ public class CustomerSmsMarketingConsentState extends AbstractResponse<CustomerS
         return this;
     }
 
+    /**
+    * The location where the customer consented to receive marketing material by SMS.
+    */
+
+    public Location getSourceLocation() {
+        return (Location) get("sourceLocation");
+    }
+
+    public CustomerSmsMarketingConsentState setSourceLocation(Location arg) {
+        optimisticData.put(getKey("sourceLocation"), arg);
+        return this;
+    }
+
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
             case "consentCollectedFrom": return false;
@@ -133,6 +157,8 @@ public class CustomerSmsMarketingConsentState extends AbstractResponse<CustomerS
             case "marketingOptInLevel": return false;
 
             case "marketingState": return false;
+
+            case "sourceLocation": return true;
 
             default: return false;
         }

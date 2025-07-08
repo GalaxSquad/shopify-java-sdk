@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CompanyQueryDefinition {
     void define(CompanyQuery _queryBuilder);
 }

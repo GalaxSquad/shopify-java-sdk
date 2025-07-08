@@ -26,6 +26,12 @@ public class ShopifyPaymentsAdjustmentOrder extends AbstractResponse<ShopifyPaym
                     break;
                 }
 
+                case "fees": {
+                    responseData.put(key, new MoneyV2(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "link": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -34,6 +40,12 @@ public class ShopifyPaymentsAdjustmentOrder extends AbstractResponse<ShopifyPaym
 
                 case "name": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
+
+                    break;
+                }
+
+                case "net": {
+                    responseData.put(key, new MoneyV2(jsonAsObject(field.getValue(), key)));
 
                     break;
                 }
@@ -73,6 +85,19 @@ public class ShopifyPaymentsAdjustmentOrder extends AbstractResponse<ShopifyPaym
     }
 
     /**
+    * The fee of the adjustment order.
+    */
+
+    public MoneyV2 getFees() {
+        return (MoneyV2) get("fees");
+    }
+
+    public ShopifyPaymentsAdjustmentOrder setFees(MoneyV2 arg) {
+        optimisticData.put(getKey("fees"), arg);
+        return this;
+    }
+
+    /**
     * The link to the adjustment order.
     */
 
@@ -99,6 +124,19 @@ public class ShopifyPaymentsAdjustmentOrder extends AbstractResponse<ShopifyPaym
     }
 
     /**
+    * The net of the adjustment order.
+    */
+
+    public MoneyV2 getNet() {
+        return (MoneyV2) get("net");
+    }
+
+    public ShopifyPaymentsAdjustmentOrder setNet(MoneyV2 arg) {
+        optimisticData.put(getKey("net"), arg);
+        return this;
+    }
+
+    /**
     * The ID of the order transaction.
     */
 
@@ -115,9 +153,13 @@ public class ShopifyPaymentsAdjustmentOrder extends AbstractResponse<ShopifyPaym
         switch (getFieldName(key)) {
             case "amount": return true;
 
+            case "fees": return true;
+
             case "link": return false;
 
             case "name": return false;
+
+            case "net": return true;
 
             case "orderTransactionId": return false;
 

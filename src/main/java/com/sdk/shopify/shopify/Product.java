@@ -293,6 +293,29 @@ public class Product extends AbstractResponse<Product> implements CommentEventEm
                     break;
                 }
 
+                case "productComponents": {
+                    responseData.put(key, new ProductComponentTypeConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "productComponentsCount": {
+                    Count optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Count(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "productParents": {
+                    responseData.put(key, new ProductConnection(jsonAsObject(field.getValue(), key)));
+
+                    break;
+                }
+
                 case "productType": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -625,8 +648,7 @@ public class Product extends AbstractResponse<Product> implements CommentEventEm
 
     /**
     * The pricing that applies to a customer in a specific context. For example, a price might vary
-    * depending on the customer's location. As of API version 2025-04, only active markets are considered
-    * in the price resolution.
+    * depending on the customer's location. Only active markets are considered in the price resolution.
     */
 
     public ProductContextualPricing getContextualPricing() {
@@ -974,6 +996,47 @@ public class Product extends AbstractResponse<Product> implements CommentEventEm
 
     public Product setPriceRangeV2(ProductPriceRangeV2 arg) {
         optimisticData.put(getKey("priceRangeV2"), arg);
+        return this;
+    }
+
+    /**
+    * A list of products that contain at least one variant associated with
+    * at least one of the current products' variants via group relationship.
+    */
+
+    public ProductComponentTypeConnection getProductComponents() {
+        return (ProductComponentTypeConnection) get("productComponents");
+    }
+
+    public Product setProductComponents(ProductComponentTypeConnection arg) {
+        optimisticData.put(getKey("productComponents"), arg);
+        return this;
+    }
+
+    /**
+    * A count of unique products that contain at least one variant associated with
+    * at least one of the current products' variants via group relationship.
+    */
+
+    public Count getProductComponentsCount() {
+        return (Count) get("productComponentsCount");
+    }
+
+    public Product setProductComponentsCount(Count arg) {
+        optimisticData.put(getKey("productComponentsCount"), arg);
+        return this;
+    }
+
+    /**
+    * A list of products that has a variant that contains any of this product's variants as a component.
+    */
+
+    public ProductConnection getProductParents() {
+        return (ProductConnection) get("productParents");
+    }
+
+    public Product setProductParents(ProductConnection arg) {
+        optimisticData.put(getKey("productParents"), arg);
         return this;
     }
 
@@ -1430,6 +1493,12 @@ public class Product extends AbstractResponse<Product> implements CommentEventEm
             case "options": return true;
 
             case "priceRangeV2": return true;
+
+            case "productComponents": return true;
+
+            case "productComponentsCount": return true;
+
+            case "productParents": return true;
 
             case "productType": return false;
 

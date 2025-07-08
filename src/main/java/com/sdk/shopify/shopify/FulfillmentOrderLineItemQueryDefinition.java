@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderLineItemQueryDefinition {
     void define(FulfillmentOrderLineItemQuery _queryBuilder);
 }

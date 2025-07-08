@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountAutomaticConnectionQueryDefinition {
     void define(DiscountAutomaticConnectionQuery _queryBuilder);
 }

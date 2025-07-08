@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountCodeAppCreatePayloadQueryDefinition {
     void define(DiscountCodeAppCreatePayloadQuery _queryBuilder);
 }

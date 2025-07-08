@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LocaleQueryDefinition {
     void define(LocaleQuery _queryBuilder);
 }

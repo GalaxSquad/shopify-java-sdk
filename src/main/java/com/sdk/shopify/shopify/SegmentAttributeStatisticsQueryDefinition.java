@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentAttributeStatisticsQueryDefinition {
     void define(SegmentAttributeStatisticsQuery _queryBuilder);
 }

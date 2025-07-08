@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MailingAddressConnectionQueryDefinition {
     void define(MailingAddressConnectionQuery _queryBuilder);
 }

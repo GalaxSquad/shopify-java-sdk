@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionDeliveryMethodPickupQueryDefinition {
     void define(SubscriptionDeliveryMethodPickupQuery _queryBuilder);
 }

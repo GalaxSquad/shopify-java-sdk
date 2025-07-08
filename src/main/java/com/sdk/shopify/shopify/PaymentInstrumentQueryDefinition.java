@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentInstrumentQueryDefinition {
     void define(PaymentInstrumentQuery _queryBuilder);
 }

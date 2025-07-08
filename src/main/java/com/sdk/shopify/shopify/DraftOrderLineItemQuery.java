@@ -43,10 +43,10 @@ public class DraftOrderLineItemQuery extends Query<DraftOrderLineItemQuery> {
     }
 
     /**
-    * The list of bundle components if applicable.
+    * The components of the draft order line item.
     */
-    public DraftOrderLineItemQuery bundleComponents(DraftOrderLineItemQueryDefinition queryDef) {
-        startField("bundleComponents");
+    public DraftOrderLineItemQuery components(DraftOrderLineItemQueryDefinition queryDef) {
+        startField("components");
 
         _queryBuilder.append('{');
         queryDef.define(new DraftOrderLineItemQuery(_queryBuilder));

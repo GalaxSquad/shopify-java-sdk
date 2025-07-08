@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentTermsTemplateQueryDefinition {
     void define(PaymentTermsTemplateQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocationAddUserErrorQueryDefinition {
     void define(LocationAddUserErrorQuery _queryBuilder);
 }

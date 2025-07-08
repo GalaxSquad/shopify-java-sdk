@@ -23,6 +23,17 @@ public class MetafieldDefinitionDeletePayload extends AbstractResponse<Metafield
             String key = field.getKey();
             String fieldName = getFieldName(key);
             switch (fieldName) {
+                case "deletedDefinition": {
+                    MetafieldDefinitionIdentifier optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new MetafieldDefinitionIdentifier(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "deletedDefinitionId": {
                     ID optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -61,6 +72,19 @@ public class MetafieldDefinitionDeletePayload extends AbstractResponse<Metafield
     }
 
     /**
+    * The metafield definition that was deleted.
+    */
+
+    public MetafieldDefinitionIdentifier getDeletedDefinition() {
+        return (MetafieldDefinitionIdentifier) get("deletedDefinition");
+    }
+
+    public MetafieldDefinitionDeletePayload setDeletedDefinition(MetafieldDefinitionIdentifier arg) {
+        optimisticData.put(getKey("deletedDefinition"), arg);
+        return this;
+    }
+
+    /**
     * The ID of the deleted metafield definition.
     */
 
@@ -88,6 +112,8 @@ public class MetafieldDefinitionDeletePayload extends AbstractResponse<Metafield
 
     public boolean unwrapsToObject(String key) {
         switch (getFieldName(key)) {
+            case "deletedDefinition": return true;
+
             case "deletedDefinitionId": return false;
 
             case "userErrors": return true;

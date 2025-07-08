@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppRevokeAccessScopesAppRevokeScopeErrorQueryDefinition {
     void define(AppRevokeAccessScopesAppRevokeScopeErrorQuery _queryBuilder);
 }

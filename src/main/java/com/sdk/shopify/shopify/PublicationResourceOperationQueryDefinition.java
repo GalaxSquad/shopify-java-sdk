@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PublicationResourceOperationQueryDefinition {
     void define(PublicationResourceOperationQuery _queryBuilder);
 }

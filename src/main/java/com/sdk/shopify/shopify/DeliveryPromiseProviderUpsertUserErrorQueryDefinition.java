@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeliveryPromiseProviderUpsertUserErrorQueryDefinition {
     void define(DeliveryPromiseProviderUpsertUserErrorQuery _queryBuilder);
 }

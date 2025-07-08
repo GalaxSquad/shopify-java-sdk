@@ -147,6 +147,15 @@ public class FulfillmentServiceQuery extends Query<FulfillmentServiceQuery> {
     }
 
     /**
+    * Whether the fulfillment service requires products to be physically shipped.
+    */
+    public FulfillmentServiceQuery requiresShippingMethod() {
+        startField("requiresShippingMethod");
+
+        return this;
+    }
+
+    /**
     * The name of the fulfillment service as seen by merchants.
     */
     public FulfillmentServiceQuery serviceName() {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderSplitResultQueryDefinition {
     void define(FulfillmentOrderSplitResultQuery _queryBuilder);
 }

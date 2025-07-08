@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TaxonomyMeasurementAttributeQueryDefinition {
     void define(TaxonomyMeasurementAttributeQuery _queryBuilder);
 }

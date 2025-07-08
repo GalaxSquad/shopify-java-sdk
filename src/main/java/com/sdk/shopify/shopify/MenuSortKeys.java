@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the Menu query.
 */
@@ -10,12 +13,6 @@ public enum MenuSortKeys {
     * Sort by the `id` value.
     */
     ID,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     /**
     * Sort by the `title` value.
@@ -39,10 +36,6 @@ public enum MenuSortKeys {
                 return ID;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "TITLE": {
                 return TITLE;
             }
@@ -60,10 +53,6 @@ public enum MenuSortKeys {
         switch (this) {
             case ID: {
                 return "ID";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case TITLE: {

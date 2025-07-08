@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MarketingEngagementQueryDefinition {
     void define(MarketingEngagementQuery _queryBuilder);
 }

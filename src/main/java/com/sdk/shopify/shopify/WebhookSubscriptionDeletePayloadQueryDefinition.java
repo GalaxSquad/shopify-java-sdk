@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface WebhookSubscriptionDeletePayloadQueryDefinition {
     void define(WebhookSubscriptionDeletePayloadQuery _queryBuilder);
 }

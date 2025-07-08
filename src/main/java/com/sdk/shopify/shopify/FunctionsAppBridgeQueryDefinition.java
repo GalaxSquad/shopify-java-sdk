@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FunctionsAppBridgeQueryDefinition {
     void define(FunctionsAppBridgeQuery _queryBuilder);
 }

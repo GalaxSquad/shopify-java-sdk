@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface UTMParametersQueryDefinition {
     void define(UTMParametersQuery _queryBuilder);
 }

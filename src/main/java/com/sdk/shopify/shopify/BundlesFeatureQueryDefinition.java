@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BundlesFeatureQueryDefinition {
     void define(BundlesFeatureQuery _queryBuilder);
 }

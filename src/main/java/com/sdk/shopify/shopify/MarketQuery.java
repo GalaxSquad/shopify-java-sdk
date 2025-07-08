@@ -3,6 +3,7 @@
 package com.sdk.shopify.shopify;
 
 import com.shopify.graphql.support.Arguments;
+import com.shopify.graphql.support.ID;
 import com.shopify.graphql.support.Query;
 import java.util.List;
 
@@ -22,6 +23,20 @@ public class MarketQuery extends Query<MarketQuery> {
         super(_queryBuilder);
 
         startField("id");
+    }
+
+    /**
+    * Whether the market has a customization with the given ID.
+    */
+    public MarketQuery assignedCustomization(ID customizationId) {
+        startField("assignedCustomization");
+
+        _queryBuilder.append("(customizationId:");
+        Query.appendQuotedString(_queryBuilder, customizationId.toString());
+
+        _queryBuilder.append(')');
+
+        return this;
     }
 
     public class CatalogsArguments extends Arguments {
@@ -123,6 +138,19 @@ public class MarketQuery extends Query<MarketQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The conditions under which a visitor is in the market.
+    */
+    public MarketQuery conditions(MarketConditionsQueryDefinition queryDef) {
+        startField("conditions");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketConditionsQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -331,6 +359,38 @@ public class MarketQuery extends Query<MarketQuery> {
     */
     public MarketQuery name() {
         startField("name");
+
+        return this;
+    }
+
+    /**
+    * The inclusive pricing strategy for a market. This determines if prices include duties and / or
+    * taxes.
+    */
+    public MarketQuery priceInclusions(MarketPriceInclusionsQueryDefinition queryDef) {
+        startField("priceInclusions");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketPriceInclusionsQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Status of the market. Replaces the enabled field.
+    */
+    public MarketQuery status() {
+        startField("status");
+
+        return this;
+    }
+
+    /**
+    * The type of the market.
+    */
+    public MarketQuery type() {
+        startField("type");
 
         return this;
     }

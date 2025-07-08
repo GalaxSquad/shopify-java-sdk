@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CalculatedReturnFeeQueryDefinition {
     void define(CalculatedReturnFeeQuery _queryBuilder);
 }

@@ -229,6 +229,13 @@ public class HasEventsQuery extends Query<HasEventsQuery> {
         return this;
     }
 
+    public HasEventsQuery onInventoryTransfer(InventoryTransferQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransfer");
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public HasEventsQuery onOrder(OrderQueryDefinition queryDef) {
         startInlineFragment("Order");
         queryDef.define(new OrderQuery(_queryBuilder));

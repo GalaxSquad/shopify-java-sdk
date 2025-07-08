@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Specifies the attribute of a product being used to populate the smart collection.
 */
@@ -24,6 +26,16 @@ public enum CollectionRuleColumn {
     * directly assigned to the specified category.
     */
     PRODUCT_CATEGORY_ID,
+
+    /**
+    * This rule type is designed to dynamically include products in a smart collection based on their
+    * category id.
+    * When a specific product category is set as a condition, this rule will not only match products that
+    * are
+    * directly assigned to the specified category but also include any products categorized under any
+    * descendant of that category.
+    */
+    PRODUCT_CATEGORY_ID_WITH_DESCENDANTS,
 
     /**
     * This category includes metafield definitions that have the `useAsCollectionCondition` flag set to
@@ -119,6 +131,10 @@ public enum CollectionRuleColumn {
                 return PRODUCT_CATEGORY_ID;
             }
 
+            case "PRODUCT_CATEGORY_ID_WITH_DESCENDANTS": {
+                return PRODUCT_CATEGORY_ID_WITH_DESCENDANTS;
+            }
+
             case "PRODUCT_METAFIELD_DEFINITION": {
                 return PRODUCT_METAFIELD_DEFINITION;
             }
@@ -180,6 +196,10 @@ public enum CollectionRuleColumn {
 
             case PRODUCT_CATEGORY_ID: {
                 return "PRODUCT_CATEGORY_ID";
+            }
+
+            case PRODUCT_CATEGORY_ID_WITH_DESCENDANTS: {
+                return "PRODUCT_CATEGORY_ID_WITH_DESCENDANTS";
             }
 
             case PRODUCT_METAFIELD_DEFINITION: {

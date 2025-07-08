@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyPaymentsPayoutConnectionQueryDefinition {
     void define(ShopifyPaymentsPayoutConnectionQuery _queryBuilder);
 }

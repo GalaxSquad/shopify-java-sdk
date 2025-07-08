@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PriceListAdjustmentQueryDefinition {
     void define(PriceListAdjustmentQuery _queryBuilder);
 }

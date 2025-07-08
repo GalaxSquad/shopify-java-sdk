@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BlogConnectionQueryDefinition {
     void define(BlogConnectionQuery _queryBuilder);
 }

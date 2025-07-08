@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DataSaleOptOutPayloadQueryDefinition {
     void define(DataSaleOptOutPayloadQuery _queryBuilder);
 }

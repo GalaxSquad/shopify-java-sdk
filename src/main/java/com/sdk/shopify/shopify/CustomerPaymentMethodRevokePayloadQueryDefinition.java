@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodRevokePayloadQueryDefinition {
     void define(CustomerPaymentMethodRevokePayloadQuery _queryBuilder);
 }

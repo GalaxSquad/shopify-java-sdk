@@ -13,7 +13,30 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* A payment transaction in the context of an order.
+* The `OrderTransaction` object represents a payment transaction that's associated with an order. An
+* order
+* transaction is a specific action or event that happens within the context of an order, such as a
+* customer paying
+* for a purchase or receiving a refund, or other payment-related activity.
+* Use the `OrderTransaction` object to capture the complete lifecycle of a payment, from initial
+* authorization to final settlement, including refunds and currency exchanges. Common use cases for
+* using the
+* `OrderTransaction` object include:
+* - Processing new payments for orders
+* - Managing payment authorizations and captures
+* - Processing refunds for returned items
+* - Tracking payment status and errors
+* - Managing multi-currency transactions
+* - Handling payment gateway integrations
+* Each `OrderTransaction` object has a
+* [`kind`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionKind)
+* that defines the type of transaction and a
+* [`status`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionStatus)
+* that indicates the current state of the transaction. The object stores detailed information about
+* payment
+* methods, gateway processing, and settlement details.
+* Learn more about [payment processing](https://help.shopify.com/manual/payments)
+* and [payment gateway integrations](https://www.shopify.com/ca/payment-gateways).
 */
 public class OrderTransaction extends AbstractResponse<OrderTransaction> implements Node, StoreCreditAccountTransactionOrigin {
     public OrderTransaction() {
@@ -80,6 +103,28 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
                     break;
                 }
 
+                case "currencyExchangeAdjustment": {
+                    CurrencyExchangeAdjustment optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new CurrencyExchangeAdjustment(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "device": {
+                    PointOfSaleDevice optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new PointOfSaleDevice(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "errorCode": {
                     OrderTransactionErrorCode optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -132,6 +177,17 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
 
                 case "kind": {
                     responseData.put(key, OrderTransactionKind.fromGraphQl(jsonAsString(field.getValue(), key)));
+
+                    break;
+                }
+
+                case "location": {
+                    Location optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Location(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -409,6 +465,33 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
     }
 
     /**
+    * An adjustment on the transaction showing the amount lost or gained  due to fluctuations in the
+    * currency exchange rate.
+    */
+
+    public CurrencyExchangeAdjustment getCurrencyExchangeAdjustment() {
+        return (CurrencyExchangeAdjustment) get("currencyExchangeAdjustment");
+    }
+
+    public OrderTransaction setCurrencyExchangeAdjustment(CurrencyExchangeAdjustment arg) {
+        optimisticData.put(getKey("currencyExchangeAdjustment"), arg);
+        return this;
+    }
+
+    /**
+    * The Shopify Point of Sale device used to process the transaction.
+    */
+
+    public PointOfSaleDevice getDevice() {
+        return (PointOfSaleDevice) get("device");
+    }
+
+    public OrderTransaction setDevice(PointOfSaleDevice arg) {
+        optimisticData.put(getKey("device"), arg);
+        return this;
+    }
+
+    /**
     * A standardized error code, independent of the payment provider.
     */
 
@@ -479,6 +562,19 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
 
     public OrderTransaction setKind(OrderTransactionKind arg) {
         optimisticData.put(getKey("kind"), arg);
+        return this;
+    }
+
+    /**
+    * The physical location where the transaction was processed.
+    */
+
+    public Location getLocation() {
+        return (Location) get("location");
+    }
+
+    public OrderTransaction setLocation(Location arg) {
+        optimisticData.put(getKey("location"), arg);
         return this;
     }
 
@@ -735,6 +831,10 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
 
             case "createdAt": return false;
 
+            case "currencyExchangeAdjustment": return true;
+
+            case "device": return true;
+
             case "errorCode": return false;
 
             case "fees": return true;
@@ -746,6 +846,8 @@ public class OrderTransaction extends AbstractResponse<OrderTransaction> impleme
             case "id": return false;
 
             case "kind": return false;
+
+            case "location": return true;
 
             case "manualPaymentGateway": return false;
 

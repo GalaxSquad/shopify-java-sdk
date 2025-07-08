@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PageDeleteUserErrorQueryDefinition {
     void define(PageDeleteUserErrorQuery _queryBuilder);
 }

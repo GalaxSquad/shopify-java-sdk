@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BlogEdgeQueryDefinition {
     void define(BlogEdgeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ResourceAlertQueryDefinition {
     void define(ResourceAlertQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionCyclePriceAdjustmentQueryDefinition {
     void define(SubscriptionCyclePriceAdjustmentQuery _queryBuilder);
 }

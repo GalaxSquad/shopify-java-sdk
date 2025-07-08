@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ReturnableFulfillmentLineItemConnectionQueryDefinition {
     void define(ReturnableFulfillmentLineItemConnectionQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderAdjustmentQueryDefinition {
     void define(OrderAdjustmentQuery _queryBuilder);
 }

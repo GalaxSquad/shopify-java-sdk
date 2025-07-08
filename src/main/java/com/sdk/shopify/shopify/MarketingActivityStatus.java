@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Status helps to identify if this marketing activity has been completed, queued, failed etc.
 */

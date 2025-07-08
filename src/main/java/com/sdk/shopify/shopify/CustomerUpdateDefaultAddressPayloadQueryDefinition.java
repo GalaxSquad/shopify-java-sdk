@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerUpdateDefaultAddressPayloadQueryDefinition {
     void define(CustomerUpdateDefaultAddressPayloadQuery _queryBuilder);
 }

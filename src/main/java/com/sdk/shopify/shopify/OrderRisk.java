@@ -9,10 +9,9 @@ import com.shopify.graphql.support.SchemaViolationError;
 import java.util.Map;
 
 /**
-* Represents a fraud check on an order.
-* As of version 2024-04 this resource is deprecated. Risk Assessments can be queried via the
-* [OrderRisk Assessments
-* API](https://shopify.dev/api/admin-graphql/2024-04/objects/OrderRiskAssessment).
+* Represents a fraud check on an order. This object is deprecated in favor of
+* [OrderRiskAssessment](https://shopify.dev/api/admin-graphql/latest/objects/OrderRiskAssessment) and
+* its enhanced capabilities.
 */
 public class OrderRisk extends AbstractResponse<OrderRisk> {
     public OrderRisk() {

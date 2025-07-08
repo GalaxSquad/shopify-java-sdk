@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface UrlRedirectImportPreviewQueryDefinition {
     void define(UrlRedirectImportPreviewQuery _queryBuilder);
 }

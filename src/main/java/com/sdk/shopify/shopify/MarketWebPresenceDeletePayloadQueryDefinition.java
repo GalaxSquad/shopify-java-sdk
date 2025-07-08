@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketWebPresenceDeletePayloadQueryDefinition {
     void define(MarketWebPresenceDeletePayloadQuery _queryBuilder);
 }

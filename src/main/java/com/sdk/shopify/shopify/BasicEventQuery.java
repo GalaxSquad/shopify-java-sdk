@@ -149,6 +149,15 @@ public class BasicEventQuery extends Query<BasicEventQuery> {
     }
 
     /**
+    * The entity which performed the action that generated the event.
+    */
+    public BasicEventQuery author() {
+        startField("author");
+
+        return this;
+    }
+
+    /**
     * The date and time when the event was created.
     */
     public BasicEventQuery createdAt() {

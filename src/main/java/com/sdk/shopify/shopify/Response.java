@@ -1,13 +1,12 @@
 package com.sdk.shopify.shopify;
 
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.shopify.graphql.support.SchemaViolationError;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.Error;
+import com.shopify.graphql.support.SchemaViolationError;
 import com.shopify.graphql.support.TopLevelResponse;
+import java.util.List;
 
 public class Response<T extends AbstractResponse<T>> {
     protected TopLevelResponse response;

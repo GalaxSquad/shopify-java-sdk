@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsBalanceTransactionAssociatedPayoutQueryDefinition {
     void define(ShopifyPaymentsBalanceTransactionAssociatedPayoutQuery _queryBuilder);
 }

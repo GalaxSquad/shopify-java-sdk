@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppSubscriptionEdgeQueryDefinition {
     void define(AppSubscriptionEdgeQuery _queryBuilder);
 }

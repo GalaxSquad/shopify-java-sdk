@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryAvailableServiceQueryDefinition {
     void define(DeliveryAvailableServiceQuery _queryBuilder);
 }

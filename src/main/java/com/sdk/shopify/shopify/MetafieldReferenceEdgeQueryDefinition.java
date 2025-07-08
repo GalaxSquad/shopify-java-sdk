@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetafieldReferenceEdgeQueryDefinition {
     void define(MetafieldReferenceEdgeQuery _queryBuilder);
 }

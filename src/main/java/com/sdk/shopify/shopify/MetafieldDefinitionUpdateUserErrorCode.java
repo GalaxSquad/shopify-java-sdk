@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `MetafieldDefinitionUpdateUserError`.
 */
@@ -10,6 +14,16 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
     * Admin access can only be specified for app-owned metafield definitions.
     */
     ADMIN_ACCESS_INPUT_NOT_ALLOWED,
+
+    /**
+    * Definition is managed by app configuration and cannot be modified through the API.
+    */
+    APP_CONFIG_MANAGED,
+
+    /**
+    * The input value is blank.
+    */
+    BLANK,
 
     /**
     * The metafield definition capability cannot be disabled.
@@ -22,9 +36,14 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
     CAPABILITY_REQUIRED_BUT_DISABLED,
 
     /**
-    * The maximum limit of grants per definition type has been exceeded.
+    * Owner type can't be used in this mutation.
     */
-    GRANT_LIMIT_EXCEEDED,
+    DISALLOWED_OWNER_TYPE,
+
+    /**
+    * A duplicate option.
+    */
+    DUPLICATE_OPTION,
 
     /**
     * An internal error occurred.
@@ -50,6 +69,11 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
     * The input combination is invalid.
     */
     INVALID_INPUT_COMBINATION,
+
+    /**
+    * An invalid option.
+    */
+    INVALID_OPTION,
 
     /**
     * Action cannot proceed. Definition is currently in use.
@@ -109,6 +133,14 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
                 return ADMIN_ACCESS_INPUT_NOT_ALLOWED;
             }
 
+            case "APP_CONFIG_MANAGED": {
+                return APP_CONFIG_MANAGED;
+            }
+
+            case "BLANK": {
+                return BLANK;
+            }
+
             case "CAPABILITY_CANNOT_BE_DISABLED": {
                 return CAPABILITY_CANNOT_BE_DISABLED;
             }
@@ -117,8 +149,12 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
                 return CAPABILITY_REQUIRED_BUT_DISABLED;
             }
 
-            case "GRANT_LIMIT_EXCEEDED": {
-                return GRANT_LIMIT_EXCEEDED;
+            case "DISALLOWED_OWNER_TYPE": {
+                return DISALLOWED_OWNER_TYPE;
+            }
+
+            case "DUPLICATE_OPTION": {
+                return DUPLICATE_OPTION;
             }
 
             case "INTERNAL_ERROR": {
@@ -139,6 +175,10 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
 
             case "INVALID_INPUT_COMBINATION": {
                 return INVALID_INPUT_COMBINATION;
+            }
+
+            case "INVALID_OPTION": {
+                return INVALID_OPTION;
             }
 
             case "METAFIELD_DEFINITION_IN_USE": {
@@ -188,6 +228,14 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
                 return "ADMIN_ACCESS_INPUT_NOT_ALLOWED";
             }
 
+            case APP_CONFIG_MANAGED: {
+                return "APP_CONFIG_MANAGED";
+            }
+
+            case BLANK: {
+                return "BLANK";
+            }
+
             case CAPABILITY_CANNOT_BE_DISABLED: {
                 return "CAPABILITY_CANNOT_BE_DISABLED";
             }
@@ -196,8 +244,12 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
                 return "CAPABILITY_REQUIRED_BUT_DISABLED";
             }
 
-            case GRANT_LIMIT_EXCEEDED: {
-                return "GRANT_LIMIT_EXCEEDED";
+            case DISALLOWED_OWNER_TYPE: {
+                return "DISALLOWED_OWNER_TYPE";
+            }
+
+            case DUPLICATE_OPTION: {
+                return "DUPLICATE_OPTION";
             }
 
             case INTERNAL_ERROR: {
@@ -218,6 +270,10 @@ public enum MetafieldDefinitionUpdateUserErrorCode {
 
             case INVALID_INPUT_COMBINATION: {
                 return "INVALID_INPUT_COMBINATION";
+            }
+
+            case INVALID_OPTION: {
+                return "INVALID_OPTION";
             }
 
             case METAFIELD_DEFINITION_IN_USE: {

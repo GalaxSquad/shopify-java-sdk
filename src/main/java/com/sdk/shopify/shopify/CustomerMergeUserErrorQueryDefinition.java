@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerMergeUserErrorQueryDefinition {
     void define(CustomerMergeUserErrorQuery _queryBuilder);
 }

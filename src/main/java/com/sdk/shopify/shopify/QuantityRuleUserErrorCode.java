@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `QuantityRuleUserError`.
 */
@@ -12,7 +16,8 @@ public enum QuantityRuleUserErrorCode {
     BLANK,
 
     /**
-    * Quantity rules can be associated only with company location catalogs.
+    * Quantity rules can be associated only with company location catalogs or catalogs associated with
+    * compatible markets.
     */
     CATALOG_CONTEXT_DOES_NOT_SUPPORT_QUANTITY_RULES,
 

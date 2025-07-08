@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopResourceFeedbackCreateUserErrorQueryDefinition {
     void define(ShopResourceFeedbackCreateUserErrorQuery _queryBuilder);
 }

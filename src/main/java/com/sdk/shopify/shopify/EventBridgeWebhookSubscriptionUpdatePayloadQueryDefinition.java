@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface EventBridgeWebhookSubscriptionUpdatePayloadQueryDefinition {
     void define(EventBridgeWebhookSubscriptionUpdatePayloadQuery _queryBuilder);
 }

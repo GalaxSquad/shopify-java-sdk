@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerMomentQueryDefinition {
     void define(CustomerMomentQuery _queryBuilder);
 }

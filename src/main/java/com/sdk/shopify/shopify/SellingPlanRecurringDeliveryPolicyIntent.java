@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Whether the delivery policy is merchant or buyer-centric.
 */

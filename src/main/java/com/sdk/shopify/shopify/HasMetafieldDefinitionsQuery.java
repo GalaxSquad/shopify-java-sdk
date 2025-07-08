@@ -84,6 +84,13 @@ public class HasMetafieldDefinitionsQuery extends Query<HasMetafieldDefinitionsQ
         return this;
     }
 
+    public HasMetafieldDefinitionsQuery onInventoryTransfer(InventoryTransferQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransfer");
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public HasMetafieldDefinitionsQuery onLocation(LocationQueryDefinition queryDef) {
         startInlineFragment("Location");
         queryDef.define(new LocationQuery(_queryBuilder));
@@ -136,6 +143,13 @@ public class HasMetafieldDefinitionsQuery extends Query<HasMetafieldDefinitionsQ
     public HasMetafieldDefinitionsQuery onSellingPlan(SellingPlanQueryDefinition queryDef) {
         startInlineFragment("SellingPlan");
         queryDef.define(new SellingPlanQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public HasMetafieldDefinitionsQuery onShop(ShopQueryDefinition queryDef) {
+        startInlineFragment("Shop");
+        queryDef.define(new ShopQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }

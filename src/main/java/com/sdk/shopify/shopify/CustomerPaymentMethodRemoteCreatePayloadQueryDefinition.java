@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerPaymentMethodRemoteCreatePayloadQueryDefinition {
     void define(CustomerPaymentMethodRemoteCreatePayloadQuery _queryBuilder);
 }

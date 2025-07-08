@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionBillingAttemptGenericErrorQueryDefinition {
     void define(SubscriptionBillingAttemptGenericErrorQuery _queryBuilder);
 }

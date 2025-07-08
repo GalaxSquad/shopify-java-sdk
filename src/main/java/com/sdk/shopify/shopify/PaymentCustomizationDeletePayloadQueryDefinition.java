@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PaymentCustomizationDeletePayloadQueryDefinition {
     void define(PaymentCustomizationDeletePayloadQuery _queryBuilder);
 }

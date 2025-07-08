@@ -35,6 +35,17 @@ public class MarketCatalog extends AbstractResponse<MarketCatalog> implements Ca
                     break;
                 }
 
+                case "marketsCount": {
+                    Count optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new Count(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "operations": {
                     List<ResourceOperation> list1 = new ArrayList<>();
                     for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
@@ -122,6 +133,19 @@ public class MarketCatalog extends AbstractResponse<MarketCatalog> implements Ca
     }
 
     /**
+    * The number of markets associated with the catalog.
+    */
+
+    public Count getMarketsCount() {
+        return (Count) get("marketsCount");
+    }
+
+    public MarketCatalog setMarketsCount(Count arg) {
+        optimisticData.put(getKey("marketsCount"), arg);
+        return this;
+    }
+
+    /**
     * Most recent catalog operations.
     */
 
@@ -191,6 +215,8 @@ public class MarketCatalog extends AbstractResponse<MarketCatalog> implements Ca
             case "id": return false;
 
             case "markets": return true;
+
+            case "marketsCount": return true;
 
             case "operations": return false;
 

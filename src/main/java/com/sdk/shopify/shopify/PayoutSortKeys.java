@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the Payout query.
 */
@@ -50,12 +53,6 @@ public enum PayoutSortKeys {
     * Sort by the `refund_gross` value.
     */
     REFUND_GROSS,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     /**
     * Sort by the `shipping_label_gross` value.
@@ -111,10 +108,6 @@ public enum PayoutSortKeys {
                 return REFUND_GROSS;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "SHIPPING_LABEL_GROSS": {
                 return SHIPPING_LABEL_GROSS;
             }
@@ -164,10 +157,6 @@ public enum PayoutSortKeys {
 
             case REFUND_GROSS: {
                 return "REFUND_GROSS";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case SHIPPING_LABEL_GROSS: {

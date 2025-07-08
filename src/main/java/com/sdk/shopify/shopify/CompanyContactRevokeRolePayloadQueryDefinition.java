@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyContactRevokeRolePayloadQueryDefinition {
     void define(CompanyContactRevokeRolePayloadQuery _queryBuilder);
 }

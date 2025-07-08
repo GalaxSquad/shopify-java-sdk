@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketLocalizationsRegisterPayloadQueryDefinition {
     void define(MarketLocalizationsRegisterPayloadQuery _queryBuilder);
 }

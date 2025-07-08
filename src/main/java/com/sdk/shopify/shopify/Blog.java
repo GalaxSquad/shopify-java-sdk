@@ -184,7 +184,7 @@ public class Blog extends AbstractResponse<Blog> implements HasEvents, HasMetafi
     }
 
     /**
-    * Count of articles.
+    * Count of articles. Limited to a maximum of 10000 by default.
     */
 
     public Count getArticlesCount() {

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MediaErrorQueryDefinition {
     void define(MediaErrorQuery _queryBuilder);
 }

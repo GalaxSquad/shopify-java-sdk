@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountCustomersQueryDefinition {
     void define(DiscountCustomersQuery _queryBuilder);
 }

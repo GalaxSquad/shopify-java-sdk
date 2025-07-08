@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TaxAppConfigurePayloadQueryDefinition {
     void define(TaxAppConfigurePayloadQuery _queryBuilder);
 }

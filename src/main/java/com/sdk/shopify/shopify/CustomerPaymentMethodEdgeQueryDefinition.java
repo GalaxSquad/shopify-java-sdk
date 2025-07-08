@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodEdgeQueryDefinition {
     void define(CustomerPaymentMethodEdgeQuery _queryBuilder);
 }

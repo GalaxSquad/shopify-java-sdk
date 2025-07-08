@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BusinessCustomerUserErrorQueryDefinition {
     void define(BusinessCustomerUserErrorQuery _queryBuilder);
 }

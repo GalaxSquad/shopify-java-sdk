@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldDefinitionConstraintValueEdgeQueryDefinition {
     void define(MetafieldDefinitionConstraintValueEdgeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentConstraintRuleCreateUserErrorQueryDefinition {
     void define(FulfillmentConstraintRuleCreateUserErrorQuery _queryBuilder);
 }

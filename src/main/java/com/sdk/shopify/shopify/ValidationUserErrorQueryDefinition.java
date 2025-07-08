@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ValidationUserErrorQueryDefinition {
     void define(ValidationUserErrorQuery _queryBuilder);
 }

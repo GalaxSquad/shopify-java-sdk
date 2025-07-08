@@ -114,13 +114,17 @@ public class UnknownHasMetafields extends AbstractResponse<UnknownHasMetafields>
             case "GiftCardCreditTransaction": {
                 return new GiftCardCreditTransaction(fields);
             }
+
             case "GiftCardDebitTransaction": {
                 return new GiftCardDebitTransaction(fields);
             }
 
-
             case "Image": {
                 return new Image(fields);
+            }
+
+            case "InventoryTransfer": {
+                return new InventoryTransfer(fields);
             }
 
             case "Location": {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LocalizedFieldEdgeQueryDefinition {
     void define(LocalizedFieldEdgeQuery _queryBuilder);
 }

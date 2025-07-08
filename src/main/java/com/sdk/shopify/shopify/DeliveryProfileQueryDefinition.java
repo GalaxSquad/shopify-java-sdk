@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryProfileQueryDefinition {
     void define(DeliveryProfileQuery _queryBuilder);
 }

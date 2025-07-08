@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the Company query.
 */
@@ -25,12 +28,6 @@ public enum CompanySortKeys {
     * Sort by the `order_count` value.
     */
     ORDER_COUNT,
-
-    /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
 
     /**
     * Sort by the `since_date` value.
@@ -71,10 +68,6 @@ public enum CompanySortKeys {
                 return ORDER_COUNT;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "SINCE_DATE": {
                 return SINCE_DATE;
             }
@@ -108,10 +101,6 @@ public enum CompanySortKeys {
 
             case ORDER_COUNT: {
                 return "ORDER_COUNT";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case SINCE_DATE: {

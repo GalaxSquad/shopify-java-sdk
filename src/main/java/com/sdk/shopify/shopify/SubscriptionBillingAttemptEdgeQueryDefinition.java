@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionBillingAttemptEdgeQueryDefinition {
     void define(SubscriptionBillingAttemptEdgeQuery _queryBuilder);
 }

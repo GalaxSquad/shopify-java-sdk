@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ReturnableFulfillmentEdgeQueryDefinition {
     void define(ReturnableFulfillmentEdgeQuery _queryBuilder);
 }

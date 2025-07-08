@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CombinedListingChildConnectionQueryDefinition {
     void define(CombinedListingChildConnectionQuery _queryBuilder);
 }

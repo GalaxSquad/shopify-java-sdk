@@ -7,22 +7,28 @@ import com.shopify.graphql.support.Query;
 import java.util.List;
 
 /**
-* An order is a customer's request to purchase one or more products from a shop. You can retrieve and
-* update orders using the `Order` object.
-* Learn more about
-* [editing an existing order with the GraphQL Admin
-* API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
-* Only the last 60 days' worth of orders from a store are accessible from the `Order` object by
-* default. If you want to access older orders,
-* then you need to [request access to all
-* orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
-* access, then you can add the `read_all_orders` scope to your app along with `read_orders` or
-* `write_orders`.
-* [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are
-* automatically granted the scope.
-* **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict
-* [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a
-* legitimate use for the associated data.
+* The `Order` object represents a customer's request to purchase one or more products from a store.
+* Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
+* Use the `Order` object when you need to:
+* - Display order details on customer account pages or admin dashboards.
+* - Create orders for phone sales, wholesale customers, or subscription services.
+* - Update order information like shipping addresses, notes, or fulfillment status.
+* - Process returns, exchanges, and partial refunds.
+* - Generate invoices, receipts, and shipping labels.
+* The `Order` object serves as the central hub connecting customer information, product details,
+* payment processing, and fulfillment data within the GraphQL Admin API schema.
+* > Note:
+* > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by
+* default. If you want to access older records,
+* > then you need to [request access to all
+* orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+* > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+* > Caution:
+* > Only use orders data if it's required for your app's functionality. Shopify will restrict [access
+* to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for
+* apps that don't have a legitimate use for the associated data.
+* Learn more about [building apps for orders and
+* fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
 */
 public class OrderQuery extends Query<OrderQuery> {
     OrderQuery(StringBuilder _queryBuilder) {
@@ -32,7 +38,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of additional fees applied to the order.
+    * A list of additional fees applied to an order, such as duties, import fees, or [tax
+    * lines](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.additional
+    * Fees.taxLines).
     */
     public OrderQuery additionalFees(AdditionalFeeQueryDefinition queryDef) {
         startField("additionalFees");
@@ -129,14 +137,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of sales agreements associated with the order.
+    * A list of sales agreements associated with the order, such as contracts defining payment terms, or
+    * delivery schedules between merchants and customers.
     */
     public OrderQuery agreements(SalesAgreementConnectionQueryDefinition queryDef) {
         return agreements(args -> {}, queryDef);
     }
 
     /**
-    * A list of sales agreements associated with the order.
+    * A list of sales agreements associated with the order, such as contracts defining payment terms, or
+    * delivery schedules between merchants and customers.
     */
     public OrderQuery agreements(AgreementsArgumentsDefinition argsDef, SalesAgreementConnectionQueryDefinition queryDef) {
         startField("agreements");
@@ -153,7 +163,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of messages that appear on the order page in the Shopify admin.
+    * A list of messages that appear on the **Orders** page in the Shopify admin. These alerts provide
+    * merchants with important information about an order's status or required actions.
     */
     public OrderQuery alerts(ResourceAlertQueryDefinition queryDef) {
         startField("alerts");
@@ -166,7 +177,11 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The application that created the order.
+    * The application that created the order. For example, "Online Store", "Point of Sale", or a custom
+    * app name.
+    * Use this to identify the order source for attribution and fulfillment workflows.
+    * Learn more about [building apps for orders and
+    * fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
     public OrderQuery app(OrderAppQueryDefinition queryDef) {
         startField("app");
@@ -179,7 +194,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The billing address of the customer.
+    * The billing address associated with the payment method selected by the customer for an order.
+    * Returns `null` if no billing address was provided during checkout.
     */
     public OrderQuery billingAddress(MailingAddressQueryDefinition queryDef) {
         startField("billingAddress");
@@ -192,7 +208,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the billing address matches the shipping address.
+    * Whether the billing address matches the [shipping
+    * address](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.shipping
+    * Address). Returns `true` if both addresses are the same, and `false` if they're different or if an
+    * address is missing.
     */
     public OrderQuery billingAddressMatchesShippingAddress() {
         startField("billingAddressMatchesShippingAddress");
@@ -201,7 +220,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order can be manually marked as paid.
+    * Whether an order can be manually marked as paid. Returns `false` if the order is already paid, is
+    * canceled, has pending [Shopify
+    * Payments](https://help.shopify.com/en/manual/payments/shopify-payments/payouts) transactions, or has
+    * a negative payment amount.
     */
     public OrderQuery canMarkAsPaid() {
         startField("canMarkAsPaid");
@@ -210,7 +232,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether a customer email exists for the order.
+    * Whether order notifications can be sent to the customer.
+    * Returns `true` if the customer has a valid [email
+    * address](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.email).
     */
     public OrderQuery canNotifyCustomer() {
         startField("canNotifyCustomer");
@@ -219,8 +243,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The reason provided when the order was canceled.
-    * Returns `null` if the order wasn't canceled.
+    * The reason provided for an order cancellation. For example, a merchant might cancel an order if
+    * there's insufficient inventory. Returns `null` if the order hasn't been canceled.
     */
     public OrderQuery cancelReason() {
         startField("cancelReason");
@@ -229,7 +253,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Cancellation details for the order.
+    * Details of an order's cancellation, if it has been canceled. This includes the reason, date, and any
+    * [staff
+    * notes](https://shopify.dev/api/admin-graphql/latest/objects/OrderCancellation#field-OrderCancellatio
+    * n.fields.staffNote).
     */
     public OrderQuery cancellation(OrderCancellationQueryDefinition queryDef) {
         startField("cancellation");
@@ -242,8 +269,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The date and time when the order was canceled.
-    * Returns `null` if the order wasn't canceled.
+    * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was
+    * canceled.
+    * Returns `null` if the order hasn't been canceled.
     */
     public OrderQuery cancelledAt() {
         startField("cancelledAt");
@@ -252,7 +280,11 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether payment for the order can be captured.
+    * Whether an authorized payment for an order can be captured.
+    * Returns `true` if an authorized payment exists that hasn't been fully captured yet. Learn more about
+    * [capturing
+    * payments](https://help.shopify.com/en/manual/fulfillment/managing-orders/payments/capturing-payments
+    * ).
     */
     public OrderQuery capturable() {
         startField("capturable");
@@ -261,7 +293,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total order-level discount amount, before returns, in shop and presentment currencies.
+    * The total discount amount applied at the time the order was created, displayed in both shop and
+    * presentment currencies, before returns, refunds, order edits, and cancellations. This field only
+    * includes discounts applied to the entire order.
     */
     public OrderQuery cartDiscountAmountSet(MoneyBagQueryDefinition queryDef) {
         startField("cartDiscountAmountSet");
@@ -274,7 +308,12 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Details about the channel that created the order.
+    * Details about the sales channel that created the order, such as the [channel app
+    * type](https://shopify.dev/docs/api/admin-graphql/latest/objects/channel#field-Channel.fields.channel
+    * Type)
+    * and [channel
+    * name](https://shopify.dev/docs/api/admin-graphql/latest/objects/ChannelDefinition#field-ChannelDefin
+    * ition.fields.channelName), which helps to track order sources.
     */
     public OrderQuery channelInformation(ChannelInformationQueryDefinition queryDef) {
         startField("channelInformation");
@@ -287,7 +326,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The IP address of the API client that created the order.
+    * The IP address of the customer who placed the order. Useful for fraud detection and geographic
+    * analysis.
     */
     public OrderQuery clientIp() {
         startField("clientIp");
@@ -296,7 +336,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order is closed.
+    * Whether an order is closed. An order is considered closed if all its line items have been fulfilled
+    * or canceled, and all financial transactions are complete.
     */
     public OrderQuery closed() {
         startField("closed");
@@ -305,8 +346,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The date and time when the order was closed.
-    * Returns `null` if the order isn't closed.
+    * The date and time [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was
+    * closed. Shopify automatically records this timestamp when all items have been fulfilled or canceled,
+    * and all financial transactions are complete. Returns `null` if the order isn't closed.
     */
     public OrderQuery closedAt() {
         startField("closedAt");
@@ -315,9 +357,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A randomly generated alpha-numeric identifier for the order that may be shown to the customer
-    * instead of the sequential order name. For example, "XPAV284CT", "R50KELTJP" or "35PKUN0UJ".
-    * This value isn't guaranteed to be unique.
+    * A customer-facing order identifier, often shown instead of the sequential order name.
+    * It uses a random alphanumeric format (for example, `XPAV284CT`) and isn't guaranteed to be unique
+    * across orders.
     */
     public OrderQuery confirmationNumber() {
         startField("confirmationNumber");
@@ -326,7 +368,12 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether inventory has been reserved for the order.
+    * Whether inventory has been reserved for an order. Returns `true` if inventory quantities for an
+    * order's [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem) have been
+    * reserved.
+    * Learn more about [managing inventory quantities and
+    * states](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps/manage-quan
+    * tities-states).
     */
     public OrderQuery confirmed() {
         startField("confirmed");
@@ -335,7 +382,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Date and time when the order was created in Shopify.
+    * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was
+    * created. This timestamp is set when the customer completes checkout and remains unchanged throughout
+    * an order's lifecycle.
     */
     public OrderQuery createdAt() {
         startField("createdAt");
@@ -344,7 +393,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The shop currency when the order was placed.
+    * The shop currency when the order was placed. For example, "USD" or "CAD".
     */
     public OrderQuery currencyCode() {
         startField("currencyCode");
@@ -353,7 +402,12 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The current order-level discount amount after all order updates, in shop and presentment currencies.
+    * The current total of all discounts applied to the entire order, after returns, refunds, order edits,
+    * and cancellations. This includes discount codes, automatic discounts, and other promotions that
+    * affect the whole order rather than individual line items. To get the original discount amount at the
+    * time of order creation, use the
+    * [`cartDiscountAmountSet`](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Orde
+    * r.fields.cartDiscountAmountSet) field.
     */
     public OrderQuery currentCartDiscountAmountSet(MoneyBagQueryDefinition queryDef) {
         startField("currentCartDiscountAmountSet");
@@ -366,8 +420,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The current shipping price after applying refunds and discounts. If the parent `order.taxesIncluded`
-    * field is true, then this price includes taxes. Otherwise, this field is the pre-tax price.
+    * The current shipping price after applying refunds and discounts.
+    * If the parent `order.taxesIncluded` field is true, then this price includes taxes. Otherwise, this
+    * field is the pre-tax price.
     */
     public OrderQuery currentShippingPriceSet(MoneyBagQueryDefinition queryDef) {
         startField("currentShippingPriceSet");
@@ -380,7 +435,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The sum of the quantities for all line items that contribute to the order's current subtotal price.
+    * The current sum of the quantities for all line items that contribute to the order's subtotal price,
+    * after returns, refunds, order edits, and cancellations.
     */
     public OrderQuery currentSubtotalLineItemsQuantity() {
         startField("currentSubtotalLineItemsQuantity");
@@ -389,9 +445,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The sum of the prices for all line items after discounts and returns, in shop and presentment
-    * currencies.
-    * If `taxesIncluded` is `true`, then the subtotal also includes tax.
+    * The total price of the order, after returns and refunds, in shop and presentment currencies.
+    * This includes taxes and discounts.
     */
     public OrderQuery currentSubtotalPriceSet(MoneyBagQueryDefinition queryDef) {
         startField("currentSubtotalPriceSet");
@@ -418,8 +473,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total amount of additional fees after returns, in shop and presentment currencies.
-    * Returns `null` if there are no additional fees for the order.
+    * The current total of all additional fees for an order, after any returns or modifications.
+    * Modifications include returns, refunds, order edits, and cancellations. Additional fees can include
+    * charges such as duties, import fees, and special handling.
     */
     public OrderQuery currentTotalAdditionalFeesSet(MoneyBagQueryDefinition queryDef) {
         startField("currentTotalAdditionalFeesSet");
@@ -432,7 +488,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total amount discounted on the order after returns, in shop and presentment currencies.
+    * The total amount discounted on the order after returns and refunds, in shop and presentment
+    * currencies.
     * This includes both order and line level discounts.
     */
     public OrderQuery currentTotalDiscountsSet(MoneyBagQueryDefinition queryDef) {
@@ -446,8 +503,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total amount of duties after returns, in shop and presentment currencies.
-    * Returns `null` if duties aren't applicable.
+    * The current total duties amount for an order, after any returns or modifications. Modifications
+    * include returns, refunds, order edits, and cancellations.
     */
     public OrderQuery currentTotalDutiesSet(MoneyBagQueryDefinition queryDef) {
         startField("currentTotalDutiesSet");
@@ -474,8 +531,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The sum of the prices of all tax lines applied to line items on the order, after returns, in shop
-    * and presentment currencies.
+    * The sum of the prices of all tax lines applied to line items on the order, after returns and
+    * refunds, in shop and presentment currencies.
     */
     public OrderQuery currentTotalTaxSet(MoneyBagQueryDefinition queryDef) {
         startField("currentTotalTaxSet");
@@ -488,7 +545,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total weight of the order after returns, in grams.
+    * The total weight of the order after returns and refunds, in grams.
     */
     public OrderQuery currentTotalWeight() {
         startField("currentTotalWeight");
@@ -497,8 +554,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of additional merchant-facing details that have been added to the order. For example, whether
-    * an order is a customer's first.
+    * A list of additional information that has been attached to the order. For example, gift message,
+    * delivery instructions, or internal notes.
     */
     public OrderQuery customAttributes(AttributeQueryDefinition queryDef) {
         startField("customAttributes");
@@ -511,7 +568,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The customer that placed the order.
+    * The customer who placed an order. Returns `null` if an order was created through a checkout without
+    * customer authentication, such as a guest checkout.
+    * Learn more about [customer accounts](https://help.shopify.com/manual/customers/customer-accounts).
     */
     public OrderQuery customer(CustomerQueryDefinition queryDef) {
         startField("customer");
@@ -524,7 +583,11 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the customer agreed to receive marketing materials.
+    * Whether the customer agreed to receive marketing emails at the time of purchase.
+    * Use this to ensure compliance with marketing consent laws and to segment customers for email
+    * campaigns.
+    * Learn more about [building customer
+    * segments](https://shopify.dev/docs/apps/build/marketing-analytics/customer-segments).
     */
     public OrderQuery customerAcceptsMarketing() {
         startField("customerAcceptsMarketing");
@@ -534,6 +597,8 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The customer's visits and interactions with the online store before placing the order.
+    * Use this to understand customer behavior, attribution sources, and marketing effectiveness to
+    * optimize your sales funnel.
     */
     public OrderQuery customerJourneySummary(CustomerJourneySummaryQueryDefinition queryDef) {
         startField("customerJourneySummary");
@@ -546,7 +611,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A two-letter or three-letter language code, optionally followed by a region modifier.
+    * The customer's language and region preference at the time of purchase. For example, "en" for
+    * English, "fr-CA" for French (Canada), or "es-MX" for Spanish (Mexico).
+    * Use this to provide localized customer service and targeted marketing in the customer's preferred
+    * language.
     */
     public OrderQuery customerLocale() {
         startField("customerLocale");
@@ -622,14 +690,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of discounts that are applied to the order, not including order edits and refunds.
+    * A list of discounts that are applied to the order, excluding order edits and refunds.
+    * Includes discount codes, automatic discounts, and other promotions that reduce the order total.
     */
     public OrderQuery discountApplications(DiscountApplicationConnectionQueryDefinition queryDef) {
         return discountApplications(args -> {}, queryDef);
     }
 
     /**
-    * A list of discounts that are applied to the order, not including order edits and refunds.
+    * A list of discounts that are applied to the order, excluding order edits and refunds.
+    * Includes discount codes, automatic discounts, and other promotions that reduce the order total.
     */
     public OrderQuery discountApplications(DiscountApplicationsArgumentsDefinition argsDef, DiscountApplicationConnectionQueryDefinition queryDef) {
         startField("discountApplications");
@@ -646,7 +716,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The discount code used for the order.
+    * The discount code used for an order. Returns `null` if no discount code was applied.
     */
     public OrderQuery discountCode() {
         startField("discountCode");
@@ -655,7 +725,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The discount codes used for the order.
+    * The discount codes used for the order. Multiple codes can be applied to a single order.
     */
     public OrderQuery discountCodes() {
         startField("discountCodes");
@@ -664,8 +734,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The primary address of the customer.
-    * Returns `null` if neither the shipping address nor the billing address was provided.
+    * The primary address of the customer, prioritizing shipping address over billing address when both
+    * are available.
+    * Returns `null` if neither shipping address nor billing address was provided.
     */
     public OrderQuery displayAddress(MailingAddressQueryDefinition queryDef) {
         startField("displayAddress");
@@ -678,9 +749,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The financial status of the order that can be shown to the merchant.
-    * This field doesn't capture all the details of an order's financial state. It should only be used for
-    * display summary purposes.
+    * An order's financial status for display in the Shopify admin.
     */
     public OrderQuery displayFinancialStatus() {
         startField("displayFinancialStatus");
@@ -689,11 +758,11 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The fulfillment status for the order that can be shown to the merchant.
-    * This field does not capture all the details of an order's fulfillment state. It should only be used
-    * for display summary purposes.
-    * For a more granular view of the fulfillment status, refer to the
-    * [FulfillmentOrder](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder) object.
+    * The order's fulfillment status that displays in the Shopify admin to merchants. For example, an
+    * order might be unfulfilled or scheduled.
+    * For detailed processing, use the
+    * [`FulfillmentOrder`](https://shopify.dev/docs/api/admin-graphql/latest/objects/FulfillmentOrder)
+    * object.
     */
     public OrderQuery displayFulfillmentStatus() {
         startField("displayFulfillmentStatus");
@@ -702,7 +771,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of the disputes associated with the order.
+    * A list of payment disputes associated with the order, such as chargebacks or payment inquiries.
+    * Disputes occur when customers challenge transactions with their bank or payment provider.
     */
     public OrderQuery disputes(OrderDisputeSummaryQueryDefinition queryDef) {
         startField("disputes");
@@ -716,6 +786,7 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * Whether duties are included in the subtotal price of the order.
+    * Duties are import taxes charged by customs authorities when goods cross international borders.
     */
     public OrderQuery dutiesIncluded() {
         startField("dutiesIncluded");
@@ -724,7 +795,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order has had any edits applied.
+    * Whether the order has had any edits applied. For example, adding or removing line items, updating
+    * quantities, or changing prices.
     */
     public OrderQuery edited() {
         startField("edited");
@@ -733,7 +805,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The email address associated with the customer.
+    * The email address associated with the customer for this order.
+    * Used for sending order confirmations, shipping notifications, and other order-related
+    * communications.
+    * Returns `null` if no email address was provided during checkout.
     */
     public OrderQuery email() {
         startField("email");
@@ -858,14 +933,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of events associated with the order.
+    * A list of events associated with the order. Events track significant changes and activities related
+    * to the order, such as creation, payment, fulfillment, and cancellation.
     */
     public OrderQuery events(EventConnectionQueryDefinition queryDef) {
         return events(args -> {}, queryDef);
     }
 
     /**
-    * A list of events associated with the order.
+    * A list of events associated with the order. Events track significant changes and activities related
+    * to the order, such as creation, payment, fulfillment, and cancellation.
     */
     public OrderQuery events(EventsArgumentsDefinition argsDef, EventConnectionQueryDefinition queryDef) {
         startField("events");
@@ -995,28 +1072,24 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of fulfillment orders for a specific order.
-    * [FulfillmentOrder API access
-    * scopes](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder#api-access-scopes)
-    * govern which fulfillments orders are returned.
-    * An API client will only receive a subset of the fulfillment orders which belong to an order
-    * if they don't have the necessary access scopes to view all of the fulfillment orders.
-    * In the case that an API client does not have the access scopes necessary to view
-    * any of the fulfillment orders that belong to an order, an empty array will be returned.
+    * A list of [fulfillment
+    * orders](https://shopify.dev/apps/fulfillment/fulfillment-service-apps/fulfillment-order) for an
+    * order. Each fulfillment order groups [line
+    * items](https://shopify.dev/api/admin-graphql/latest/objects/OrderLineItem) that are fulfilled
+    * together,
+    * allowing an order to be processed in parts if needed.
     */
     public OrderQuery fulfillmentOrders(FulfillmentOrderConnectionQueryDefinition queryDef) {
         return fulfillmentOrders(args -> {}, queryDef);
     }
 
     /**
-    * A list of fulfillment orders for a specific order.
-    * [FulfillmentOrder API access
-    * scopes](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder#api-access-scopes)
-    * govern which fulfillments orders are returned.
-    * An API client will only receive a subset of the fulfillment orders which belong to an order
-    * if they don't have the necessary access scopes to view all of the fulfillment orders.
-    * In the case that an API client does not have the access scopes necessary to view
-    * any of the fulfillment orders that belong to an order, an empty array will be returned.
+    * A list of [fulfillment
+    * orders](https://shopify.dev/apps/fulfillment/fulfillment-service-apps/fulfillment-order) for an
+    * order. Each fulfillment order groups [line
+    * items](https://shopify.dev/api/admin-graphql/latest/objects/OrderLineItem) that are fulfilled
+    * together,
+    * allowing an order to be processed in parts if needed.
     */
     public OrderQuery fulfillmentOrders(FulfillmentOrdersArgumentsDefinition argsDef, FulfillmentOrderConnectionQueryDefinition queryDef) {
         startField("fulfillmentOrders");
@@ -1047,6 +1120,19 @@ public class OrderQuery extends Query<OrderQuery> {
             }
             return this;
         }
+
+        /**
+        * Optional query string to filter fulfillments by timestamps. Examples:
+        * `created_at:>='2024-05-07T08:37:00Z' updated_at:<'2025-05-07T08:37:00Z'`,
+        * `created_at:'2024-05-07T08:37:00Z'`
+        */
+        public FulfillmentsArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
     }
 
     public interface FulfillmentsArgumentsDefinition {
@@ -1054,14 +1140,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * List of shipments for the order.
+    * A list of shipments for the order. Fulfillments represent the physical shipment of products to
+    * customers.
     */
     public OrderQuery fulfillments(FulfillmentQueryDefinition queryDef) {
         return fulfillments(args -> {}, queryDef);
     }
 
     /**
-    * List of shipments for the order.
+    * A list of shipments for the order. Fulfillments represent the physical shipment of products to
+    * customers.
     */
     public OrderQuery fulfillments(FulfillmentsArgumentsDefinition argsDef, FulfillmentQueryDefinition queryDef) {
         startField("fulfillments");
@@ -1078,7 +1166,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The count of fulfillments including the cancelled fulfillments.
+    * The total number of fulfillments for the order, including canceled ones.
     */
     public OrderQuery fulfillmentsCount(CountQueryDefinition queryDef) {
         startField("fulfillmentsCount");
@@ -1091,7 +1179,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order has been paid in full.
+    * Whether the order has been paid in full. This field returns `true` when the total amount received
+    * equals or exceeds the order total.
     */
     public OrderQuery fullyPaid() {
         startField("fullyPaid");
@@ -1100,7 +1189,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the merchant added a timeline comment to the order.
+    * Whether the merchant has added a timeline comment to the order.
     */
     public OrderQuery hasTimelineComment() {
         startField("hasTimelineComment");
@@ -1185,14 +1274,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of the order's line items.
+    * A list of the order's line items. Line items represent the individual products and quantities that
+    * make up the order.
     */
     public OrderQuery lineItems(LineItemConnectionQueryDefinition queryDef) {
         return lineItems(args -> {}, queryDef);
     }
 
     /**
-    * A list of the order's line items.
+    * A list of the order's line items. Line items represent the individual products and quantities that
+    * make up the order.
     */
     public OrderQuery lineItems(LineItemsArgumentsDefinition argsDef, LineItemConnectionQueryDefinition queryDef) {
         startField("lineItems");
@@ -1340,7 +1431,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The merchant's business entity associated with the order.
+    * The legal business structure that the merchant operates under for this order, such as an LLC,
+    * corporation, or partnership.
+    * Used for tax reporting, legal compliance, and determining which business entity is responsible for
+    * the order.
     */
     public OrderQuery merchantBusinessEntity(BusinessEntityQueryDefinition queryDef) {
         startField("merchantBusinessEntity");
@@ -1353,7 +1447,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order can be edited by the merchant. For example, canceled orders can’t be edited.
+    * Whether the order can be edited by the merchant. Returns `false` for orders that can't be modified,
+    * such as canceled orders or orders with specific payment statuses.
     */
     public OrderQuery merchantEditable() {
         startField("merchantEditable");
@@ -1362,7 +1457,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of reasons why the order can't be edited. For example, "Canceled orders can't be edited".
+    * A list of reasons why the order can't be edited. For example, canceled orders can't be edited.
     */
     public OrderQuery merchantEditableErrors() {
         startField("merchantEditableErrors");
@@ -1371,7 +1466,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The application acting as the Merchant of Record for the order.
+    * The application acting as the Merchant of Record for the order. The Merchant of Record is
+    * responsible for tax collection and remittance.
     */
     public OrderQuery merchantOfRecordApp(OrderAppQueryDefinition queryDef) {
         startField("merchantOfRecordApp");
@@ -1561,9 +1657,10 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The unique identifier for the order that appears on the order page in the Shopify admin and the
-    * <b>Order status</b> page.
+    * **Order status** page.
     * For example, "#1001", "EN1001", or "1001-A".
-    * This value isn't unique across multiple stores.
+    * This value isn't unique across multiple stores. Use this field to identify orders in the Shopify
+    * admin and for order tracking.
     */
     public OrderQuery name() {
         startField("name");
@@ -1683,7 +1780,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The contents of the note associated with the order.
+    * The note associated with the order.
+    * Contains additional information or instructions added by merchants or customers during the order
+    * process.
+    * Commonly used for special delivery instructions, gift messages, or internal processing notes.
     */
     public OrderQuery note() {
         startField("note");
@@ -1692,8 +1792,19 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total amount of additional fees at the time of order creation, in shop and presentment
-    * currencies.
+    * The order number used to generate the name using the store's configured order number prefix/suffix.
+    * This number isn't guaranteed to follow a consecutive integer sequence (e.g. 1, 2, 3..), nor is it
+    * guaranteed to be unique across multiple stores, or even for a single store.
+    */
+    public OrderQuery number() {
+        startField("number");
+
+        return this;
+    }
+
+    /**
+    * The total amount of all additional fees, such as import fees or taxes, that were applied when an
+    * order was created.
     * Returns `null` if additional fees aren't applicable.
     */
     public OrderQuery originalTotalAdditionalFeesSet(MoneyBagQueryDefinition queryDef) {
@@ -1707,8 +1818,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total amount of duties at the time of order creation, in shop and presentment currencies.
-    * Returns `null` if duties aren't applicable.
+    * The total amount of duties calculated when an order was created, before any modifications.
+    * Modifications include returns, refunds, order edits, and cancellations. Use
+    * [`currentTotalDutiesSet`](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Orde
+    * r.fields.currentTotalDutiesSet) to retrieve the current duties amount after adjustments.
     */
     public OrderQuery originalTotalDutiesSet(MoneyBagQueryDefinition queryDef) {
         startField("originalTotalDutiesSet");
@@ -1722,6 +1835,8 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The total price of the order at the time of order creation, in shop and presentment currencies.
+    * Use this to compare the original order value against the current total after edits, returns, or
+    * refunds.
     */
     public OrderQuery originalTotalPriceSet(MoneyBagQueryDefinition queryDef) {
         startField("originalTotalPriceSet");
@@ -1734,7 +1849,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The payment collection details for the order.
+    * The payment collection details for the order, including payment status, outstanding amounts, and
+    * collection information.
+    * Use this to understand when and how payments should be collected, especially for orders with
+    * deferred or installment payment terms.
     */
     public OrderQuery paymentCollectionDetails(OrderPaymentCollectionDetailsQueryDefinition queryDef) {
         startField("paymentCollectionDetails");
@@ -1757,7 +1875,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The payment terms associated with the order.
+    * The payment terms associated with the order, such as net payment due dates or early payment
+    * discounts. Payment terms define when and how an order should be paid. Returns `null` if no specific
+    * payment terms were set for the order.
     */
     public OrderQuery paymentTerms(PaymentTermsQueryDefinition queryDef) {
         startField("paymentTerms");
@@ -1770,7 +1890,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The phone number associated with the customer.
+    * The phone number associated with the customer for this order.
+    * Useful for contacting customers about shipping updates, delivery notifications, or order issues.
+    * Returns `null` if no phone number was provided during checkout.
     */
     public OrderQuery phone() {
         startField("phone");
@@ -1779,7 +1901,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The PO number associated with the order.
+    * The purchase order (PO) number that's associated with an order.
+    * This is typically provided by business customers who require a PO number for their procurement.
     */
     public OrderQuery poNumber() {
         startField("poNumber");
@@ -1788,7 +1911,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The payment `CurrencyCode` of the customer for the order.
+    * The currency used by the customer when placing the order. For example, "USD", "EUR", or "CAD".
+    * This may differ from the shop's base currency when serving international customers or using
+    * multi-currency pricing.
     */
     public OrderQuery presentmentCurrencyCode() {
         startField("presentmentCurrencyCode");
@@ -1797,7 +1922,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The date and time when the order was processed.
+    * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when the order was
+    * processed.
     * This date and time might not match the date and time when the order was created.
     */
     public OrderQuery processedAt() {
@@ -1807,7 +1933,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The publication that the order was created from.
+    * The sales channel that the order was created from, such as the [Online
+    * Store](https://shopify.dev/docs/apps/build/app-surfaces#online-store) or [Shopify
+    * POS](https://shopify.dev/docs/apps/build/app-surfaces#point-of-sale).
     */
     public OrderQuery publication(PublicationQueryDefinition queryDef) {
         startField("publication");
@@ -1820,7 +1948,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The purchasing entity for the order.
+    * The business entity that placed the order, including company details and purchasing relationships.
+    * Used for B2B transactions to track which company or organization is responsible for the purchase and
+    * payment terms.
     */
     public OrderQuery purchasingEntity(PurchasingEntityQueryDefinition queryDef) {
         startField("purchasingEntity");
@@ -1834,8 +1964,9 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The difference between the suggested and actual refund amount of all refunds that have been applied
-    * to the order. A positive value indicates a difference in the merchant's favor, and a negative value
-    * indicates a difference in the customer's favor.
+    * to the order.
+    * A positive value indicates a difference in the merchant's favor, and a negative value indicates a
+    * difference in the customer's favor.
     */
     public OrderQuery refundDiscrepancySet(MoneyBagQueryDefinition queryDef) {
         startField("refundDiscrepancySet");
@@ -1848,7 +1979,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order can be refunded.
+    * Whether the order can be refunded based on its payment transactions.
+    * Returns `false` for orders with no eligible payment transactions, such as fully refunded orders or
+    * orders with non-refundable payment methods.
     */
     public OrderQuery refundable() {
         startField("refundable");
@@ -1879,6 +2012,7 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * A list of refunds that have been applied to the order.
+    * Refunds represent money returned to customers for returned items, cancellations, or adjustments.
     */
     public OrderQuery refunds(RefundQueryDefinition queryDef) {
         return refunds(args -> {}, queryDef);
@@ -1886,6 +2020,7 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * A list of refunds that have been applied to the order.
+    * Refunds represent money returned to customers for returned items, cancellations, or adjustments.
     */
     public OrderQuery refunds(RefundsArgumentsDefinition argsDef, RefundQueryDefinition queryDef) {
         startField("refunds");
@@ -1902,7 +2037,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The URL of the source that the order originated from, if found in the domain registry.
+    * The URL of the source that the order originated from, if found in the domain registry. Returns
+    * `null` if the source URL isn't in the domain registry.
     */
     public OrderQuery registeredSourceUrl() {
         startField("registeredSourceUrl");
@@ -1911,7 +2047,10 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether the order has shipping lines or at least one line item on the order that requires shipping.
+    * Whether the order requires physical shipping to the customer.
+    * Returns `false` for digital-only orders (such as gift cards or downloadable products) and `true` for
+    * orders with physical products that need delivery.
+    * Use this to determine shipping workflows and logistics requirements.
     */
     public OrderQuery requiresShipping() {
         startField("requiresShipping");
@@ -1920,7 +2059,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * Whether any line item on the order can be restocked.
+    * Whether any line items on the order can be restocked into inventory.
+    * Returns `false` for digital products, custom items, or items that can't be resold.
     */
     public OrderQuery restockable() {
         startField("restockable");
@@ -1930,7 +2070,8 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The physical location where a retail order is created or completed, except for draft POS orders
-    * completed via the “mark as paid” flow in Admin, which return null.
+    * completed using the "mark as paid" flow in the Shopify admin, which return `null`. Transactions
+    * associated with the order might have been processed at a different location.
     */
     public OrderQuery retailLocation(LocationQueryDefinition queryDef) {
         startField("retailLocation");
@@ -1944,6 +2085,8 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * The order's aggregated return status for display purposes.
+    * Indicates the overall state of returns for the order, helping merchants track and manage the return
+    * process.
     */
     public OrderQuery returnStatus() {
         startField("returnStatus");
@@ -2036,14 +2179,20 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of returns for the order.
+    * The returns associated with the order.
+    * Contains information about items that customers have requested to return, including return reasons,
+    * status, and refund details.
+    * Use this to track and manage the return process for order items.
     */
     public OrderQuery returns(ReturnConnectionQueryDefinition queryDef) {
         return returns(args -> {}, queryDef);
     }
 
     /**
-    * A list of returns for the order.
+    * The returns associated with the order.
+    * Contains information about items that customers have requested to return, including return reasons,
+    * status, and refund details.
+    * Use this to track and manage the return process for order items.
     */
     public OrderQuery returns(ReturnsArgumentsDefinition argsDef, ReturnConnectionQueryDefinition queryDef) {
         startField("returns");
@@ -2060,7 +2209,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The risk characteristics for the order.
+    * The risk assessment summary for the order.
+    * Provides fraud analysis and risk scoring to help you identify potentially fraudulent orders.
+    * Use this to make informed decisions about order fulfillment and payment processing.
     */
     public OrderQuery risk(OrderRiskSummaryQueryDefinition queryDef) {
         startField("risk");
@@ -2073,7 +2224,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The mailing address of the customer.
+    * The shipping address where the order will be delivered.
+    * Contains the customer's delivery location for fulfillment and shipping label generation.
+    * Returns `null` for digital orders or orders that don't require shipping.
     */
     public OrderQuery shippingAddress(MailingAddressQueryDefinition queryDef) {
         startField("shippingAddress");
@@ -2087,6 +2240,7 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * A summary of all shipping costs on the order.
+    * Aggregates shipping charges, discounts, and taxes to provide a single view of delivery costs.
     */
     public OrderQuery shippingLine(ShippingLineQueryDefinition queryDef) {
         startField("shippingLine");
@@ -2177,14 +2331,20 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A list of the order's shipping lines.
+    * The shipping methods applied to the order.
+    * Each shipping line represents a shipping option chosen during checkout, including the carrier,
+    * service level, and cost.
+    * Use this to understand shipping charges and delivery options for the order.
     */
     public OrderQuery shippingLines(ShippingLineConnectionQueryDefinition queryDef) {
         return shippingLines(args -> {}, queryDef);
     }
 
     /**
-    * A list of the order's shipping lines.
+    * The shipping methods applied to the order.
+    * Each shipping line represents a shipping option chosen during checkout, including the carrier,
+    * service level, and cost.
+    * Use this to understand shipping charges and delivery options for the order.
     */
     public OrderQuery shippingLines(ShippingLinesArgumentsDefinition argsDef, ShippingLineConnectionQueryDefinition queryDef) {
         startField("shippingLines");
@@ -2201,8 +2361,12 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The Shopify Protect details for the order. If Shopify Protect is disabled for the shop, then this
-    * will be null.
+    * The Shopify Protect details for the order, including fraud protection status and coverage
+    * information.
+    * Shopify Protect helps protect eligible orders against fraudulent chargebacks.
+    * Returns `null` if Shopify Protect is disabled for the shop or the order isn't eligible for
+    * protection.
+    * Learn more about [Shopify Protect](https://www.shopify.com/protect).
     */
     public OrderQuery shopifyProtect(ShopifyProtectOrderSummaryQueryDefinition queryDef) {
         startField("shopifyProtect");
@@ -2216,8 +2380,9 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * A unique POS or third party order identifier.
-    * For example, "1234-12-1000" or "111-98567-54". The `receipt_number` field is derived from this value
-    * for POS orders.
+    * For example, "1234-12-1000" or "111-98567-54". The
+    * [`receiptNumber`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-receiptNumbe
+    * r) field is derived from this value for POS orders.
     */
     public OrderQuery sourceIdentifier() {
         startField("sourceIdentifier");
@@ -2226,7 +2391,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The name of the source associated with the order.
+    * The name of the source associated with the order, such as "web", "mobile_app", or "pos". Use this
+    * field to identify the platform where the order was placed.
     */
     public OrderQuery sourceName() {
         startField("sourceName");
@@ -2235,7 +2401,9 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The staff member associated with the order.
+    * The staff member who created or is responsible for the order.
+    * Useful for tracking which team member handled phone orders, manual orders, or order modifications.
+    * Returns `null` for orders created directly by customers through the online store.
     */
     public OrderQuery staffMember(StaffMemberQueryDefinition queryDef) {
         startField("staffMember");
@@ -2247,17 +2415,67 @@ public class OrderQuery extends Query<OrderQuery> {
         return this;
     }
 
+    public class StatusPageUrlArguments extends Arguments {
+        StatusPageUrlArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * Specifies the intended audience for the status page URL.
+        */
+        public StatusPageUrlArguments audience(Audience value) {
+            if (value != null) {
+                startArgument("audience");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Specifies the intended notification usage for the status page URL.
+        */
+        public StatusPageUrlArguments notificationUsage(NotificationUsage value) {
+            if (value != null) {
+                startArgument("notificationUsage");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface StatusPageUrlArgumentsDefinition {
+        void define(StatusPageUrlArguments args);
+    }
+
     /**
-    * The URL where the customer can check the order's current status.
+    * The URL where customers can check their order's current status, including tracking information and
+    * delivery updates.
+    * Provides order tracking links in emails, apps, or customer communications.
     */
     public OrderQuery statusPageUrl() {
+        return statusPageUrl(args -> {});
+    }
+
+    /**
+    * The URL where customers can check their order's current status, including tracking information and
+    * delivery updates.
+    * Provides order tracking links in emails, apps, or customer communications.
+    */
+    public OrderQuery statusPageUrl(StatusPageUrlArgumentsDefinition argsDef) {
         startField("statusPageUrl");
+
+        StatusPageUrlArguments args = new StatusPageUrlArguments(_queryBuilder);
+        argsDef.define(args);
+        StatusPageUrlArguments.end(args);
 
         return this;
     }
 
     /**
-    * The sum of the quantities for all line items that contribute to the order's subtotal price.
+    * The sum of quantities for all line items that contribute to the order's subtotal price.
+    * This excludes quantities for items like tips, shipping costs, or gift cards that don't affect the
+    * subtotal.
+    * Use this to quickly understand the total item count for pricing calculations.
     */
     public OrderQuery subtotalLineItemsQuantity() {
         startField("subtotalLineItemsQuantity");
@@ -2358,6 +2576,17 @@ public class OrderQuery extends Query<OrderQuery> {
             }
             return this;
         }
+
+        /**
+        * Specifies which refund methods to allocate the suggested refund amount to.
+        */
+        public SuggestedRefundArguments refundMethodAllocation(RefundMethodAllocation value) {
+            if (value != null) {
+                startArgument("refundMethodAllocation");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
     }
 
     public interface SuggestedRefundArgumentsDefinition {
@@ -2365,14 +2594,16 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * A suggested refund for the order.
+    * A calculated refund suggestion for the order based on specified line items, shipping, and duties.
+    * Use this to preview refund amounts, taxes, and processing fees before creating an actual refund.
     */
     public OrderQuery suggestedRefund(SuggestedRefundQueryDefinition queryDef) {
         return suggestedRefund(args -> {}, queryDef);
     }
 
     /**
-    * A suggested refund for the order.
+    * A calculated refund suggestion for the order based on specified line items, shipping, and duties.
+    * Use this to preview refund amounts, taxes, and processing fees before creating an actual refund.
     */
     public OrderQuery suggestedRefund(SuggestedRefundArgumentsDefinition argsDef, SuggestedRefundQueryDefinition queryDef) {
         startField("suggestedRefund");
@@ -2402,6 +2633,9 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * Whether taxes are exempt on the order.
+    * Returns `true` for orders where the customer or business has a valid tax exemption, such as
+    * non-profit organizations or tax-free purchases.
+    * Use this to understand if tax calculations were skipped during checkout.
     */
     public OrderQuery taxExempt() {
         startField("taxExempt");
@@ -2425,6 +2659,8 @@ public class OrderQuery extends Query<OrderQuery> {
 
     /**
     * Whether taxes are included in the subtotal price of the order.
+    * When `true`, the subtotal and line item prices include tax amounts. When `false`, taxes are
+    * calculated and displayed separately.
     */
     public OrderQuery taxesIncluded() {
         startField("taxesIncluded");
@@ -2458,7 +2694,7 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total rounding adjustment applied to payments or refunds for an Order involving cash payments.
+    * The total rounding adjustment applied to payments or refunds for an order involving cash payments.
     * Applies to some countries where cash transactions are rounded to the nearest currency denomination.
     */
     public OrderQuery totalCashRoundingAdjustment(CashRoundingAdjustmentQueryDefinition queryDef) {
@@ -2555,7 +2791,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The total shipping amount before discounts and returns, in shop and presentment currencies.
+    * The total shipping costs returned to the customer, in shop and presentment currencies. This includes
+    * fees and any related discounts that were refunded.
     */
     public OrderQuery totalShippingPriceSet(MoneyBagQueryDefinition queryDef) {
         startField("totalShippingPriceSet");
@@ -2693,7 +2930,8 @@ public class OrderQuery extends Query<OrderQuery> {
     }
 
     /**
-    * The date and time when the order was modified last.
+    * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when the order was
+    * last modified.
     */
     public OrderQuery updatedAt() {
         startField("updatedAt");

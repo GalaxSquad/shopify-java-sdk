@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface GiftCardQueryDefinition {
     void define(GiftCardQuery _queryBuilder);
 }

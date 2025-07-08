@@ -205,7 +205,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         }
 
         /**
-        * The upper bound on count value before returning a result.
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
         */
         public AbandonedCheckoutsCountArguments limit(Integer value) {
             if (value != null) {
@@ -221,14 +221,16 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000.
+    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000 by
+    * default.
     */
     public QueryRootQuery abandonedCheckoutsCount(CountQueryDefinition queryDef) {
         return abandonedCheckoutsCount(args -> {}, queryDef);
     }
 
     /**
-    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000.
+    * Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000 by
+    * default.
     */
     public QueryRootQuery abandonedCheckoutsCount(AbandonedCheckoutsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("abandonedCheckoutsCount");
@@ -389,6 +391,97 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new AppDiscountTypeQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class AppDiscountTypesNodesArguments extends Arguments {
+        AppDiscountTypesNodesArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public AppDiscountTypesNodesArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public AppDiscountTypesNodesArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public AppDiscountTypesNodesArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public AppDiscountTypesNodesArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public AppDiscountTypesNodesArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface AppDiscountTypesNodesArgumentsDefinition {
+        void define(AppDiscountTypesNodesArguments args);
+    }
+
+    /**
+    * A list of app discount types installed by apps.
+    */
+    public QueryRootQuery appDiscountTypesNodes(AppDiscountTypeConnectionQueryDefinition queryDef) {
+        return appDiscountTypesNodes(args -> {}, queryDef);
+    }
+
+    /**
+    * A list of app discount types installed by apps.
+    */
+    public QueryRootQuery appDiscountTypesNodes(AppDiscountTypesNodesArgumentsDefinition argsDef, AppDiscountTypeConnectionQueryDefinition queryDef) {
+        startField("appDiscountTypesNodes");
+
+        AppDiscountTypesNodesArguments args = new AppDiscountTypesNodesArguments(_queryBuilder);
+        argsDef.define(args);
+        AppDiscountTypesNodesArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new AppDiscountTypeConnectionQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -587,6 +680,97 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class ArticleAuthorsArguments extends Arguments {
+        ArticleAuthorsArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ArticleAuthorsArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ArticleAuthorsArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ArticleAuthorsArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ArticleAuthorsArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public ArticleAuthorsArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ArticleAuthorsArgumentsDefinition {
+        void define(ArticleAuthorsArguments args);
+    }
+
+    /**
+    * List of article authors for the shop.
+    */
+    public QueryRootQuery articleAuthors(ArticleAuthorConnectionQueryDefinition queryDef) {
+        return articleAuthors(args -> {}, queryDef);
+    }
+
+    /**
+    * List of article authors for the shop.
+    */
+    public QueryRootQuery articleAuthors(ArticleAuthorsArgumentsDefinition argsDef, ArticleAuthorConnectionQueryDefinition queryDef) {
+        startField("articleAuthors");
+
+        ArticleAuthorsArguments args = new ArticleAuthorsArguments(_queryBuilder);
+        argsDef.define(args);
+        ArticleAuthorsArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new ArticleAuthorConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     public class ArticleTagsArguments extends Arguments {
         ArticleTagsArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, false);
@@ -711,15 +895,23 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | name | type | description | acceptable_values | default_value | example_use |
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
-        * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * `query=Bob Norman`<br/> - `query=handle:summer-collection-announcement` |
         * | author | string | Filter by the author of the article. |
+        * | blog_id | string | Filter by the ID of the blog the article belongs to. | | | -
+        * `blog_id:1234`<br/> - `blog_id:>=1234`<br/> - `blog_id:<=1234` |
         * | blog_title | string |
         * | created_at | time | Filter by the date and time when the article was created. | | | -
         * `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
+        * | handle | string | Filter by the article's handle. | | | -
+        * `handle:summer-collection-announcement`<br/> - `handle:how-to-guide` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | published_at | time | Filter by the date and time when the article was published. | | | -
+        * `published_at:>'2020-10-21T23:39:20Z'`<br/> - `published_at:<now`<br/> - `published_at:<=2024` |
         * | published_status | string | Filter by published status |
         * | tag | string | Filter objects by the `tag` field. | | | - `tag:my_tag` |
         * | tag_not | string | Filter by objects that don’t have the specified tag. | | | - `tag_not:my_tag` |
+        * | title | string | Filter by the title of the article. | | | - `title:summer-collection`<br/> -
+        * `title:green hoodie` |
         * | updated_at | time | Filter by the date and time when the article was last updated. | | | -
         * `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> - `updated_at:<=2024` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
@@ -1185,6 +1377,19 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
+    * The regions that can be used as the backup region of the shop.
+    */
+    public QueryRootQuery availableBackupRegions(MarketRegionQueryDefinition queryDef) {
+        startField("availableBackupRegions");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketRegionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Returns a list of activated carrier services and associated shop locations that support them.
     */
     public QueryRootQuery availableCarrierServices(DeliveryCarrierServiceAndLocationsQueryDefinition queryDef) {
@@ -1205,6 +1410,19 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new LocaleQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The backup region of the shop.
+    */
+    public QueryRootQuery backupRegion(MarketRegionQueryDefinition queryDef) {
+        startField("backupRegion");
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketRegionQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -1380,6 +1598,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public BlogsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface BlogsCountArgumentsDefinition {
@@ -1387,14 +1616,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of blogs.
+    * Count of blogs. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery blogsCount(CountQueryDefinition queryDef) {
         return blogsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of blogs.
+    * Count of blogs. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery blogsCount(BlogsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("blogsCount");
@@ -1846,7 +2075,23 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Catalog resource by ID.
+    * Retrieves a [catalog](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Catalog) by its
+    * ID.
+    * A catalog represents a list of products with publishing and pricing information,
+    * and can be associated with a context, such as a market, company location, or app.
+    * Use the `catalog` query to retrieve information associated with the following workflows:
+    * - Managing product publications across different contexts
+    * - Setting up contextual pricing with price lists
+    * - Managing market-specific product availability
+    * - Configuring B2B customer catalogs
+    * There are several types of catalogs:
+    * - [`MarketCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/MarketCatalog)
+    * - [`AppCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/AppCatalog)
+    * -
+    * [`CompanyLocationCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/CompanyLocation
+    * Catalog)
+    * Learn more about [catalogs for different
+    * markets](https://shopify.dev/docs/apps/build/markets/catalogs-different-markets).
     */
     public QueryRootQuery catalog(ID id, CatalogQueryDefinition queryDef) {
         startField("catalog");
@@ -2056,6 +2301,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CatalogsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface CatalogsCountArgumentsDefinition {
@@ -2063,14 +2319,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * The count of catalogs belonging to the shop. Limited to a maximum of 10000.
+    * The count of catalogs belonging to the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery catalogsCount(CountQueryDefinition queryDef) {
         return catalogsCount(args -> {}, queryDef);
     }
 
     /**
-    * The count of catalogs belonging to the shop. Limited to a maximum of 10000.
+    * The count of catalogs belonging to the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery catalogsCount(CatalogsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("catalogsCount");
@@ -2544,13 +2800,49 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Collection resource by ID.
+    * Retrieves a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection) by
+    * its ID.
+    * A collection represents a grouping of
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * that merchants can display and sell as a group in their [online
+    * store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * Use the `collection` query when you need to:
+    * - Manage collection publishing across sales channels
+    * - Access collection metadata and SEO information
+    * - Work with collection rules and product relationships
+    * A collection can be either a custom
+    * ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+    * collection where products are manually added, or a smart
+    * ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+    * collection where products are automatically included based on defined rules. Each collection has
+    * associated metadata including
+    * title, description, handle, image, and
+    * [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields).
     */
     public QueryRootQuery collection(ID id, CollectionQueryDefinition queryDef) {
         startField("collection");
 
         _queryBuilder.append("(id:");
         Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new CollectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Return a collection by an identifier.
+    */
+    public QueryRootQuery collectionByIdentifier(CollectionIdentifierInput identifier, CollectionQueryDefinition queryDef) {
+        startField("collectionByIdentifier");
+
+        _queryBuilder.append("(identifier:");
+        identifier.appendTo(_queryBuilder);
 
         _queryBuilder.append(')');
 
@@ -2750,20 +3042,20 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | handle | string |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
         * | product_id | id | Filter by collections containing a product by its ID. |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | publishable_status | string | Filter by the publishable status of the resource on a channel, such
         * as the online store. The value is a composite of either the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) or
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_at | time | Filter by the date and time when the collection was published to the Online
         * Store. |
         * | published_status | string | Filter by the published status of the resource on a channel, such as
@@ -2801,14 +3093,76 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a list of collections.
+    * Retrieves a list of
+    * [collections](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+    * in a store. Collections are groups of
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * that merchants can organize for display in their [online
+    * store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * For example, an athletics store might create different collections for running attire, shoes, and
+    * accessories.
+    * Use the `collections` query when you need to:
+    * - Build a browsing interface for a store's product groupings.
+    * - Create collection searching, sorting, and filtering experiences (for example, by title, type, or
+    * published status).
+    * - Sync collection data with external systems.
+    * - Manage both custom
+    * ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+    * and smart ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+    * collections.
+    * The `collections` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * for large catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/collections#arguments-savedSearc
+    * hId)
+    * for frequently used collection queries.
+    * The `collections` query returns collections with their associated metadata, including:
+    * - Basic collection information (title, description, handle, and type)
+    * - Collection image and SEO metadata
+    * - Product count and product relationships
+    * - Collection rules (for smart collections)
+    * - Publishing status and publication details
+    * - Metafields and custom attributes
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
     public QueryRootQuery collections(CollectionConnectionQueryDefinition queryDef) {
         return collections(args -> {}, queryDef);
     }
 
     /**
-    * Returns a list of collections.
+    * Retrieves a list of
+    * [collections](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+    * in a store. Collections are groups of
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * that merchants can organize for display in their [online
+    * store](https://shopify.dev/docs/apps/build/online-store) and
+    * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+    * For example, an athletics store might create different collections for running attire, shoes, and
+    * accessories.
+    * Use the `collections` query when you need to:
+    * - Build a browsing interface for a store's product groupings.
+    * - Create collection searching, sorting, and filtering experiences (for example, by title, type, or
+    * published status).
+    * - Sync collection data with external systems.
+    * - Manage both custom
+    * ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+    * and smart ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+    * collections.
+    * The `collections` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * for large catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/collections#arguments-savedSearc
+    * hId)
+    * for frequently used collection queries.
+    * The `collections` query returns collections with their associated metadata, including:
+    * - Basic collection information (title, description, handle, and type)
+    * - Collection image and SEO metadata
+    * - Product count and product relationships
+    * - Collection rules (for smart collections)
+    * - Publishing status and publication details
+    * - Metafields and custom attributes
+    * Learn more about [using metafields with smart
+    * collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
     */
     public QueryRootQuery collections(CollectionsArgumentsDefinition argsDef, CollectionConnectionQueryDefinition queryDef) {
         startField("collections");
@@ -2839,20 +3193,20 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | handle | string |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
         * | product_id | id | Filter by collections containing a product by its ID. |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | publishable_status | string | Filter by the publishable status of the resource on a channel, such
         * as the online store. The value is a composite of either the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) or
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_at | time | Filter by the date and time when the collection was published to the Online
         * Store. |
         * | published_status | string | Filter by the published status of the resource on a channel, such as
@@ -2884,6 +3238,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CollectionsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface CollectionsCountArgumentsDefinition {
@@ -2891,14 +3256,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of collections. Limited to a maximum of 10000.
+    * Count of collections. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery collectionsCount(CountQueryDefinition queryDef) {
         return collectionsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of collections. Limited to a maximum of 10000.
+    * Count of collections. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery collectionsCount(CollectionsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("collectionsCount");
@@ -3013,11 +3378,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time | Filter by the date and time when the comment was created. | | | -
+        * `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | published_at | time | Filter by the date and time when the comment was published. | | | -
+        * `published_at:>'2020-10-21T23:39:20Z'`<br/> - `published_at:<now`<br/> - `published_at:<=2024` |
         * | published_status | string | Filter by published status | - `any`<br/> - `published`<br/> -
         * `unpublished` | | - `published_status:any`<br/> - `published_status:published`<br/> -
         * `published_status:unpublished` |
         * | status | string |
+        * | updated_at | time | Filter by the date and time when the comment was last updated. | | | -
+        * `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> - `updated_at:<=2024` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
         * syntax](https://shopify.dev/api/usage/search-syntax).
         */
@@ -3184,11 +3555,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class CompaniesCountArguments extends Arguments {
+        CompaniesCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CompaniesCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface CompaniesCountArgumentsDefinition {
+        void define(CompaniesCountArguments args);
+    }
+
     /**
-    * The number of companies for a shop.
+    * The number of companies for a shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery companiesCount(CountQueryDefinition queryDef) {
+        return companiesCount(args -> {}, queryDef);
+    }
+
+    /**
+    * The number of companies for a shop. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery companiesCount(CompaniesCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("companiesCount");
+
+        CompaniesCountArguments args = new CompaniesCountArguments(_queryBuilder);
+        argsDef.define(args);
+        CompaniesCountArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));
@@ -3395,6 +3798,108 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class ConsentPolicyArguments extends Arguments {
+        ConsentPolicyArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * Return the policy with the provided ID.
+        */
+        public ConsentPolicyArguments id(ID value) {
+            if (value != null) {
+                startArgument("id");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Return policies with the provided country code.
+        */
+        public ConsentPolicyArguments countryCode(PrivacyCountryCode value) {
+            if (value != null) {
+                startArgument("countryCode");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Return policies with the provided region code.
+        */
+        public ConsentPolicyArguments regionCode(String value) {
+            if (value != null) {
+                startArgument("regionCode");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Return policies where consent is required or not.
+        */
+        public ConsentPolicyArguments consentRequired(Boolean value) {
+            if (value != null) {
+                startArgument("consentRequired");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * Return policies where data sale opt out is required or not.
+        */
+        public ConsentPolicyArguments dataSaleOptOutRequired(Boolean value) {
+            if (value != null) {
+                startArgument("dataSaleOptOutRequired");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface ConsentPolicyArgumentsDefinition {
+        void define(ConsentPolicyArguments args);
+    }
+
+    /**
+    * Returns the customer privacy consent policies of a shop.
+    */
+    public QueryRootQuery consentPolicy(ConsentPolicyQueryDefinition queryDef) {
+        return consentPolicy(args -> {}, queryDef);
+    }
+
+    /**
+    * Returns the customer privacy consent policies of a shop.
+    */
+    public QueryRootQuery consentPolicy(ConsentPolicyArgumentsDefinition argsDef, ConsentPolicyQueryDefinition queryDef) {
+        startField("consentPolicy");
+
+        ConsentPolicyArguments args = new ConsentPolicyArguments(_queryBuilder);
+        argsDef.define(args);
+        ConsentPolicyArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new ConsentPolicyQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * List of countries and regions for which consent policies can be created or updated.
+    */
+    public QueryRootQuery consentPolicyRegions(ConsentPolicyRegionQueryDefinition queryDef) {
+        startField("consentPolicyRegions");
+
+        _queryBuilder.append('{');
+        queryDef.define(new ConsentPolicyRegionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     /**
     * Return the AppInstallation for the currently authenticated App.
     */
@@ -3469,7 +3974,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Customer resource by ID.
+    * Returns a `Customer` resource by ID.
     */
     public QueryRootQuery customer(ID id, CustomerQueryDefinition queryDef) {
         startField("customer");
@@ -4133,24 +4638,51 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
-        * | accepts_marketing | boolean |
-        * | country | string |
-        * | customer_date | time |
+        * | accepts_marketing | boolean | Filter by whether a customer has consented to receive marketing
+        * material. | | | - `accepts_marketing:true` |
+        * | country | string | Filter by the country associated with the customer's address. Use either the
+        * country name or the two-letter country code. | | | - `country:Canada`<br/> - `country:JP` |
+        * | customer_date | time | Filter by the date and time when the customer record was created. This
+        * query parameter filters by the
+        * [`createdAt`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer#field-createdAt)
+        * field. | | | - `customer_date:'2024-03-15T14:30:00Z'`<br/> - `customer_date:'>=2024-01-01'` |
         * | email | string | The customer's email address, used to communicate information about orders and
         * for the purposes of email marketing campaigns. You can use a wildcard value to filter the query by
-        * customers who have an email address specified. | | | - `email:bo.wang@example.com`<br/> - `email:*`
-        * |
+        * customers who have an email address specified. Please note that _email_ is a tokenized field: To
+        * retrieve exact matches, quote the email address (_phrase query_) as described in [Shopify API search
+        * syntax](https://shopify.dev/docs/api/usage/search-syntax). | | | - `email:gmail.com`<br/> -
+        * `email:"bo.wang@example.com"`<br/> - `email:*` |
+        * | first_name | string | Filter by the customer's first name. | | | - `first_name:Jane` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
-        * | last_abandoned_order_date | time |
-        * | order_date | time |
-        * | orders_count | integer |
+        * | last_abandoned_order_date | time | Filter by the date and time of the customer's most recent
+        * abandoned checkout. An abandoned checkout occurs when a customer adds items to their cart, begins
+        * the checkout process, but leaves the site without completing their purchase. | | | -
+        * `last_abandoned_order_date:'2024-04-01T10:00:00Z'`<br/> - `last_abandoned_order_date:'>=2024-01-01'`
+        * |
+        * | last_name | string | Filter by the customer's last name. | | | - `last_name:Reeves` |
+        * | order_date | time | Filter by the date and time that the order was placed by the customer. Use
+        * this query filter to check if a customer has placed at least one order within a specified date
+        * range. | | | - `order_date:'2024-02-20T00:00:00Z'`<br/> - `order_date:'>=2024-01-01'`<br/> -
+        * `order_date:'2024-01-01..2024-03-31'` |
+        * | orders_count | integer | Filter by the total number of orders a customer has placed. | | | -
+        * `orders_count:5` |
         * | phone | string | The phone number of the customer, used to communicate information about orders
         * and for the purposes of SMS marketing campaigns. You can use a wildcard value to filter the query by
         * customers who have a phone number specified. | | | - `phone:+18005550100`<br/> - `phone:*` |
-        * | state | string |
-        * | tag | string |
-        * | tag_not | string |
-        * | total_spent | float |
+        * | state | string | Filter by the
+        * [state](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer#field-state) of the
+        * customer's account with the shop. This filter is only valid when [Classic Customer
+        * Accounts](https://shopify.dev/docs/api/admin-graphql/latest/objects/CustomerAccountsV2#field-custome
+        * rAccountsVersion) is active. | | | - `state:ENABLED`<br/> - `state:INVITED`<br/> -
+        * `state:DISABLED`<br/> - `state:DECLINED` |
+        * | tag | string | Filter by the tags that are associated with the customer. This query parameter
+        * accepts multiple tags separated by commas. | | | - `tag:'VIP'`<br/> - `tag:'Wholesale,Repeat'` |
+        * | tag_not | string | Filter by the tags that aren't associated with the customer. This query
+        * parameter accepts multiple tags separated by commas. | | | - `tag_not:'Prospect'`<br/> -
+        * `tag_not:'Test,Internal'` |
+        * | total_spent | float | Filter by the total amount of money a customer has spent across all orders.
+        * | | | - `total_spent:100.50`<br/> - `total_spent:50.00`<br/> - `total_spent:>100.50`<br/> -
+        * `total_spent:>50.00` |
         * | updated_at | time | The date and time, matching a whole day, when the customer's information was
         * last updated. | | | - `updated_at:2024-01-01T00:00:00Z`<br/> - `updated_at:<now`<br/> -
         * `updated_at:<=2024` |
@@ -4171,14 +4703,24 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a list of customers.
+    * Returns a list of [customers](https://shopify.dev/api/admin-graphql/latest/objects/Customer) in your
+    * Shopify store, including key information such as name, email, location, and purchase history.
+    * Use this query to segment your audience, personalize marketing campaigns, or analyze customer
+    * behavior by applying filters based on location, order history, marketing preferences and tags.
+    * The `customers` query supports [pagination](https://shopify.dev/api/usage/pagination-graphql) and
+    * [sorting](https://shopify.dev/api/admin-graphql/latest/enums/CustomerSortKeys).
     */
     public QueryRootQuery customers(CustomerConnectionQueryDefinition queryDef) {
         return customers(args -> {}, queryDef);
     }
 
     /**
-    * Returns a list of customers.
+    * Returns a list of [customers](https://shopify.dev/api/admin-graphql/latest/objects/Customer) in your
+    * Shopify store, including key information such as name, email, location, and purchase history.
+    * Use this query to segment your audience, personalize marketing campaigns, or analyze customer
+    * behavior by applying filters based on location, order history, marketing preferences and tags.
+    * The `customers` query supports [pagination](https://shopify.dev/api/usage/pagination-graphql) and
+    * [sorting](https://shopify.dev/api/admin-graphql/latest/enums/CustomerSortKeys).
     */
     public QueryRootQuery customers(CustomersArgumentsDefinition argsDef, CustomerConnectionQueryDefinition queryDef) {
         startField("customers");
@@ -4216,6 +4758,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CustomersCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface CustomersCountArgumentsDefinition {
@@ -4223,14 +4776,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * The number of customers.
+    * The number of customers. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery customersCount(CountQueryDefinition queryDef) {
         return customersCount(args -> {}, queryDef);
     }
 
     /**
-    * The number of customers.
+    * The number of customers. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery customersCount(CustomersCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("customersCount");
@@ -4674,6 +5227,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public DiscountCodesCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface DiscountCodesCountArgumentsDefinition {
@@ -4681,14 +5245,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * The total number of discount codes for the shop.
+    * The total number of discount codes for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery discountCodesCount(CountQueryDefinition queryDef) {
         return discountCodesCount(args -> {}, queryDef);
     }
 
     /**
-    * The total number of discount codes for the shop.
+    * The total number of discount codes for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery discountCodesCount(DiscountCodesCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("discountCodesCount");
@@ -4810,12 +5374,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * type](https://shopify.dev/docs/api/admin-graphql/latest/queries/discountnodes#argument-query-filter-
         * discount_type) can combine with. | - `order_discounts`<br/> - `product_discounts`<br/> -
         * `shipping_discounts` | | - `combines_with:product_discounts` |
+        * | created_at | time | Filter by the date and time, in the shop's timezone, when the discount was
+        * created. | | | - `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> -
+        * `created_at:<='2024'` |
         * | discount_class | string | Filter by the [discount
         * class](https://shopify.dev/docs/apps/build/discounts#discount-classes). | - `order`<br/> -
         * `product`<br/> - `shipping` | | - `discount_class:product` |
         * | discount_type | string | Filter by the [discount
         * type](https://help.shopify.com/manual/discounts/discount-types). | - `bogo`<br/> -
         * `fixed_amount`<br/> - `free_shipping`<br/> - `percentage` | | - `type:fixed_amount` |
+        * | ends_at | time | Filter by the date and time, in the shop's timezone, when the discount ends. | |
+        * | - `ends_at:>'2020-10-21T23:39:20Z'`<br/> - `ends_at:<now`<br/> - `ends_at:<='2024'` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
         * | method | string | Filter by the [discount
         * method](https://shopify.dev/docs/apps/build/discounts#discount-methods). | - `automatic`<br/> -
@@ -4836,6 +5405,9 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * type](https://help.shopify.com/manual/discounts/discount-types). | - `all`<br/> -
         * `all_with_app`<br/> - `app`<br/> - `bxgy`<br/> - `fixed_amount`<br/> - `free_shipping`<br/> -
         * `percentage` | | - `type:percentage` |
+        * | updated_at | time | Filter by the date and time, in the shop's timezone, when the discount was
+        * last updated. | | | - `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> -
+        * `updated_at:<='2024'` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
         * syntax](https://shopify.dev/api/usage/search-syntax).
         */
@@ -4907,12 +5479,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * type](https://shopify.dev/docs/api/admin-graphql/latest/queries/discountnodes#argument-query-filter-
         * discount_type) can combine with. | - `order_discounts`<br/> - `product_discounts`<br/> -
         * `shipping_discounts` | | - `combines_with:product_discounts` |
+        * | created_at | time | Filter by the date and time, in the shop's timezone, when the discount was
+        * created. | | | - `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> -
+        * `created_at:<='2024'` |
         * | discount_class | string | Filter by the [discount
         * class](https://shopify.dev/docs/apps/build/discounts#discount-classes). | - `order`<br/> -
         * `product`<br/> - `shipping` | | - `discount_class:product` |
         * | discount_type | string | Filter by the [discount
         * type](https://help.shopify.com/manual/discounts/discount-types). | - `bogo`<br/> -
         * `fixed_amount`<br/> - `free_shipping`<br/> - `percentage` | | - `type:fixed_amount` |
+        * | ends_at | time | Filter by the date and time, in the shop's timezone, when the discount ends. | |
+        * | - `ends_at:>'2020-10-21T23:39:20Z'`<br/> - `ends_at:<now`<br/> - `ends_at:<='2024'` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
         * | method | string | Filter by the [discount
         * method](https://shopify.dev/docs/apps/build/discounts#discount-methods). | - `automatic`<br/> -
@@ -4933,6 +5510,9 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * type](https://help.shopify.com/manual/discounts/discount-types). | - `all`<br/> -
         * `all_with_app`<br/> - `app`<br/> - `bxgy`<br/> - `fixed_amount`<br/> - `free_shipping`<br/> -
         * `percentage` | | - `type:percentage` |
+        * | updated_at | time | Filter by the date and time, in the shop's timezone, when the discount was
+        * last updated. | | | - `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> -
+        * `updated_at:<='2024'` |
         * You can apply one or more filters to a query. Learn more about [Shopify API search
         * syntax](https://shopify.dev/api/usage/search-syntax).
         */
@@ -4957,6 +5537,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public DiscountNodesCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface DiscountNodesCountArgumentsDefinition {
@@ -4964,14 +5555,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * The total number of discounts for the shop. Limited to a maximum of 10000.
+    * The total number of discounts for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery discountNodesCount(CountQueryDefinition queryDef) {
         return discountNodesCount(args -> {}, queryDef);
     }
 
     /**
-    * The total number of discounts for the shop. Limited to a maximum of 10000.
+    * The total number of discounts for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery discountNodesCount(DiscountNodesCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("discountNodesCount");
@@ -5292,7 +5883,27 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a DraftOrder resource by ID.
+    * Retrieves a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) by
+    * its ID.
+    * A draft order is an order created by a merchant on behalf of their
+    * customers. Draft orders contain all necessary order details (products, pricing, customer
+    * information)
+    * but require payment to be accepted before they can be converted into
+    * [completed orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete).
+    * Use the `draftOrder` query to retrieve information associated with the following workflows:
+    * - Creating orders for phone, in-person, or chat sales
+    * - Sending invoices to customers with secure checkout links
+    * - Managing custom items and additional costs
+    * - Selling products at discount or wholesale rates
+    * - Processing pre-orders and saving drafts for later completion
+    * A draft order is associated with a
+    * [customer](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer)
+    * and contains multiple [line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrderLineItem).
+    * Each draft order has a
+    * [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder#field-DraftOrder.field
+    * s.status),
+    * which indicates its progress through the sales workflow.
     */
     public QueryRootQuery draftOrder(ID id, DraftOrderQueryDefinition queryDef) {
         startField("draftOrder");
@@ -5304,6 +5915,87 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new DraftOrderQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class DraftOrderAvailableDeliveryOptionsArguments extends Arguments {
+        DraftOrderAvailableDeliveryOptionsArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The search term for the delivery options.
+        */
+        public DraftOrderAvailableDeliveryOptionsArguments search(String value) {
+            if (value != null) {
+                startArgument("search");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The offset for the local pickup options.
+        */
+        public DraftOrderAvailableDeliveryOptionsArguments localPickupFrom(Integer value) {
+            if (value != null) {
+                startArgument("localPickupFrom");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The number of local pickup options required.
+        */
+        public DraftOrderAvailableDeliveryOptionsArguments localPickupCount(Integer value) {
+            if (value != null) {
+                startArgument("localPickupCount");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * Unique token used to trace execution and help optimize the calculation.
+        */
+        public DraftOrderAvailableDeliveryOptionsArguments sessionToken(String value) {
+            if (value != null) {
+                startArgument("sessionToken");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface DraftOrderAvailableDeliveryOptionsArgumentsDefinition {
+        void define(DraftOrderAvailableDeliveryOptionsArguments args);
+    }
+
+    /**
+    * Returns a list of available delivery options for a draft order.
+    */
+    public QueryRootQuery draftOrderAvailableDeliveryOptions(DraftOrderAvailableDeliveryOptionsInput input, DraftOrderAvailableDeliveryOptionsQueryDefinition queryDef) {
+        return draftOrderAvailableDeliveryOptions(input, args -> {}, queryDef);
+    }
+
+    /**
+    * Returns a list of available delivery options for a draft order.
+    */
+    public QueryRootQuery draftOrderAvailableDeliveryOptions(DraftOrderAvailableDeliveryOptionsInput input, DraftOrderAvailableDeliveryOptionsArgumentsDefinition argsDef, DraftOrderAvailableDeliveryOptionsQueryDefinition queryDef) {
+        startField("draftOrderAvailableDeliveryOptions");
+
+        _queryBuilder.append("(input:");
+        input.appendTo(_queryBuilder);
+
+        argsDef.define(new DraftOrderAvailableDeliveryOptionsArguments(_queryBuilder));
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new DraftOrderAvailableDeliveryOptionsQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -5554,6 +6246,90 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new DraftOrderConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class DraftOrdersCountArguments extends Arguments {
+        DraftOrdersCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * A filter made up of terms, connectives, modifiers, and comparators.
+        * | name | type | description | acceptable_values | default_value | example_use |
+        * | ---- | ---- | ---- | ---- | ---- | ---- |
+        * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
+        * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time |
+        * | customer_id | id |
+        * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | ids | string |
+        * | source | string |
+        * | status | string |
+        * | tag | string |
+        * | updated_at | time |
+        * You can apply one or more filters to a query. Learn more about [Shopify API search
+        * syntax](https://shopify.dev/api/usage/search-syntax).
+        */
+        public DraftOrdersCountArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The ID of an existing saved search.
+        * The search’s query string is used as the query argument.
+        * Refer to the [`SavedSearch`](https://shopify.dev/api/admin-graphql/latest/objects/savedsearch)
+        * object.
+        */
+        public DraftOrdersCountArguments savedSearchId(ID value) {
+            if (value != null) {
+                startArgument("savedSearchId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public DraftOrdersCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface DraftOrdersCountArgumentsDefinition {
+        void define(DraftOrdersCountArguments args);
+    }
+
+    /**
+    * Returns the number of draft orders that match the query. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery draftOrdersCount(CountQueryDefinition queryDef) {
+        return draftOrdersCount(args -> {}, queryDef);
+    }
+
+    /**
+    * Returns the number of draft orders that match the query. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery draftOrdersCount(DraftOrdersCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
+        startField("draftOrdersCount");
+
+        DraftOrdersCountArguments args = new DraftOrdersCountArguments(_queryBuilder);
+        argsDef.define(args);
+        DraftOrdersCountArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new CountQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -5979,14 +6755,56 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a paginated list of files that have been uploaded to Shopify.
+    * Retrieves a paginated list of files that have been uploaded to a Shopify store. Files represent
+    * digital assets
+    * that merchants can upload to their store for various purposes including product images, marketing
+    * materials,
+    * documents, and brand assets.
+    * Use the `files` query to retrieve information associated with the following workflows:
+    * - [Managing product media and
+    * images](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * - [Theme development and asset
+    * management](https://shopify.dev/docs/storefronts/themes/store/success/brand-assets)
+    * - Brand asset management and [checkout
+    * branding](https://shopify.dev/docs/apps/build/checkout/styling/add-favicon)
+    * Files can include multiple [content
+    * types](https://shopify.dev/docs/api/admin-graphql/latest/enums/FileContentType),
+    * such as images, videos, 3D models, and generic files. Each file has
+    * properties like dimensions, file size, alt text for accessibility, and upload status. Files can be
+    * filtered
+    * by [media type](https://shopify.dev/docs/api/admin-graphql/latest/enums/MediaContentType) and can be
+    * associated with
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * [themes](https://shopify.dev/docs/api/admin-graphql/latest/objects/OnlineStoreTheme),
+    * and other store resources.
     */
     public QueryRootQuery files(FileConnectionQueryDefinition queryDef) {
         return files(args -> {}, queryDef);
     }
 
     /**
-    * Returns a paginated list of files that have been uploaded to Shopify.
+    * Retrieves a paginated list of files that have been uploaded to a Shopify store. Files represent
+    * digital assets
+    * that merchants can upload to their store for various purposes including product images, marketing
+    * materials,
+    * documents, and brand assets.
+    * Use the `files` query to retrieve information associated with the following workflows:
+    * - [Managing product media and
+    * images](https://shopify.dev/docs/apps/build/online-store/product-media)
+    * - [Theme development and asset
+    * management](https://shopify.dev/docs/storefronts/themes/store/success/brand-assets)
+    * - Brand asset management and [checkout
+    * branding](https://shopify.dev/docs/apps/build/checkout/styling/add-favicon)
+    * Files can include multiple [content
+    * types](https://shopify.dev/docs/api/admin-graphql/latest/enums/FileContentType),
+    * such as images, videos, 3D models, and generic files. Each file has
+    * properties like dimensions, file size, alt text for accessibility, and upload status. Files can be
+    * filtered
+    * by [media type](https://shopify.dev/docs/api/admin-graphql/latest/enums/MediaContentType) and can be
+    * associated with
+    * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+    * [themes](https://shopify.dev/docs/api/admin-graphql/latest/objects/OnlineStoreTheme),
+    * and other store resources.
     */
     public QueryRootQuery files(FilesArgumentsDefinition argsDef, FileConnectionQueryDefinition queryDef) {
         startField("files");
@@ -5997,6 +6815,32 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new FileConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Returns the access policy for a finance app .
+    */
+    public QueryRootQuery financeAppAccessPolicy(FinanceAppAccessPolicyQueryDefinition queryDef) {
+        startField("financeAppAccessPolicy");
+
+        _queryBuilder.append('{');
+        queryDef.define(new FinanceAppAccessPolicyQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Returns the KYC information for the shop's Shopify Payments account, used in embedded finance apps.
+    */
+    public QueryRootQuery financeKycInformation(FinanceKycInformationQueryDefinition queryDef) {
+        startField("financeKycInformation");
+
+        _queryBuilder.append('{');
+        queryDef.define(new FinanceKycInformationQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -6243,6 +7087,19 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    /**
+    * The configuration for the shop's gift cards.
+    */
+    public QueryRootQuery giftCardConfiguration(GiftCardConfigurationQueryDefinition queryDef) {
+        startField("giftCardConfiguration");
+
+        _queryBuilder.append('{');
+        queryDef.define(new GiftCardConfigurationQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
     public class GiftCardsArguments extends Arguments {
         GiftCardsArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, true);
@@ -6430,6 +7287,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public GiftCardsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface GiftCardsCountArgumentsDefinition {
@@ -6437,14 +7305,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * The total number of gift cards issued for the shop. Limited to a maximum of 10000.
+    * The total number of gift cards issued for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery giftCardsCount(CountQueryDefinition queryDef) {
         return giftCardsCount(args -> {}, queryDef);
     }
 
     /**
-    * The total number of gift cards issued for the shop. Limited to a maximum of 10000.
+    * The total number of gift cards issued for the shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery giftCardsCount(GiftCardsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("giftCardsCount");
@@ -6627,6 +7495,186 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
+    * Returns an inventory shipment by ID.
+    */
+    public QueryRootQuery inventoryShipment(ID id, InventoryShipmentQueryDefinition queryDef) {
+        startField("inventoryShipment");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryShipmentQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Returns an inventory transfer by ID.
+    */
+    public QueryRootQuery inventoryTransfer(ID id, InventoryTransferQueryDefinition queryDef) {
+        startField("inventoryTransfer");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class InventoryTransfersArguments extends Arguments {
+        InventoryTransfersArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public InventoryTransfersArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public InventoryTransfersArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public InventoryTransfersArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public InventoryTransfersArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public InventoryTransfersArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * Sort the underlying list using a key. If your query is slow or returns an error, then [try
+        * specifying a sort key that matches the field used in the
+        * search](https://shopify.dev/api/usage/pagination-graphql#search-performance-considerations).
+        */
+        public InventoryTransfersArguments sortKey(TransferSortKeys value) {
+            if (value != null) {
+                startArgument("sortKey");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * A filter made up of terms, connectives, modifiers, and comparators.
+        * | name | type | description | acceptable_values | default_value | example_use |
+        * | ---- | ---- | ---- | ---- | ---- | ---- |
+        * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
+        * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time |
+        * | destination_id | id |
+        * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | origin_id | id |
+        * | product_id | id |
+        * | product_variant_id | id |
+        * | source_id | id |
+        * | status | string |
+        * | tag | string | Filter objects by the `tag` field. | | | - `tag:my_tag` |
+        * | tag_not | string | Filter by objects that don’t have the specified tag. | | | - `tag_not:my_tag` |
+        * You can apply one or more filters to a query. Learn more about [Shopify API search
+        * syntax](https://shopify.dev/api/usage/search-syntax).
+        */
+        public InventoryTransfersArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The ID of a [saved
+        * search](https://shopify.dev/api/admin-graphql/latest/objects/savedsearch#field-id).
+        * The search’s query string is used as the query argument.
+        */
+        public InventoryTransfersArguments savedSearchId(ID value) {
+            if (value != null) {
+                startArgument("savedSearchId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface InventoryTransfersArgumentsDefinition {
+        void define(InventoryTransfersArguments args);
+    }
+
+    /**
+    * Returns a paginated list of transfers.
+    */
+    public QueryRootQuery inventoryTransfers(InventoryTransferConnectionQueryDefinition queryDef) {
+        return inventoryTransfers(args -> {}, queryDef);
+    }
+
+    /**
+    * Returns a paginated list of transfers.
+    */
+    public QueryRootQuery inventoryTransfers(InventoryTransfersArgumentsDefinition argsDef, InventoryTransferConnectionQueryDefinition queryDef) {
+        startField("inventoryTransfers");
+
+        InventoryTransfersArguments args = new InventoryTransfersArguments(_queryBuilder);
+        argsDef.define(args);
+        InventoryTransfersArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new InventoryTransferConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Returns a Job resource by ID. Used to check the status of internal jobs and any applicable changes.
     */
     public QueryRootQuery job(ID id, JobQueryDefinition queryDef) {
@@ -6682,6 +7730,24 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         LocationArguments args = new LocationArguments(_queryBuilder);
         argsDef.define(args);
         LocationArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new LocationQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Return a location by an identifier.
+    */
+    public QueryRootQuery locationByIdentifier(LocationIdentifierInput identifier, LocationQueryDefinition queryDef) {
+        startField("locationByIdentifier");
+
+        _queryBuilder.append("(identifier:");
+        identifier.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
 
         _queryBuilder.append('{');
         queryDef.define(new LocationQuery(_queryBuilder));
@@ -6973,6 +8039,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public LocationsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface LocationsCountArgumentsDefinition {
@@ -6980,14 +8057,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns the count of locations for the given shop. Limited to a maximum of 10000.
+    * Returns the count of locations for the given shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery locationsCount(CountQueryDefinition queryDef) {
         return locationsCount(args -> {}, queryDef);
     }
 
     /**
-    * Returns the count of locations for the given shop. Limited to a maximum of 10000.
+    * Returns the count of locations for the given shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery locationsCount(LocationsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("locationsCount");
@@ -7120,24 +8197,6 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append("(id:");
         Query.appendQuotedString(_queryBuilder, id.toString());
-
-        _queryBuilder.append(')');
-
-        _queryBuilder.append('{');
-        queryDef.define(new MarketQuery(_queryBuilder));
-        _queryBuilder.append('}');
-
-        return this;
-    }
-
-    /**
-    * Returns the applicable market for a customer based on where they are in the world.
-    */
-    public QueryRootQuery marketByGeography(CountryCode countryCode, MarketQueryDefinition queryDef) {
-        startField("marketByGeography");
-
-        _queryBuilder.append("(countryCode:");
-        _queryBuilder.append(countryCode.toString());
 
         _queryBuilder.append(')');
 
@@ -7577,7 +8636,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a MarketingEvent resource by ID.
+    * Returns a `MarketingEvent` resource by ID.
     */
     public QueryRootQuery marketingEvent(ID id, MarketingEventQueryDefinition queryDef) {
         startField("marketingEvent");
@@ -7724,6 +8783,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         }
 
         /**
+        * Filters markets by type.
+        */
+        public MarketsArguments type(MarketType value) {
+            if (value != null) {
+                startArgument("type");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
         * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
         */
         public MarketsArguments first(Integer value) {
@@ -7779,6 +8849,42 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * Sort the underlying list using a key. If your query is slow or returns an error, then [try
+        * specifying a sort key that matches the field used in the
+        * search](https://shopify.dev/api/usage/pagination-graphql#search-performance-considerations).
+        */
+        public MarketsArguments sortKey(MarketsSortKeys value) {
+            if (value != null) {
+                startArgument("sortKey");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * A filter made up of terms, connectives, modifiers, and comparators.
+        * | name | type | description | acceptable_values | default_value | example_use |
+        * | ---- | ---- | ---- | ---- | ---- | ---- |
+        * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
+        * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | market_condition_types | string | A comma-separated list of condition types. |
+        * | market_type | string |
+        * | name | string |
+        * | status | string | | - `ACTIVE`<br/> - `DRAFT` |
+        * | wildcard_company_location_with_country_code | string |
+        * You can apply one or more filters to a query. Learn more about [Shopify API search
+        * syntax](https://shopify.dev/api/usage/search-syntax).
+        */
+        public MarketsArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
     }
 
     public interface MarketsArgumentsDefinition {
@@ -7804,6 +8910,24 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new MarketConnectionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * The resolved values for a buyer signal.
+    */
+    public QueryRootQuery marketsResolvedValues(BuyerSignalInput buyerSignal, MarketsResolvedValuesQueryDefinition queryDef) {
+        startField("marketsResolvedValues");
+
+        _queryBuilder.append("(buyerSignal:");
+        buyerSignal.appendTo(_queryBuilder);
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketsResolvedValuesQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -7950,16 +9074,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class MetafieldDefinitionArguments extends Arguments {
+        MetafieldDefinitionArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The identifier of the MetafieldDefinition to return.
+        */
+        public MetafieldDefinitionArguments identifier(MetafieldDefinitionIdentifierInput value) {
+            if (value != null) {
+                startArgument("identifier");
+                value.appendTo(_queryBuilder);
+            }
+            return this;
+        }
+    }
+
+    public interface MetafieldDefinitionArgumentsDefinition {
+        void define(MetafieldDefinitionArguments args);
+    }
+
     /**
     * Returns a metafield definition by identifier.
     */
-    public QueryRootQuery metafieldDefinition(ID id, MetafieldDefinitionQueryDefinition queryDef) {
+    public QueryRootQuery metafieldDefinition(MetafieldDefinitionQueryDefinition queryDef) {
+        return metafieldDefinition(args -> {}, queryDef);
+    }
+
+    /**
+    * Returns a metafield definition by identifier.
+    */
+    public QueryRootQuery metafieldDefinition(MetafieldDefinitionArgumentsDefinition argsDef, MetafieldDefinitionQueryDefinition queryDef) {
         startField("metafieldDefinition");
 
-        _queryBuilder.append("(id:");
-        Query.appendQuotedString(_queryBuilder, id.toString());
-
-        _queryBuilder.append(')');
+        MetafieldDefinitionArguments args = new MetafieldDefinitionArguments(_queryBuilder);
+        argsDef.define(args);
+        MetafieldDefinitionArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new MetafieldDefinitionQuery(_queryBuilder));
@@ -8643,13 +9794,55 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns an Order resource by ID.
+    * The `order` query retrieves an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/order) by its ID. This query
+    * provides access to comprehensive order information such as customer details, line items, financial
+    * data, and fulfillment status.
+    * Use the `order` query to retrieve information associated with the following processes:
+    * - [Order management and
+    * fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+    * - [Financial reporting](https://help.shopify.com/manual/finance)
+    * - [Customer purchase
+    * history](https://help.shopify.com/manual/reports-and-analytics/shopify-reports/report-types/default-
+    * reports/customers-reports) and [transaction
+    * analysis](https://shopify.dev/docs/apps/launch/billing/view-charges-earnings#transaction-data-throug
+    * h-the-graphql-admin-api)
+    * - [Shipping](https://shopify.dev/docs/apps/build/checkout/delivery-shipping) and [inventory
+    * management](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps)
+    * You can only retrieve the last 60 days worth of orders from a store by default. If you want to
+    * access older orders, then you need to [request access to all
+    * orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions).
+    * For large order datasets, consider using [bulk
+    * operations](https://shopify.dev/docs/api/usage/bulk-operations/queries).
+    * Bulk operations handle pagination automatically and allow you to retrieve data asynchronously
+    * without being constrained by API rate limits.
+    * Learn more about [creating
+    * orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/ordercreate) and [building order
+    * management apps](https://shopify.dev/docs/apps/build/orders-fulfillment).
     */
     public QueryRootQuery order(ID id, OrderQueryDefinition queryDef) {
         startField("order");
 
         _queryBuilder.append("(id:");
         Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new OrderQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Return an order by an identifier.
+    */
+    public QueryRootQuery orderByIdentifier(OrderIdentifierInput identifier, OrderQueryDefinition queryDef) {
+        startField("orderByIdentifier");
+
+        _queryBuilder.append("(identifier:");
+        identifier.appendTo(_queryBuilder);
 
         _queryBuilder.append(')');
 
@@ -8853,8 +10046,9 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
-        * | cart_token | string | Filter by the cart token's unique value, which references the cart that's
-        * associated with an order. | | | - `cart_token:abc123` |
+        * | cart_token | string | Filter by the cart token's unique value to track abandoned cart conversions
+        * or troubleshoot checkout issues. The token references the cart that's associated with an order. | |
+        * | - `cart_token:abc123` |
         * | channel | string | Filter by the channel information
         * [`handle`](https://shopify.dev/api/admin-graphql/latest/objects/ChannelInformation#field-channeldefi
         * nition) (`ChannelInformation.channelDefinition.handle`) field. | | | - `channel:web`<br/> -
@@ -8866,15 +10060,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * customer questions the legitimacy of a charge with their financial institution. | - `accepted`<br/>
         * - `charge_refunded`<br/> - `lost`<br/> - `needs_response`<br/> - `under_review`<br/> - `won` | | -
         * `chargeback_status:accepted` |
-        * | checkout_token | string | Filter by the checkout token's unique value, which references the
-        * checkout that's associated with an order. | | | - `checkout_token:abc123` |
+        * | checkout_token | string | Filter by the checkout token's unique value to analyze conversion
+        * funnels or resolve payment issues. The checkout token's value references the checkout that's
+        * associated with an order. | | | - `checkout_token:abc123` |
         * | confirmation_number | string | Filter by the randomly generated alpha-numeric identifier for an
         * order that can be displayed to the customer instead of the sequential order name. This value isn't
         * guaranteed to be unique. | | | - `confirmation_number:ABC123` |
         * | created_at | time | Filter by the date and time when the order was created in Shopify's system. |
         * | | - `created_at:2020-10-21T23:39:20Z`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
-        * | credit_card_last4 | string | Filter by the last four digits of the credit card that was used to
-        * pay for the order. | | | - `credit_card_last4:1234` |
+        * | credit_card_last4 | string | Filter by the last four digits of the payment card that was used to
+        * pay for the order. This filter matches only the last four digits of the card for heightened
+        * security. | | | - `credit_card_last4:1234` |
         * | customer_id | id | Filter orders by the customer
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/Customer#field-id) field. | | | -
         * `customer_id:123` |
@@ -8884,36 +10080,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * `none` | | - `delivery_method:shipping` |
         * | discount_code | string | Filter by the case-insensitive discount code that was applied to the
         * order at checkout. Maximum characters: 255. | | | - `discount_code:ABC123` |
-        * | email | string | Filter by the email address that's associated with the order. | | | -
-        * `email:example@shopify.com` |
+        * | email | string | Filter by the email address that's associated with the order to provide customer
+        * support or analyze purchasing patterns. | | | - `email:example@shopify.com` |
         * | financial_status | string | Filter by the order
         * [`displayFinancialStatus`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-displayf
         * inancialstatus) field. | - `paid`<br/> - `pending`<br/> - `authorized`<br/> - `partially_paid`<br/>
         * - `partially_refunded`<br/> - `refunded`<br/> - `voided`<br/> - `expired` | | -
         * `financial_status:authorized` |
         * | fraud_protection_level | string | Filter by the level of fraud protection that's applied to the
-        * order. | - `fully_protected`<br/> - `partially_protected`<br/> - `not_protected`<br/> -
-        * `pending`<br/> - `not_eligible`<br/> - `not_available` | | -
-        * `fraud_protection_level:fully_protected` |
+        * order. Use this filter to manage risk or handle disputes. | - `fully_protected`<br/> -
+        * `partially_protected`<br/> - `not_protected`<br/> - `pending`<br/> - `not_eligible`<br/> -
+        * `not_available` | | - `fraud_protection_level:fully_protected` |
         * | fulfillment_location_id | id | Filter by the fulfillment location
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/Fulfillment#field-location)
         * (`Fulfillment.location.id`) field. | | | - `fulfillment_location_id:123` |
-        * | fulfillment_status | string | Filter by the order's fulfillment status. | - `unshipped`<br/> -
-        * `shipped`<br/> - `fulfilled`<br/> - `partial`<br/> - `scheduled`<br/> - `on_hold`<br/> -
-        * `unfulfilled`<br/> - `request_declined` | | - `fulfillment_status:fulfilled` |
-        * | gateway | string | Filter by the order
-        * [`paymentGatewayNames`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-paymentgate
-        * waynames) field. | | | - `gateway:shopify_payments` |
+        * | fulfillment_status | string | Filter by the
+        * [`displayFulfillmentStatus`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-d
+        * isplayfulfillmentstatus) field to prioritize shipments or monitor order processing. | -
+        * `unshipped`<br/> - `shipped`<br/> - `fulfilled`<br/> - `partial`<br/> - `scheduled`<br/> -
+        * `on_hold`<br/> - `unfulfilled`<br/> - `request_declined` | | - `fulfillment_status:fulfilled` |
+        * | gateway | string | Filter by the
+        * [`paymentGatewayNames`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-paymen
+        * tgatewaynames) field. Use this filter to find orders that were processed through specific payment
+        * providers like Shopify Payments, PayPal, or other custom payment gateways. | | | -
+        * `gateway:shopify_payments` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
-        * | location_id | id | Filter by the ID of the location that's associated with the order. | | | -
-        * `location_id:123` |
+        * | location_id | id | Filter by the location
+        * [`id`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-id) that's
+        * associated with the order to view and manage orders for specific locations. For POS orders,
+        * locations must be defined in the Shopify admin under **Settings** > **Locations**. If no ID is
+        * provided, then the primary location of the shop is returned. | | | - `location_id:123` |
         * | name | string | Filter by the order
         * [`name`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-name) field. | | | -
         * `name:1001-A` |
-        * | payment_id | string | Filter by the ID of the payment that's associated with the order. | | | -
-        * `payment_id:abc123` |
+        * | payment_id | string | Filter by the payment ID that's associated with the order to reconcile
+        * financial records or troubleshoot payment issues. | | | - `payment_id:abc123` |
         * | payment_provider_id | id | Filter by the ID of the payment provider that's associated with the
-        * order. | | | - `payment_provider_id:123` |
+        * order to manage payment methods or troubleshoot transactions. | | | - `payment_provider_id:123` |
         * | po_number | string | Filter by the order
         * [`poNumber`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-ponumber) field. | | |
         * - `po_number:P01001` |
@@ -8923,26 +10126,33 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | reference_location_id | id | Filter by the ID of a location that's associated with the order, such
         * as locations from fulfillments, refunds, or the shop's primary location. | | | -
         * `reference_location_id:123` |
-        * | return_status | string | Filter by the order's return status. | - `return_requested`<br/> -
-        * `in_progress`<br/> - `inspection_complete`<br/> - `returned`<br/> - `return_failed`<br/> -
-        * `no_return` | | - `return_status:in_progress` |
+        * | return_status | string | Filter by the return status to monitor returns processing and track which
+        * orders have active returns. | - `return_requested`<br/> - `in_progress`<br/> -
+        * `inspection_complete`<br/> - `returned`<br/> - `return_failed`<br/> - `no_return` | | -
+        * `return_status:in_progress` |
         * | risk_level | string | Filter by the order risk assessment
         * [`riskLevel`](https://shopify.dev/api/admin-graphql/latest/objects/OrderRiskAssessment#field-risklev
         * el) field. | - `high`<br/> - `medium`<br/> - `low`<br/> - `none`<br/> - `pending` | | -
         * `risk_level:high` |
-        * | sales_channel | string | Filter by the sales channel that the order is attributed to. | | | -
-        * `sales_channel: some_sales_channel` |
+        * | sales_channel | string | Filter by the [sales
+        * channel](https://shopify.dev/docs/apps/build/sales-channels) where the order was made to analyze
+        * performance or manage fulfillment processes. | | | - `sales_channel: some_sales_channel` |
         * | sku | string | Filter by the product variant
         * [`sku`](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant#field-sku) field. [Learn
         * more about SKUs](https://help.shopify.com/manual/products/details/sku). | | | - `sku:ABC123` |
         * | source_identifier | string | Filter by the ID of the order placed on the originating platform,
         * such as a unique POS or third-party identifier. This value doesn't correspond to the Shopify ID
         * that's generated from a completed draft order. | | | - `source_identifier:1234-12-1000` |
-        * | source_name | string | Filter by the name of the originating platform that's associated with the
-        * checkout for the order. | | | - `source_name:web`<br/> - `source_name:shopify_draft_order` |
-        * | status | string | Filter by the order status. | - `open`<br/> - `closed`<br/> - `cancelled`<br/> -
-        * `not_closed` | | - `status:open` |
-        * | subtotal_line_items_quantity | string |
+        * | source_name | string | Filter by the platform where the order was placed to distinguish between
+        * web orders, POS sales, draft orders, or third-party channels. Use this filter to analyze sales
+        * performance across different ordering methods. | | | - `source_name:web`<br/> -
+        * `source_name:shopify_draft_order` |
+        * | status | string | Filter by the order's status to manage workflows or analyze the order lifecycle.
+        * | - `open`<br/> - `closed`<br/> - `cancelled`<br/> - `not_closed` | | - `status:open` |
+        * | subtotal_line_items_quantity | string | Filter by the total number of items across all line items
+        * in an order. This filter supports both exact values and ranges, and is useful for identifying bulk
+        * orders or analyzing purchase volume patterns. | | | - `subtotal_line_items_quantity:10`<br/> -
+        * `subtotal_line_items_quantity:5..20` |
         * | tag | string | Filter objects by the `tag` field. | | | - `tag:my_tag` |
         * | tag_not | string | Filter by objects that don’t have the specified tag. | | | - `tag_not:my_tag` |
         * | test | boolean | Filter by test orders. Test orders are made using the [Shopify Bogus
@@ -8981,14 +10191,26 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a list of orders placed in the store.
+    * Returns a list of [orders](https://shopify.dev/api/admin-graphql/latest/objects/Order) placed in the
+    * store, including data such as order status, customer, and line item details.
+    * Use the `orders` query to build reports, analyze sales performance, or automate fulfillment
+    * workflows. The `orders` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-sortkey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-query).
     */
     public QueryRootQuery orders(OrderConnectionQueryDefinition queryDef) {
         return orders(args -> {}, queryDef);
     }
 
     /**
-    * Returns a list of orders placed in the store.
+    * Returns a list of [orders](https://shopify.dev/api/admin-graphql/latest/objects/Order) placed in the
+    * store, including data such as order status, customer, and line item details.
+    * Use the `orders` query to build reports, analyze sales performance, or automate fulfillment
+    * workflows. The `orders` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-sortkey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-query).
     */
     public QueryRootQuery orders(OrdersArgumentsDefinition argsDef, OrderConnectionQueryDefinition queryDef) {
         startField("orders");
@@ -9015,8 +10237,9 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | ---- | ---- | ---- | ---- | ---- | ---- |
         * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
         * `query=Bob Norman`<br/> - `query=title:green hoodie` |
-        * | cart_token | string | Filter by the cart token's unique value, which references the cart that's
-        * associated with an order. | | | - `cart_token:abc123` |
+        * | cart_token | string | Filter by the cart token's unique value to track abandoned cart conversions
+        * or troubleshoot checkout issues. The token references the cart that's associated with an order. | |
+        * | - `cart_token:abc123` |
         * | channel | string | Filter by the channel information
         * [`handle`](https://shopify.dev/api/admin-graphql/latest/objects/ChannelInformation#field-channeldefi
         * nition) (`ChannelInformation.channelDefinition.handle`) field. | | | - `channel:web`<br/> -
@@ -9028,15 +10251,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * customer questions the legitimacy of a charge with their financial institution. | - `accepted`<br/>
         * - `charge_refunded`<br/> - `lost`<br/> - `needs_response`<br/> - `under_review`<br/> - `won` | | -
         * `chargeback_status:accepted` |
-        * | checkout_token | string | Filter by the checkout token's unique value, which references the
-        * checkout that's associated with an order. | | | - `checkout_token:abc123` |
+        * | checkout_token | string | Filter by the checkout token's unique value to analyze conversion
+        * funnels or resolve payment issues. The checkout token's value references the checkout that's
+        * associated with an order. | | | - `checkout_token:abc123` |
         * | confirmation_number | string | Filter by the randomly generated alpha-numeric identifier for an
         * order that can be displayed to the customer instead of the sequential order name. This value isn't
         * guaranteed to be unique. | | | - `confirmation_number:ABC123` |
         * | created_at | time | Filter by the date and time when the order was created in Shopify's system. |
         * | | - `created_at:2020-10-21T23:39:20Z`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
-        * | credit_card_last4 | string | Filter by the last four digits of the credit card that was used to
-        * pay for the order. | | | - `credit_card_last4:1234` |
+        * | credit_card_last4 | string | Filter by the last four digits of the payment card that was used to
+        * pay for the order. This filter matches only the last four digits of the card for heightened
+        * security. | | | - `credit_card_last4:1234` |
         * | customer_id | id | Filter orders by the customer
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/Customer#field-id) field. | | | -
         * `customer_id:123` |
@@ -9046,36 +10271,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * `none` | | - `delivery_method:shipping` |
         * | discount_code | string | Filter by the case-insensitive discount code that was applied to the
         * order at checkout. Maximum characters: 255. | | | - `discount_code:ABC123` |
-        * | email | string | Filter by the email address that's associated with the order. | | | -
-        * `email:example@shopify.com` |
+        * | email | string | Filter by the email address that's associated with the order to provide customer
+        * support or analyze purchasing patterns. | | | - `email:example@shopify.com` |
         * | financial_status | string | Filter by the order
         * [`displayFinancialStatus`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-displayf
         * inancialstatus) field. | - `paid`<br/> - `pending`<br/> - `authorized`<br/> - `partially_paid`<br/>
         * - `partially_refunded`<br/> - `refunded`<br/> - `voided`<br/> - `expired` | | -
         * `financial_status:authorized` |
         * | fraud_protection_level | string | Filter by the level of fraud protection that's applied to the
-        * order. | - `fully_protected`<br/> - `partially_protected`<br/> - `not_protected`<br/> -
-        * `pending`<br/> - `not_eligible`<br/> - `not_available` | | -
-        * `fraud_protection_level:fully_protected` |
+        * order. Use this filter to manage risk or handle disputes. | - `fully_protected`<br/> -
+        * `partially_protected`<br/> - `not_protected`<br/> - `pending`<br/> - `not_eligible`<br/> -
+        * `not_available` | | - `fraud_protection_level:fully_protected` |
         * | fulfillment_location_id | id | Filter by the fulfillment location
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/Fulfillment#field-location)
         * (`Fulfillment.location.id`) field. | | | - `fulfillment_location_id:123` |
-        * | fulfillment_status | string | Filter by the order's fulfillment status. | - `unshipped`<br/> -
-        * `shipped`<br/> - `fulfilled`<br/> - `partial`<br/> - `scheduled`<br/> - `on_hold`<br/> -
-        * `unfulfilled`<br/> - `request_declined` | | - `fulfillment_status:fulfilled` |
-        * | gateway | string | Filter by the order
-        * [`paymentGatewayNames`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-paymentgate
-        * waynames) field. | | | - `gateway:shopify_payments` |
+        * | fulfillment_status | string | Filter by the
+        * [`displayFulfillmentStatus`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-d
+        * isplayfulfillmentstatus) field to prioritize shipments or monitor order processing. | -
+        * `unshipped`<br/> - `shipped`<br/> - `fulfilled`<br/> - `partial`<br/> - `scheduled`<br/> -
+        * `on_hold`<br/> - `unfulfilled`<br/> - `request_declined` | | - `fulfillment_status:fulfilled` |
+        * | gateway | string | Filter by the
+        * [`paymentGatewayNames`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-paymen
+        * tgatewaynames) field. Use this filter to find orders that were processed through specific payment
+        * providers like Shopify Payments, PayPal, or other custom payment gateways. | | | -
+        * `gateway:shopify_payments` |
         * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
-        * | location_id | id | Filter by the ID of the location that's associated with the order. | | | -
-        * `location_id:123` |
+        * | location_id | id | Filter by the location
+        * [`id`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Location#field-id) that's
+        * associated with the order to view and manage orders for specific locations. For POS orders,
+        * locations must be defined in the Shopify admin under **Settings** > **Locations**. If no ID is
+        * provided, then the primary location of the shop is returned. | | | - `location_id:123` |
         * | name | string | Filter by the order
         * [`name`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-name) field. | | | -
         * `name:1001-A` |
-        * | payment_id | string | Filter by the ID of the payment that's associated with the order. | | | -
-        * `payment_id:abc123` |
+        * | payment_id | string | Filter by the payment ID that's associated with the order to reconcile
+        * financial records or troubleshoot payment issues. | | | - `payment_id:abc123` |
         * | payment_provider_id | id | Filter by the ID of the payment provider that's associated with the
-        * order. | | | - `payment_provider_id:123` |
+        * order to manage payment methods or troubleshoot transactions. | | | - `payment_provider_id:123` |
         * | po_number | string | Filter by the order
         * [`poNumber`](https://shopify.dev/api/admin-graphql/latest/objects/Order#field-ponumber) field. | | |
         * - `po_number:P01001` |
@@ -9085,26 +10317,33 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | reference_location_id | id | Filter by the ID of a location that's associated with the order, such
         * as locations from fulfillments, refunds, or the shop's primary location. | | | -
         * `reference_location_id:123` |
-        * | return_status | string | Filter by the order's return status. | - `return_requested`<br/> -
-        * `in_progress`<br/> - `inspection_complete`<br/> - `returned`<br/> - `return_failed`<br/> -
-        * `no_return` | | - `return_status:in_progress` |
+        * | return_status | string | Filter by the return status to monitor returns processing and track which
+        * orders have active returns. | - `return_requested`<br/> - `in_progress`<br/> -
+        * `inspection_complete`<br/> - `returned`<br/> - `return_failed`<br/> - `no_return` | | -
+        * `return_status:in_progress` |
         * | risk_level | string | Filter by the order risk assessment
         * [`riskLevel`](https://shopify.dev/api/admin-graphql/latest/objects/OrderRiskAssessment#field-risklev
         * el) field. | - `high`<br/> - `medium`<br/> - `low`<br/> - `none`<br/> - `pending` | | -
         * `risk_level:high` |
-        * | sales_channel | string | Filter by the sales channel that the order is attributed to. | | | -
-        * `sales_channel: some_sales_channel` |
+        * | sales_channel | string | Filter by the [sales
+        * channel](https://shopify.dev/docs/apps/build/sales-channels) where the order was made to analyze
+        * performance or manage fulfillment processes. | | | - `sales_channel: some_sales_channel` |
         * | sku | string | Filter by the product variant
         * [`sku`](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant#field-sku) field. [Learn
         * more about SKUs](https://help.shopify.com/manual/products/details/sku). | | | - `sku:ABC123` |
         * | source_identifier | string | Filter by the ID of the order placed on the originating platform,
         * such as a unique POS or third-party identifier. This value doesn't correspond to the Shopify ID
         * that's generated from a completed draft order. | | | - `source_identifier:1234-12-1000` |
-        * | source_name | string | Filter by the name of the originating platform that's associated with the
-        * checkout for the order. | | | - `source_name:web`<br/> - `source_name:shopify_draft_order` |
-        * | status | string | Filter by the order status. | - `open`<br/> - `closed`<br/> - `cancelled`<br/> -
-        * `not_closed` | | - `status:open` |
-        * | subtotal_line_items_quantity | string |
+        * | source_name | string | Filter by the platform where the order was placed to distinguish between
+        * web orders, POS sales, draft orders, or third-party channels. Use this filter to analyze sales
+        * performance across different ordering methods. | | | - `source_name:web`<br/> -
+        * `source_name:shopify_draft_order` |
+        * | status | string | Filter by the order's status to manage workflows or analyze the order lifecycle.
+        * | - `open`<br/> - `closed`<br/> - `cancelled`<br/> - `not_closed` | | - `status:open` |
+        * | subtotal_line_items_quantity | string | Filter by the total number of items across all line items
+        * in an order. This filter supports both exact values and ranges, and is useful for identifying bulk
+        * orders or analyzing purchase volume patterns. | | | - `subtotal_line_items_quantity:10`<br/> -
+        * `subtotal_line_items_quantity:5..20` |
         * | tag | string | Filter objects by the `tag` field. | | | - `tag:my_tag` |
         * | tag_not | string | Filter by objects that don’t have the specified tag. | | | - `tag_not:my_tag` |
         * | test | boolean | Filter by test orders. Test orders are made using the [Shopify Bogus
@@ -9139,7 +10378,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         }
 
         /**
-        * The upper bound on count value before returning a result.
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
         */
         public OrdersCountArguments limit(Integer value) {
             if (value != null) {
@@ -9155,14 +10394,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns the count of orders for the given shop. Limited to a maximum of 10000.
+    * Returns the count of orders for the given shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery ordersCount(CountQueryDefinition queryDef) {
         return ordersCount(args -> {}, queryDef);
     }
 
     /**
-    * Returns the count of orders for the given shop. Limited to a maximum of 10000.
+    * Returns the count of orders for the given shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery ordersCount(OrdersCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("ordersCount");
@@ -9257,6 +10496,59 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * Sort the underlying list using a key. If your query is slow or returns an error, then [try
+        * specifying a sort key that matches the field used in the
+        * search](https://shopify.dev/api/usage/pagination-graphql#search-performance-considerations).
+        */
+        public PagesArguments sortKey(PageSortKeys value) {
+            if (value != null) {
+                startArgument("sortKey");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * A filter made up of terms, connectives, modifiers, and comparators.
+        * | name | type | description | acceptable_values | default_value | example_use |
+        * | ---- | ---- | ---- | ---- | ---- | ---- |
+        * | default | string | Filter by a case-insensitive search of multiple fields in a document. | | | -
+        * `query=Bob Norman`<br/> - `query=title:green hoodie` |
+        * | created_at | time | Filter by the date and time when the page was created. | | | -
+        * `created_at:>'2020-10-21T23:39:20Z'`<br/> - `created_at:<now`<br/> - `created_at:<=2024` |
+        * | handle | string | Filter by the handle of the page. |
+        * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | published_at | time | Filter by the date and time when the page was published. | | | -
+        * `published_at:>'2020-10-21T23:39:20Z'`<br/> - `published_at:<now`<br/> - `published_at:<=2024` |
+        * | published_status | string | Filter by published status |
+        * | title | string | Filter by the title of the page. |
+        * | updated_at | time | Filter by the date and time when the page was last updated. | | | -
+        * `updated_at:>'2020-10-21T23:39:20Z'`<br/> - `updated_at:<now`<br/> - `updated_at:<=2024` |
+        * You can apply one or more filters to a query. Learn more about [Shopify API search
+        * syntax](https://shopify.dev/api/usage/search-syntax).
+        */
+        public PagesArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The ID of a [saved
+        * search](https://shopify.dev/api/admin-graphql/latest/objects/savedsearch#field-id).
+        * The search’s query string is used as the query argument.
+        */
+        public PagesArguments savedSearchId(ID value) {
+            if (value != null) {
+                startArgument("savedSearchId");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
     }
 
     public interface PagesArgumentsDefinition {
@@ -9287,11 +10579,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class PagesCountArguments extends Arguments {
+        PagesCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public PagesCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface PagesCountArgumentsDefinition {
+        void define(PagesCountArguments args);
+    }
+
     /**
-    * Count of pages.
+    * Count of pages. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery pagesCount(CountQueryDefinition queryDef) {
+        return pagesCount(args -> {}, queryDef);
+    }
+
+    /**
+    * Count of pages. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery pagesCount(PagesCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("pagesCount");
+
+        PagesCountArguments args = new PagesCountArguments(_queryBuilder);
+        argsDef.define(args);
+        PagesCountArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));
@@ -9486,6 +10810,24 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
+    * Lookup a point of sale device by ID.
+    */
+    public QueryRootQuery pointOfSaleDevice(ID id, PointOfSaleDeviceQueryDefinition queryDef) {
+        startField("pointOfSaleDevice");
+
+        _queryBuilder.append("(id:");
+        Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new PointOfSaleDeviceQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
     * Returns a price list resource by ID.
     */
     public QueryRootQuery priceList(ID id, PriceListQueryDefinition queryDef) {
@@ -9608,7 +10950,30 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Product resource by ID.
+    * Privacy related settings for a shop.
+    */
+    public QueryRootQuery privacySettings(PrivacySettingsQueryDefinition queryDef) {
+        startField("privacySettings");
+
+        _queryBuilder.append('{');
+        queryDef.define(new PrivacySettingsQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Retrieves a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) by its ID.
+    * A product is an item that a merchant can sell in their store.
+    * Use the `product` query when you need to:
+    * - Access essential product data (for example, title, description, price, images, SEO metadata, and
+    * metafields).
+    * - Build product detail pages and manage inventory.
+    * - Handle international sales with localized pricing and content.
+    * - Manage product variants and product options.
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery product(ID id, ProductQueryDefinition queryDef) {
         startField("product");
@@ -10099,13 +11464,45 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a ProductVariant resource by ID.
+    * Retrieves a [product
+    * variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) by its ID.
+    * A product variant is a specific version of a
+    * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) that comes in more than
+    * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+    * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+    * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+    * Use the `productVariant` query when you need to:
+    * - Access essential product variant data (for example, title, price, image, and metafields).
+    * - Build product detail pages and manage inventory.
+    * - Handle international sales with localized pricing and content.
+    * - Manage product variants that are part of a bundle or selling plan.
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery productVariant(ID id, ProductVariantQueryDefinition queryDef) {
         startField("productVariant");
 
         _queryBuilder.append("(id:");
         Query.appendQuotedString(_queryBuilder, id.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ProductVariantQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Return a product variant by an identifier.
+    */
+    public QueryRootQuery productVariantByIdentifier(ProductVariantIdentifierInput identifier, ProductVariantQueryDefinition queryDef) {
+        startField("productVariantByIdentifier");
+
+        _queryBuilder.append("(identifier:");
+        identifier.appendTo(_queryBuilder);
 
         _queryBuilder.append(')');
 
@@ -10237,12 +11634,12 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | product_ids | string | Filter by a comma-separated list of product
         * [IDs](https://shopify.dev/api/admin-graphql/latest/objects/Product#field-id). | | | -
         * `product_ids:8474977763649,8474977796417` |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | product_status | string | Filter by a comma-separated list of product
         * [statuses](https://shopify.dev/api/admin-graphql/latest/objects/Product#field-status). | | | -
         * `product_status:ACTIVE,DRAFT` |
@@ -10254,8 +11651,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_status | string | Filter by the published status of the resource on a channel, such as
         * the online store. | - `unset`<br/> - `pending`<br/> - `approved`<br/> - `not approved` | | -
         * `published_status:approved` |
@@ -10309,14 +11706,66 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a list of product variants.
+    * Retrieves a list of [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * associated with a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product).
+    * A product variant is a specific version of a product that comes in more than
+    * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+    * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+    * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+    * Use the `productVariants` query when you need to:
+    * - Search for product variants by attributes such as SKU, barcode, or inventory quantity.
+    * - Filter product variants by attributes, such as whether they're gift cards or have custom
+    * metafields.
+    * - Fetch product variants for bulk operations, such as updating prices or inventory.
+    * - Preload data for product variants, such as inventory items, selected options, or associated
+    * products.
+    * The `productVariants` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/productVariants#arguments-savedS
+    * earchId)
+    * for frequently used product variant queries.
+    * The `productVariants` query returns product variants with their associated metadata, including:
+    * - Basic product variant information (for example, title, SKU, barcode, price, and inventory)
+    * - Media attachments (for example, images and videos)
+    * - Associated products, selling plans, bundles, and metafields
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery productVariants(ProductVariantConnectionQueryDefinition queryDef) {
         return productVariants(args -> {}, queryDef);
     }
 
     /**
-    * Returns a list of product variants.
+    * Retrieves a list of [product
+    * variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+    * associated with a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product).
+    * A product variant is a specific version of a product that comes in more than
+    * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+    * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+    * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+    * Use the `productVariants` query when you need to:
+    * - Search for product variants by attributes such as SKU, barcode, or inventory quantity.
+    * - Filter product variants by attributes, such as whether they're gift cards or have custom
+    * metafields.
+    * - Fetch product variants for bulk operations, such as updating prices or inventory.
+    * - Preload data for product variants, such as inventory items, selected options, or associated
+    * products.
+    * The `productVariants` query supports
+    * [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/productVariants#arguments-savedS
+    * earchId)
+    * for frequently used product variant queries.
+    * The `productVariants` query returns product variants with their associated metadata, including:
+    * - Basic product variant information (for example, title, SKU, barcode, price, and inventory)
+    * - Media attachments (for example, images and videos)
+    * - Associated products, selling plans, bundles, and metafields
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery productVariants(ProductVariantsArgumentsDefinition argsDef, ProductVariantConnectionQueryDefinition queryDef) {
         startField("productVariants");
@@ -10347,6 +11796,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public ProductVariantsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface ProductVariantsCountArgumentsDefinition {
@@ -10354,14 +11814,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of product variants.
+    * Count of product variants. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery productVariantsCount(CountQueryDefinition queryDef) {
         return productVariantsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of product variants.
+    * Count of product variants. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery productVariantsCount(ProductVariantsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("productVariantsCount");
@@ -10603,12 +12063,12 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | product_configuration_owner | string | Filter by the app
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/App#field-id) field. | | | -
         * `product_configuration_owner:10001` |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | product_type | string | Filter by a comma-separated list of [product
         * types](https://help.shopify.com/manual/products/details/product-type). | | | -
         * `product_type:snowboard` |
@@ -10620,8 +12080,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_at | time | Filter by the date and time when the product was published to the online
         * store and other sales channels. | | | - `published_at:>2020-10-21T23:39:20Z`<br/> -
         * `published_at:<now`<br/> - `published_at:<=2024` |
@@ -10680,14 +12140,62 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a list of products.
+    * Retrieves a list of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * in a store. Products are the items that merchants can sell in their store.
+    * Use the `products` query when you need to:
+    * - Build a browsing interface for a product catalog.
+    * - Create product [searching](https://shopify.dev/docs/api/usage/search-syntax),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-sortKey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-query)
+    * experiences.
+    * - Implement product recommendations.
+    * - Sync product data with external systems.
+    * The `products` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-savedSearchId
+    * )
+    * for frequently used product queries.
+    * The `products` query returns products with their associated metadata, including:
+    * - Basic product information (for example, title, description, vendor, and type)
+    * - Product options and product variants, with their prices and inventory
+    * - Media attachments (for example, images and videos)
+    * - SEO metadata
+    * - Product categories and tags
+    * - Product availability and publishing statuses
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery products(ProductConnectionQueryDefinition queryDef) {
         return products(args -> {}, queryDef);
     }
 
     /**
-    * Returns a list of products.
+    * Retrieves a list of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+    * in a store. Products are the items that merchants can sell in their store.
+    * Use the `products` query when you need to:
+    * - Build a browsing interface for a product catalog.
+    * - Create product [searching](https://shopify.dev/docs/api/usage/search-syntax),
+    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-sortKey), and
+    * [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-query)
+    * experiences.
+    * - Implement product recommendations.
+    * - Sync product data with external systems.
+    * The `products` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+    * to handle large product catalogs and [saved
+    * searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-savedSearchId
+    * )
+    * for frequently used product queries.
+    * The `products` query returns products with their associated metadata, including:
+    * - Basic product information (for example, title, description, vendor, and type)
+    * - Product options and product variants, with their prices and inventory
+    * - Media attachments (for example, images and videos)
+    * - SEO metadata
+    * - Product categories and tags
+    * - Product availability and publishing statuses
+    * Learn more about working with [Shopify's product
+    * model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-component
+    * s).
     */
     public QueryRootQuery products(ProductsArgumentsDefinition argsDef, ProductConnectionQueryDefinition queryDef) {
         startField("products");
@@ -10766,12 +12274,12 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * | product_configuration_owner | string | Filter by the app
         * [`id`](https://shopify.dev/api/admin-graphql/latest/objects/App#field-id) field. | | | -
         * `product_configuration_owner:10001` |
-        * | product_publication_status | string | Filter by the publishable status of the resource on a
+        * | product_publication_status | string | Filter by the publication status of the resource on a
         * channel, such as the online store. The value is a composite of the [channel `app`
         * ID](https://shopify.dev/api/admin-graphql/latest/objects/Channel#app-price) (`Channel.app.id`) and
         * one of the valid values. | - `approved`<br/> - `rejected`<br/> - `needs_action`<br/> -
         * `awaiting_review`<br/> - `published`<br/> - `demoted`<br/> - `scheduled`<br/> -
-        * `provisionally_published` | | - `publishable_status:189769876-approved` |
+        * `provisionally_published` | | - `product_publication_status:189769876-approved` |
         * | product_type | string | Filter by a comma-separated list of [product
         * types](https://help.shopify.com/manual/products/details/product-type). | | | -
         * `product_type:snowboard` |
@@ -10783,8 +12291,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         * [channel `name`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Channel#field-name) and
         * one of the valid values. | - `online_store_channel`<br/> - `published`<br/> - `unpublished`<br/> -
         * `visible`<br/> - `unavailable`<br/> - `hidden`<br/> - `intended`<br/> - `visible` | | -
-        * `publishable_status:published`<br/> - `publishable_status:189769876:visible`<br/> -
-        * `publishable_status:pos:hidden` |
+        * `publishable_status:published`<br/> - `publishable_status:189769876-visible`<br/> -
+        * `publishable_status:pos-hidden` |
         * | published_at | time | Filter by the date and time when the product was published to the online
         * store and other sales channels. | | | - `published_at:>2020-10-21T23:39:20Z`<br/> -
         * `published_at:<now`<br/> - `published_at:<=2024` |
@@ -10839,7 +12347,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         }
 
         /**
-        * The upper bound on count value before returning a result.
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
         */
         public ProductsCountArguments limit(Integer value) {
             if (value != null) {
@@ -10855,14 +12363,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of products.
+    * Count of products. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery productsCount(CountQueryDefinition queryDef) {
         return productsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of products.
+    * Count of products. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery productsCount(ProductsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("productsCount");
@@ -11027,6 +12535,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public PublicationsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface PublicationsCountArgumentsDefinition {
@@ -11034,14 +12553,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of publications.
+    * Count of publications. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery publicationsCount(CountQueryDefinition queryDef) {
         return publicationsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of publications.
+    * Count of publications. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery publicationsCount(PublicationsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("publicationsCount");
@@ -11057,14 +12576,44 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class PublishedProductsCountArguments extends Arguments {
+        PublishedProductsCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, false);
+        }
+
+        /**
+        * The maximum number of products to count.
+        */
+        public PublishedProductsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface PublishedProductsCountArgumentsDefinition {
+        void define(PublishedProductsCountArguments args);
+    }
+
     /**
-    * Returns a count of published products by publication ID.
+    * Returns a count of published products by publication ID. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery publishedProductsCount(ID publicationId, CountQueryDefinition queryDef) {
+        return publishedProductsCount(publicationId, args -> {}, queryDef);
+    }
+
+    /**
+    * Returns a count of published products by publication ID. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery publishedProductsCount(ID publicationId, PublishedProductsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("publishedProductsCount");
 
         _queryBuilder.append("(publicationId:");
         Query.appendQuotedString(_queryBuilder, publicationId.toString());
+
+        argsDef.define(new PublishedProductsCountArguments(_queryBuilder));
 
         _queryBuilder.append(')');
 
@@ -11076,7 +12625,23 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Refund resource by ID.
+    * Retrieves a [refund](https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund) by its ID.
+    * A refund represents a financial record of money returned to a customer from an order.
+    * It provides a comprehensive view of all refunded amounts, transactions, and restocking
+    * instructions associated with returning products or correcting order issues.
+    * Use the `refund` query to retrieve information associated with the following workflows:
+    * - Displaying refund details in order management interfaces
+    * - Building customer service tools for reviewing refund history
+    * - Creating reports on refunded amounts and reasons
+    * - Auditing refund transactions and payment gateway records
+    * - Tracking inventory impacts from refunded items
+    * A refund is associated with an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+    * and includes [refund line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/RefundLineItem)
+    * that specify which items were refunded. Each refund processes through
+    * [order transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+    * that handle the actual money transfer back to the customer.
     */
     public QueryRootQuery refund(ID id, RefundQueryDefinition queryDef) {
         startField("refund");
@@ -11094,7 +12659,25 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Returns a Return resource by ID.
+    * Retrieves a return by its ID. A return represents the intent of a buyer to ship one or more items
+    * from an
+    * order back to a merchant or a third-party fulfillment location.
+    * Use the `return` query to retrieve information associated with the following workflows:
+    * - [Managing
+    * returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management
+    * )
+    * - [Processing
+    * exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges)
+    * - [Tracking reverse fulfillment
+    * orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillme
+    * nt-orders)
+    * A return is associated with an
+    * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+    * and can include multiple return [line
+    * items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+    * Each return has a
+    * [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+    * which indicates the state of the return.
     */
     public QueryRootQuery returnValue(ID id, ReturnQueryDefinition queryDef) {
         startField("return");
@@ -11279,9 +12862,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
     /**
     * <div class="note"><h4>Theme app extensions</h4>
-    * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-    * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-    * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
     * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
     * more</a>.</p></div>
     * <div class="note"><h4>Script tag deprecation</h4>
@@ -11405,9 +12987,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
     /**
     * <div class="note"><h4>Theme app extensions</h4>
-    * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-    * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-    * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
     * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
     * more</a>.</p></div>
     * <div class="note"><h4>Script tag deprecation</h4>
@@ -11423,9 +13004,8 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
     /**
     * <div class="note"><h4>Theme app extensions</h4>
-    * <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions.
-    * All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions,
-    * such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage
+    * <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store,
+    * you must use theme app extensions instead of Script tags. Script tags can only be used with vintage
     * themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn
     * more</a>.</p></div>
     * <div class="note"><h4>Script tag deprecation</h4>
@@ -11920,11 +13500,43 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         return this;
     }
 
+    public class SegmentsCountArguments extends Arguments {
+        SegmentsCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public SegmentsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface SegmentsCountArgumentsDefinition {
+        void define(SegmentsCountArguments args);
+    }
+
     /**
-    * The number of segments for a shop.
+    * The number of segments for a shop. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery segmentsCount(CountQueryDefinition queryDef) {
+        return segmentsCount(args -> {}, queryDef);
+    }
+
+    /**
+    * The number of segments for a shop. Limited to a maximum of 10000 by default.
+    */
+    public QueryRootQuery segmentsCount(SegmentsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("segmentsCount");
+
+        SegmentsCountArguments args = new SegmentsCountArguments(_queryBuilder);
+        argsDef.define(args);
+        SegmentsCountArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));
@@ -12161,6 +13773,151 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new ShopLocaleQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    /**
+    * Returns a Shop Pay payment request receipt.
+    */
+    public QueryRootQuery shopPayPaymentRequestReceipt(String token, ShopPayPaymentRequestReceiptQueryDefinition queryDef) {
+        startField("shopPayPaymentRequestReceipt");
+
+        _queryBuilder.append("(token:");
+        Query.appendQuotedString(_queryBuilder, token.toString());
+
+        _queryBuilder.append(')');
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopPayPaymentRequestReceiptQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class ShopPayPaymentRequestReceiptsArguments extends Arguments {
+        ShopPayPaymentRequestReceiptsArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ShopPayPaymentRequestReceiptsArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ShopPayPaymentRequestReceiptsArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ShopPayPaymentRequestReceiptsArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public ShopPayPaymentRequestReceiptsArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public ShopPayPaymentRequestReceiptsArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * Sort the underlying list using a key. If your query is slow or returns an error, then [try
+        * specifying a sort key that matches the field used in the
+        * search](https://shopify.dev/api/usage/pagination-graphql#search-performance-considerations).
+        */
+        public ShopPayPaymentRequestReceiptsArguments sortKey(ShopPayPaymentRequestReceiptsSortKeys value) {
+            if (value != null) {
+                startArgument("sortKey");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * A filter made up of terms, connectives, modifiers, and comparators.
+        * | name | type | description | acceptable_values | default_value | example_use |
+        * | ---- | ---- | ---- | ---- | ---- | ---- |
+        * | created_at | time | Filter by the creation date of the payment request receipt. | | | -
+        * `created_at:2021-01-01`<br/> - `created_at:2021-01-01..2021-01-02`<br/> - `created_at:<now`<br/> -
+        * `created_at:<2024-01-01` |
+        * | id | id | Filter by `id` range. | | | - `id:1234`<br/> - `id:>=1234`<br/> - `id:<=1234` |
+        * | source_identifier | string | Filter by the source identifier of the payment request receipt. | | |
+        * - `source_identifier:1282823` |
+        * | state | string | Filter by the state of the payment request receipt. Options include: - COMPLETED
+        * - FAILED - PENDING - PROCESSING | | | - `state:COMPLETED` |
+        * You can apply one or more filters to a query. Learn more about [Shopify API search
+        * syntax](https://shopify.dev/api/usage/search-syntax).
+        */
+        public ShopPayPaymentRequestReceiptsArguments query(String value) {
+            if (value != null) {
+                startArgument("query");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+    }
+
+    public interface ShopPayPaymentRequestReceiptsArgumentsDefinition {
+        void define(ShopPayPaymentRequestReceiptsArguments args);
+    }
+
+    /**
+    * Returns a list of Shop Pay payment request receipts.
+    */
+    public QueryRootQuery shopPayPaymentRequestReceipts(ShopPayPaymentRequestReceiptConnectionQueryDefinition queryDef) {
+        return shopPayPaymentRequestReceipts(args -> {}, queryDef);
+    }
+
+    /**
+    * Returns a list of Shop Pay payment request receipts.
+    */
+    public QueryRootQuery shopPayPaymentRequestReceipts(ShopPayPaymentRequestReceiptsArgumentsDefinition argsDef, ShopPayPaymentRequestReceiptConnectionQueryDefinition queryDef) {
+        startField("shopPayPaymentRequestReceipts");
+
+        ShopPayPaymentRequestReceiptsArguments args = new ShopPayPaymentRequestReceiptsArguments(_queryBuilder);
+        argsDef.define(args);
+        ShopPayPaymentRequestReceiptsArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new ShopPayPaymentRequestReceiptConnectionQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -13103,6 +14860,19 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
         }
 
         /**
+        * Sort the underlying list using a key. If your query is slow or returns an error, then [try
+        * specifying a sort key that matches the field used in the
+        * search](https://shopify.dev/api/usage/pagination-graphql#search-performance-considerations).
+        */
+        public SubscriptionContractsArguments sortKey(SubscriptionContractsSortKeys value) {
+            if (value != null) {
+                startArgument("sortKey");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
+
+        /**
         * A filter made up of terms, connectives, modifiers, and comparators.
         * | name | type | description | acceptable_values | default_value | example_use |
         * | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -13961,6 +15731,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public UrlRedirectsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface UrlRedirectsCountArgumentsDefinition {
@@ -13968,14 +15749,14 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     }
 
     /**
-    * Count of redirects. Limited to a maximum of 10000.
+    * Count of redirects. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery urlRedirectsCount(CountQueryDefinition queryDef) {
         return urlRedirectsCount(args -> {}, queryDef);
     }
 
     /**
-    * Count of redirects. Limited to a maximum of 10000.
+    * Count of redirects. Limited to a maximum of 10000 by default.
     */
     public QueryRootQuery urlRedirectsCount(UrlRedirectsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("urlRedirectsCount");
@@ -14157,6 +15938,97 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
 
         _queryBuilder.append('{');
         queryDef.define(new WebPixelQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
+
+    public class WebPresencesArguments extends Arguments {
+        WebPresencesArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The first `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public WebPresencesArguments first(Integer value) {
+            if (value != null) {
+                startArgument("first");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come after the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public WebPresencesArguments after(String value) {
+            if (value != null) {
+                startArgument("after");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * The last `n` elements from the [paginated list](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public WebPresencesArguments last(Integer value) {
+            if (value != null) {
+                startArgument("last");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+
+        /**
+        * The elements that come before the specified
+        * [cursor](https://shopify.dev/api/usage/pagination-graphql).
+        */
+        public WebPresencesArguments before(String value) {
+            if (value != null) {
+                startArgument("before");
+                Query.appendQuotedString(_queryBuilder, value.toString());
+            }
+            return this;
+        }
+
+        /**
+        * Reverse the order of the underlying list.
+        */
+        public WebPresencesArguments reverse(Boolean value) {
+            if (value != null) {
+                startArgument("reverse");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface WebPresencesArgumentsDefinition {
+        void define(WebPresencesArguments args);
+    }
+
+    /**
+    * The web presences for the shop.
+    */
+    public QueryRootQuery webPresences(MarketWebPresenceConnectionQueryDefinition queryDef) {
+        return webPresences(args -> {}, queryDef);
+    }
+
+    /**
+    * The web presences for the shop.
+    */
+    public QueryRootQuery webPresences(WebPresencesArgumentsDefinition argsDef, MarketWebPresenceConnectionQueryDefinition queryDef) {
+        startField("webPresences");
+
+        WebPresencesArguments args = new WebPresencesArguments(_queryBuilder);
+        argsDef.define(args);
+        WebPresencesArguments.end(args);
+
+        _queryBuilder.append('{');
+        queryDef.define(new MarketWebPresenceConnectionQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;
@@ -14380,6 +16252,17 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
             }
             return this;
         }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public WebhookSubscriptionsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
     }
 
     public interface WebhookSubscriptionsCountArgumentsDefinition {
@@ -14392,7 +16275,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
     * date by Shopify & require less maintenance. Please read [About managing webhook
     * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe). Limited to a maximum of
-    * 10000.
+    * 10000 by default.
     */
     public QueryRootQuery webhookSubscriptionsCount(CountQueryDefinition queryDef) {
         return webhookSubscriptionsCount(args -> {}, queryDef);
@@ -14404,7 +16287,7 @@ public class QueryRootQuery extends Query<QueryRootQuery> {
     * subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to
     * date by Shopify & require less maintenance. Please read [About managing webhook
     * subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe). Limited to a maximum of
-    * 10000.
+    * 10000 by default.
     */
     public QueryRootQuery webhookSubscriptionsCount(WebhookSubscriptionsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("webhookSubscriptionsCount");

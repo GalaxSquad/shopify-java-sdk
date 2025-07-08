@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface InventoryAdjustmentGroupQueryDefinition {
     void define(InventoryAdjustmentGroupQuery _queryBuilder);
 }

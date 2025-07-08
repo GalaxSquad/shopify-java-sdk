@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FileDeletePayloadQueryDefinition {
     void define(FileDeletePayloadQuery _queryBuilder);
 }

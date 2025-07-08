@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CatalogCsvOperationQueryDefinition {
     void define(CatalogCsvOperationQuery _queryBuilder);
 }

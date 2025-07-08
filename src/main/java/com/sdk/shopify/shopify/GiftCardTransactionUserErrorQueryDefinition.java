@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface GiftCardTransactionUserErrorQueryDefinition {
     void define(GiftCardTransactionUserErrorQuery _queryBuilder);
 }

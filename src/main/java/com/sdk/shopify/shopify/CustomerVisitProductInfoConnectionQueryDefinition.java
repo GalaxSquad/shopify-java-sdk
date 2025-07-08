@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerVisitProductInfoConnectionQueryDefinition {
     void define(CustomerVisitProductInfoConnectionQuery _queryBuilder);
 }

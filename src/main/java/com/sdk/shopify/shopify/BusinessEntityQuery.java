@@ -28,6 +28,15 @@ public class BusinessEntityQuery extends Query<BusinessEntityQuery> {
     }
 
     /**
+    * Whether the Business Entity is archived from the shop.
+    */
+    public BusinessEntityQuery archived() {
+        startField("archived");
+
+        return this;
+    }
+
+    /**
     * The name of the company associated with the merchant's Business Entity.
     */
     public BusinessEntityQuery companyName() {

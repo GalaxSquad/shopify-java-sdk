@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ResourceOperationQueryDefinition {
     void define(ResourceOperationQuery _queryBuilder);
 }

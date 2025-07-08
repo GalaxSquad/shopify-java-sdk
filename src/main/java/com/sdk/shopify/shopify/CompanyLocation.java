@@ -138,12 +138,6 @@ public class CompanyLocation extends AbstractResponse<CompanyLocation> implement
                     break;
                 }
 
-                case "market": {
-                    responseData.put(key, new Market(jsonAsObject(field.getValue(), key)));
-
-                    break;
-                }
-
                 case "metafield": {
                     Metafield optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -307,7 +301,8 @@ public class CompanyLocation extends AbstractResponse<CompanyLocation> implement
     }
 
     /**
-    * The number of catalogs associated with the company location. Limited to a maximum of 10000.
+    * The number of catalogs associated with the company location. Limited to a maximum of 10000 by
+    * default.
     */
 
     public Count getCatalogsCount() {
@@ -457,20 +452,6 @@ public class CompanyLocation extends AbstractResponse<CompanyLocation> implement
 
     public CompanyLocation setLocale(String arg) {
         optimisticData.put(getKey("locale"), arg);
-        return this;
-    }
-
-    /**
-    * The market that includes the location's shipping address. If the shipping address is empty, then the
-    * value is the shop's primary market.
-    */
-
-    public Market getMarket() {
-        return (Market) get("market");
-    }
-
-    public CompanyLocation setMarket(Market arg) {
-        optimisticData.put(getKey("market"), arg);
         return this;
     }
 
@@ -678,8 +659,6 @@ public class CompanyLocation extends AbstractResponse<CompanyLocation> implement
             case "inCatalog": return false;
 
             case "locale": return false;
-
-            case "market": return true;
 
             case "metafield": return true;
 

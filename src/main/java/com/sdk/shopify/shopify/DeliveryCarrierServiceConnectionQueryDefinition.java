@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryCarrierServiceConnectionQueryDefinition {
     void define(DeliveryCarrierServiceConnectionQuery _queryBuilder);
 }

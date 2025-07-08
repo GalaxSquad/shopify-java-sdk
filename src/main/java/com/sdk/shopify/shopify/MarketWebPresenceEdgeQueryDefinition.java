@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketWebPresenceEdgeQueryDefinition {
     void define(MarketWebPresenceEdgeQuery _queryBuilder);
 }

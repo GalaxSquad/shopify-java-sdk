@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PricingPercentageValueQueryDefinition {
     void define(PricingPercentageValueQuery _queryBuilder);
 }

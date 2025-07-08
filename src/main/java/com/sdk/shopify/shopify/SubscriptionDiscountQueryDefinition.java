@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionDiscountQueryDefinition {
     void define(SubscriptionDiscountQuery _queryBuilder);
 }

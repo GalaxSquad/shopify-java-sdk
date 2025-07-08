@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ServerPixelDeletePayloadQueryDefinition {
     void define(ServerPixelDeletePayloadQuery _queryBuilder);
 }

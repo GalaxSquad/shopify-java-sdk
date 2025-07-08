@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PubSubWebhookSubscriptionUpdatePayloadQueryDefinition {
     void define(PubSubWebhookSubscriptionUpdatePayloadQuery _queryBuilder);
 }

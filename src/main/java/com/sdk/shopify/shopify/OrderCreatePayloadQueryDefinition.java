@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderCreatePayloadQueryDefinition {
     void define(OrderCreatePayloadQuery _queryBuilder);
 }

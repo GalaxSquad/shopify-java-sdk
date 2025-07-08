@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The type of value given to a customer when a discount is applied to an order. For example, the
 * application of the discount might give the customer a percentage off a specified item.

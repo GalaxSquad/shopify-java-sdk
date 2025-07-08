@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OnlineStorePasswordProtectionQueryDefinition {
     void define(OnlineStorePasswordProtectionQuery _queryBuilder);
 }

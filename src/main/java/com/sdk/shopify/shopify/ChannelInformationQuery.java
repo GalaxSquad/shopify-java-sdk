@@ -48,4 +48,13 @@ public class ChannelInformationQuery extends Query<ChannelInformationQuery> {
 
         return this;
     }
+
+    /**
+    * The publishing destination display name or channel name.
+    */
+    public ChannelInformationQuery displayName() {
+        startField("displayName");
+
+        return this;
+    }
 }

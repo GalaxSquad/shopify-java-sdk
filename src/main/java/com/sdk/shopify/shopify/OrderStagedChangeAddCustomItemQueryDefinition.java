@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderStagedChangeAddCustomItemQueryDefinition {
     void define(OrderStagedChangeAddCustomItemQuery _queryBuilder);
 }

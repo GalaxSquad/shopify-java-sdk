@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface HasCompareDigestQueryDefinition {
     void define(HasCompareDigestQuery _queryBuilder);
 }

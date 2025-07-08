@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ServerPixelCreatePayloadQueryDefinition {
     void define(ServerPixelCreatePayloadQuery _queryBuilder);
 }

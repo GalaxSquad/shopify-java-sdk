@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerEmailMarketingConsentUpdatePayloadQueryDefinition {
     void define(CustomerEmailMarketingConsentUpdatePayloadQuery _queryBuilder);
 }

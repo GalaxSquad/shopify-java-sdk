@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Represents the origin of a price, either fixed (defined on the price list) or relative (calculated
 * using a price list adjustment configuration). For examples, refer to

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DutySaleQueryDefinition {
     void define(DutySaleQuery _queryBuilder);
 }

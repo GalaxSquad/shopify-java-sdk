@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountAutomaticFreeShippingUpdatePayloadQueryDefinition {
     void define(DiscountAutomaticFreeShippingUpdatePayloadQuery _queryBuilder);
 }

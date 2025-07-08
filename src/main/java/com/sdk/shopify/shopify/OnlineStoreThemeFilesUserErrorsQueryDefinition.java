@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OnlineStoreThemeFilesUserErrorsQueryDefinition {
     void define(OnlineStoreThemeFilesUserErrorsQuery _queryBuilder);
 }

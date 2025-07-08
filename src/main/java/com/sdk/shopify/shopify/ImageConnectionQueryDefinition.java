@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ImageConnectionQueryDefinition {
     void define(ImageConnectionQuery _queryBuilder);
 }

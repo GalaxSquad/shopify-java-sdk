@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SaleAdditionalFeeQueryDefinition {
     void define(SaleAdditionalFeeQuery _queryBuilder);
 }

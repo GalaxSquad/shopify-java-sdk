@@ -115,6 +115,17 @@ public class MetaobjectDefinition extends AbstractResponse<MetaobjectDefinition>
                     break;
                 }
 
+                case "standardTemplate": {
+                    StandardMetaobjectDefinitionTemplate optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = new StandardMetaobjectDefinitionTemplate(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "type": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -294,6 +305,19 @@ public class MetaobjectDefinition extends AbstractResponse<MetaobjectDefinition>
     }
 
     /**
+    * The standard metaobject template associated with the definition.
+    */
+
+    public StandardMetaobjectDefinitionTemplate getStandardTemplate() {
+        return (StandardMetaobjectDefinitionTemplate) get("standardTemplate");
+    }
+
+    public MetaobjectDefinition setStandardTemplate(StandardMetaobjectDefinitionTemplate arg) {
+        optimisticData.put(getKey("standardTemplate"), arg);
+        return this;
+    }
+
+    /**
     * The type of the object definition. Defines the namespace of associated metafields.
     */
 
@@ -331,6 +355,8 @@ public class MetaobjectDefinition extends AbstractResponse<MetaobjectDefinition>
             case "metaobjectsCount": return false;
 
             case "name": return false;
+
+            case "standardTemplate": return true;
 
             case "type": return false;
 

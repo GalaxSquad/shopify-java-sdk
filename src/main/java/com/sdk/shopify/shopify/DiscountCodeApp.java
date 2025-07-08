@@ -103,8 +103,13 @@ public class DiscountCodeApp extends AbstractResponse<DiscountCodeApp> implement
                     break;
                 }
 
-                case "discountClass": {
-                    responseData.put(key, DiscountClass.fromGraphQl(jsonAsString(field.getValue(), key)));
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -376,18 +381,15 @@ public class DiscountCodeApp extends AbstractResponse<DiscountCodeApp> implement
     }
 
     /**
-    * The
-    * [discount
-    * class](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
-    * that's used to control how discounts can be combined.
+    * The classes of the discount.
     */
 
-    public DiscountClass getDiscountClass() {
-        return (DiscountClass) get("discountClass");
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
     }
 
-    public DiscountCodeApp setDiscountClass(DiscountClass arg) {
-        optimisticData.put(getKey("discountClass"), arg);
+    public DiscountCodeApp setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
         return this;
     }
 
@@ -581,7 +583,7 @@ public class DiscountCodeApp extends AbstractResponse<DiscountCodeApp> implement
 
             case "customerSelection": return false;
 
-            case "discountClass": return false;
+            case "discountClasses": return false;
 
             case "discountId": return false;
 

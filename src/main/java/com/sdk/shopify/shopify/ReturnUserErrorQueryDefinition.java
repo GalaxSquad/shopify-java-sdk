@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ReturnUserErrorQueryDefinition {
     void define(ReturnUserErrorQuery _queryBuilder);
 }

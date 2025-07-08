@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryRateProviderQueryDefinition {
     void define(DeliveryRateProviderQuery _queryBuilder);
 }

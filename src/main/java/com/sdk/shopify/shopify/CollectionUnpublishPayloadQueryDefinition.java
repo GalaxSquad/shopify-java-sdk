@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CollectionUnpublishPayloadQueryDefinition {
     void define(CollectionUnpublishPayloadQuery _queryBuilder);
 }

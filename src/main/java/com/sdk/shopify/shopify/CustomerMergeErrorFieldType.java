@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The types of the hard blockers preventing a customer from being merged to another customer.
 */
@@ -35,6 +39,11 @@ public enum CustomerMergeErrorFieldType {
     * The customer has a multipass identifier.
     */
     MULTIPASS_IDENTIFIER,
+
+    /**
+    * The override fields are invalid.
+    */
+    OVERRIDE_FIELDS,
 
     /**
     * The customer has a pending data request.
@@ -88,6 +97,10 @@ public enum CustomerMergeErrorFieldType {
                 return MULTIPASS_IDENTIFIER;
             }
 
+            case "OVERRIDE_FIELDS": {
+                return OVERRIDE_FIELDS;
+            }
+
             case "PENDING_DATA_REQUEST": {
                 return PENDING_DATA_REQUEST;
             }
@@ -133,6 +146,10 @@ public enum CustomerMergeErrorFieldType {
 
             case MULTIPASS_IDENTIFIER: {
                 return "MULTIPASS_IDENTIFIER";
+            }
+
+            case OVERRIDE_FIELDS: {
+                return "OVERRIDE_FIELDS";
             }
 
             case PENDING_DATA_REQUEST: {

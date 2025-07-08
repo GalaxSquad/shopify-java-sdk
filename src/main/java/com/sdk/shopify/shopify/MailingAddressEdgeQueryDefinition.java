@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MailingAddressEdgeQueryDefinition {
     void define(MailingAddressEdgeQuery _queryBuilder);
 }

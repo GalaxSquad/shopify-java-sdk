@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ReverseDeliveryLineItemEdgeQueryDefinition {
     void define(ReverseDeliveryLineItemEdgeQuery _queryBuilder);
 }

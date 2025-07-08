@@ -3,7 +3,6 @@ package com.sdk.shopify;
 import com.sdk.shopify.shopify.*;
 import com.shopify.graphql.support.ID;
 import com.shopify.graphql.support.SchemaViolationError;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 

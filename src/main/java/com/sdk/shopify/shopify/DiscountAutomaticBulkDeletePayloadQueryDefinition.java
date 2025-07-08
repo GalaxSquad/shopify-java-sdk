@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountAutomaticBulkDeletePayloadQueryDefinition {
     void define(DiscountAutomaticBulkDeletePayloadQuery _queryBuilder);
 }

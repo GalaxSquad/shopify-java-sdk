@@ -217,6 +217,16 @@ public class ImageQuery extends Query<ImageQuery> {
         return this;
     }
 
+    /**
+    * The ThumbHash of the image.
+    * Useful to display placeholder images while the original image is loading.
+    */
+    public ImageQuery thumbhash() {
+        startField("thumbhash");
+
+        return this;
+    }
+
     public class UrlArguments extends Arguments {
         UrlArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, true);

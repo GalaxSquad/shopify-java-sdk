@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQueryDefinition {
     void define(ShopifyPaymentsPayoutAlternateCurrencyCreatePayloadQuery _queryBuilder);
 }

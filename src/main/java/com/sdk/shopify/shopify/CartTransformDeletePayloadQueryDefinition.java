@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CartTransformDeletePayloadQueryDefinition {
     void define(CartTransformDeletePayloadQuery _queryBuilder);
 }

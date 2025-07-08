@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryLegacyModeBlockedQueryDefinition {
     void define(DeliveryLegacyModeBlockedQuery _queryBuilder);
 }

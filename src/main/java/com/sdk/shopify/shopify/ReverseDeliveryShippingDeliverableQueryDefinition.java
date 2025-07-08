@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ReverseDeliveryShippingDeliverableQueryDefinition {
     void define(ReverseDeliveryShippingDeliverableQuery _queryBuilder);
 }

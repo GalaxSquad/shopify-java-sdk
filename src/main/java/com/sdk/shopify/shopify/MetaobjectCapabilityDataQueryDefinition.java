@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetaobjectCapabilityDataQueryDefinition {
     void define(MetaobjectCapabilityDataQuery _queryBuilder);
 }

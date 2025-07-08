@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CurrencyFormatsQueryDefinition {
     void define(CurrencyFormatsQuery _queryBuilder);
 }

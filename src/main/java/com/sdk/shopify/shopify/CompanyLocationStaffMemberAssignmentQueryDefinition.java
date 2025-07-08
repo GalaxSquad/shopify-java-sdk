@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CompanyLocationStaffMemberAssignmentQueryDefinition {
     void define(CompanyLocationStaffMemberAssignmentQuery _queryBuilder);
 }

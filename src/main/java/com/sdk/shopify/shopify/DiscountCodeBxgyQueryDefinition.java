@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountCodeBxgyQueryDefinition {
     void define(DiscountCodeBxgyQuery _queryBuilder);
 }

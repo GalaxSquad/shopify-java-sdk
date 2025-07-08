@@ -57,6 +57,17 @@ public class DraftOrderPlatformDiscount extends AbstractResponse<DraftOrderPlatf
                     break;
                 }
 
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
+
+                    break;
+                }
+
                 case "discountNode": {
                     DiscountNode optional1 = null;
                     if (!field.getValue().isJsonNull()) {
@@ -183,6 +194,19 @@ public class DraftOrderPlatformDiscount extends AbstractResponse<DraftOrderPlatf
     }
 
     /**
+    * The discount classes.
+    */
+
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
+    }
+
+    public DraftOrderPlatformDiscount setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
+        return this;
+    }
+
+    /**
     * The discount node for the platform discount.
     */
 
@@ -295,6 +319,8 @@ public class DraftOrderPlatformDiscount extends AbstractResponse<DraftOrderPlatf
             case "bxgyDiscount": return false;
 
             case "code": return false;
+
+            case "discountClasses": return false;
 
             case "discountNode": return true;
 

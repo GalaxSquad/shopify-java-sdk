@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CombinedListingChildEdgeQueryDefinition {
     void define(CombinedListingChildEdgeQuery _queryBuilder);
 }

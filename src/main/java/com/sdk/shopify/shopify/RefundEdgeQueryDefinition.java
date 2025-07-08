@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface RefundEdgeQueryDefinition {
     void define(RefundEdgeQuery _queryBuilder);
 }

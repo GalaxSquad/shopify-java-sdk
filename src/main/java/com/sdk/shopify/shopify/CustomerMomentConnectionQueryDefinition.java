@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerMomentConnectionQueryDefinition {
     void define(CustomerMomentConnectionQuery _queryBuilder);
 }

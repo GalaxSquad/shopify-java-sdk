@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountCodeBasicQueryDefinition {
     void define(DiscountCodeBasicQuery _queryBuilder);
 }

@@ -20,6 +20,8 @@ public class PubSubWebhookSubscriptionInput implements Serializable {
 
     private Input<List<String>> metafieldNamespaces = Input.undefined();
 
+    private Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields = Input.undefined();
+
     public PubSubWebhookSubscriptionInput(String pubSubProject, String pubSubTopic) {
         this.pubSubProject = pubSubProject;
 
@@ -128,6 +130,27 @@ public class PubSubWebhookSubscriptionInput implements Serializable {
         return this;
     }
 
+    public List<HasMetafieldsMetafieldIdentifierInput> getMetafields() {
+        return metafields.getValue();
+    }
+
+    public Input<List<HasMetafieldsMetafieldIdentifierInput>> getMetafieldsInput() {
+        return metafields;
+    }
+
+    public PubSubWebhookSubscriptionInput setMetafields(List<HasMetafieldsMetafieldIdentifierInput> metafields) {
+        this.metafields = Input.optional(metafields);
+        return this;
+    }
+
+    public PubSubWebhookSubscriptionInput setMetafieldsInput(Input<List<HasMetafieldsMetafieldIdentifierInput>> metafields) {
+        if (metafields == null) {
+            throw new IllegalArgumentException("Input can not be null");
+        }
+        this.metafields = metafields;
+        return this;
+    }
+
     public void appendTo(StringBuilder _queryBuilder) {
         String separator = "";
         _queryBuilder.append('{');
@@ -196,6 +219,26 @@ public class PubSubWebhookSubscriptionInput implements Serializable {
                         _queryBuilder.append(listSeperator1);
                         listSeperator1 = ",";
                         Query.appendQuotedString(_queryBuilder, item1.toString());
+                    }
+                }
+                _queryBuilder.append(']');
+            } else {
+                _queryBuilder.append("null");
+            }
+        }
+
+        if (this.metafields.isDefined()) {
+            _queryBuilder.append(separator);
+            separator = ",";
+            _queryBuilder.append("metafields:");
+            if (metafields.getValue() != null) {
+                _queryBuilder.append('[');
+                {
+                    String listSeperator1 = "";
+                    for (HasMetafieldsMetafieldIdentifierInput item1 : metafields.getValue()) {
+                        _queryBuilder.append(listSeperator1);
+                        listSeperator1 = ",";
+                        item1.appendTo(_queryBuilder);
                     }
                 }
                 _queryBuilder.append(']');

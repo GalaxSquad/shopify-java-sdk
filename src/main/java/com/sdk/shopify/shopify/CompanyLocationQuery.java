@@ -136,11 +136,45 @@ public class CompanyLocationQuery extends Query<CompanyLocationQuery> {
         return this;
     }
 
+    public class CatalogsCountArguments extends Arguments {
+        CatalogsCountArguments(StringBuilder _queryBuilder) {
+            super(_queryBuilder, true);
+        }
+
+        /**
+        * The upper bound on count value before returning a result. Use `null` to have no limit.
+        */
+        public CatalogsCountArguments limit(Integer value) {
+            if (value != null) {
+                startArgument("limit");
+                _queryBuilder.append(value);
+            }
+            return this;
+        }
+    }
+
+    public interface CatalogsCountArgumentsDefinition {
+        void define(CatalogsCountArguments args);
+    }
+
     /**
-    * The number of catalogs associated with the company location. Limited to a maximum of 10000.
+    * The number of catalogs associated with the company location. Limited to a maximum of 10000 by
+    * default.
     */
     public CompanyLocationQuery catalogsCount(CountQueryDefinition queryDef) {
+        return catalogsCount(args -> {}, queryDef);
+    }
+
+    /**
+    * The number of catalogs associated with the company location. Limited to a maximum of 10000 by
+    * default.
+    */
+    public CompanyLocationQuery catalogsCount(CatalogsCountArgumentsDefinition argsDef, CountQueryDefinition queryDef) {
         startField("catalogsCount");
+
+        CatalogsCountArguments args = new CatalogsCountArguments(_queryBuilder);
+        argsDef.define(args);
+        CatalogsCountArguments.end(args);
 
         _queryBuilder.append('{');
         queryDef.define(new CountQuery(_queryBuilder));
@@ -487,20 +521,6 @@ public class CompanyLocationQuery extends Query<CompanyLocationQuery> {
     */
     public CompanyLocationQuery locale() {
         startField("locale");
-
-        return this;
-    }
-
-    /**
-    * The market that includes the location's shipping address. If the shipping address is empty, then the
-    * value is the shop's primary market.
-    */
-    public CompanyLocationQuery market(MarketQueryDefinition queryDef) {
-        startField("market");
-
-        _queryBuilder.append('{');
-        queryDef.define(new MarketQuery(_queryBuilder));
-        _queryBuilder.append('}');
 
         return this;
     }

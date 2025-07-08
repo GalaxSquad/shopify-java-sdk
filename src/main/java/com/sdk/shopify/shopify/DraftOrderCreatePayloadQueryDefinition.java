@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderCreatePayloadQueryDefinition {
     void define(DraftOrderCreatePayloadQuery _queryBuilder);
 }

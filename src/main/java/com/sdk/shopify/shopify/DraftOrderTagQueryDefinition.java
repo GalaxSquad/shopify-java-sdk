@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DraftOrderTagQueryDefinition {
     void define(DraftOrderTagQuery _queryBuilder);
 }

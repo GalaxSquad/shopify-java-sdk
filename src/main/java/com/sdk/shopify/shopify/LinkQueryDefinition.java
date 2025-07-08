@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LinkQueryDefinition {
     void define(LinkQuery _queryBuilder);
 }

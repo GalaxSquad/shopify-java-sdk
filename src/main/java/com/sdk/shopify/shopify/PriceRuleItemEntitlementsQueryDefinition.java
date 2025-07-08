@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceRuleItemEntitlementsQueryDefinition {
     void define(PriceRuleItemEntitlementsQuery _queryBuilder);
 }

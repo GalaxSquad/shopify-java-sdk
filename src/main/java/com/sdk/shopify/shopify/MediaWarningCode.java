@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Warning types for media.
 */
@@ -11,6 +15,11 @@ public enum MediaWarningCode {
     * reviewing your model to ensure they are correct.
     */
     MODEL_LARGE_PHYSICAL_SIZE,
+
+    /**
+    * The thumbnail failed to regenerate.Try applying the changes again to regenerate the thumbnail.
+    */
+    MODEL_PREVIEW_IMAGE_FAIL,
 
     /**
     * 3D model physical size might be invalid. The dimensions of your model are very small. Consider
@@ -30,6 +39,10 @@ public enum MediaWarningCode {
                 return MODEL_LARGE_PHYSICAL_SIZE;
             }
 
+            case "MODEL_PREVIEW_IMAGE_FAIL": {
+                return MODEL_PREVIEW_IMAGE_FAIL;
+            }
+
             case "MODEL_SMALL_PHYSICAL_SIZE": {
                 return MODEL_SMALL_PHYSICAL_SIZE;
             }
@@ -43,6 +56,10 @@ public enum MediaWarningCode {
         switch (this) {
             case MODEL_LARGE_PHYSICAL_SIZE: {
                 return "MODEL_LARGE_PHYSICAL_SIZE";
+            }
+
+            case MODEL_PREVIEW_IMAGE_FAIL: {
+                return "MODEL_PREVIEW_IMAGE_FAIL";
             }
 
             case MODEL_SMALL_PHYSICAL_SIZE: {

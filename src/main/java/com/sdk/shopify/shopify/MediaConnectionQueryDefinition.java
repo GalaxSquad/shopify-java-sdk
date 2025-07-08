@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MediaConnectionQueryDefinition {
     void define(MediaConnectionQuery _queryBuilder);
 }

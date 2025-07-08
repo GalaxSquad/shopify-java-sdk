@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingFontQueryDefinition {
     void define(CheckoutBrandingFontQuery _queryBuilder);
 }

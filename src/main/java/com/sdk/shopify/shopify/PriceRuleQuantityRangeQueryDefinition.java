@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PriceRuleQuantityRangeQueryDefinition {
     void define(PriceRuleQuantityRangeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentIntegerFilterQueryDefinition {
     void define(SegmentIntegerFilterQuery _queryBuilder);
 }

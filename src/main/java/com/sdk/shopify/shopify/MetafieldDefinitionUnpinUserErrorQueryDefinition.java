@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetafieldDefinitionUnpinUserErrorQueryDefinition {
     void define(MetafieldDefinitionUnpinUserErrorQuery _queryBuilder);
 }

@@ -7,13 +7,56 @@ import com.shopify.graphql.support.Query;
 import java.util.List;
 
 /**
-* Represents a return.
+* The `Return` object represents the intent of a buyer to ship one or more items from an order back to
+* a merchant
+* or a third-party fulfillment location. A return is associated with an
+* [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+* and can include multiple return [line
+* items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+* Each return has a
+* [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+* which indicates the state of the return.
+* Use the `Return` object to capture the financial, logistical,
+* and business intent of a return. For example, you can identify eligible items for a return and issue
+* customers
+* a refund for returned items on behalf of the merchant.
+* Learn more about providing a
+* [return management
+* workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-managemen
+* t)
+* for merchants. You can also manage
+* [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+* [reverse fulfillment
+* orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillme
+* nt-orders),
+* and [reverse
+* deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliv
+* eries)
+* on behalf of merchants.
 */
 public class ReturnQuery extends Query<ReturnQuery> {
     ReturnQuery(StringBuilder _queryBuilder) {
         super(_queryBuilder);
 
         startField("id");
+    }
+
+    /**
+    * The date and time when the return was closed.
+    */
+    public ReturnQuery closedAt() {
+        startField("closedAt");
+
+        return this;
+    }
+
+    /**
+    * The date and time when the return was created.
+    */
+    public ReturnQuery createdAt() {
+        startField("createdAt");
+
+        return this;
     }
 
     /**
@@ -247,6 +290,15 @@ public class ReturnQuery extends Query<ReturnQuery> {
         return this;
     }
 
+    /**
+    * The date and time when the return was approved.
+    */
+    public ReturnQuery requestApprovedAt() {
+        startField("requestApprovedAt");
+
+        return this;
+    }
+
     public class ReturnLineItemsArguments extends Arguments {
         ReturnLineItemsArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, true);
@@ -451,15 +503,15 @@ public class ReturnQuery extends Query<ReturnQuery> {
         return this;
     }
 
-    public class SuggestedRefundArguments extends Arguments {
-        SuggestedRefundArguments(StringBuilder _queryBuilder) {
+    public class SuggestedFinancialOutcomeArguments extends Arguments {
+        SuggestedFinancialOutcomeArguments(StringBuilder _queryBuilder) {
             super(_queryBuilder, false);
         }
 
         /**
-        * The shipping amount from the associated order to include in the refund.
+        * The shipping amount from the associated order to include as a refund.
         */
-        public SuggestedRefundArguments refundShipping(RefundShippingInput value) {
+        public SuggestedFinancialOutcomeArguments refundShipping(RefundShippingInput value) {
             if (value != null) {
                 startArgument("refundShipping");
                 value.appendTo(_queryBuilder);
@@ -468,9 +520,9 @@ public class ReturnQuery extends Query<ReturnQuery> {
         }
 
         /**
-        * The duties from to associated order to include in the refund.
+        * The duties from the associated order to include as a refund.
         */
-        public SuggestedRefundArguments refundDuties(List<RefundDutyInput> value) {
+        public SuggestedFinancialOutcomeArguments refundDuties(List<RefundDutyInput> value) {
             if (value != null) {
                 startArgument("refundDuties");
                 _queryBuilder.append('[');
@@ -486,30 +538,41 @@ public class ReturnQuery extends Query<ReturnQuery> {
             }
             return this;
         }
+
+        /**
+        * Specifies which refund methods to allocate the suggested refund amount to.
+        */
+        public SuggestedFinancialOutcomeArguments refundMethodAllocation(RefundMethodAllocation value) {
+            if (value != null) {
+                startArgument("refundMethodAllocation");
+                _queryBuilder.append(value.toString());
+            }
+            return this;
+        }
     }
 
-    public interface SuggestedRefundArgumentsDefinition {
-        void define(SuggestedRefundArguments args);
+    public interface SuggestedFinancialOutcomeArgumentsDefinition {
+        void define(SuggestedFinancialOutcomeArguments args);
     }
 
     /**
-    * A suggested refund for the return.
+    * A suggested financial outcome for the return.
     */
-    public ReturnQuery suggestedRefund(List<ReturnRefundLineItemInput> returnRefundLineItems, SuggestedReturnRefundQueryDefinition queryDef) {
-        return suggestedRefund(returnRefundLineItems, args -> {}, queryDef);
+    public ReturnQuery suggestedFinancialOutcome(List<SuggestedOutcomeReturnLineItemInput> returnLineItems, List<SuggestedOutcomeExchangeLineItemInput> exchangeLineItems, SuggestedReturnFinancialOutcomeQueryDefinition queryDef) {
+        return suggestedFinancialOutcome(returnLineItems, exchangeLineItems, args -> {}, queryDef);
     }
 
     /**
-    * A suggested refund for the return.
+    * A suggested financial outcome for the return.
     */
-    public ReturnQuery suggestedRefund(List<ReturnRefundLineItemInput> returnRefundLineItems, SuggestedRefundArgumentsDefinition argsDef, SuggestedReturnRefundQueryDefinition queryDef) {
-        startField("suggestedRefund");
+    public ReturnQuery suggestedFinancialOutcome(List<SuggestedOutcomeReturnLineItemInput> returnLineItems, List<SuggestedOutcomeExchangeLineItemInput> exchangeLineItems, SuggestedFinancialOutcomeArgumentsDefinition argsDef, SuggestedReturnFinancialOutcomeQueryDefinition queryDef) {
+        startField("suggestedFinancialOutcome");
 
-        _queryBuilder.append("(returnRefundLineItems:");
+        _queryBuilder.append("(returnLineItems:");
         _queryBuilder.append('[');
         {
             String listSeperator1 = "";
-            for (ReturnRefundLineItemInput item1 : returnRefundLineItems) {
+            for (SuggestedOutcomeReturnLineItemInput item1 : returnLineItems) {
                 _queryBuilder.append(listSeperator1);
                 listSeperator1 = ",";
                 item1.appendTo(_queryBuilder);
@@ -517,12 +580,24 @@ public class ReturnQuery extends Query<ReturnQuery> {
         }
         _queryBuilder.append(']');
 
-        argsDef.define(new SuggestedRefundArguments(_queryBuilder));
+        _queryBuilder.append(",exchangeLineItems:");
+        _queryBuilder.append('[');
+        {
+            String listSeperator1 = "";
+            for (SuggestedOutcomeExchangeLineItemInput item1 : exchangeLineItems) {
+                _queryBuilder.append(listSeperator1);
+                listSeperator1 = ",";
+                item1.appendTo(_queryBuilder);
+            }
+        }
+        _queryBuilder.append(']');
+
+        argsDef.define(new SuggestedFinancialOutcomeArguments(_queryBuilder));
 
         _queryBuilder.append(')');
 
         _queryBuilder.append('{');
-        queryDef.define(new SuggestedReturnRefundQuery(_queryBuilder));
+        queryDef.define(new SuggestedReturnFinancialOutcomeQuery(_queryBuilder));
         _queryBuilder.append('}');
 
         return this;

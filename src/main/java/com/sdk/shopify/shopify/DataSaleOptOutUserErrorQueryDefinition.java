@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DataSaleOptOutUserErrorQueryDefinition {
     void define(DataSaleOptOutUserErrorQuery _queryBuilder);
 }

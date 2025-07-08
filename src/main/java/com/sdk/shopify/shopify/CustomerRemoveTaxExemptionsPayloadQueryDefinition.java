@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerRemoveTaxExemptionsPayloadQueryDefinition {
     void define(CustomerRemoveTaxExemptionsPayloadQuery _queryBuilder);
 }

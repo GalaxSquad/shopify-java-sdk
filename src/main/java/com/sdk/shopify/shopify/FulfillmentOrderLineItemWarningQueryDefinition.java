@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderLineItemWarningQueryDefinition {
     void define(FulfillmentOrderLineItemWarningQuery _queryBuilder);
 }

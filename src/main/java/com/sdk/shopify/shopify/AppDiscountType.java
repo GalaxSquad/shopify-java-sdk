@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.shopify.graphql.support.AbstractResponse;
 import com.shopify.graphql.support.SchemaViolationError;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,6 +56,17 @@ public class AppDiscountType extends AbstractResponse<AppDiscountType> {
                     }
 
                     responseData.put(key, optional1);
+
+                    break;
+                }
+
+                case "discountClasses": {
+                    List<DiscountClass> list1 = new ArrayList<>();
+                    for (JsonElement element1 : jsonAsArray(field.getValue(), key)) {
+                        list1.add(DiscountClass.fromGraphQl(jsonAsString(element1, key)));
+                    }
+
+                    responseData.put(key, list1);
 
                     break;
                 }
@@ -144,6 +157,21 @@ public class AppDiscountType extends AbstractResponse<AppDiscountType> {
     }
 
     /**
+    * The list of [discount
+    * classes](https://help.shopify.com/manual/discounts/combining-discounts/discount-combinations)
+    * that this app extension supports.
+    */
+
+    public List<DiscountClass> getDiscountClasses() {
+        return (List<DiscountClass>) get("discountClasses");
+    }
+
+    public AppDiscountType setDiscountClasses(List<DiscountClass> arg) {
+        optimisticData.put(getKey("discountClasses"), arg);
+        return this;
+    }
+
+    /**
     * The
     * [function
     * ID](https://shopify.dev/docs/apps/build/functions/input-output/metafields-for-input-queries)
@@ -183,6 +211,8 @@ public class AppDiscountType extends AbstractResponse<AppDiscountType> {
             case "appKey": return false;
 
             case "description": return false;
+
+            case "discountClasses": return false;
 
             case "functionId": return false;
 

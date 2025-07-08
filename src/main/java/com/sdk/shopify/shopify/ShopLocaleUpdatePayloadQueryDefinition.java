@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ShopLocaleUpdatePayloadQueryDefinition {
     void define(ShopLocaleUpdatePayloadQuery _queryBuilder);
 }

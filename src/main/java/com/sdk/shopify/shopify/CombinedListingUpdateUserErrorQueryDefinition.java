@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CombinedListingUpdateUserErrorQueryDefinition {
     void define(CombinedListingUpdateUserErrorQuery _queryBuilder);
 }

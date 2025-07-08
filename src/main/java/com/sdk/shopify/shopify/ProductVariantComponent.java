@@ -10,7 +10,9 @@ import com.shopify.graphql.support.SchemaViolationError;
 import java.util.Map;
 
 /**
-* A product variant component associated with a product variant.
+* A product variant component that is included within a bundle.
+* These are the individual product variants that make up a bundle product,
+* where each component has a specific required quantity.
 */
 public class ProductVariantComponent extends AbstractResponse<ProductVariantComponent> implements Node {
     public ProductVariantComponent() {

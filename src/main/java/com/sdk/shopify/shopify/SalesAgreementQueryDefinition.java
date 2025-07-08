@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SalesAgreementQueryDefinition {
     void define(SalesAgreementQuery _queryBuilder);
 }

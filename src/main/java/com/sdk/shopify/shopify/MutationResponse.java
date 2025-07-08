@@ -3,7 +3,7 @@
 package com.sdk.shopify.shopify;
 
 import com.shopify.graphql.support.SchemaViolationError;
-import com.shopify.graphql.support.TopLevelResponse;    
+import com.shopify.graphql.support.TopLevelResponse;
 
 public class MutationResponse extends Response<Mutation> {
 

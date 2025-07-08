@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ProductBundleComponentQueryDefinition {
     void define(ProductBundleComponentQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductVariantLeaveSellingPlanGroupsPayloadQueryDefinition {
     void define(ProductVariantLeaveSellingPlanGroupsPayloadQuery _queryBuilder);
 }

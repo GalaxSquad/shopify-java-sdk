@@ -88,6 +88,10 @@ public class UnknownHasEvents extends AbstractResponse<UnknownHasEvents> impleme
                 return new DraftOrder(fields);
             }
 
+            case "InventoryTransfer": {
+                return new InventoryTransfer(fields);
+            }
+
             case "Order": {
                 return new Order(fields);
             }

@@ -3,6 +3,8 @@
 package com.sdk.shopify.shopify;
 
 
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the GiftCard query.
 */
@@ -53,12 +55,6 @@ public enum GiftCardSortKeys {
     INITIAL_VALUE,
 
     /**
-    * Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-    * Don't use this sort key when no search query is specified.
-    */
-    RELEVANCE,
-
-    /**
     * Sort by the `updated_at` value.
     */
     UPDATED_AT,
@@ -107,10 +103,6 @@ public enum GiftCardSortKeys {
                 return INITIAL_VALUE;
             }
 
-            case "RELEVANCE": {
-                return RELEVANCE;
-            }
-
             case "UPDATED_AT": {
                 return UPDATED_AT;
             }
@@ -156,10 +148,6 @@ public enum GiftCardSortKeys {
 
             case INITIAL_VALUE: {
                 return "INITIAL_VALUE";
-            }
-
-            case RELEVANCE: {
-                return "RELEVANCE";
             }
 
             case UPDATED_AT: {

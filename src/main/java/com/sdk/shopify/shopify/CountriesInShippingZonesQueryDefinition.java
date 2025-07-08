@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CountriesInShippingZonesQueryDefinition {
     void define(CountriesInShippingZonesQuery _queryBuilder);
 }

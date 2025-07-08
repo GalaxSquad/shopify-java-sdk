@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppUsageRecordConnectionQueryDefinition {
     void define(AppUsageRecordConnectionQuery _queryBuilder);
 }

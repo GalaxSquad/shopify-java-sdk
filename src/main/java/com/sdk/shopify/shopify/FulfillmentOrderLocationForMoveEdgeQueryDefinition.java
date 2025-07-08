@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderLocationForMoveEdgeQueryDefinition {
     void define(FulfillmentOrderLocationForMoveEdgeQuery _queryBuilder);
 }

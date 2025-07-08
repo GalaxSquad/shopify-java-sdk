@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderEditUpdateDiscountPayloadQueryDefinition {
     void define(OrderEditUpdateDiscountPayloadQuery _queryBuilder);
 }

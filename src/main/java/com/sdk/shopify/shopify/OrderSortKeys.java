@@ -2,6 +2,9 @@
 
 package com.sdk.shopify.shopify;
 
+
+import com.shopify.graphql.support.ID;
+
 /**
 * The set of valid sort keys for the Order query.
 */
@@ -17,7 +20,7 @@ public enum OrderSortKeys {
     CUSTOMER_NAME,
 
     /**
-    * Sort orders by their shipping address country and city.
+    * Sort by shipping address to analyze regional sales patterns or plan logistics.
     */
     DESTINATION,
 
@@ -42,7 +45,7 @@ public enum OrderSortKeys {
     ORDER_NUMBER,
 
     /**
-    * Sort orders by their purchase order number.
+    * Sort by the purchase order number to match external procurement systems or track recent orders.
     */
     PO_NUMBER,
 
@@ -58,12 +61,14 @@ public enum OrderSortKeys {
     RELEVANCE,
 
     /**
-    * Sort orders by the total quantity of all line items.
+    * Sort by the total quantity of all line items to identify large purchases or analyze inventory demand
+    * patterns.
     */
     TOTAL_ITEMS_QUANTITY,
 
     /**
-    * Sort by the `total_price` value.
+    * Sorts by the total sold price of an order in the shop currency, excluding any
+    * returns/refunds/removals.
     */
     TOTAL_PRICE,
 

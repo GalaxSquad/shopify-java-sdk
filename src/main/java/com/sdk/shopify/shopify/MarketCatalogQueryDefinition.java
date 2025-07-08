@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MarketCatalogQueryDefinition {
     void define(MarketCatalogQuery _queryBuilder);
 }

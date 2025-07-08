@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodGetUpdateUrlUserErrorQueryDefinition {
     void define(CustomerPaymentMethodGetUpdateUrlUserErrorQuery _queryBuilder);
 }

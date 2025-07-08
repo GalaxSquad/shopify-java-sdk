@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StandardizedProductTypeQueryDefinition {
     void define(StandardizedProductTypeQuery _queryBuilder);
 }

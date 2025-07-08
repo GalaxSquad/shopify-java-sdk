@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface OrderAgreementQueryDefinition {
     void define(OrderAgreementQuery _queryBuilder);
 }

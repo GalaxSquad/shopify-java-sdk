@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * StatusBadgeType helps to identify the color of the status badge.
 */

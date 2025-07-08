@@ -71,6 +71,17 @@ public class Image extends AbstractResponse<Image> implements HasMetafields {
                     break;
                 }
 
+                case "thumbhash": {
+                    String optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = jsonAsString(field.getValue(), key);
+                    }
+
+                    responseData.put(key, optional1);
+
+                    break;
+                }
+
                 case "url": {
                     responseData.put(key, jsonAsString(field.getValue(), key));
 
@@ -172,6 +183,20 @@ public class Image extends AbstractResponse<Image> implements HasMetafields {
     }
 
     /**
+    * The ThumbHash of the image.
+    * Useful to display placeholder images while the original image is loading.
+    */
+
+    public String getThumbhash() {
+        return (String) get("thumbhash");
+    }
+
+    public Image setThumbhash(String arg) {
+        optimisticData.put(getKey("thumbhash"), arg);
+        return this;
+    }
+
+    /**
     * The location of the image as a URL.
     * If no transform options are specified, then the original image will be preserved including any
     * pre-applied transforms.
@@ -214,6 +239,8 @@ public class Image extends AbstractResponse<Image> implements HasMetafields {
             case "metafield": return true;
 
             case "metafields": return true;
+
+            case "thumbhash": return false;
 
             case "url": return false;
 

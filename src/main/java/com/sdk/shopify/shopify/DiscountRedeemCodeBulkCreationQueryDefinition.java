@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DiscountRedeemCodeBulkCreationQueryDefinition {
     void define(DiscountRedeemCodeBulkCreationQuery _queryBuilder);
 }

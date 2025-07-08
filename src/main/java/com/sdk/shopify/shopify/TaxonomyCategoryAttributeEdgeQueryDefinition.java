@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TaxonomyCategoryAttributeEdgeQueryDefinition {
     void define(TaxonomyCategoryAttributeEdgeQuery _queryBuilder);
 }

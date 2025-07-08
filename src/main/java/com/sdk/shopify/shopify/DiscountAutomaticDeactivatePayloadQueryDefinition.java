@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DiscountAutomaticDeactivatePayloadQueryDefinition {
     void define(DiscountAutomaticDeactivatePayloadQuery _queryBuilder);
 }

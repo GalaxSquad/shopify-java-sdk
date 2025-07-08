@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface OrderEditRemoveLineItemDiscountPayloadQueryDefinition {
     void define(OrderEditRemoveLineItemDiscountPayloadQuery _queryBuilder);
 }

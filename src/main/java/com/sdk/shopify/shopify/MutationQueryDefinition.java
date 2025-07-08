@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MutationQueryDefinition {
     void define(MutationQuery _queryBuilder);
 }

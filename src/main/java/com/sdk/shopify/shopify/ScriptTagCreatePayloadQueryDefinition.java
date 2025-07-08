@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ScriptTagCreatePayloadQueryDefinition {
     void define(ScriptTagCreatePayloadQuery _queryBuilder);
 }

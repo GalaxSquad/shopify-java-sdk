@@ -304,9 +304,23 @@ public class HasMetafieldsQuery extends Query<HasMetafieldsQuery> {
         return this;
     }
 
+    public HasMetafieldsQuery onGiftCardDebitTransaction(GiftCardDebitTransactionQueryDefinition queryDef) {
+        startInlineFragment("GiftCardDebitTransaction");
+        queryDef.define(new GiftCardDebitTransactionQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
     public HasMetafieldsQuery onImage(ImageQueryDefinition queryDef) {
         startInlineFragment("Image");
         queryDef.define(new ImageQuery(_queryBuilder));
+        _queryBuilder.append('}');
+        return this;
+    }
+
+    public HasMetafieldsQuery onInventoryTransfer(InventoryTransferQueryDefinition queryDef) {
+        startInlineFragment("InventoryTransfer");
+        queryDef.define(new InventoryTransferQuery(_queryBuilder));
         _queryBuilder.append('}');
         return this;
     }

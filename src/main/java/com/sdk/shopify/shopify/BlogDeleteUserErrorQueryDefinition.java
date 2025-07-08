@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BlogDeleteUserErrorQueryDefinition {
     void define(BlogDeleteUserErrorQuery _queryBuilder);
 }

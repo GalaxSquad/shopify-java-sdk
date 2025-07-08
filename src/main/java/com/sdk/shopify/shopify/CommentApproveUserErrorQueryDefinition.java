@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentApproveUserErrorQueryDefinition {
     void define(CommentApproveUserErrorQuery _queryBuilder);
 }

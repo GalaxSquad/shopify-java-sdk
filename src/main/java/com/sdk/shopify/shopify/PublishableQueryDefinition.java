@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PublishableQueryDefinition {
     void define(PublishableQuery _queryBuilder);
 }

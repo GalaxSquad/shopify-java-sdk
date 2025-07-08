@@ -30,7 +30,12 @@ public class FeeSale extends AbstractResponse<FeeSale> implements Sale {
                 }
 
                 case "fee": {
-                    responseData.put(key, UnknownFee.create(jsonAsObject(field.getValue(), key)));
+                    Fee optional1 = null;
+                    if (!field.getValue().isJsonNull()) {
+                        optional1 = UnknownFee.create(jsonAsObject(field.getValue(), key));
+                    }
+
+                    responseData.put(key, optional1);
 
                     break;
                 }
@@ -122,7 +127,7 @@ public class FeeSale extends AbstractResponse<FeeSale> implements Sale {
     }
 
     /**
-    * The fee associated with the sale.
+    * The fee associated with the sale. It can be null if the fee was deleted.
     */
 
     public Fee getFee() {

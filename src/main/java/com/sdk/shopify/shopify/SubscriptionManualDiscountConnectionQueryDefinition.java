@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SubscriptionManualDiscountConnectionQueryDefinition {
     void define(SubscriptionManualDiscountConnectionQuery _queryBuilder);
 }

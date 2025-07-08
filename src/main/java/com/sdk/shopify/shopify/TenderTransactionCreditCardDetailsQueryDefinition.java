@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface TenderTransactionCreditCardDetailsQueryDefinition {
     void define(TenderTransactionCreditCardDetailsQuery _queryBuilder);
 }

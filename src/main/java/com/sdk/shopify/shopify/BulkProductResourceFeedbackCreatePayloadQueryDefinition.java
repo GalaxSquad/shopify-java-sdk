@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface BulkProductResourceFeedbackCreatePayloadQueryDefinition {
     void define(BulkProductResourceFeedbackCreatePayloadQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingContainerDividerQueryDefinition {
     void define(CheckoutBrandingContainerDividerQuery _queryBuilder);
 }

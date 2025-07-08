@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodRemoteUserErrorQueryDefinition {
     void define(CustomerPaymentMethodRemoteUserErrorQuery _queryBuilder);
 }

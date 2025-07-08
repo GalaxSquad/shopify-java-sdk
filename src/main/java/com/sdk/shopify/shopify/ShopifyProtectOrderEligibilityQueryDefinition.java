@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ShopifyProtectOrderEligibilityQueryDefinition {
     void define(ShopifyProtectOrderEligibilityQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface AppPricingDetailsQueryDefinition {
     void define(AppPricingDetailsQuery _queryBuilder);
 }

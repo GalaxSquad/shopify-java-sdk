@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CommentDeleteUserErrorQueryDefinition {
     void define(CommentDeleteUserErrorQuery _queryBuilder);
 }

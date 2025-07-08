@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * Possible error codes that can be returned by `ProductOptionsCreateUserError`.
 */
@@ -87,6 +91,11 @@ public enum ProductOptionsCreateUserErrorCode {
     OPTION_NAME_MISSING,
 
     /**
+    * Option name is too long.
+    */
+    OPTION_NAME_TOO_LONG,
+
+    /**
     * If specified, position field must be present in all option inputs.
     */
     OPTION_POSITION_MISSING,
@@ -100,6 +109,11 @@ public enum ProductOptionsCreateUserErrorCode {
     * Option values count is over the allowed limit.
     */
     OPTION_VALUES_OVER_LIMIT,
+
+    /**
+    * Option value name is too long.
+    */
+    OPTION_VALUE_NAME_TOO_LONG,
 
     /**
     * Position must be between 1 and the maximum number of options per product.
@@ -198,6 +212,10 @@ public enum ProductOptionsCreateUserErrorCode {
                 return OPTION_NAME_MISSING;
             }
 
+            case "OPTION_NAME_TOO_LONG": {
+                return OPTION_NAME_TOO_LONG;
+            }
+
             case "OPTION_POSITION_MISSING": {
                 return OPTION_POSITION_MISSING;
             }
@@ -208,6 +226,10 @@ public enum ProductOptionsCreateUserErrorCode {
 
             case "OPTION_VALUES_OVER_LIMIT": {
                 return OPTION_VALUES_OVER_LIMIT;
+            }
+
+            case "OPTION_VALUE_NAME_TOO_LONG": {
+                return OPTION_VALUE_NAME_TOO_LONG;
             }
 
             case "POSITION_OUT_OF_BOUNDS": {
@@ -301,6 +323,10 @@ public enum ProductOptionsCreateUserErrorCode {
                 return "OPTION_NAME_MISSING";
             }
 
+            case OPTION_NAME_TOO_LONG: {
+                return "OPTION_NAME_TOO_LONG";
+            }
+
             case OPTION_POSITION_MISSING: {
                 return "OPTION_POSITION_MISSING";
             }
@@ -311,6 +337,10 @@ public enum ProductOptionsCreateUserErrorCode {
 
             case OPTION_VALUES_OVER_LIMIT: {
                 return "OPTION_VALUES_OVER_LIMIT";
+            }
+
+            case OPTION_VALUE_NAME_TOO_LONG: {
+                return "OPTION_VALUE_NAME_TOO_LONG";
             }
 
             case POSITION_OUT_OF_BOUNDS: {

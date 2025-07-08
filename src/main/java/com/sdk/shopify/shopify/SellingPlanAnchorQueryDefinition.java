@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SellingPlanAnchorQueryDefinition {
     void define(SellingPlanAnchorQuery _queryBuilder);
 }

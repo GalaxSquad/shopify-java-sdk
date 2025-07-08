@@ -42,4 +42,17 @@ public class CustomerEmailMarketingConsentStateQuery extends Query<CustomerEmail
 
         return this;
     }
+
+    /**
+    * The location where the customer consented to receive marketing material by email.
+    */
+    public CustomerEmailMarketingConsentStateQuery sourceLocation(LocationQueryDefinition queryDef) {
+        startField("sourceLocation");
+
+        _queryBuilder.append('{');
+        queryDef.define(new LocationQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
 }

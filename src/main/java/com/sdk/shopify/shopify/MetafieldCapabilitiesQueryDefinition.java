@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface MetafieldCapabilitiesQueryDefinition {
     void define(MetafieldCapabilitiesQuery _queryBuilder);
 }

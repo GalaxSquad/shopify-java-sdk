@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MarketingEventEdgeQueryDefinition {
     void define(MarketingEventEdgeQuery _queryBuilder);
 }

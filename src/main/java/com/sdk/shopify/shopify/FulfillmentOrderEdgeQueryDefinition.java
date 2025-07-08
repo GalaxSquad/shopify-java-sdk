@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FulfillmentOrderEdgeQueryDefinition {
     void define(FulfillmentOrderEdgeQuery _queryBuilder);
 }

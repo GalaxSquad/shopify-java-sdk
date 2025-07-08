@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The status of the discount that describes its availability,
 * expiration, or pending activation.

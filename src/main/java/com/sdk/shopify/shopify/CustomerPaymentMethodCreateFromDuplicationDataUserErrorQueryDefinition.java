@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CustomerPaymentMethodCreateFromDuplicationDataUserErrorQueryDefinition {
     void define(CustomerPaymentMethodCreateFromDuplicationDataUserErrorQuery _queryBuilder);
 }

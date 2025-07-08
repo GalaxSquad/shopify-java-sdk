@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface LocalizationExtensionQueryDefinition {
     void define(LocalizationExtensionQuery _queryBuilder);
 }

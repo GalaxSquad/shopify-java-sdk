@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MetafieldReferenceConnectionQueryDefinition {
     void define(MetafieldReferenceConnectionQuery _queryBuilder);
 }

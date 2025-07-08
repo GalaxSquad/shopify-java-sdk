@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface LocalizationExtensionEdgeQueryDefinition {
     void define(LocalizationExtensionEdgeQuery _queryBuilder);
 }

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PriceRuleQueryDefinition {
     void define(PriceRuleQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CombinedListingChildQueryDefinition {
     void define(CombinedListingChildQuery _queryBuilder);
 }

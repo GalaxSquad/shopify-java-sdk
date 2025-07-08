@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface SegmentQueryDefinition {
     void define(SegmentQuery _queryBuilder);
 }

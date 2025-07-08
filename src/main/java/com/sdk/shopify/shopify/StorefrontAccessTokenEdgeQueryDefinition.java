@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface StorefrontAccessTokenEdgeQueryDefinition {
     void define(StorefrontAccessTokenEdgeQuery _queryBuilder);
 }

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SegmentMembershipQueryDefinition {
     void define(SegmentMembershipQuery _queryBuilder);
 }

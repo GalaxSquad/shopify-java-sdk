@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface StoreCreditAccountDebitPayloadQueryDefinition {
     void define(StoreCreditAccountDebitPayloadQuery _queryBuilder);
 }

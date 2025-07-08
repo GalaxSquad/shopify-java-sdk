@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerEdgeQueryDefinition {
     void define(CustomerEdgeQuery _queryBuilder);
 }

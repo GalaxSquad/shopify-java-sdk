@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The supported topics for webhook subscriptions. You can use webhook subscriptions to receive
 * notifications about particular events in a shop.
@@ -109,6 +113,12 @@ public enum WebhookSubscriptionTopic {
     * `read_orders` scope.
     */
     CHECKOUTS_UPDATE,
+
+    /**
+    * The webhook topic for `checkout_and_accounts_configurations/update` events. The event occurs
+    * whenever a published checkout and account configuration is updated.
+    */
+    CHECKOUT_AND_ACCOUNTS_CONFIGURATIONS_UPDATE,
 
     /**
     * The webhook topic for `collections/create` events. Occurs whenever a collection is created. Requires
@@ -436,6 +446,36 @@ public enum WebhookSubscriptionTopic {
     DRAFT_ORDERS_UPDATE,
 
     /**
+    * The webhook topic for `finance_app_staff_member/delete` events. Triggers when a staff with access to
+    * all or some finance app has been removed. Requires the `read_financial_kyc_information` scope.
+    */
+    FINANCE_APP_STAFF_MEMBER_DELETE,
+
+    /**
+    * The webhook topic for `finance_app_staff_member/grant` events. Triggers when a staff is granted
+    * access to all or some finance app. Requires the `read_financial_kyc_information` scope.
+    */
+    FINANCE_APP_STAFF_MEMBER_GRANT,
+
+    /**
+    * The webhook topic for `finance_app_staff_member/revoke` events. Triggers when a staff's access to
+    * all or some finance app has been revoked. Requires the `read_financial_kyc_information` scope.
+    */
+    FINANCE_APP_STAFF_MEMBER_REVOKE,
+
+    /**
+    * The webhook topic for `finance_app_staff_member/update` events. Triggers when a staff's information
+    * has been updated. Requires the `read_financial_kyc_information` scope.
+    */
+    FINANCE_APP_STAFF_MEMBER_UPDATE,
+
+    /**
+    * The webhook topic for `finance_kyc_information/update` events. Occurs whenever shop's finance KYC
+    * information was updated Requires the `read_financial_kyc_information` scope.
+    */
+    FINANCE_KYC_INFORMATION_UPDATE,
+
+    /**
     * The webhook topic for `fulfillments/create` events. Occurs whenever a fulfillment is created.
     * Requires at least one of the following scopes: read_fulfillments, read_marketplace_orders.
     */
@@ -655,19 +695,19 @@ public enum WebhookSubscriptionTopic {
 
     /**
     * The webhook topic for `inventory_items/create` events. Occurs whenever an inventory item is created.
-    * Requires the `read_inventory` scope.
+    * Requires at least one of the following scopes: read_inventory, read_products.
     */
     INVENTORY_ITEMS_CREATE,
 
     /**
     * The webhook topic for `inventory_items/delete` events. Occurs whenever an inventory item is deleted.
-    * Requires the `read_inventory` scope.
+    * Requires at least one of the following scopes: read_inventory, read_products.
     */
     INVENTORY_ITEMS_DELETE,
 
     /**
     * The webhook topic for `inventory_items/update` events. Occurs whenever an inventory item is updated.
-    * Requires the `read_inventory` scope.
+    * Requires at least one of the following scopes: read_inventory, read_products.
     */
     INVENTORY_ITEMS_UPDATE,
 
@@ -688,6 +728,90 @@ public enum WebhookSubscriptionTopic {
     * updated. Requires the `read_inventory` scope.
     */
     INVENTORY_LEVELS_UPDATE,
+
+    /**
+    * The webhook topic for `inventory_shipments/add_items` events. Occurs whenever items are added to a
+    * shipment. Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_ADD_ITEMS,
+
+    /**
+    * The webhook topic for `inventory_shipments/create` events. Triggers when a shipment is created.
+    * Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_CREATE,
+
+    /**
+    * The webhook topic for `inventory_shipments/delete` events. Triggers when a shipment is deleted.
+    * Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_DELETE,
+
+    /**
+    * The webhook topic for `inventory_shipments/mark_in_transit` events. Triggers when a shipment is
+    * marked as in transit. Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_MARK_IN_TRANSIT,
+
+    /**
+    * The webhook topic for `inventory_shipments/receive_items` events. Triggers when items on a shipment
+    * are received. Requires the `read_inventory_shipments_received_items` scope.
+    */
+    INVENTORY_SHIPMENTS_RECEIVE_ITEMS,
+
+    /**
+    * The webhook topic for `inventory_shipments/remove_items` events. Occurs whenever items are removed
+    * from a shipment. Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_REMOVE_ITEMS,
+
+    /**
+    * The webhook topic for `inventory_shipments/update_item_quantities` events. Occurs whenever
+    * quantities change on a shipment. Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_UPDATE_ITEM_QUANTITIES,
+
+    /**
+    * The webhook topic for `inventory_shipments/update_tracking` events. Triggers when tracking info on a
+    * shipment is updated. Requires the `read_inventory_shipments` scope.
+    */
+    INVENTORY_SHIPMENTS_UPDATE_TRACKING,
+
+    /**
+    * The webhook topic for `inventory_transfers/add_items` events. Occurs any time items are added to a
+    * transfer. Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_ADD_ITEMS,
+
+    /**
+    * The webhook topic for `inventory_transfers/cancel` events. Triggers when a transfer is canceled.
+    * Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_CANCEL,
+
+    /**
+    * The webhook topic for `inventory_transfers/complete` events. Triggers when a transfer is completed.
+    * Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_COMPLETE,
+
+    /**
+    * The webhook topic for `inventory_transfers/ready_to_ship` events. Triggers when a transfer is marked
+    * as ready to ship. Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_READY_TO_SHIP,
+
+    /**
+    * The webhook topic for `inventory_transfers/remove_items` events. Occurs any time items are removed
+    * from a transfer. Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_REMOVE_ITEMS,
+
+    /**
+    * The webhook topic for `inventory_transfers/update_item_quantities` events. Occurs whenever the
+    * quantity of transfer line items changes. Requires the `read_inventory_transfers` scope.
+    */
+    INVENTORY_TRANSFERS_UPDATE_ITEM_QUANTITIES,
 
     /**
     * The webhook topic for `locales/create` events. Occurs whenever a shop locale is created Requires the
@@ -730,6 +854,12 @@ public enum WebhookSubscriptionTopic {
     * `read_locations` scope.
     */
     LOCATIONS_UPDATE,
+
+    /**
+    * The webhook topic for `markets_backup_region/update` events. Occurs when a backup region is updated.
+    * Requires the `read_markets` scope.
+    */
+    MARKETS_BACKUP_REGION_UPDATE,
 
     /**
     * The webhook topic for `markets/create` events. Occurs when a new market is created. Requires the
@@ -834,6 +964,7 @@ public enum WebhookSubscriptionTopic {
     * This can be the first or a subsequent risk assessment.
     * New risk assessments can be provided until the order is marked as fulfilled.
     * Includes the risk level, risk facts, the provider and the order ID.
+    * When the provider is Shopify, that field is null.
     * Does not include the risk recommendation for the order.
     * The Shop ID is available in the headers.
     * Requires the `read_orders` scope.
@@ -1038,6 +1169,13 @@ public enum WebhookSubscriptionTopic {
     * read_marketplace_returns, read_buyer_membership_orders.
     */
     RETURNS_DECLINE,
+
+    /**
+    * The webhook topic for `returns/process` events. Occurs whenever a return is processed. Requires at
+    * least one of the following scopes: read_returns, read_marketplace_returns,
+    * read_buyer_membership_orders.
+    */
+    RETURNS_PROCESS,
 
     /**
     * The webhook topic for `returns/reopen` events. Occurs whenever a closed return is reopened. Requires
@@ -1292,14 +1430,16 @@ public enum WebhookSubscriptionTopic {
     THEMES_UPDATE,
 
     /**
-    * The webhook topic for `variants/in_stock` events. Occurs whenever a variant becomes in stock.
-    * Requires the `read_products` scope.
+    * The webhook topic for `variants/in_stock` events. Occurs whenever a variant becomes in stock. Online
+    * channels receive this webhook only when the variant becomes in stock online. Requires the
+    * `read_products` scope.
     */
     VARIANTS_IN_STOCK,
 
     /**
     * The webhook topic for `variants/out_of_stock` events. Occurs whenever a variant becomes out of
-    * stock. Requires the `read_products` scope.
+    * stock. Online channels receive this webhook only when the variant becomes out of stock online.
+    * Requires the `read_products` scope.
     */
     VARIANTS_OUT_OF_STOCK,
 
@@ -1369,6 +1509,10 @@ public enum WebhookSubscriptionTopic {
 
             case "CHECKOUTS_UPDATE": {
                 return CHECKOUTS_UPDATE;
+            }
+
+            case "CHECKOUT_AND_ACCOUNTS_CONFIGURATIONS_UPDATE": {
+                return CHECKOUT_AND_ACCOUNTS_CONFIGURATIONS_UPDATE;
             }
 
             case "COLLECTIONS_CREATE": {
@@ -1587,6 +1731,26 @@ public enum WebhookSubscriptionTopic {
                 return DRAFT_ORDERS_UPDATE;
             }
 
+            case "FINANCE_APP_STAFF_MEMBER_DELETE": {
+                return FINANCE_APP_STAFF_MEMBER_DELETE;
+            }
+
+            case "FINANCE_APP_STAFF_MEMBER_GRANT": {
+                return FINANCE_APP_STAFF_MEMBER_GRANT;
+            }
+
+            case "FINANCE_APP_STAFF_MEMBER_REVOKE": {
+                return FINANCE_APP_STAFF_MEMBER_REVOKE;
+            }
+
+            case "FINANCE_APP_STAFF_MEMBER_UPDATE": {
+                return FINANCE_APP_STAFF_MEMBER_UPDATE;
+            }
+
+            case "FINANCE_KYC_INFORMATION_UPDATE": {
+                return FINANCE_KYC_INFORMATION_UPDATE;
+            }
+
             case "FULFILLMENTS_CREATE": {
                 return FULFILLMENTS_CREATE;
             }
@@ -1707,6 +1871,62 @@ public enum WebhookSubscriptionTopic {
                 return INVENTORY_LEVELS_UPDATE;
             }
 
+            case "INVENTORY_SHIPMENTS_ADD_ITEMS": {
+                return INVENTORY_SHIPMENTS_ADD_ITEMS;
+            }
+
+            case "INVENTORY_SHIPMENTS_CREATE": {
+                return INVENTORY_SHIPMENTS_CREATE;
+            }
+
+            case "INVENTORY_SHIPMENTS_DELETE": {
+                return INVENTORY_SHIPMENTS_DELETE;
+            }
+
+            case "INVENTORY_SHIPMENTS_MARK_IN_TRANSIT": {
+                return INVENTORY_SHIPMENTS_MARK_IN_TRANSIT;
+            }
+
+            case "INVENTORY_SHIPMENTS_RECEIVE_ITEMS": {
+                return INVENTORY_SHIPMENTS_RECEIVE_ITEMS;
+            }
+
+            case "INVENTORY_SHIPMENTS_REMOVE_ITEMS": {
+                return INVENTORY_SHIPMENTS_REMOVE_ITEMS;
+            }
+
+            case "INVENTORY_SHIPMENTS_UPDATE_ITEM_QUANTITIES": {
+                return INVENTORY_SHIPMENTS_UPDATE_ITEM_QUANTITIES;
+            }
+
+            case "INVENTORY_SHIPMENTS_UPDATE_TRACKING": {
+                return INVENTORY_SHIPMENTS_UPDATE_TRACKING;
+            }
+
+            case "INVENTORY_TRANSFERS_ADD_ITEMS": {
+                return INVENTORY_TRANSFERS_ADD_ITEMS;
+            }
+
+            case "INVENTORY_TRANSFERS_CANCEL": {
+                return INVENTORY_TRANSFERS_CANCEL;
+            }
+
+            case "INVENTORY_TRANSFERS_COMPLETE": {
+                return INVENTORY_TRANSFERS_COMPLETE;
+            }
+
+            case "INVENTORY_TRANSFERS_READY_TO_SHIP": {
+                return INVENTORY_TRANSFERS_READY_TO_SHIP;
+            }
+
+            case "INVENTORY_TRANSFERS_REMOVE_ITEMS": {
+                return INVENTORY_TRANSFERS_REMOVE_ITEMS;
+            }
+
+            case "INVENTORY_TRANSFERS_UPDATE_ITEM_QUANTITIES": {
+                return INVENTORY_TRANSFERS_UPDATE_ITEM_QUANTITIES;
+            }
+
             case "LOCALES_CREATE": {
                 return LOCALES_CREATE;
             }
@@ -1733,6 +1953,10 @@ public enum WebhookSubscriptionTopic {
 
             case "LOCATIONS_UPDATE": {
                 return LOCATIONS_UPDATE;
+            }
+
+            case "MARKETS_BACKUP_REGION_UPDATE": {
+                return MARKETS_BACKUP_REGION_UPDATE;
             }
 
             case "MARKETS_CREATE": {
@@ -1921,6 +2145,10 @@ public enum WebhookSubscriptionTopic {
 
             case "RETURNS_DECLINE": {
                 return RETURNS_DECLINE;
+            }
+
+            case "RETURNS_PROCESS": {
+                return RETURNS_PROCESS;
             }
 
             case "RETURNS_REOPEN": {
@@ -2158,6 +2386,10 @@ public enum WebhookSubscriptionTopic {
                 return "CHECKOUTS_UPDATE";
             }
 
+            case CHECKOUT_AND_ACCOUNTS_CONFIGURATIONS_UPDATE: {
+                return "CHECKOUT_AND_ACCOUNTS_CONFIGURATIONS_UPDATE";
+            }
+
             case COLLECTIONS_CREATE: {
                 return "COLLECTIONS_CREATE";
             }
@@ -2374,6 +2606,26 @@ public enum WebhookSubscriptionTopic {
                 return "DRAFT_ORDERS_UPDATE";
             }
 
+            case FINANCE_APP_STAFF_MEMBER_DELETE: {
+                return "FINANCE_APP_STAFF_MEMBER_DELETE";
+            }
+
+            case FINANCE_APP_STAFF_MEMBER_GRANT: {
+                return "FINANCE_APP_STAFF_MEMBER_GRANT";
+            }
+
+            case FINANCE_APP_STAFF_MEMBER_REVOKE: {
+                return "FINANCE_APP_STAFF_MEMBER_REVOKE";
+            }
+
+            case FINANCE_APP_STAFF_MEMBER_UPDATE: {
+                return "FINANCE_APP_STAFF_MEMBER_UPDATE";
+            }
+
+            case FINANCE_KYC_INFORMATION_UPDATE: {
+                return "FINANCE_KYC_INFORMATION_UPDATE";
+            }
+
             case FULFILLMENTS_CREATE: {
                 return "FULFILLMENTS_CREATE";
             }
@@ -2494,6 +2746,62 @@ public enum WebhookSubscriptionTopic {
                 return "INVENTORY_LEVELS_UPDATE";
             }
 
+            case INVENTORY_SHIPMENTS_ADD_ITEMS: {
+                return "INVENTORY_SHIPMENTS_ADD_ITEMS";
+            }
+
+            case INVENTORY_SHIPMENTS_CREATE: {
+                return "INVENTORY_SHIPMENTS_CREATE";
+            }
+
+            case INVENTORY_SHIPMENTS_DELETE: {
+                return "INVENTORY_SHIPMENTS_DELETE";
+            }
+
+            case INVENTORY_SHIPMENTS_MARK_IN_TRANSIT: {
+                return "INVENTORY_SHIPMENTS_MARK_IN_TRANSIT";
+            }
+
+            case INVENTORY_SHIPMENTS_RECEIVE_ITEMS: {
+                return "INVENTORY_SHIPMENTS_RECEIVE_ITEMS";
+            }
+
+            case INVENTORY_SHIPMENTS_REMOVE_ITEMS: {
+                return "INVENTORY_SHIPMENTS_REMOVE_ITEMS";
+            }
+
+            case INVENTORY_SHIPMENTS_UPDATE_ITEM_QUANTITIES: {
+                return "INVENTORY_SHIPMENTS_UPDATE_ITEM_QUANTITIES";
+            }
+
+            case INVENTORY_SHIPMENTS_UPDATE_TRACKING: {
+                return "INVENTORY_SHIPMENTS_UPDATE_TRACKING";
+            }
+
+            case INVENTORY_TRANSFERS_ADD_ITEMS: {
+                return "INVENTORY_TRANSFERS_ADD_ITEMS";
+            }
+
+            case INVENTORY_TRANSFERS_CANCEL: {
+                return "INVENTORY_TRANSFERS_CANCEL";
+            }
+
+            case INVENTORY_TRANSFERS_COMPLETE: {
+                return "INVENTORY_TRANSFERS_COMPLETE";
+            }
+
+            case INVENTORY_TRANSFERS_READY_TO_SHIP: {
+                return "INVENTORY_TRANSFERS_READY_TO_SHIP";
+            }
+
+            case INVENTORY_TRANSFERS_REMOVE_ITEMS: {
+                return "INVENTORY_TRANSFERS_REMOVE_ITEMS";
+            }
+
+            case INVENTORY_TRANSFERS_UPDATE_ITEM_QUANTITIES: {
+                return "INVENTORY_TRANSFERS_UPDATE_ITEM_QUANTITIES";
+            }
+
             case LOCALES_CREATE: {
                 return "LOCALES_CREATE";
             }
@@ -2520,6 +2828,10 @@ public enum WebhookSubscriptionTopic {
 
             case LOCATIONS_UPDATE: {
                 return "LOCATIONS_UPDATE";
+            }
+
+            case MARKETS_BACKUP_REGION_UPDATE: {
+                return "MARKETS_BACKUP_REGION_UPDATE";
             }
 
             case MARKETS_CREATE: {
@@ -2708,6 +3020,10 @@ public enum WebhookSubscriptionTopic {
 
             case RETURNS_DECLINE: {
                 return "RETURNS_DECLINE";
+            }
+
+            case RETURNS_PROCESS: {
+                return "RETURNS_PROCESS";
             }
 
             case RETURNS_REOPEN: {

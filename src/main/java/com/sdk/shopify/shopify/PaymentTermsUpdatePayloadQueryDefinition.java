@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface PaymentTermsUpdatePayloadQueryDefinition {
     void define(PaymentTermsUpdatePayloadQuery _queryBuilder);
 }

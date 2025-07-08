@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface PaymentTermsCreateUserErrorQueryDefinition {
     void define(PaymentTermsCreateUserErrorQuery _queryBuilder);
 }

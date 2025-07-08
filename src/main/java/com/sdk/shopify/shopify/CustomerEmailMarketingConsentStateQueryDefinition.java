@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerEmailMarketingConsentStateQueryDefinition {
     void define(CustomerEmailMarketingConsentStateQuery _queryBuilder);
 }

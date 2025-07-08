@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `FilesUserError`.
 */
@@ -42,6 +44,16 @@ public enum FilesErrorCode {
     * Duplicate resolution mode is not supported for this file type.
     */
     INVALID_DUPLICATE_MODE_FOR_TYPE,
+
+    /**
+    * Invalid duplicate resolution mode provided.
+    */
+    INVALID_DUPLICATE_RESOLUTION_MODE,
+
+    /**
+    * File cannot be updated in a failed state.
+    */
+    INVALID_FAILED_MEDIA_STATE,
 
     /**
     * The provided filename is invalid.
@@ -92,6 +104,11 @@ public enum FilesErrorCode {
     * Exceeded the limit of media per product.
     */
     PRODUCT_MEDIA_LIMIT_EXCEEDED,
+
+    /**
+    * One or more associated products are suspended.
+    */
+    PRODUCT_SUSPENDED,
 
     /**
     * The target resource does not exist.
@@ -170,6 +187,14 @@ public enum FilesErrorCode {
                 return INVALID_DUPLICATE_MODE_FOR_TYPE;
             }
 
+            case "INVALID_DUPLICATE_RESOLUTION_MODE": {
+                return INVALID_DUPLICATE_RESOLUTION_MODE;
+            }
+
+            case "INVALID_FAILED_MEDIA_STATE": {
+                return INVALID_FAILED_MEDIA_STATE;
+            }
+
             case "INVALID_FILENAME": {
                 return INVALID_FILENAME;
             }
@@ -208,6 +233,10 @@ public enum FilesErrorCode {
 
             case "PRODUCT_MEDIA_LIMIT_EXCEEDED": {
                 return PRODUCT_MEDIA_LIMIT_EXCEEDED;
+            }
+
+            case "PRODUCT_SUSPENDED": {
+                return PRODUCT_SUSPENDED;
             }
 
             case "REFERENCE_TARGET_DOES_NOT_EXIST": {
@@ -277,6 +306,14 @@ public enum FilesErrorCode {
                 return "INVALID_DUPLICATE_MODE_FOR_TYPE";
             }
 
+            case INVALID_DUPLICATE_RESOLUTION_MODE: {
+                return "INVALID_DUPLICATE_RESOLUTION_MODE";
+            }
+
+            case INVALID_FAILED_MEDIA_STATE: {
+                return "INVALID_FAILED_MEDIA_STATE";
+            }
+
             case INVALID_FILENAME: {
                 return "INVALID_FILENAME";
             }
@@ -315,6 +352,10 @@ public enum FilesErrorCode {
 
             case PRODUCT_MEDIA_LIMIT_EXCEEDED: {
                 return "PRODUCT_MEDIA_LIMIT_EXCEEDED";
+            }
+
+            case PRODUCT_SUSPENDED: {
+                return "PRODUCT_SUSPENDED";
             }
 
             case REFERENCE_TARGET_DOES_NOT_EXIST: {

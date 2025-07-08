@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DomainQueryDefinition {
     void define(DomainQuery _queryBuilder);
 }

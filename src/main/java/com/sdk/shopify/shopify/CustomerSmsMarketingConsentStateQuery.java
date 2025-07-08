@@ -50,4 +50,17 @@ public class CustomerSmsMarketingConsentStateQuery extends Query<CustomerSmsMark
 
         return this;
     }
+
+    /**
+    * The location where the customer consented to receive marketing material by SMS.
+    */
+    public CustomerSmsMarketingConsentStateQuery sourceLocation(LocationQueryDefinition queryDef) {
+        startField("sourceLocation");
+
+        _queryBuilder.append('{');
+        queryDef.define(new LocationQuery(_queryBuilder));
+        _queryBuilder.append('}');
+
+        return this;
+    }
 }

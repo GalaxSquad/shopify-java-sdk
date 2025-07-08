@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface ChannelConnectionQueryDefinition {
     void define(ChannelConnectionQuery _queryBuilder);
 }

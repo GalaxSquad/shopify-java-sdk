@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface TransactionVoidUserErrorQueryDefinition {
     void define(TransactionVoidUserErrorQuery _queryBuilder);
 }

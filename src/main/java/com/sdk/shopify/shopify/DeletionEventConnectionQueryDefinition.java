@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface DeletionEventConnectionQueryDefinition {
     void define(DeletionEventConnectionQuery _queryBuilder);
 }

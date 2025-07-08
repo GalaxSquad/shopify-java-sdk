@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Specifies the relationship between the `column` and the `condition`.
 */

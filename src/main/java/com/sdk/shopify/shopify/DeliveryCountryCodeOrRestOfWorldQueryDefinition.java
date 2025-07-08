@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DeliveryCountryCodeOrRestOfWorldQueryDefinition {
     void define(DeliveryCountryCodeOrRestOfWorldQuery _queryBuilder);
 }

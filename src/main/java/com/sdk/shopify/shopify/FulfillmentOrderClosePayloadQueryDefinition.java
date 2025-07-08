@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface FulfillmentOrderClosePayloadQueryDefinition {
     void define(FulfillmentOrderClosePayloadQuery _queryBuilder);
 }

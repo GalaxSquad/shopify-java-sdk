@@ -74,6 +74,10 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
                 return new AppSubscriptionTrialExtendUserError(fields);
             }
 
+            case "AppUninstallAppUninstallError": {
+                return new AppUninstallAppUninstallError(fields);
+            }
+
             case "ArticleCreateUserError": {
                 return new ArticleCreateUserError(fields);
             }
@@ -170,6 +174,10 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
                 return new CommentSpamUserError(fields);
             }
 
+            case "ConsentPolicyError": {
+                return new ConsentPolicyError(fields);
+            }
+
             case "CustomerCancelDataErasureUserError": {
                 return new CustomerCancelDataErasureUserError(fields);
             }
@@ -212,6 +220,10 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
 
             case "CustomerSendAccountInviteEmailUserError": {
                 return new CustomerSendAccountInviteEmailUserError(fields);
+            }
+
+            case "CustomerSetUserError": {
+                return new CustomerSetUserError(fields);
             }
 
             case "CustomerSmsMarketingConsentError": {
@@ -346,6 +358,78 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
                 return new InventorySetScheduledChangesUserError(fields);
             }
 
+            case "InventoryShipmentAddItemsUserError": {
+                return new InventoryShipmentAddItemsUserError(fields);
+            }
+
+            case "InventoryShipmentCreateInTransitUserError": {
+                return new InventoryShipmentCreateInTransitUserError(fields);
+            }
+
+            case "InventoryShipmentCreateUserError": {
+                return new InventoryShipmentCreateUserError(fields);
+            }
+
+            case "InventoryShipmentDeleteUserError": {
+                return new InventoryShipmentDeleteUserError(fields);
+            }
+
+            case "InventoryShipmentMarkInTransitUserError": {
+                return new InventoryShipmentMarkInTransitUserError(fields);
+            }
+
+            case "InventoryShipmentReceiveUserError": {
+                return new InventoryShipmentReceiveUserError(fields);
+            }
+
+            case "InventoryShipmentRemoveItemsUserError": {
+                return new InventoryShipmentRemoveItemsUserError(fields);
+            }
+
+            case "InventoryShipmentSetTrackingUserError": {
+                return new InventoryShipmentSetTrackingUserError(fields);
+            }
+
+            case "InventoryShipmentUpdateItemQuantitiesUserError": {
+                return new InventoryShipmentUpdateItemQuantitiesUserError(fields);
+            }
+
+            case "InventoryTransferCancelUserError": {
+                return new InventoryTransferCancelUserError(fields);
+            }
+
+            case "InventoryTransferCreateAsReadyToShipUserError": {
+                return new InventoryTransferCreateAsReadyToShipUserError(fields);
+            }
+
+            case "InventoryTransferCreateUserError": {
+                return new InventoryTransferCreateUserError(fields);
+            }
+
+            case "InventoryTransferDeleteUserError": {
+                return new InventoryTransferDeleteUserError(fields);
+            }
+
+            case "InventoryTransferDuplicateUserError": {
+                return new InventoryTransferDuplicateUserError(fields);
+            }
+
+            case "InventoryTransferEditUserError": {
+                return new InventoryTransferEditUserError(fields);
+            }
+
+            case "InventoryTransferMarkAsReadyToShipUserError": {
+                return new InventoryTransferMarkAsReadyToShipUserError(fields);
+            }
+
+            case "InventoryTransferRemoveItemsUserError": {
+                return new InventoryTransferRemoveItemsUserError(fields);
+            }
+
+            case "InventoryTransferSetItemsUserError": {
+                return new InventoryTransferSetItemsUserError(fields);
+            }
+
             case "LocationActivateUserError": {
                 return new LocationActivateUserError(fields);
             }
@@ -438,8 +522,20 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
                 return new OrderCreateMandatePaymentUserError(fields);
             }
 
+            case "OrderCreateManualPaymentOrderCreateManualPaymentError": {
+                return new OrderCreateManualPaymentOrderCreateManualPaymentError(fields);
+            }
+
             case "OrderCreateUserError": {
                 return new OrderCreateUserError(fields);
+            }
+
+            case "OrderCustomerRemoveUserError": {
+                return new OrderCustomerRemoveUserError(fields);
+            }
+
+            case "OrderCustomerSetUserError": {
+                return new OrderCustomerSetUserError(fields);
             }
 
             case "OrderDeleteUserError": {
@@ -516,6 +612,10 @@ public class UnknownDisplayableError extends AbstractResponse<UnknownDisplayable
 
             case "PriceListUserError": {
                 return new PriceListUserError(fields);
+            }
+
+            case "PrivacyFeaturesDisableUserError": {
+                return new PrivacyFeaturesDisableUserError(fields);
             }
 
             case "ProductBundleMutationUserError": {

@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * The possible product subscription states for a customer, as defined by the customer's subscription
 * contracts.

@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface FileErrorQueryDefinition {
     void define(FileErrorQuery _queryBuilder);
 }

@@ -22,7 +22,7 @@ public class FeeSaleQuery extends Query<FeeSaleQuery> {
     }
 
     /**
-    * The fee associated with the sale.
+    * The fee associated with the sale. It can be null if the fee was deleted.
     */
     public FeeSaleQuery fee(FeeQueryDefinition queryDef) {
         startField("fee");

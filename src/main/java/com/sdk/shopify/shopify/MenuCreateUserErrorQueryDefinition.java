@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface MenuCreateUserErrorQueryDefinition {
     void define(MenuCreateUserErrorQuery _queryBuilder);
 }

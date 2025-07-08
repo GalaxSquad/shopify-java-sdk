@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface WebPixelQueryDefinition {
     void define(WebPixelQuery _queryBuilder);
 }

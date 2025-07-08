@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CollectionRuleSetQueryDefinition {
     void define(CollectionRuleSetQuery _queryBuilder);
 }

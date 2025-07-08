@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface CustomerGenerateAccountActivationUrlPayloadQueryDefinition {
     void define(CustomerGenerateAccountActivationUrlPayloadQuery _queryBuilder);
 }

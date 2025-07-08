@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Represents a resource that can be published to a channel.
 * A publishable resource can be either a Product or Collection.

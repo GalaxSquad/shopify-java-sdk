@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `ReturnUserError`.
 */
@@ -72,6 +74,11 @@ public enum ReturnErrorCode {
     * The input value should be less than or equal to the maximum value allowed.
     */
     LESS_THAN_OR_EQUAL_TO,
+
+    /**
+    * The user does not have permission to perform the operation.
+    */
+    MISSING_PERMISSION,
 
     /**
     * A requested notification could not be sent.
@@ -188,6 +195,10 @@ public enum ReturnErrorCode {
                 return LESS_THAN_OR_EQUAL_TO;
             }
 
+            case "MISSING_PERMISSION": {
+                return MISSING_PERMISSION;
+            }
+
             case "NOTIFICATION_FAILED": {
                 return NOTIFICATION_FAILED;
             }
@@ -289,6 +300,10 @@ public enum ReturnErrorCode {
 
             case LESS_THAN_OR_EQUAL_TO: {
                 return "LESS_THAN_OR_EQUAL_TO";
+            }
+
+            case MISSING_PERMISSION: {
+                return "MISSING_PERMISSION";
             }
 
             case NOTIFICATION_FAILED: {

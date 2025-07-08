@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface CheckoutBrandingCartLinkQueryDefinition {
     void define(CheckoutBrandingCartLinkQuery _queryBuilder);
 }

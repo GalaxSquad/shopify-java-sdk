@@ -114,24 +114,6 @@ public class ShopFeaturesQuery extends Query<ShopFeaturesQuery> {
     }
 
     /**
-    * Whether a shop can enable international price overrides.
-    */
-    public ShopFeaturesQuery internationalPriceOverrides() {
-        startField("internationalPriceOverrides");
-
-        return this;
-    }
-
-    /**
-    * Whether a shop can enable international price rules.
-    */
-    public ShopFeaturesQuery internationalPriceRules() {
-        startField("internationalPriceRules");
-
-        return this;
-    }
-
-    /**
     * Whether a shop has enabled a legacy subscription gateway to handle older subscriptions.
     */
     public ShopFeaturesQuery legacySubscriptionGatewayEnabled() {
@@ -193,6 +175,15 @@ public class ShopFeaturesQuery extends Query<ShopFeaturesQuery> {
     */
     public ShopFeaturesQuery storefront() {
         startField("storefront");
+
+        return this;
+    }
+
+    /**
+    * Whether a shop is eligible for Unified Markets.
+    */
+    public ShopFeaturesQuery unifiedMarkets() {
+        startField("unifiedMarkets");
 
         return this;
     }

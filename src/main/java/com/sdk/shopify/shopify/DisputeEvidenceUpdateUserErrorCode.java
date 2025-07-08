@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 /**
 * Possible error codes that can be returned by `DisputeEvidenceUpdateUserError`.
 */
@@ -27,6 +29,11 @@ public enum DisputeEvidenceUpdateUserErrorCode {
     * Combined files size is too large.
     */
     FILES_SIZE_EXCEEDED_LIMIT,
+
+    /**
+    * File upload failed. Please try again.
+    */
+    FILE_NOT_FOUND,
 
     /**
     * The input value is invalid.
@@ -62,6 +69,10 @@ public enum DisputeEvidenceUpdateUserErrorCode {
                 return FILES_SIZE_EXCEEDED_LIMIT;
             }
 
+            case "FILE_NOT_FOUND": {
+                return FILE_NOT_FOUND;
+            }
+
             case "INVALID": {
                 return INVALID;
             }
@@ -91,6 +102,10 @@ public enum DisputeEvidenceUpdateUserErrorCode {
 
             case FILES_SIZE_EXCEEDED_LIMIT: {
                 return "FILES_SIZE_EXCEEDED_LIMIT";
+            }
+
+            case FILE_NOT_FOUND: {
+                return "FILE_NOT_FOUND";
             }
 
             case INVALID: {

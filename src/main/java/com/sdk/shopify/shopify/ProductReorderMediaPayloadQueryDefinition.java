@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface ProductReorderMediaPayloadQueryDefinition {
     void define(ProductReorderMediaPayloadQuery _queryBuilder);
 }

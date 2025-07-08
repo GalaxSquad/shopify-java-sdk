@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface BusinessEntityAddressQueryDefinition {
     void define(BusinessEntityAddressQuery _queryBuilder);
 }

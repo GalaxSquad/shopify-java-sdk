@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 public interface SubscriptionShippingOptionResultSuccessQueryDefinition {
     void define(SubscriptionShippingOptionResultSuccessQuery _queryBuilder);
 }

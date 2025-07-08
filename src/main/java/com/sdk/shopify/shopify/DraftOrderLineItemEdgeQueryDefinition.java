@@ -4,6 +4,8 @@ package com.sdk.shopify.shopify;
 
 
 
+
+
 public interface DraftOrderLineItemEdgeQueryDefinition {
     void define(DraftOrderLineItemEdgeQuery _queryBuilder);
 }

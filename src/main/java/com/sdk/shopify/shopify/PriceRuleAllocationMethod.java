@@ -2,6 +2,10 @@
 
 package com.sdk.shopify.shopify;
 
+
+
+
+
 /**
 * The method by which the price rule's value is allocated to its entitled items.
 */
